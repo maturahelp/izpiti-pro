@@ -1,0 +1,230 @@
+export type Difficulty = 'лесен' | 'среден' | 'труден'
+export type TestStatus = 'not_started' | 'in_progress' | 'completed'
+
+export interface Test {
+  id: string
+  title: string
+  subjectId: string
+  subjectName: string
+  topicId: string
+  topicName: string
+  examType: 'nvo7' | 'dzi12'
+  difficulty: Difficulty
+  questionsCount: number
+  timeMinutes: number
+  isPremium: boolean
+  completedCount: number
+  avgScore: number
+  status?: TestStatus
+  lastScore?: number
+  completedAt?: string
+}
+
+export interface Question {
+  id: string
+  testId: string
+  order: number
+  text: string
+  options: string[]
+  correctIndex: number
+  explanation: string
+  points: number
+}
+
+export const tests: Test[] = [
+  {
+    id: 'test-1',
+    title: 'Правопис и пунктуация — основни правила',
+    subjectId: 'bg-lang-7',
+    subjectName: 'Български език',
+    topicId: 'bg7-1',
+    topicName: 'Правопис и пунктуация',
+    examType: 'nvo7',
+    difficulty: 'лесен',
+    questionsCount: 20,
+    timeMinutes: 30,
+    isPremium: false,
+    completedCount: 1842,
+    avgScore: 74,
+    status: 'completed',
+    lastScore: 85,
+    completedAt: '2024-03-10',
+  },
+  {
+    id: 'test-2',
+    title: 'Части на речта — съществителни и прилагателни',
+    subjectId: 'bg-lang-7',
+    subjectName: 'Български език',
+    topicId: 'bg7-2',
+    topicName: 'Части на речта',
+    examType: 'nvo7',
+    difficulty: 'среден',
+    questionsCount: 25,
+    timeMinutes: 40,
+    isPremium: false,
+    completedCount: 1234,
+    avgScore: 68,
+    status: 'in_progress',
+  },
+  {
+    id: 'test-3',
+    title: 'Анализ на художествен текст — разбиране и интерпретация',
+    subjectId: 'bg-lang-7',
+    subjectName: 'Български език',
+    topicId: 'bg7-3',
+    topicName: 'Анализ на текст',
+    examType: 'nvo7',
+    difficulty: 'труден',
+    questionsCount: 30,
+    timeMinutes: 50,
+    isPremium: true,
+    completedCount: 987,
+    avgScore: 61,
+    status: 'not_started',
+  },
+  {
+    id: 'test-4',
+    title: 'Числа и изрази — пробен тест 1',
+    subjectId: 'math-7',
+    subjectName: 'Математика',
+    topicId: 'math7-1',
+    topicName: 'Числа и изрази',
+    examType: 'nvo7',
+    difficulty: 'лесен',
+    questionsCount: 20,
+    timeMinutes: 35,
+    isPremium: false,
+    completedCount: 2103,
+    avgScore: 71,
+    status: 'completed',
+    lastScore: 90,
+    completedAt: '2024-03-08',
+  },
+  {
+    id: 'test-5',
+    title: 'Уравнения и неравенства — задачи с решение',
+    subjectId: 'math-7',
+    subjectName: 'Математика',
+    topicId: 'math7-2',
+    topicName: 'Уравнения и неравенства',
+    examType: 'nvo7',
+    difficulty: 'среден',
+    questionsCount: 25,
+    timeMinutes: 45,
+    isPremium: true,
+    completedCount: 1456,
+    avgScore: 63,
+    status: 'not_started',
+  },
+  {
+    id: 'test-6',
+    title: 'Геометрия — триъгълници и техните свойства',
+    subjectId: 'math-7',
+    subjectName: 'Математика',
+    topicId: 'math7-4',
+    topicName: 'Геометрия — триъгълници',
+    examType: 'nvo7',
+    difficulty: 'труден',
+    questionsCount: 30,
+    timeMinutes: 55,
+    isPremium: true,
+    completedCount: 876,
+    avgScore: 58,
+    status: 'not_started',
+  },
+  {
+    id: 'test-7',
+    title: 'Стилистика — изразни средства в поезията',
+    subjectId: 'bg-lang-12',
+    subjectName: 'Български език и литература',
+    topicId: 'bg12-1',
+    topicName: 'Стилистика и изразни средства',
+    examType: 'dzi12',
+    difficulty: 'среден',
+    questionsCount: 30,
+    timeMinutes: 45,
+    isPremium: false,
+    completedCount: 1567,
+    avgScore: 66,
+    status: 'not_started',
+  },
+  {
+    id: 'test-8',
+    title: 'Под игото — анализ на романа',
+    subjectId: 'bg-lang-12',
+    subjectName: 'Български език и литература',
+    topicId: 'bg12-5',
+    topicName: 'Под игото — Иван Вазов',
+    examType: 'dzi12',
+    difficulty: 'труден',
+    questionsCount: 35,
+    timeMinutes: 60,
+    isPremium: true,
+    completedCount: 934,
+    avgScore: 62,
+    status: 'not_started',
+  },
+]
+
+export const sampleQuestions: Question[] = [
+  {
+    id: 'q1',
+    testId: 'test-1',
+    order: 1,
+    text: 'В коя от следните думи е допусната правописна грешка?',
+    options: ['изключение', 'извинение', 'изследване', 'изщракване'],
+    correctIndex: 3,
+    explanation: 'Думата "изщракване" е написана неправилно. Правилно е "ищракване" — представката "из-" пред "щ" се изписва като "и-".',
+    points: 2,
+  },
+  {
+    id: 'q2',
+    testId: 'test-1',
+    order: 2,
+    text: 'Кое от следните изречения е написано без пунктуационна грешка?',
+    options: [
+      'Момчето, което видях вчера, беше висок.',
+      'Момчето което видях вчера беше висок.',
+      'Момчето, което видях вчера беше висок.',
+      'Момчето което, видях вчера, беше висок.',
+    ],
+    correctIndex: 0,
+    explanation: 'Относителното изречение "което видях вчера" се отделя със запетаи от двете страни, тъй като е вметнато в главното изречение.',
+    points: 2,
+  },
+  {
+    id: 'q3',
+    testId: 'test-1',
+    order: 3,
+    text: 'Коя представка се изписва с "и" пред звучна съгласна?',
+    options: ['из-', 'въз-', 'раз-', 'без-'],
+    correctIndex: 0,
+    explanation: 'Представката "из-" се изписва с "и" (не "и") — тя винаги запазва своя изход "з" независимо от следващата съгласна.',
+    points: 2,
+  },
+  {
+    id: 'q4',
+    testId: 'test-1',
+    order: 4,
+    text: 'В кое изречение запетаята е поставена правилно?',
+    options: [
+      'Ако учиш, ще успееш.',
+      'Ако, учиш ще успееш.',
+      'Ако учиш ще, успееш.',
+      'Ако учиш ще успееш.',
+    ],
+    correctIndex: 0,
+    explanation: 'В условно изречение, когато подчиненото изречение предхожда главното, се поставя запетая след подчиненото.',
+    points: 2,
+  },
+  {
+    id: 'q5',
+    testId: 'test-1',
+    order: 5,
+    text: 'Кой от следните знаци се поставя след обръщение в края на изречение?',
+    options: ['запетая', 'удивителен знак', 'точка', 'двоеточие'],
+    correctIndex: 0,
+    explanation: 'След обръщение, когато е в средата или края на изречението, се поставя запетая. В началото на изречение — запетая или удивителен знак.',
+    points: 2,
+  },
+]
