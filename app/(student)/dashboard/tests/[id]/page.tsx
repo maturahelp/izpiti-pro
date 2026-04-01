@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { tests, sampleQuestions } from '@/data/tests'
+import { nvoQuestions } from '@/data/nvo-questions'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -11,7 +12,8 @@ export default function TestPage() {
   const params = useParams()
   const router = useRouter()
   const test = tests.find((t) => t.id === params.id) || tests[0]
-  const questions = sampleQuestions.filter((q) => q.testId === test.id)
+  const allQuestions = [...sampleQuestions, ...nvoQuestions]
+  const questions = allQuestions.filter((q) => q.testId === test.id)
   // Use all sample questions if test has no questions
   const displayQuestions = questions.length > 0 ? questions : sampleQuestions
 
