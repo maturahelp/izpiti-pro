@@ -1,33 +1,40 @@
 'use client'
 
 import { useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { tests, sampleQuestions } from '@/data/tests'
 import { nvoQuestions } from '@/data/nvo-questions'
+import { nvoExamMeta } from '@/data/nvo-exam-meta'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function TestPage() {
   const params = useParams()
-  const router = useRouter()
   const test = tests.find((t) => t.id === params.id) || tests[0]
   const allQuestions = [...sampleQuestions, ...nvoQuestions]
   const questions = allQuestions.filter((q) => q.testId === test.id)
-  // Use all sample questions if test has no questions
   const displayQuestions = questions.length > 0 ? questions : sampleQuestions
 
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [showContext, setShowContext] = useState(true)
 
-  const currentQuestion = displayQuestions[currentIndex]
-  const selected = selectedAnswers[currentQuestion?.id]
+  const meta = nvoExamMeta[test.id]
   const answered = Object.keys(selectedAnswers).length
-  const isLast = currentIndex === displayQuestions.length - 1
+  const total = displayQuestions.length
 
   if (submitted) {
-    return <TestResults test={test} questions={displayQuestions} answers={selectedAnswers} />
+    return (
+      <TestResults
+        test={test}
+        questions={displayQuestions}
+        answers={selectedAnswers}
+        meta={meta}
+        onRetry={() => { setSelectedAnswers({}); setSubmitted(false) }}
+      />
+    )
   }
 
   return (
@@ -35,131 +42,125 @@ export default function TestPage() {
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
 
-        {/* Progress header */}
+        {/* Context panel (BEL exams) */}
+        {meta?.contextText && (
+          <div className="card mb-6 overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-border">
+              <div>
+                <p className="text-xs text-text-muted uppercase tracking-wide font-semibold">Изходен текст към изпита</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowContext((v) => !v)}
+                  className="text-xs text-primary font-semibold hover:underline"
+                >
+                  {showContext ? 'Скрий текста' : 'Покажи текста'}
+                </button>
+              </div>
+            </div>
+            {showContext && (
+              <div className="p-5 space-y-4">
+                <p className="text-sm text-text leading-relaxed whitespace-pre-line">{meta.contextText}</p>
+                {meta.contextImage && (
+                  <div className="mt-4">
+                    <Image
+                      src={meta.contextImage}
+                      alt="Инфографика към изпита"
+                      width={700}
+                      height={400}
+                      className="rounded-lg w-full h-auto object-contain"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Progress bar */}
         <div className="card p-4 mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-text-muted">
-              Въпрос {currentIndex + 1} от {displayQuestions.length}
-            </span>
-            <span className="text-sm font-semibold text-text">
-              {answered} отговорени
-            </span>
+            <span className="text-sm font-medium text-text-muted">Напредък</span>
+            <span className="text-sm font-semibold text-text">{answered} / {total} отговорени</span>
           </div>
-          <div className="flex gap-1">
-            {displayQuestions.map((_, i) => (
+          <div className="flex gap-0.5">
+            {displayQuestions.map((q) => (
               <div
-                key={i}
+                key={q.id}
                 className={cn(
                   'flex-1 h-1.5 rounded-full transition-colors',
-                  i < currentIndex
-                    ? selectedAnswers[displayQuestions[i].id] !== undefined
-                      ? 'bg-primary'
-                      : 'bg-gray-200'
-                    : i === currentIndex
-                    ? 'bg-primary/50'
-                    : 'bg-gray-100'
+                  selectedAnswers[q.id] !== undefined ? 'bg-primary' : 'bg-gray-100'
                 )}
               />
             ))}
           </div>
         </div>
 
-        {/* Question card */}
-        <div className="card p-6 mb-4">
-          <div className="flex items-start gap-3 mb-6">
-            <span className="w-7 h-7 rounded-lg bg-primary-light flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
-              {currentIndex + 1}
-            </span>
-            <p className="text-base font-medium text-text leading-relaxed">{currentQuestion?.text}</p>
-          </div>
-
-          <div className="space-y-3">
-            {currentQuestion?.options.map((option, i) => (
-              <button
-                key={i}
-                onClick={() => setSelectedAnswers((prev) => ({ ...prev, [currentQuestion.id]: i }))}
-                className={cn(
-                  'w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all duration-150 text-sm font-medium',
-                  selected === i
-                    ? 'border-primary bg-primary-light text-primary'
-                    : 'border-border bg-white text-text hover:border-primary/40 hover:bg-gray-50'
-                )}
-              >
-                <span className="inline-flex items-center gap-3">
-                  <span className={cn(
-                    'w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0',
-                    selected === i ? 'border-primary bg-primary text-white' : 'border-border text-text-muted'
-                  )}>
-                    {String.fromCharCode(65 + i)}
-                  </span>
-                  {option}
+        {/* All questions */}
+        <div className="space-y-5">
+          {displayQuestions.map((q, i) => (
+            <div key={q.id} className="card p-5">
+              <div className="flex items-start gap-3 mb-4">
+                <span className="w-7 h-7 rounded-lg bg-primary-light flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
+                  {i + 1}
                 </span>
-              </button>
-            ))}
-          </div>
+                <p className="text-sm font-medium text-text leading-relaxed">{q.text}</p>
+              </div>
+
+              <div className="space-y-2 pl-10">
+                {q.options.map((option, oi) => (
+                  <button
+                    key={oi}
+                    onClick={() => setSelectedAnswers((prev) => ({ ...prev, [q.id]: oi }))}
+                    className={cn(
+                      'w-full text-left px-4 py-3 rounded-xl border-2 transition-all duration-150 text-sm font-medium',
+                      selectedAnswers[q.id] === oi
+                        ? 'border-primary bg-primary-light text-primary'
+                        : 'border-border bg-white text-text hover:border-primary/40 hover:bg-gray-50'
+                    )}
+                  >
+                    <span className="inline-flex items-center gap-3">
+                      <span className={cn(
+                        'w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0',
+                        selectedAnswers[q.id] === oi ? 'border-primary bg-primary text-white' : 'border-border text-text-muted'
+                      )}>
+                        {String.fromCharCode(65 + oi)}
+                      </span>
+                      {option}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between gap-3">
+        {/* Submit */}
+        <div className="mt-6 flex flex-col items-center gap-2">
           <button
-            onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
-            disabled={currentIndex === 0}
-            className="btn-secondary disabled:opacity-40"
+            onClick={() => setSubmitted(true)}
+            disabled={answered < total}
+            className="btn-primary w-full max-w-xs disabled:opacity-40"
           >
-            Предишен
+            Провери отговорите
           </button>
-
-          <div className="flex items-center gap-2">
-            {displayQuestions.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className={cn(
-                  'w-7 h-7 rounded-lg text-xs font-semibold transition-colors',
-                  i === currentIndex
-                    ? 'bg-primary text-white'
-                    : selectedAnswers[displayQuestions[i].id] !== undefined
-                    ? 'bg-primary-light text-primary'
-                    : 'bg-gray-100 text-text-muted hover:bg-gray-200'
-                )}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-
-          {isLast ? (
-            <button
-              onClick={() => setSubmitted(true)}
-              disabled={answered < displayQuestions.length}
-              className="btn-primary disabled:opacity-40"
-            >
-              Предай теста
-            </button>
-          ) : (
-            <button
-              onClick={() => setCurrentIndex((i) => Math.min(displayQuestions.length - 1, i + 1))}
-              className="btn-primary"
-            >
-              Следващ
-            </button>
+          {answered < total && (
+            <p className="text-xs text-text-muted">
+              Остават {total - answered} неотговорени въпроса
+            </p>
           )}
         </div>
-
-        {answered < displayQuestions.length && isLast && (
-          <p className="text-center text-xs text-text-muted mt-3">
-            Все още имаш {displayQuestions.length - answered} неотговорени въпроса
-          </p>
-        )}
       </div>
     </div>
   )
 }
 
-function TestResults({ test, questions, answers }: {
+function TestResults({ test, questions, answers, meta, onRetry }: {
   test: ReturnType<typeof tests.find>
   questions: typeof sampleQuestions
   answers: Record<string, number>
+  meta: typeof nvoExamMeta[string] | undefined
+  onRetry: () => void
 }) {
   const correct = questions.filter((q) => answers[q.id] === q.correctIndex).length
   const total = questions.length
@@ -200,18 +201,15 @@ function TestResults({ test, questions, answers }: {
           <Link href="/dashboard/tests" className="btn-secondary">
             Обратно към тестовете
           </Link>
-          <Link href={`/dashboard/tests/${test?.id}`} className="btn-primary">
+          <button onClick={onRetry} className="btn-primary">
             Опитай отново
-          </Link>
-          <Link href="/dashboard/ai" className="btn-ghost border border-border">
-            Питай AI за грешките
-          </Link>
+          </button>
         </div>
 
-        {/* Question review */}
+        {/* Question review — all on one page */}
         <div>
           <h2 className="font-semibold text-text mb-3">Преглед на отговорите</h2>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {questions.map((q, i) => {
               const isCorrect = answers[q.id] === q.correctIndex
               return (
@@ -227,23 +225,34 @@ function TestResults({ test, questions, answers }: {
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                       )}
                     </div>
-                    <p className="text-sm font-medium text-text">{q.text}</p>
+                    <p className="text-sm font-medium text-text"><span className="text-text-muted mr-1">{i + 1}.</span>{q.text}</p>
                   </div>
 
-                  {!isCorrect && (
-                    <div className="pl-9 space-y-1.5 mb-3">
-                      <p className="text-xs text-danger">
-                        Твоят отговор: <strong>{q.options[answers[q.id]]}</strong>
-                      </p>
-                      <p className="text-xs text-success">
-                        Верен отговор: <strong>{q.options[q.correctIndex]}</strong>
-                      </p>
+                  <div className="pl-9 space-y-1.5">
+                    {q.options.map((opt, oi) => {
+                      const isSelected = answers[q.id] === oi
+                      const isRight = q.correctIndex === oi
+                      return (
+                        <div key={oi} className={cn(
+                          'px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-2',
+                          isRight ? 'bg-success-light text-success' :
+                          isSelected && !isRight ? 'bg-danger-light text-danger' :
+                          'text-text-muted'
+                        )}>
+                          <span className="font-bold">{String.fromCharCode(65 + oi)}.</span>
+                          {opt}
+                          {isRight && <span className="ml-auto text-success">✓</span>}
+                          {isSelected && !isRight && <span className="ml-auto text-danger">✗</span>}
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {q.explanation && (
+                    <div className="pl-9 mt-3 bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-text-muted leading-relaxed">{q.explanation}</p>
                     </div>
                   )}
-
-                  <div className="pl-9 bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-text-muted leading-relaxed">{q.explanation}</p>
-                  </div>
                 </div>
               )
             })}
