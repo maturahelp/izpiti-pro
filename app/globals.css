@@ -139,4 +139,11 @@
     background-color: #E4E7EC;
     border-radius: 2px;
   }
+
+  /* MathJax inline math: SVG inside has display:block which breaks inline flow.
+     Force inline-block so the container shrink-wraps the SVG correctly. */
+  mjx-container[jax="SVG"] {
+    display: inline-block !important;
+    white-space: normal;
+  }
 }

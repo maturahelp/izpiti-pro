@@ -9,6 +9,7 @@ import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
 import nvoDataset from '@/data/official_quiz_dataset.json'
+import dziDataset from '@/data/official_dzi_bel_dataset.json'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -97,11 +98,28 @@ function collapseQuestionText(text: string): string {
     .trim()
 }
 
+function stripExamBoilerplate(text: string): string {
+  if (!text) return ''
+  return text
+    .replace(/МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО И НАУКАТА\s*/g, '')
+    .replace(/ДЪРЖАВЕН ЗРЕЛОСТЕН ИЗПИТ ПО БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА\s*/g, '')
+    .replace(/\b\d{1,2}\s+[а-яА-Я]+\s+\d{4}\s+година\s*/g, '')
+    .replace(/ЧАСТ\s*[12]\s*\(Време за работа:\s*\d+\s*минути\)\s*/g, '')
+    .replace(/Отговорите на задачите от \d+\. до \d+\. включително отбелязвайте в листа за отговори\.\s*/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
 function cleanOfficialAnswer(text: string | undefined, questionType: string): string {
   if (!text) return ''
   let cleaned = normalizeMathText(text)
+    .replace(/^(Примерни отговори:)\s*\d+\s*/i, '$1 ')
+    .replace(/^(Възможни отговори:)\s*\d+\s*/i, '$1 ')
     .replace(/\uf0b7/g, '•')
     .replace(/_/g, ' ')
+    .replace(/([А-Я]\)\s*\d+)\s+\d+\s+(?=[А-Я]\))/g, '$1 ')
+    .replace(/([^\d])\s+\d+\s+(?=[А-Я]\))/g, '$1 ')
+    .replace(/([А-Яа-яA-Za-z„“"«»])\s+\d+\s+(?=[А-Яа-яA-Za-z„“"«»])/g, '$1 ')
     .replace(/\b(?:Общо|Всичко):?\s*\d+(?:,\d+)?\s*т\.?.*$/gi, '')
     .replace(/\b(?:по\s+\d+(?:,\d+)?\s*т\.?.*)$/gi, '')
     .replace(/\b(\d+(?:,\d+)?)\s*точки?\b.*$/gi, '')
@@ -149,6 +167,9 @@ function isManualCheck(cleaned: string): boolean {
 }
 
 function getOpenResponseLabels(question: NvoQuestion): string[] {
+  if (question.type === 'open_response' && question.options) {
+    return Object.keys(question.options)
+  }
   const text = normalizeMathText(question.question || '')
   const matches = [...text.matchAll(/(^|[.!?:;]\s*)([АБВГД])\)/g)]
   const labels = matches.map((m) => m[2])
@@ -169,6 +190,8 @@ function splitContextText(exam: NvoExam): { intro: string; body: string } {
     /^Прочетете текста и разгледайте таблицата, за да изпълните задачите от 1\. до 16\. включително\.\s*/i,
     /^Прочетете текста и коментарите в една социална мрежа, за да изпълните задачите от 1\. до 16\. включително\.\s*/i,
     /^Прочетете текста, запознайте се със съдържанието на таблицата и изпълнете от 1\. до 16\. задача включително\.\s*/i,
+    /^Запознайте се с текста и диаграмата и изпълнете задачите към тях \(от 14\. до 21\.\s*включително\)\.\s*/i,
+    /^Запознайте се с текста и таблицата и изпълнете задачите към тях \(от 14\. до 21\.\s*включително\)\.\s*/i,
   ]
 
   let matched = true
@@ -194,6 +217,11 @@ function splitContextText(exam: NvoExam): { intro: string; body: string } {
 function mapTestId(testId: string): string {
   const m = testId.match(/^nvo-(bel|math)-(\d{4})$/)
   if (m) return `${m[2]}_${m[1]}`
+  const dzi = testId.match(/^dzi-bel-(\d{4})-(may|aug|june)$/)
+  if (dzi) {
+    const sessionMap: Record<string, string> = { may: 'may', aug: 'aug', june: 'june' }
+    return `dzi_bel_${dzi[1]}_${sessionMap[dzi[2]]}`
+  }
   return testId
 }
 
@@ -207,7 +235,8 @@ export default function TestPage() {
   const test = tests.find((t) => t.id === testId) || tests[0]
 
   const datasetId = mapTestId(test.id)
-  const exam = (nvoDataset as unknown as NvoExam[]).find((e) => e.id === datasetId) ?? null
+  const exam = ([...(nvoDataset as unknown as NvoExam[]), ...(dziDataset as unknown as NvoExam[])])
+    .find((e) => e.id === datasetId) ?? null
 
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
@@ -456,14 +485,24 @@ function QuestionCard({
   if (override?.questionHtml) {
     questionContent = <span dangerouslySetInnerHTML={{ __html: override.questionHtml }} />
   } else if (isMath && question.type === 'open_response') {
-    const formatted = collapseQuestionText(normalizeMathText(question.question || ''))
+    const formatted = stripExamBoilerplate(collapseQuestionText(normalizeMathText(question.question || '')))
       .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n\n$2)')
       .replace(/^([АБВГД])\)/gm, '$1)')
-    questionContent = <span>{formatted}</span>
+    const parts = formatted.split('\n\n').filter(Boolean)
+    questionContent = (
+      <>
+        {parts.map((part, i) => <p key={i} className={i > 0 ? 'mt-2' : ''}>{part}</p>)}
+      </>
+    )
   } else if (isMath) {
-    questionContent = <span>{collapseQuestionText(normalizeMathText(question.question || ''))}</span>
+    questionContent = <span>{stripExamBoilerplate(collapseQuestionText(normalizeMathText(question.question || '')))}</span>
   } else {
-    questionContent = <span>{normalizeMathText(question.question || '')}</span>
+    const parts = stripExamBoilerplate(normalizeMathText(question.question || '')).split('\n\n').filter(Boolean)
+    questionContent = (
+      <>
+        {parts.map((part, i) => <p key={i} className={i > 0 ? 'mt-2' : ''}>{part}</p>)}
+      </>
+    )
   }
 
   const openState = openResponses[question.number] || {}
@@ -503,7 +542,7 @@ function QuestionCard({
       </div>
 
       {/* Question text */}
-      <div className="text-sm font-medium text-text leading-relaxed mb-4 whitespace-pre-line">
+      <div className="text-sm font-medium text-text leading-relaxed mb-4">
         {questionContent}
       </div>
 
