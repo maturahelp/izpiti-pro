@@ -1,3 +1,5 @@
+import { FadeIn, StaggerChildren, StaggerItem } from '@/components/ui/fade-in'
+
 const benefits = [
   {
     title: 'Подредена подготовка',
@@ -33,37 +35,39 @@ const benefits = [
 
 export function Benefits() {
   return (
-    <section className="py-16 md:py-24 bg-bg">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <p className="section-label mb-3">Защо ИзпитиПро</p>
-          <h2 className="section-title text-3xl md:text-4xl mb-4">
+    <section className="py-20 md:py-28 bg-[#F8FAFC]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-7">
+        <FadeIn className="text-center mb-14">
+          <p className="section-label mb-3">Защо MaturaHelp</p>
+          <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
             Всичко, от което се нуждаеш
           </h2>
-          <p className="text-text-muted text-lg max-w-2xl mx-auto">
+          <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
             Платформата е изградена специално за ученици, подготвящи се за НВО и ДЗИ — с фокус върху резултата, а не само съдържанието.
           </p>
-        </div>
+        </FadeIn>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {benefits.map((benefit, i) => (
-            <div key={benefit.title} className="card p-6 flex flex-col gap-4">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-primary-light flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-primary font-serif">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+            <StaggerItem key={benefit.title}>
+              <div className="card p-6 flex flex-col gap-4 h-full hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_2px_4px_rgba(15,23,42,0.04)] hover:-translate-y-0.5 transition-all duration-200">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-8 h-8 rounded-xl bg-primary/[0.07] flex items-center justify-center flex-shrink-0 border border-primary/10 mt-px">
+                    <span className="text-[11px] font-bold text-primary/80 font-serif tabular-nums">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className="font-semibold text-text text-[14.5px] leading-snug pt-1 tracking-[-0.01em]">
+                    {benefit.title}
+                  </h3>
                 </div>
-                <h3 className="font-semibold text-text text-base leading-snug pt-0.5">
-                  {benefit.title}
-                </h3>
+                <p className="text-[13.5px] text-text-muted leading-relaxed pl-[46px]">
+                  {benefit.description}
+                </p>
               </div>
-              <p className="text-sm text-text-muted leading-relaxed pl-11">
-                {benefit.description}
-              </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerChildren>
       </div>
     </section>
   )

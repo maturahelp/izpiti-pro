@@ -1,3 +1,5 @@
+import { FadeIn, StaggerChildren, StaggerItem } from '@/components/ui/fade-in'
+
 const steps = [
   {
     step: '01',
@@ -33,36 +35,35 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="kak-raboti" className="py-16 md:py-24 bg-white border-y border-border">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
+    <section id="kak-raboti" className="py-20 md:py-28 bg-white border-y border-[#E2E8F0]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-7">
+        <FadeIn className="text-center mb-14">
           <p className="section-label mb-3">Как работи</p>
-          <h2 className="section-title text-3xl md:text-4xl mb-4">
+          <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
             От нула до уверено на изпита
           </h2>
-          <p className="text-text-muted text-lg max-w-2xl mx-auto">
+          <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
             Шест прости стъпки, с които започваш подготовката и виждаш реален напредък.
           </p>
-        </div>
+        </FadeIn>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {steps.map((s, i) => (
-            <div key={s.step} className="flex gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">{s.step}</span>
+        <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+          {steps.map((s) => (
+            <StaggerItem key={s.step}>
+              <div className="flex gap-4 group">
+                <div className="flex-shrink-0 flex flex-col items-center">
+                  <div className="w-9 h-9 rounded-xl border border-[#E2E8F0] bg-white flex items-center justify-center shadow-[0_1px_2px_rgba(15,23,42,0.06)] group-hover:border-primary/30 group-hover:bg-primary/[0.04] transition-colors duration-200">
+                    <span className="text-[11px] font-bold text-primary/80 tabular-nums">{s.step}</span>
+                  </div>
                 </div>
-                {i < steps.length - 1 && i % 3 !== 2 && (
-                  <div className="hidden lg:block w-px h-full bg-border ml-5 mt-2" />
-                )}
+                <div className="pt-1">
+                  <h3 className="font-semibold text-text text-[14.5px] mb-1.5 tracking-[-0.01em]">{s.title}</h3>
+                  <p className="text-[13.5px] text-text-muted leading-relaxed">{s.description}</p>
+                </div>
               </div>
-              <div className="pt-1.5 pb-4">
-                <h3 className="font-semibold text-text mb-1.5">{s.title}</h3>
-                <p className="text-sm text-text-muted leading-relaxed">{s.description}</p>
-              </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerChildren>
       </div>
     </section>
   )

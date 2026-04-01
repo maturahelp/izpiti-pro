@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --font-lora: 'Lora', serif;
-    --font-plus-jakarta: 'Plus Jakarta Sans', sans-serif;
+    --font-display: var(--font-display);
+    --font-sans: var(--font-sans);
   }
 
   * {
@@ -16,54 +16,70 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    background-color: #F4F6FA;
-    color: #111827;
-    font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+    background-color: #F8FAFC;
+    color: #0F172A;
+    font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3 {
-    font-family: var(--font-lora), Georgia, serif;
+    font-family: var(--font-display), Georgia, serif;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
   }
 
   h4, h5, h6 {
-    font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 600;
+    letter-spacing: -0.01em;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 bg-primary text-white font-semibold text-sm rounded-lg
-    hover:bg-primary-dark transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply inline-flex items-center justify-center px-5 py-2.5 bg-primary text-white font-semibold text-sm rounded-xl
+    hover:bg-primary-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-2
+    shadow-[0_1px_2px_rgba(27,79,216,0.2),inset_0_1px_0_rgba(255,255,255,0.1)]
+    hover:shadow-[0_4px_12px_rgba(27,79,216,0.28)]
+    hover:-translate-y-px active:translate-y-0 tracking-[-0.01em];
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 bg-white text-text font-semibold text-sm rounded-lg
-    border border-border hover:bg-gray-50 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply inline-flex items-center justify-center px-5 py-2.5 bg-white text-text font-semibold text-sm rounded-xl
+    border border-[#E2E8F0] hover:border-slate-300 hover:bg-slate-50/80 transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2
+    shadow-[0_1px_2px_rgba(15,23,42,0.06)]
+    hover:shadow-[0_2px_8px_rgba(15,23,42,0.08)]
+    hover:-translate-y-px active:translate-y-0 tracking-[-0.01em];
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center px-4 py-2 text-text-muted font-medium text-sm rounded-lg
-    hover:bg-gray-100 transition-colors duration-150;
+    @apply inline-flex items-center justify-center px-4 py-2 text-text-muted font-medium text-sm rounded-xl
+    hover:bg-slate-100 hover:text-text transition-all duration-150 tracking-[-0.01em];
   }
 
   .card {
-    @apply bg-white rounded-xl border border-border shadow-card;
+    @apply bg-white rounded-2xl border border-[#E2E8F0]
+    shadow-[0_1px_2px_rgba(15,23,42,0.04),0_0_0_1px_rgba(15,23,42,0.02)];
   }
 
   .card-hover {
-    @apply bg-white rounded-xl border border-border shadow-card hover:shadow-card-hover transition-shadow duration-200;
+    @apply bg-white rounded-2xl border border-[#E2E8F0]
+    shadow-[0_1px_2px_rgba(15,23,42,0.04),0_0_0_1px_rgba(15,23,42,0.02)]
+    hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_2px_4px_rgba(15,23,42,0.04),0_0_0_1px_rgba(15,23,42,0.04)]
+    hover:-translate-y-0.5 transition-all duration-200;
   }
 
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-[-0.01em];
   }
 
   .badge-primary {
@@ -83,29 +99,30 @@
   }
 
   .section-label {
-    @apply text-xs font-bold tracking-widest uppercase text-primary;
+    @apply text-[0.6875rem] font-semibold tracking-[0.08em] uppercase text-primary/80 font-sans;
   }
 
   .page-title {
-    @apply text-3xl font-serif font-bold text-text;
+    @apply text-3xl font-serif font-bold text-text tracking-[-0.025em];
   }
 
   .section-title {
-    @apply text-2xl font-serif font-bold text-text;
+    @apply text-2xl font-serif font-bold text-text tracking-[-0.025em];
   }
 
   .input-field {
-    @apply w-full px-4 py-2.5 rounded-lg border border-border bg-white text-text placeholder-text-light text-sm
-    focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-150;
+    @apply w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-text placeholder-text-light text-sm
+    focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/40 transition-all duration-150
+    shadow-[inset_0_1px_2px_rgba(15,23,42,0.04)];
   }
 
   .sidebar-item {
-    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-slate-400
-    hover:text-white hover:bg-sidebar-hover transition-colors duration-150 cursor-pointer;
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-400
+    hover:text-white hover:bg-sidebar-hover transition-colors duration-150 cursor-pointer tracking-[-0.01em];
   }
 
   .sidebar-item-active {
-    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-white bg-primary;
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-primary tracking-[-0.01em];
   }
 
   .premium-lock {
@@ -113,7 +130,7 @@
   }
 
   .premium-overlay {
-    @apply absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center rounded-xl z-10;
+    @apply absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center rounded-2xl z-10;
   }
 }
 
@@ -124,7 +141,7 @@
 
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: #E4E7EC transparent;
+    scrollbar-color: #CBD5E1 transparent;
   }
 
   .scrollbar-thin::-webkit-scrollbar {
@@ -136,7 +153,7 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #E4E7EC;
+    background-color: #CBD5E1;
     border-radius: 2px;
   }
 }

@@ -125,7 +125,7 @@ export function AdminSidebar() {
           <span className="text-white font-bold text-sm font-serif">И</span>
         </span>
         <div>
-          <span className="font-bold text-white text-sm font-serif block">ИзпитиПро</span>
+          <span className="font-bold text-white text-sm font-serif block">MaturaHelp</span>
           <span className="text-[10px] text-slate-400">Администратор</span>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default function AdminSettingsPage() {
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Наименование на платформата</label>
-              <input type="text" defaultValue="ИзпитиПро" className="input-field" />
+              <input type="text" defaultValue="MaturaHelp" className="input-field" />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Имейл за поддръжка</label>

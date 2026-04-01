@@ -1,21 +1,22 @@
 import type { Metadata } from 'next'
-import { Lora, Plus_Jakarta_Sans } from 'next/font/google'
+import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
 
-const lora = Lora({
+const playfair = Playfair_Display({
   subsets: ['latin', 'cyrillic'],
-  variable: '--font-lora',
+  variable: '--font-display',
   display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
 })
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-plus-jakarta',
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-sans',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'ИзпитиПро — Подготовка за НВО и ДЗИ',
+  title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
   description: 'Интерактивна платформа за подготовка за НВО и ДЗИ с тестове, аудио уроци, учебни материали и AI помощник.',
 }
 
@@ -25,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="bg" className={`${lora.variable} ${plusJakarta.variable}`}>
+    <html lang="bg" className={`${playfair.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   )

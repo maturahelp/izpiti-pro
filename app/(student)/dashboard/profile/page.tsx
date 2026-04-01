@@ -1,10 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { currentUser } from '@/data/users'
+import { getStoredUser, clearStoredUser } from '@/lib/auth'
 
 export default function ProfilePage() {
+  const [userName, setUserName] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    setUserName(getStoredUser() || '')
+  }, [])
+
+  const initials = userName.split(' ').filter(Boolean).map((n) => n[0]).join('').slice(0, 2).toUpperCase()
+
+  const handleLogout = () => {
+    clearStoredUser()
+    router.push('/login')
+  }
+
   const [notifications, setNotifications] = useState({
     newTests: true,
     weeklyReport: true,
@@ -21,18 +36,14 @@ export default function ProfilePage() {
         <div className="card p-6 flex items-center gap-4">
           <div className="w-16 h-16 rounded-2xl bg-primary-light flex items-center justify-center flex-shrink-0">
             <span className="text-xl font-bold text-primary font-serif">
-              {currentUser.name.split(' ').map((n) => n[0]).join('')}
+              {initials}
             </span>
           </div>
           <div>
-            <h1 className="text-xl font-serif font-bold text-text">{currentUser.name}</h1>
-            <p className="text-sm text-text-muted">{currentUser.email}</p>
+            <h1 className="text-xl font-serif font-bold text-text">{userName}</h1>
             <div className="flex items-center gap-2 mt-1.5">
-              <span className={`badge text-xs ${currentUser.plan === 'premium' ? 'bg-amber-light text-amber' : 'bg-gray-100 text-text-muted'}`}>
-                {currentUser.plan === 'premium' ? 'Премиум' : 'Безплатен план'}
-              </span>
-              <span className="badge bg-gray-100 text-text-muted text-xs">
-                {currentUser.class === '7' ? '7. клас' : '12. клас'}
+              <span className="badge text-xs bg-gray-100 text-text-muted">
+                Безплатен план
               </span>
             </div>
           </div>
@@ -47,22 +58,22 @@ export default function ProfilePage() {
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Пълно име</label>
-              <input type="text" defaultValue={currentUser.name} className="input-field" readOnly />
+              <input type="text" defaultValue={userName} className="input-field" readOnly />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Имейл адрес</label>
-              <input type="email" defaultValue={currentUser.email} className="input-field" readOnly />
+              <input type="email" placeholder="Имейл адрес" className="input-field" readOnly />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Клас</label>
-              <select defaultValue={currentUser.class} className="input-field">
+              <select defaultValue="7" className="input-field">
                 <option value="7">7. клас</option>
                 <option value="12">12. клас</option>
               </select>
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Изпитен път</label>
-              <select defaultValue={currentUser.examPath} className="input-field">
+              <select defaultValue="НВО — Български език" className="input-field">
                 <option>НВО — Български език</option>
                 <option>НВО — Математика</option>
                 <option>ДЗИ — Български език и литература</option>
@@ -130,7 +141,7 @@ export default function ProfilePage() {
         <div className="card p-5 border-danger/20">
           <h2 className="font-semibold text-text mb-3 text-sm">Изход и изтриване</h2>
           <div className="flex flex-col sm:flex-row gap-3">
-            <button className="btn-secondary text-sm justify-center">
+            <button onClick={handleLogout} className="btn-secondary text-sm justify-center">
               Изход от профила
             </button>
             <button className="text-sm font-medium text-danger hover:bg-danger-light px-4 py-2.5 rounded-lg transition-colors">
