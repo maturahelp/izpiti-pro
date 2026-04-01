@@ -1,0 +1,87 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .guide { stroke: #d8d2c7; stroke-width: 2.5; stroke-dasharray: 10 10; opacity: 0.68; fill: none; }
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.20; stroke: #4a97f2; stroke-width: 4; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.16; stroke: #7db22f; stroke-width: 4; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+      .angle-arc { stroke: #d8d2c7; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Hypotenuse MP: M(300,480) P(1000,480) -->
+  <!-- Triangle MPQ (right angle at Q, ∠MPQ=30°): Q(475,783) -->
+  <polygon class="blue-fill" points="300,480 1000,480 475,783"/>
+
+  <!-- Triangle MPN (right angle at N, ∠MPN=15°): N(347,305) -->
+  <polygon class="green-fill" points="300,480 1000,480 347,305"/>
+
+  <!-- Common hypotenuse MP: main-line -->
+  <path class="main-line" d="M300,480 L1000,480"/>
+
+  <!-- Sides of MPQ -->
+  <path class="blue-line" d="M300,480 L475,783"/>
+  <path class="blue-line" d="M1000,480 L475,783"/>
+
+  <!-- Sides of MPN -->
+  <path class="green-line" d="M300,480 L347,305"/>
+  <path class="green-line" d="M1000,480 L347,305"/>
+
+  <!-- Midpoint O(650,480) -->
+  <path class="guide" d="M650,440 L650,520"/>
+
+  <!-- Right angle mark at Q(475,783)
+       QM dir: (300-475,480-783)=(-175,-303)/350≈(-0.5,-0.866)
+       QP dir: (1000-475,480-783)=(525,-303)/606≈(0.866,-0.5)
+       size 18: p1=Q+18*QP=(491,774), p2=Q+18*QP+18*QM=(482,758), p3=Q+18*QM=(466,767) -->
+  <path class="ra" d="M491,774 L482,758 L466,767"/>
+
+  <!-- Right angle mark at N(347,305)
+       NM dir: (300-347,480-305)=(-47,175)/181≈(-0.260,0.967)
+       NP dir: (1000-347,480-305)=(653,175)/676≈(0.966,0.259)
+       size 18: p1=N+18*NP=(364,310), p2=N+18*NP+18*NM=(360,327), p3=N+18*NM=(342,322) -->
+  <path class="ra" d="M364,310 L360,327 L342,322"/>
+
+  <!-- Angle arc at P for 30° (∠MPQ) -->
+  <path class="angle-arc" d="M958,480 Q948,500 930,512"/>
+  <text class="small" x="910" y="530">30°</text>
+
+  <!-- Angle arc at P for 15° (∠MPN) -->
+  <path class="angle-arc" d="M958,480 Q952,462 940,450"/>
+  <text class="small" x="910" y="448">15°</text>
+
+  <!-- Points -->
+  <circle class="point-main" cx="300" cy="480" r="10"/>
+  <circle class="point-main" cx="1000" cy="480" r="10"/>
+  <circle class="point-orange" cx="650" cy="480" r="10"/>
+  <circle class="point-blue" cx="475" cy="783" r="10"/>
+  <circle class="point-green" cx="347" cy="305" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="262" y="476">M</text>
+  <text class="label" x="1012" y="476">P</text>
+  <text class="label" x="626" y="468">O</text>
+  <text class="label" x="448" y="826">Q</text>
+  <text class="label" x="320" y="298">N</text>
+
+  <!-- Annotations -->
+  <text class="small" x="300" y="840">∠Q = 90°  (хипотенуза MP)</text>
+  <text class="small" x="850" y="840">∠N = 90°  (хипотенуза MP)</text>
+  <text class="small" x="590" y="530">O — среда на MP,  PO = 2 cm</text>
+
+  <!-- Tick marks showing PO = OM -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M643,470 L643,490 M657,470 L657,490"/>
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M793,470 L793,490 M807,470 L807,490"/>
+</svg>

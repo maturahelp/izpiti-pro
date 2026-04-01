@@ -1,0 +1,79 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.18; stroke: #4a97f2; stroke-width: 3; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.16; stroke: #7db22f; stroke-width: 3; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Right triangle ABC: right angle at C
+       A(200,720) B(1200,720) C(450,287)
+       ∠CAB=60°, ∠ABC=30°, hypotenuse AB -->
+  <polygon class="main-line" points="200,720 1200,720 450,287"/>
+
+  <!-- Angle bisector AL from A to L(700,431) on BC: blue -->
+  <path class="blue-line" d="M200,720 L700,431"/>
+
+  <!-- Line LN parallel to AC, from L(700,431) to N(533,720): green -->
+  <path class="green-line" d="M700,431 L533,720"/>
+
+  <!-- Highlight triangle ALN -->
+  <polygon class="blue-fill" points="200,720 700,431 533,720"/>
+
+  <!-- Right angle mark at C(450,287)
+       CA_norm=(-0.5,0.866), CB_norm=(0.866,0.5); size 18
+       p1=C+18*CB=(466,296), p2=C+18*CB+18*CA=(457,312), p3=C+18*CA=(441,303) -->
+  <path class="ra" d="M466,296 L457,312 L441,303"/>
+
+  <!-- Midpoint tick on BN: B(1200,720) N(533,720) M(867,720) -->
+  <!-- tick at M: perpendicular to BN (horizontal), so vertical ticks -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M867,710 L867,730"/>
+
+  <!-- Equal ticks on BM and MN (M is midpoint of BN) -->
+  <path stroke="#e6a84d" stroke-width="2" fill="none" d="M700,710 L700,730"/>
+  <path stroke="#e6a84d" stroke-width="2" fill="none" d="M1033,710 L1033,730"/>
+
+  <!-- Parallel mark: LN ∥ AC — small arrows on both -->
+  <path stroke="#7db22f" stroke-width="2" fill="none" d="M588,620 L582,608 L576,622"/>
+  <path stroke="#f0ede6" stroke-width="2" fill="none" d="M358,546 L352,534 L346,548"/>
+
+  <!-- Angle arc at A showing bisector splits ∠CAB -->
+  <path stroke="#4a97f2" stroke-width="2" fill="none" d="M248,690 Q256,668 268,652"/>
+  <path stroke="#4a97f2" stroke-width="2" fill="none" d="M268,652 Q280,634 300,624"/>
+
+  <!-- Points -->
+  <circle class="point-main" cx="200" cy="720" r="10"/>
+  <circle class="point-main" cx="1200" cy="720" r="10"/>
+  <circle class="point-main" cx="450" cy="287" r="10"/>
+  <circle class="point-blue" cx="700" cy="431" r="10"/>
+  <circle class="point-green" cx="533" cy="720" r="10"/>
+  <circle class="point-orange" cx="867" cy="720" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="162" y="758">A</text>
+  <text class="label" x="1208" y="758">B</text>
+  <text class="label" x="420" y="278">C</text>
+  <text class="label" x="712" y="428">L</text>
+  <text class="label" x="510" y="758">N</text>
+  <text class="label" x="874" y="758">M</text>
+
+  <!-- Angle labels -->
+  <text class="small" x="258" y="686">60°</text>
+  <text class="small" x="1110" y="700">30°</text>
+  <text class="small" x="840" y="278">∠C = 90°</text>
+  <text class="small" x="340" y="820">M — среда на BN</text>
+  <text class="small" x="700" y="820">LN ∥ AC</text>
+</svg>
