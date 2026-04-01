@@ -1,0 +1,75 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .guide { stroke: #d8d2c7; stroke-width: 2.5; stroke-dasharray: 10 10; opacity: 0.68; fill: none; }
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .violet-line { stroke: #7d71f0; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.18; stroke: #4a97f2; stroke-width: 3; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.16; stroke: #7db22f; stroke-width: 3; }
+      .orange-fill { fill: #ffc46e; fill-opacity: 0.16; stroke: #e6a84d; stroke-width: 3; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .point-violet { fill: #7d71f0; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Triangle ABC: C(700,120) A(200,720) B(1200,720) — isosceles AC=BC -->
+  <polygon class="main-line" points="200,720 1200,720 700,120"/>
+
+  <!-- Angle bisector BL: blue, B(1200,720) to L(487,380) -->
+  <path class="blue-line" d="M1200,720 L487,380"/>
+
+  <!-- Line PQ perpendicular to BL through midpoint M: orange -->
+  <!-- P(774,720) Q(914,390) -->
+  <path class="orange-line" d="M774,720 L914,390"/>
+
+  <!-- Highlight rhombus PBQL with light fill -->
+  <polygon class="green-fill" points="774,720 1200,720 914,390 844,550"/>
+  <!-- Actually PBQL: P(774,720) B(1200,720) Q(914,390) L(487,380) -->
+  <polygon style="fill:#a7a0ff;fill-opacity:0.12;stroke:#7d71f0;stroke-width:3;" points="774,720 1200,720 914,390 487,380"/>
+
+  <!-- Right angle mark at M (PQ⊥BL) -->
+  <!-- BL dir: (-713,-340)/789.9 ≈ (-0.903,-0.431); PQ dir: (0.431,-0.903) -->
+  <!-- p1=M+14*BL=M+(-12.6,-6.0)=(831,544), p2=M+14*BL+14*PQ=(837,531), p3=M+14*PQ=(850,537) -->
+  <path class="ra" d="M831,544 L837,531 L850,537"/>
+
+  <!-- Equal length tick marks on AC and BC to show AC=BC -->
+  <!-- Tick on AC near midpoint ~(444,250) perpendicular to AC dir=(500,600)/781=(0.640,0.769) -->
+  <!-- perp=(-0.769,0.640); tick: (444-8,250+6.7)→(444+8,250-6.7) -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M436,257 L452,243"/>
+  <!-- Tick on BC near midpoint ~(950,420) perpendicular to BC dir=(-500,600)/781 perp=(0.769,0.640) -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M943,430 L957,410"/>
+
+  <!-- Points -->
+  <circle class="point-main" cx="200" cy="720" r="10"/>
+  <circle class="point-main" cx="1200" cy="720" r="10"/>
+  <circle class="point-main" cx="700" cy="120" r="10"/>
+  <circle class="point-blue" cx="487" cy="380" r="10"/>
+  <circle class="point-orange" cx="844" cy="550" r="10"/>
+  <circle class="point-green" cx="774" cy="720" r="10"/>
+  <circle class="point-violet" cx="914" cy="390" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="164" y="756">A</text>
+  <text class="label" x="1208" y="756">B</text>
+  <text class="label" x="670" y="108">C</text>
+  <text class="label" x="454" y="376">L</text>
+  <text class="label" x="852" y="548">M</text>
+  <text class="label" x="748" y="758">P</text>
+  <text class="label" x="922" y="385">Q</text>
+
+  <!-- Annotations -->
+  <text class="small" x="330" y="820">AC = BC</text>
+  <text class="small" x="810" y="820">PQ ⊥ BL</text>
+  <text class="small" x="500" y="820">M — среда на BL</text>
+</svg>

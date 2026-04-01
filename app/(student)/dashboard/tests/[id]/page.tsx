@@ -1,264 +1,707 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
-import { TopBar } from '@/components/dashboard/TopBar'
-import { tests, sampleQuestions } from '@/data/tests'
-import { nvoQuestions } from '@/data/nvo-questions'
-import { nvoExamMeta } from '@/data/nvo-exam-meta'
-import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import Image from 'next/image'
+import { TopBar } from '@/components/dashboard/TopBar'
+import { tests } from '@/data/tests'
+import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
+import { QUESTION_IMAGES } from '@/data/nvo-question-images'
+import { cn } from '@/lib/utils'
+import nvoDataset from '@/data/official_quiz_dataset.json'
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+interface NvoQuestion {
+  number: number
+  type: 'single_choice' | 'open_response'
+  question: string
+  options?: Record<string, string>
+  correct_option?: string
+  official_answer?: string
+  points?: number
+}
+
+interface NvoExam {
+  id: string
+  year: number | string
+  subject: string
+  published_at: string
+  context_text?: string
+  context_images?: string[]
+  questions: NvoQuestion[]
+}
+
+type SingleChoiceAnswers = Record<number, string>          // questionNumber → chosen label
+type OpenResponses = Record<number, Record<string, string>> // questionNumber → { label → text }
+
+// ---------------------------------------------------------------------------
+// Figure helpers (math geometry questions only)
+// ---------------------------------------------------------------------------
+
+const FIGURE_HELPERS: Record<string, Record<number, string>> = {
+  '2025_math': { 23: '/figures/figure_2025_math_q23.svg' },
+  '2024_math': { 23: '/figures/figure_2024_math_q23.svg' },
+  '2023_math': { 23: '/figures/figure_2023_math_q23.svg' },
+  '2022_math': { 23: '/figures/figure_2022_math_q23.svg' },
+  '2021_math': { 23: '/figures/figure_2021_math_q23.svg' },
+  '2020_math': { 23: '/figures/figure_2020_math_q23.svg' },
+  '2019_math': { 23: '/figures/figure_2019_math_q23.svg' },
+  '2018_math': { 24: '/figures/figure_2018_math_q24.svg' },
+}
+
+// ---------------------------------------------------------------------------
+// Utility: text normalisation (ported from app.js)
+// ---------------------------------------------------------------------------
+
+function normalizeMathText(text: string): string {
+  if (!text) return ''
+  return text
+    .replace(/\s+ПО МАТЕМАТИКА[\s\S]*$/u, '')
+    .replace(/\uf040/g, '≅')
+    .replace(/\uf050/g, '∥')
+    .replace(/\uf0a3/g, '≤')
+    .replace(/\uf0ae/g, '→')
+    .replace(/\uf0b9/g, '≠')
+    .replace(/\uf0c7/g, '∩')
+    .replace(/\uf0d7/g, '·')
+    .replace(/([A-Za-zА-Яа-я])△([A-Za-zА-Яа-я]{1,3})/g, '$1 ∈ $2')
+    .replace(/∑/g, '∠')
+    .replace(/\u0002/g, '→')
+    .replace(/\u0003/g, '∥')
+    .replace(/\u0004/g, '≠')
+    .replace(/\b([A-ZА-Я]{3})\s*:\s*([A-ZА-Я]{3})\s*:\s*([A-ZА-Я]{3})/g, '∠$1: ∠$2: ∠$3')
+    .replace(/\b([A-ZА-Я]{3})\s*:\s*([A-ZА-Я]{3})(?=\s*=\s*[\d:])/g, '∠$1: ∠$2')
+    .replace(/\b([A-ZА-Я]{3})(?==\s*\d+\s*°)/g, '∠$1')
+    .replace(/\b([A-ZА-Я]{3})(?==\s*\d+°)/g, '∠$1')
+    .replace(/права\s+([a-zа-я])\s+([A-ZА-Я]{2})/g, 'права $1 ∥ $2')
+    .replace(/(?:\s*∠){2,}(?=\s*лежи)/g, '')
+    .replace(/\s*∥\s*∥(?=\s*Намерете)/g, '')
+    .replace(/∠\s*(?=[A-ZА-Я]{1,2}\b)/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/…/g, '...')
+    .trim()
+}
+
+function collapseQuestionText(text: string): string {
+  if (!text) return ''
+  return text
+    .replace(/\r/g, '')
+    .replace(/[ \t]*\n[ \t]*/g, '\n')
+    // Preserve explicit blank lines / subquestion markers, but join PDF-broken line wraps.
+    .replace(/([^\n])\n(?!\n|[АБВГД])(?=\S)/g, '$1 ')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim()
+}
+
+function cleanOfficialAnswer(text: string | undefined, questionType: string): string {
+  if (!text) return ''
+  let cleaned = normalizeMathText(text)
+    .replace(/\uf0b7/g, '•')
+    .replace(/_/g, ' ')
+    .replace(/\b(?:Общо|Всичко):?\s*\d+(?:,\d+)?\s*т\.?.*$/gi, '')
+    .replace(/\b(?:по\s+\d+(?:,\d+)?\s*т\.?.*)$/gi, '')
+    .replace(/\b(\d+(?:,\d+)?)\s*точки?\b.*$/gi, '')
+    .replace(/\b(\d+(?:,\d+)?)\s*т\.?\b.*$/gi, '')
+    .replace(/^(Например:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
+    .replace(/^(Примерни (?:насоки|посоки)(?: за размисъл)?:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
+    .replace(/^(Възможни? отговори?:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
+    .replace(/^(Възможен отговор:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
+    .replace(/\s+\d+(?:,\d+)?\s*$/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+
+  if (questionType !== 'single_choice') {
+    cleaned = cleaned
+      .replace(/(?<=[А-Яа-яA-Za-z"»""\)])\s+\d+(?:,\d+)?\s+(?=[а-яa-z])/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim()
+  }
+  return cleaned
+}
+
+function normalizeOpenAnswer(text: string): string {
+  return normalizeMathText(text || '')
+    .toLowerCase()
+    .replace(/["„""«»]/g, '')
+    .replace(/[.,!?;:()[\]{}]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function extractAlternatives(cleaned: string): string[] {
+  if (!cleaned) return []
+  return cleaned
+    .replace(/^Например:\s*/i, '')
+    .replace(/^Възможни? отговори?:\s*/i, '')
+    .replace(/^Възможен отговор:\s*/i, '')
+    .split(/\s*\/\s*|\s*;\s*|\s+или\s+/i)
+    .map((p) => normalizeOpenAnswer(p))
+    .filter(Boolean)
+}
+
+function isManualCheck(cleaned: string): boolean {
+  if (!cleaned) return true
+  return /примерни|насоки|посоки|размисъл|докажете|редактирана|грешка|текстът|изречение|съчувствие|ролята на|например:/i.test(cleaned)
+}
+
+function getOpenResponseLabels(question: NvoQuestion): string[] {
+  const text = normalizeMathText(question.question || '')
+  const matches = [...text.matchAll(/(^|[.!?:;]\s*)([АБВГД])\)/g)]
+  const labels = matches.map((m) => m[2])
+  return [...new Set(labels)]
+}
+
+function splitContextText(exam: NvoExam): { intro: string; body: string } {
+  const text = (exam.context_text || '').trim()
+  if (!text || !exam.subject.includes('Български')) return { intro: '', body: text }
+
+  let remaining = text
+  const introParts: string[] = []
+  const introPatterns = [
+    /^Отговорите на задачите от 1\. до 25\. включително отбелязвайте в листа за отговори\.\s*/i,
+    /^Прочетете текста, запознайте се с данните от анкетата и отговорете на въпросите от 1\. до 16\. включително\.\s*/i,
+    /^Прочетете текста, разгледайте таблицата и изпълнете задачите от 1\. до 16\. включително\.\s*/i,
+    /^Прочетете текста, запознайте се със съдържанието на таблицата и изпълнете задачите от 1\. до 16\. включително\.\s*/i,
+    /^Прочетете текста и разгледайте таблицата, за да изпълните задачите от 1\. до 16\. включително\.\s*/i,
+    /^Прочетете текста и коментарите в една социална мрежа, за да изпълните задачите от 1\. до 16\. включително\.\s*/i,
+    /^Прочетете текста, запознайте се със съдържанието на таблицата и изпълнете от 1\. до 16\. задача включително\.\s*/i,
+  ]
+
+  let matched = true
+  while (matched) {
+    matched = false
+    for (const pattern of introPatterns) {
+      const hit = remaining.match(pattern)
+      if (hit) {
+        introParts.push(hit[0].trim())
+        remaining = remaining.slice(hit[0].length).trim()
+        matched = true
+        break
+      }
+    }
+  }
+  return { intro: introParts.join(' '), body: remaining }
+}
+
+// ---------------------------------------------------------------------------
+// Map izpiti-pro test ID → dataset exam ID
+// ---------------------------------------------------------------------------
+
+function mapTestId(testId: string): string {
+  const m = testId.match(/^nvo-(bel|math)-(\d{4})$/)
+  if (m) return `${m[2]}_${m[1]}`
+  return testId
+}
+
+// ---------------------------------------------------------------------------
+// Page component
+// ---------------------------------------------------------------------------
 
 export default function TestPage() {
   const params = useParams()
-  const test = tests.find((t) => t.id === params.id) || tests[0]
-  const allQuestions = [...sampleQuestions, ...nvoQuestions]
-  const questions = allQuestions.filter((q) => q.testId === test.id)
-  const displayQuestions = questions.length > 0 ? questions : sampleQuestions
+  const testId = String(params.id)
+  const test = tests.find((t) => t.id === testId) || tests[0]
 
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({})
+  const datasetId = mapTestId(test.id)
+  const exam = (nvoDataset as unknown as NvoExam[]).find((e) => e.id === datasetId) ?? null
+
+  const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
+  const [openResponses, setOpenResponses] = useState<OpenResponses>({})
   const [submitted, setSubmitted] = useState(false)
-  const [showContext, setShowContext] = useState(true)
+  const [revealAnswers, setRevealAnswers] = useState(false)
+  const [contextCollapsed, setContextCollapsed] = useState(false)
+  const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
 
-  const meta = nvoExamMeta[test.id]
-  const answered = Object.keys(selectedAnswers).length
-  const total = displayQuestions.length
+  // Inject MathJax on mount, retrigger after state changes
+  useEffect(() => {
+    const w = window as unknown as { MathJax?: { typesetPromise?: () => Promise<void>; startup?: { promise: Promise<void> } } }
+    if (!document.getElementById('mathjax-script')) {
+      const script = document.createElement('script')
+      script.id = 'mathjax-script'
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js'
+      script.async = true
+      ;(window as unknown as { MathJax: object }).MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+        svg: { fontCache: 'global' },
+      }
+      document.head.appendChild(script)
+    } else if (w.MathJax?.typesetPromise) {
+      w.MathJax.typesetPromise()
+    }
+  }, [submitted, revealAnswers, answers])
 
-  if (submitted) {
+  const handleReset = useCallback(() => {
+    setAnswers({})
+    setOpenResponses({})
+    setSubmitted(false)
+    setRevealAnswers(false)
+    setContextCollapsed(false)
+    setContextMediaCollapsed(false)
+  }, [])
+
+  if (!exam) {
     return (
-      <TestResults
-        test={test}
-        questions={displayQuestions}
-        answers={selectedAnswers}
-        meta={meta}
-        onRetry={() => { setSelectedAnswers({}); setSubmitted(false) }}
-      />
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title={test.title} />
+        <div className="p-4 md:p-6 max-w-3xl mx-auto">
+          <div className="card p-8 text-center">
+            <p className="text-text-muted">Тестът не е намерен в базата данни.</p>
+          </div>
+        </div>
+      </div>
     )
   }
+
+  const selectableQuestions = exam.questions.filter((q) => q.type === 'single_choice')
+  const answeredCount = Object.keys(answers).filter((k) => answers[Number(k)]).length
+  const totalSelectable = selectableQuestions.length
+
+  const score = (() => {
+    const correct = selectableQuestions.filter((q) => answers[q.number] === q.correct_option).length
+    return { correct, total: totalSelectable, percent: totalSelectable ? Math.round((correct / totalSelectable) * 100) : 0 }
+  })()
+
+  const contextParts = splitContextText(exam)
+  const hasContext = Boolean(exam.context_text)
+  const hasMedia = Boolean(exam.context_images?.length)
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <TopBar title={test.title} />
-      <div className="p-4 md:p-6 max-w-3xl mx-auto">
+      <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
 
-        {/* Context panel (BEL exams) */}
-        {meta?.contextText && (
-          <div className="card mb-6 overflow-hidden">
+        {/* Score + actions bar */}
+        <div className="card p-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-4">
+            <div className={cn(
+              'w-14 h-14 rounded-full flex items-center justify-center text-sm font-bold border-4',
+              !submitted && !revealAnswers ? 'border-gray-200 text-text-muted' :
+              score.percent >= 80 ? 'border-green-400 text-green-700' :
+              score.percent >= 60 ? 'border-amber-400 text-amber-700' :
+              'border-red-400 text-red-700'
+            )}>
+              {submitted || revealAnswers ? `${score.percent}%` : '—'}
+            </div>
+            <div>
+              <p className="text-xs text-text-muted font-semibold uppercase tracking-wide">Напредък</p>
+              <p className="text-sm font-semibold text-text">{answeredCount} / {totalSelectable} тестови отговорени</p>
+              {(submitted || revealAnswers) && (
+                <p className="text-xs text-text-muted">{score.correct} верни от {score.total}</p>
+              )}
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSubmitted(true)}
+              className="btn-primary text-sm px-4 py-2"
+            >
+              Провери отговорите
+            </button>
+            <button
+              onClick={() => setRevealAnswers((v) => !v)}
+              className="btn-secondary text-sm px-4 py-2"
+            >
+              {revealAnswers ? 'Скрий верните' : 'Покажи верните'}
+            </button>
+            <button
+              onClick={handleReset}
+              className="btn-secondary text-sm px-4 py-2"
+            >
+              Изчисти
+            </button>
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div className="card px-4 py-3">
+          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full bg-primary transition-all duration-200"
+              style={{ width: totalSelectable ? `${Math.round((answeredCount / totalSelectable) * 100)}%` : '0%' }}
+            />
+          </div>
+        </div>
+
+        {/* Context panel */}
+        {hasContext && (
+          <div className="card overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border">
-              <div>
-                <p className="text-xs text-text-muted uppercase tracking-wide font-semibold">Изходен текст към изпита</p>
-              </div>
-              <div className="flex gap-2">
+              <p className="text-xs text-text-muted uppercase tracking-wide font-semibold">
+                {exam.subject.includes('Български') ? 'Изходен текст и указания' : 'Текст към изпита'}
+              </p>
+              <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => setShowContext((v) => !v)}
+                  onClick={() => setContextCollapsed((v) => !v)}
                   className="text-xs text-primary font-semibold hover:underline"
                 >
-                  {showContext ? 'Скрий текста' : 'Покажи текста'}
+                  {contextCollapsed ? 'Покажи текста' : 'Скрий текста'}
                 </button>
+                {hasMedia && (
+                  <button
+                    onClick={() => setContextMediaCollapsed((v) => !v)}
+                    className="text-xs text-primary font-semibold hover:underline"
+                  >
+                    {contextMediaCollapsed ? 'Покажи инфографиката' : 'Скрий инфографиката'}
+                  </button>
+                )}
               </div>
             </div>
-            {showContext && (
-              <div className="p-5 space-y-4">
-                <p className="text-sm text-text leading-relaxed whitespace-pre-line">{meta.contextText}</p>
-                {meta.contextImage && (
-                  <div className="mt-4">
-                    <Image
-                      src={meta.contextImage}
-                      alt="Инфографика към изпита"
-                      width={700}
-                      height={400}
-                      className="rounded-lg w-full h-auto object-contain"
-                    />
+            {!contextCollapsed && (
+              <div className="p-5 space-y-3">
+                {contextParts.intro && (
+                  <div className="px-3 py-2 rounded-lg bg-primary-light border border-primary/20 text-xs font-semibold text-primary leading-relaxed">
+                    {contextParts.intro}
                   </div>
                 )}
+                {contextParts.body && (
+                  <p className="text-sm text-text leading-relaxed whitespace-pre-wrap">{contextParts.body}</p>
+                )}
+              </div>
+            )}
+            {hasMedia && !contextCollapsed && !contextMediaCollapsed && (
+              <div className="px-5 pb-5 space-y-3">
+                {(exam.context_images || []).map((src, i) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <figure key={i} className="m-0 rounded-xl overflow-x-auto border border-border bg-white">
+                    <img
+                      src={src}
+                      alt={`Илюстрация ${i + 1}`}
+                      className="block w-auto min-w-full max-w-none h-auto rounded-xl"
+                      loading="lazy"
+                    />
+                  </figure>
+                ))}
               </div>
             )}
           </div>
         )}
 
-        {/* Progress bar */}
-        <div className="card p-4 mb-6">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-text-muted">Напредък</span>
-            <span className="text-sm font-semibold text-text">{answered} / {total} отговорени</span>
-          </div>
-          <div className="flex gap-0.5">
-            {displayQuestions.map((q) => (
-              <div
-                key={q.id}
-                className={cn(
-                  'flex-1 h-1.5 rounded-full transition-colors',
-                  selectedAnswers[q.id] !== undefined ? 'bg-primary' : 'bg-gray-100'
-                )}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* All questions */}
+        {/* Questions */}
         <div className="space-y-5">
-          {displayQuestions.map((q, i) => (
-            <div key={q.id} className="card p-5">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="w-7 h-7 rounded-lg bg-primary-light flex items-center justify-center text-xs font-bold text-primary flex-shrink-0">
-                  {i + 1}
-                </span>
-                <p className="text-sm font-medium text-text leading-relaxed">{q.text}</p>
-              </div>
-
-              <div className="space-y-2 pl-10">
-                {q.options.map((option, oi) => (
-                  <button
-                    key={oi}
-                    onClick={() => setSelectedAnswers((prev) => ({ ...prev, [q.id]: oi }))}
-                    className={cn(
-                      'w-full text-left px-4 py-3 rounded-xl border-2 transition-all duration-150 text-sm font-medium',
-                      selectedAnswers[q.id] === oi
-                        ? 'border-primary bg-primary-light text-primary'
-                        : 'border-border bg-white text-text hover:border-primary/40 hover:bg-gray-50'
-                    )}
-                  >
-                    <span className="inline-flex items-center gap-3">
-                      <span className={cn(
-                        'w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0',
-                        selectedAnswers[q.id] === oi ? 'border-primary bg-primary text-white' : 'border-border text-text-muted'
-                      )}>
-                        {String.fromCharCode(65 + oi)}
-                      </span>
-                      {option}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
+          {exam.questions.map((q) => (
+            <QuestionCard
+              key={q.number}
+              exam={exam}
+              question={q}
+              answers={answers}
+              openResponses={openResponses}
+              submitted={submitted}
+              revealAnswers={revealAnswers}
+              onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
+              onOpenResponse={(num, label, val) =>
+                setOpenResponses((prev) => ({
+                  ...prev,
+                  [num]: { ...(prev[num] || {}), [label]: val },
+                }))
+              }
+            />
           ))}
         </div>
 
-        {/* Submit */}
-        <div className="mt-6 flex flex-col items-center gap-2">
-          <button
-            onClick={() => setSubmitted(true)}
-            disabled={answered < total}
-            className="btn-primary w-full max-w-xs disabled:opacity-40"
-          >
-            Провери отговорите
+        <div className="flex flex-wrap gap-3 pt-2">
+          <Link href="/dashboard/tests" className="btn-secondary">
+            Обратно към тестовете
+          </Link>
+          <button onClick={handleReset} className="btn-primary">
+            Опитай отново
           </button>
-          {answered < total && (
-            <p className="text-xs text-text-muted">
-              Остават {total - answered} неотговорени въпроса
-            </p>
-          )}
         </div>
+
       </div>
     </div>
   )
 }
 
-function TestResults({ test, questions, answers, meta, onRetry }: {
-  test: ReturnType<typeof tests.find>
-  questions: typeof sampleQuestions
-  answers: Record<string, number>
-  meta: typeof nvoExamMeta[string] | undefined
-  onRetry: () => void
+// ---------------------------------------------------------------------------
+// QuestionCard
+// ---------------------------------------------------------------------------
+
+function QuestionCard({
+  exam,
+  question,
+  answers,
+  openResponses,
+  submitted,
+  revealAnswers,
+  onAnswer,
+  onOpenResponse,
+}: {
+  exam: NvoExam
+  question: NvoQuestion
+  answers: SingleChoiceAnswers
+  openResponses: OpenResponses
+  submitted: boolean
+  revealAnswers: boolean
+  onAnswer: (num: number, val: string) => void
+  onOpenResponse: (num: number, label: string, val: string) => void
 }) {
-  const correct = questions.filter((q) => answers[q.id] === q.correctIndex).length
-  const total = questions.length
-  const score = Math.round((correct / total) * 100)
-  const passed = score >= 60
+  const isMath = exam.subject === 'Математика'
+  const override = MATH_TEXT_OVERRIDES[exam.id]?.[question.number]
+  const figureHref = FIGURE_HELPERS[exam.id]?.[question.number]
+  const questionImageSrc = QUESTION_IMAGES[exam.id]?.[question.number]
+  const showFeedback = submitted || revealAnswers
+
+  const chosen = answers[question.number]
+  const isChoiceCorrect = chosen === question.correct_option
+  const cardBorder = showFeedback && question.type === 'single_choice'
+    ? isChoiceCorrect ? 'border-green-300' : chosen ? 'border-red-300' : 'border-border'
+    : question.type === 'open_response' ? 'border-dashed border-border' : 'border-border'
+
+  // Question text
+  let questionContent: React.ReactNode
+  if (override?.questionHtml) {
+    questionContent = <span dangerouslySetInnerHTML={{ __html: override.questionHtml }} />
+  } else if (isMath && question.type === 'open_response') {
+    const formatted = collapseQuestionText(normalizeMathText(question.question || ''))
+      .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n\n$2)')
+      .replace(/^([АБВГД])\)/gm, '$1)')
+    questionContent = <span>{formatted}</span>
+  } else if (isMath) {
+    questionContent = <span>{collapseQuestionText(normalizeMathText(question.question || ''))}</span>
+  } else {
+    questionContent = <span>{normalizeMathText(question.question || '')}</span>
+  }
+
+  const openState = openResponses[question.number] || {}
+  const labels = getOpenResponseLabels(question)
+  const effectiveLabels = labels.length ? labels : ['Отговор']
+
+  const openEval = (() => {
+    if (question.type !== 'open_response') return null
+    const cleaned = cleanOfficialAnswer(question.official_answer, question.type)
+    const filledEntries = effectiveLabels.filter((l) => (openState[l] || '').trim())
+    if (!filledEntries.length) return { mode: 'empty' as const, cleaned }
+    if (isManualCheck(cleaned)) return { mode: 'manual' as const, cleaned }
+    if (labels.length <= 1) {
+      const variants = extractAlternatives(cleaned)
+      const userNorm = normalizeOpenAnswer(openState[effectiveLabels[0]] || '')
+      const correct = variants.some((v) => v && userNorm === v)
+      return { mode: correct ? 'correct' as const : 'incorrect' as const, cleaned }
+    }
+    return { mode: 'manual' as const, cleaned }
+  })()
 
   return (
-    <div className="min-h-screen pb-20 md:pb-0">
-      <TopBar title="Резултати" />
-      <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
+    <div className={cn('card p-5 border-2', cardBorder)}>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-mono text-xs font-bold text-primary-dark">Въпрос {question.number}</span>
+        <span className={cn(
+          'text-xs font-bold px-2 py-1 rounded-full',
+          question.type === 'open_response'
+            ? 'bg-amber-50 text-amber-700'
+            : chosen ? 'bg-primary-light text-primary' : 'bg-gray-100 text-text-muted'
+        )}>
+          {question.type === 'open_response'
+            ? `Свободен отговор`
+            : chosen ? `Избрано: ${chosen}` : 'Неотговорен'}
+        </span>
+      </div>
 
-        {/* Score card */}
-        <div className={cn('card p-8 text-center', passed ? 'border-success/30' : 'border-danger/30')}>
-          <p className="text-sm font-semibold text-text-muted mb-2">Твоят резултат</p>
-          <p className={cn(
-            'text-6xl font-bold font-serif mb-2',
-            score >= 80 ? 'text-success' : score >= 60 ? 'text-amber' : 'text-danger'
-          )}>
-            {score}%
-          </p>
-          <p className="text-text-muted text-sm mb-4">
-            {correct} верни от {total} въпроса
-          </p>
-          <div className="flex justify-center gap-6 text-sm">
-            <span className="flex items-center gap-1.5 text-success font-medium">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              {correct} верни
-            </span>
-            <span className="flex items-center gap-1.5 text-danger font-medium">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              {total - correct} грешни
-            </span>
-          </div>
+      {/* Question text */}
+      <div className="text-sm font-medium text-text leading-relaxed mb-4 whitespace-pre-line">
+        {questionContent}
+      </div>
+
+      {/* PDF figure image */}
+      {questionImageSrc && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <figure className="my-3 m-0">
+          <img
+            src={questionImageSrc}
+            alt={`Фигура към въпрос ${question.number}`}
+            className="block max-w-full h-auto rounded-xl border border-border bg-white"
+            loading="lazy"
+            style={{ maxHeight: '480px', width: 'auto' }}
+          />
+        </figure>
+      )}
+
+      {/* Figure link */}
+      {figureHref && (
+        <div className="mb-4 flex flex-wrap items-center gap-3 p-3 rounded-xl border border-dashed border-border bg-white/60">
+          <a
+            href={figureHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-primary-light text-primary text-xs font-bold hover:bg-primary/20 transition-colors"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Отвори фигурата
+          </a>
+          <span className="text-xs text-text-muted">Помощна фигура към условието — отваря се при нужда.</span>
         </div>
+      )}
 
-        {/* Actions */}
-        <div className="flex flex-wrap gap-3">
-          <Link href="/dashboard/tests" className="btn-secondary">
-            Обратно към тестовете
-          </Link>
-          <button onClick={onRetry} className="btn-primary">
-            Опитай отново
-          </button>
+      {/* Single choice options */}
+      {question.type === 'single_choice' && question.options && (
+        <div className="space-y-2 pl-0">
+          {Object.entries(question.options).map(([label, text]) => {
+            const isSelected = chosen === label
+            const isCorrect = label === question.correct_option
+            const showCorrect = showFeedback && isCorrect
+            const showWrong = showFeedback && isSelected && !isCorrect
+
+            let optText: React.ReactNode = normalizeMathText(text || 'Избор по изображение')
+            if (override?.optionsHtml?.[label]) {
+              optText = <span dangerouslySetInnerHTML={{ __html: override.optionsHtml[label] }} />
+            }
+
+            return (
+              <label
+                key={label}
+                className={cn(
+                  'flex items-start gap-3 px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-sm font-medium',
+                  showCorrect ? 'border-green-400 bg-green-50 text-green-800' :
+                  showWrong ? 'border-red-400 bg-red-50 text-red-800' :
+                  isSelected ? 'border-primary bg-primary-light text-primary' :
+                  'border-border bg-white text-text hover:border-primary/40 hover:bg-gray-50'
+                )}
+              >
+                <input
+                  type="radio"
+                  name={`q-${exam.id}-${question.number}`}
+                  value={label}
+                  checked={isSelected}
+                  onChange={() => onAnswer(question.number, label)}
+                  className="mt-0.5 flex-shrink-0"
+                />
+                <span className={cn(
+                  'w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0',
+                  showCorrect ? 'border-green-500 bg-green-500 text-white' :
+                  showWrong ? 'border-red-500 bg-red-500 text-white' :
+                  isSelected ? 'border-primary bg-primary text-white' :
+                  'border-border text-text-muted'
+                )}>
+                  {label}
+                </span>
+                <span className="leading-relaxed">{optText}</span>
+                {showCorrect && <span className="ml-auto text-green-600">✓</span>}
+                {showWrong && <span className="ml-auto text-red-600">✗</span>}
+              </label>
+            )
+          })}
         </div>
+      )}
 
-        {/* Question review — all on one page */}
-        <div>
-          <h2 className="font-semibold text-text mb-3">Преглед на отговорите</h2>
-          <div className="space-y-4">
-            {questions.map((q, i) => {
-              const isCorrect = answers[q.id] === q.correctIndex
+      {/* Open response fields */}
+      {question.type === 'open_response' && (
+        <div className="space-y-3">
+          {question.options && Object.entries(question.options).map(([label, text]) => (
+            <div key={label} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-gray-50 text-sm text-text-muted">
+              <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold flex-shrink-0">{label}</span>
+              <span>{normalizeMathText(text)}</span>
+            </div>
+          ))}
+          <div className="space-y-3">
+            {effectiveLabels.map((label) => {
+              const val = openState[label] || ''
+              const isCorrect = openEval?.mode === 'correct'
+              const isIncorrect = openEval?.mode === 'incorrect'
               return (
-                <div key={q.id} className={cn('card p-5', isCorrect ? 'border-success/30' : 'border-danger/30')}>
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className={cn(
-                      'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0',
-                      isCorrect ? 'bg-success-light' : 'bg-danger-light'
-                    )}>
-                      {isCorrect ? (
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
-                      ) : (
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                      )}
-                    </div>
-                    <p className="text-sm font-medium text-text"><span className="text-text-muted mr-1">{i + 1}.</span>{q.text}</p>
-                  </div>
-
-                  <div className="pl-9 space-y-1.5">
-                    {q.options.map((opt, oi) => {
-                      const isSelected = answers[q.id] === oi
-                      const isRight = q.correctIndex === oi
-                      return (
-                        <div key={oi} className={cn(
-                          'px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-2',
-                          isRight ? 'bg-success-light text-success' :
-                          isSelected && !isRight ? 'bg-danger-light text-danger' :
-                          'text-text-muted'
-                        )}>
-                          <span className="font-bold">{String.fromCharCode(65 + oi)}.</span>
-                          {opt}
-                          {isRight && <span className="ml-auto text-success">✓</span>}
-                          {isSelected && !isRight && <span className="ml-auto text-danger">✗</span>}
-                        </div>
-                      )
-                    })}
-                  </div>
-
-                  {q.explanation && (
-                    <div className="pl-9 mt-3 bg-gray-50 rounded-lg p-3">
-                      <p className="text-xs text-text-muted leading-relaxed">{q.explanation}</p>
-                    </div>
-                  )}
+                <div key={label} className="grid gap-1.5">
+                  <label className="text-xs font-bold text-amber-700">
+                    {labels.length ? `${label}) Твоят отговор` : 'Твоят отговор'}
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder={labels.length ? `Запиши решението за ${label})` : 'Запиши своя отговор'}
+                    value={val}
+                    onChange={(e) => onOpenResponse(question.number, label, e.target.value)}
+                    className={cn(
+                      'w-full resize-y border rounded-xl px-3 py-2 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
+                      isCorrect ? 'border-green-400 bg-green-50 focus:ring-green-200' :
+                      isIncorrect ? 'border-red-300 bg-red-50 focus:ring-red-200' :
+                      'border-border focus:ring-primary/20'
+                    )}
+                  />
                 </div>
               )
             })}
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Feedback */}
+      {showFeedback && <FeedbackBox question={question} answers={answers} openEval={openEval} />}
     </div>
   )
+}
+
+// ---------------------------------------------------------------------------
+// FeedbackBox
+// ---------------------------------------------------------------------------
+
+function FeedbackBox({
+  question,
+  answers,
+  openEval,
+}: {
+  question: NvoQuestion
+  answers: SingleChoiceAnswers
+  openEval: { mode: 'empty' | 'correct' | 'incorrect' | 'manual'; cleaned: string } | null
+}) {
+  if (question.type === 'single_choice') {
+    const chosen = answers[question.number]
+    const correct = chosen === question.correct_option
+    return (
+      <div className={cn(
+        'mt-3 px-3 py-2 rounded-lg text-xs font-medium',
+        correct ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+      )}>
+        {chosen ? `Твоят избор: ${chosen}.` : 'Нямаш избран отговор.'}{' '}
+        {correct ? `Отлично. Верен отговор: ${question.correct_option}.` : `Верен отговор: ${question.correct_option}.`}
+      </div>
+    )
+  }
+
+  if (!openEval) return null
+  const { mode, cleaned } = openEval
+
+  if (mode === 'empty') {
+    return cleaned ? (
+      <div className="mt-3 px-3 py-2 rounded-lg text-xs font-medium bg-amber-50 text-amber-700">
+        <strong>Официален отговор:</strong><br />
+        <span className="whitespace-pre-wrap">{formatStructuredAnswer(cleaned)}</span>
+      </div>
+    ) : null
+  }
+
+  if (mode === 'correct') {
+    return (
+      <div className="mt-3 px-3 py-2 rounded-lg text-xs font-medium bg-green-50 text-green-700">
+        <strong>Верен отговор.</strong> Официален отговор:<br />
+        <span className="whitespace-pre-wrap">{formatStructuredAnswer(cleaned)}</span>
+      </div>
+    )
+  }
+
+  if (mode === 'incorrect') {
+    return (
+      <div className="mt-3 px-3 py-2 rounded-lg text-xs font-medium bg-red-50 text-red-700">
+        <strong>Отговорът не съвпада с официалния.</strong> Официален отговор:<br />
+        <span className="whitespace-pre-wrap">{formatStructuredAnswer(cleaned)}</span>
+      </div>
+    )
+  }
+
+  // manual
+  return (
+    <div className="mt-3 px-3 py-2 rounded-lg text-xs font-medium bg-amber-50 text-amber-700">
+      {cleaned ? (
+        <><strong>Свери отговора си с официалния:</strong><br />
+        <span className="whitespace-pre-wrap">{formatStructuredAnswer(cleaned)}</span></>
+      ) : 'Задача със свободен отговор или писмена работа.'}
+    </div>
+  )
+}
+
+function formatStructuredAnswer(text: string): string {
+  return text
+    .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n$2)')
+    .replace(/^([АБВГД])\)/gm, '$1)')
 }
