@@ -57,7 +57,7 @@ const features = [
 
 export function Features() {
   return (
-    <section className="py-20 md:py-28 bg-[#F8FAFC]">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 sm:px-7">
         <FadeIn className="text-center mb-14">
           <p className="section-label mb-3">Функции</p>

@@ -5,7 +5,7 @@ const freePlan = {
   name: 'Безплатен план',
   price: '0',
   period: '',
-  description: 'За да опиташ платформата и видиш дали работи за теб.',
+  description: 'За да разгледаш платформата и да пробваш как учиш с нея.',
   cta: 'Започни безплатно',
   ctaHref: '/dashboard',
   features: [
@@ -27,8 +27,8 @@ const premiumPlan = {
   yearlyPrice: '9.99',
   period: 'лв./месец',
   yearlyNote: 'или 119.99 лв./год. (спестяваш 38%)',
-  description: 'Пълен достъп до всичко, от което се нуждаеш за подготовка.',
-  cta: 'Започни 7 дни безплатно',
+  description: 'За пълна и системна подготовка за изпита.',
+  cta: 'Вземи Премиум',
   ctaHref: '/subscription',
   highlight: true,
   features: [
@@ -67,10 +67,13 @@ export function Pricing() {
           </StaggerItem>
         </StaggerChildren>
 
-        <FadeIn delay={0.25} className="text-center mt-8">
-          <p className="text-[13px] text-text-muted">
+        <FadeIn delay={0.25} className="text-center mt-8 space-y-2">
+          <p className="text-[14px] font-medium text-text-muted">
+            По-достъпно от дори един частен урок месечно.
+          </p>
+          <p className="text-[13px] text-text-muted/70">
             Без скрити такси. Отказ от абонамента по всяко време.{' '}
-            <span className="text-text-muted/70">·</span>{' '}
+            <span className="text-text-muted/50">·</span>{' '}
             7 дни безплатен пробен период за Премиум план.
           </p>
         </FadeIn>

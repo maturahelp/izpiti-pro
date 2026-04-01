@@ -6,6 +6,54 @@ import { subjects } from '@/data/subjects'
 import { cn } from '@/lib/utils'
 import { FadeIn, StaggerChildren, StaggerItem } from '@/components/ui/fade-in'
 
+const subjectMeta: Record<string, { description: string; includes: string[]; formats: string[] }> = {
+  'bg-lang-7': {
+    description: 'Тестове по теми, кратки аудио уроци, материали за преговор и AI помощ.',
+    includes: ['Правопис и пунктуация', 'Анализ на текст', 'Съчинение-разсъждение'],
+    formats: ['Тест с избор', 'Анализ на текст', 'Пълен НВО формат'],
+  },
+  'math-7': {
+    description: 'Задачи по теми с решения стъпка по стъпка, аудио обяснения и AI помощ при грешки.',
+    includes: ['Алгебра и функции', 'Геометрия', 'Уравнения и неравенства'],
+    formats: ['Тест с избор', 'Задачи с решение', 'Пълен НВО формат'],
+  },
+  'bg-lang-12': {
+    description: 'Литературен анализ, изразни средства, интерпретативни съчинения и AI преговор.',
+    includes: ['Художествени текстове', 'Стилистика', 'Интерпретативно съчинение'],
+    formats: ['Тест с избор', 'Съчинение', 'Пълен ДЗИ формат'],
+  },
+  'math-12': {
+    description: 'Алгебра, геометрия и вероятности — с решени примери, тестове и AI обяснения.',
+    includes: ['Алгебра и анализ', 'Геометрия', 'Статистика и вероятности'],
+    formats: ['Тест с избор', 'Задачи с решение', 'Пълен ДЗИ формат'],
+  },
+  'history-12': {
+    description: 'Теми по световна и българска история с аудио уроци и тестове по периоди.',
+    includes: ['Антична история', 'Нова история', 'История на България'],
+    formats: ['Тест с избор', 'Есе', 'Пълен ДЗИ формат'],
+  },
+  'geography-12': {
+    description: 'Физическа и икономическа география, екология и демография с тестове и уроци.',
+    includes: ['Физическа география', 'Икономическа география', 'Демография'],
+    formats: ['Тест с избор', 'Задачи', 'Пълен ДЗИ формат'],
+  },
+  'biology-12': {
+    description: 'Клетъчна биология, генетика, екосистеми и здравно образование — с тестове и уроци.',
+    includes: ['Клетъчна биология', 'Генетика', 'Екосистеми'],
+    formats: ['Тест с избор', 'Задачи', 'Пълен ДЗИ формат'],
+  },
+  'chemistry-12': {
+    description: 'Химични реакции, органична химия и опазване на околната среда с тестове.',
+    includes: ['Неорганична химия', 'Органична химия', 'Екология'],
+    formats: ['Тест с избор', 'Задачи', 'Пълен ДЗИ формат'],
+  },
+  'physics-12': {
+    description: 'Механика, електричество, оптика и астрономия с задачи и аудио обяснения.',
+    includes: ['Механика', 'Електродинамика', 'Оптика и астрономия'],
+    formats: ['Тест с избор', 'Задачи с решение', 'Пълен ДЗИ формат'],
+  },
+}
+
 export function ExamsSection() {
   const [activeTab, setActiveTab] = useState<'nvo7' | 'dzi12'>('nvo7')
 
@@ -61,41 +109,78 @@ export function ExamsSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
-            {filtered.map((subject) => (
-              <div key={subject.id} className="card-hover p-5 flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: subject.color + '14' }}
-                  >
-                    <span
-                      className="text-[11px] font-bold"
-                      style={{ color: subject.color }}
+            {filtered.map((subject) => {
+              const meta = subjectMeta[subject.id]
+              return (
+                <div key={subject.id} className="card-hover p-6 flex flex-col gap-4">
+                  {/* Header */}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: subject.color + '14' }}
                     >
-                      {subject.code}
-                    </span>
-                  </div>
-                  <h3 className="font-semibold text-text text-[13.5px] leading-snug tracking-[-0.01em]">
-                    {subject.name}
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { label: 'Теми', value: subject.topicsCount },
-                    { label: 'Тестове', value: subject.testsCount },
-                    { label: 'Уроци', value: subject.lessonsCount },
-                  ].map((stat) => (
-                    <div key={stat.label} className="text-center bg-[#F8FAFC] rounded-xl py-2.5 border border-[#E2E8F0]/60">
-                      <p className="text-[15px] font-bold text-text font-serif">{stat.value}</p>
-                      <p className="text-[10.5px] text-text-muted">{stat.label}</p>
+                      <span
+                        className="text-[11px] font-bold"
+                        style={{ color: subject.color }}
+                      >
+                        {subject.code}
+                      </span>
                     </div>
-                  ))}
+                    <h3 className="font-semibold text-text text-[14px] leading-snug tracking-[-0.01em]">
+                      {subject.name}
+                    </h3>
+                  </div>
+
+                  {/* Description */}
+                  {meta && (
+                    <p className="text-[13px] text-text-muted leading-relaxed">
+                      {meta.description}
+                    </p>
+                  )}
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { label: 'Теми', value: subject.topicsCount },
+                      { label: 'Тестове', value: subject.testsCount },
+                      { label: 'Уроци', value: subject.lessonsCount },
+                    ].map((stat) => (
+                      <div key={stat.label} className="text-center bg-[#F8FAFC] rounded-xl py-2.5 border border-[#E2E8F0]/60">
+                        <p className="text-[15px] font-bold text-text font-serif">{stat.value}</p>
+                        <p className="text-[10.5px] text-text-muted">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Formats */}
+                  {meta && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {meta.formats.map((fmt) => (
+                        <span
+                          key={fmt}
+                          className="text-[11px] font-medium text-text-muted bg-[#F8FAFC] border border-[#E2E8F0] px-2.5 py-1 rounded-full"
+                        >
+                          {fmt}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* CTA */}
+                  <a
+                    href="/dashboard"
+                    className="mt-auto inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors"
+                  >
+                    Виж подготовката
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </a>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </motion.div>
         </AnimatePresence>
 

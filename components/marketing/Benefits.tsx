@@ -40,7 +40,7 @@ export function Benefits() {
         <FadeIn className="text-center mb-14">
           <p className="section-label mb-3">Защо MaturaHelp</p>
           <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
-            Всичко, от което се нуждаеш
+            Какво получаваш още в първите 7 дни
           </h2>
           <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
             Платформата е изградена специално за ученици, подготвящи се за НВО и ДЗИ — с фокус върху резултата, а не само съдържанието.

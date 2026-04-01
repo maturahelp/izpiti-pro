@@ -1,4 +1,5 @@
 import { FadeIn, StaggerChildren, StaggerItem } from '@/components/ui/fade-in'
+import Link from 'next/link'
 
 const steps = [
   {
@@ -8,28 +9,18 @@ const steps = [
   },
   {
     step: '02',
-    title: 'Избери клас и изпит',
-    description: 'Посочи дали се готвиш за НВО (7. клас) или ДЗИ (12. клас) и кой предмет.',
-  },
-  {
-    step: '03',
-    title: 'Учи по теми',
+    title: 'Учи по теми и слушай уроци',
     description: 'Следвай структурирания учебен план — слушай аудио уроци и преглеждай материали по теми.',
   },
   {
+    step: '03',
+    title: 'Решавай тестове и виж грешките си',
+    description: 'Провери знанията си с интерактивни тестове. Получи незабавна обратна връзка и обяснения за всяка грешка.',
+  },
+  {
     step: '04',
-    title: 'Решавай тестове',
-    description: 'Провери знанията си с интерактивни тестове. Получи незабавна обратна връзка и обяснения.',
-  },
-  {
-    step: '05',
-    title: 'Ползвай AI помощ',
-    description: 'Когато нещо е неясно, AI помощникът обяснява темата по-лесно и отговаря на въпросите ти.',
-  },
-  {
-    step: '06',
-    title: 'Следи напредъка си',
-    description: 'Виж ясно къде се намираш и кои теми трябват повече внимание. Напредвай уверено.',
+    title: 'Ползвай AI помощ и следи напредъка си',
+    description: 'Когато нещо е неясно, AI помощникът обяснява темата по-лесно. Виж ясно напредъка си и кои теми трябват повече внимание.',
   },
 ]
 
@@ -43,11 +34,11 @@ export function HowItWorks() {
             От нула до уверено на изпита
           </h2>
           <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
-            Шест прости стъпки, с които започваш подготовката и виждаш реален напредък.
+            Четири стъпки, с които започваш подготовката и виждаш реален напредък.
           </p>
         </FadeIn>
 
-        <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+        <StaggerChildren className="grid sm:grid-cols-2 gap-x-10 gap-y-8 max-w-3xl mx-auto">
           {steps.map((s) => (
             <StaggerItem key={s.step}>
               <div className="flex gap-4 group">
@@ -64,6 +55,12 @@ export function HowItWorks() {
             </StaggerItem>
           ))}
         </StaggerChildren>
+
+        <FadeIn delay={0.2} className="text-center mt-12">
+          <Link href="/dashboard" className="btn-secondary px-6 py-2.5 text-[14px]">
+            Разгледай как работи
+          </Link>
+        </FadeIn>
       </div>
     </section>
   )
