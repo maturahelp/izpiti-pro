@@ -13,7 +13,7 @@ export async function signUp(email: string, password: string, name?: string) {
     password,
     options: { data: { name: name ?? email.split('@')[0] } },
   })
-  return { user: data?.user ?? null, error }
+  return { user: data?.user ?? null, session: data?.session ?? null, error }
 }
 
 export async function signOut() {

@@ -22,12 +22,20 @@ export default function RegisterPage() {
     if (password.length < 8) { setError('Паролата трябва да е поне 8 знака.'); return }
     if (password !== confirmPassword) { setError('Паролите не съвпадат.'); return }
     setLoading(true)
-    const { error } = await signUp(email, password, name)
+    const { session, error } = await signUp(email, password, name)
     if (error) { setLoading(false); setError(error.message); return }
-    // Auto sign-in after registration (in case email confirmation is enabled)
+    if (session) {
+      // Email confirmation is disabled — session created immediately
+      router.push('/dashboard')
+      return
+    }
+    // Email confirmation is enabled — try signing in anyway
     const { error: signInError } = await signIn(email, password)
     setLoading(false)
-    if (signInError) { setError(signInError.message); return }
+    if (signInError) {
+      setError('Акаунтът е създаден! Провери имейла си за потвърждение, след което влез.')
+      return
+    }
     router.push('/dashboard')
   }
 
