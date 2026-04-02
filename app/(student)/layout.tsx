@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import { MobileNav } from '@/components/dashboard/MobileNav'
-import { getStoredUser } from '@/lib/auth'
+import { getUser } from '@/lib/auth'
 
 export default function StudentLayout({
   children,
@@ -15,11 +15,13 @@ export default function StudentLayout({
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    if (!getStoredUser()) {
-      router.replace('/login')
-    } else {
-      setReady(true)
-    }
+    getUser().then(user => {
+      if (!user) {
+        router.replace('/')
+      } else {
+        setReady(true)
+      }
+    })
   }, [router])
 
   if (!ready) return null

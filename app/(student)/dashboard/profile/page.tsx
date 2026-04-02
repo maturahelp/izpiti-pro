@@ -3,21 +3,28 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { getStoredUser, clearStoredUser } from '@/lib/auth'
+import { getUser, signOut } from '@/lib/auth'
 
 export default function ProfilePage() {
   const [userName, setUserName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
   const router = useRouter()
 
   useEffect(() => {
-    setUserName(getStoredUser() || '')
+    getUser().then(user => {
+      if (user) {
+        const name = user.user_metadata?.name || user.email?.split('@')[0] || ''
+        setUserName(name)
+        setUserEmail(user.email || '')
+      }
+    })
   }, [])
 
   const initials = userName.split(' ').filter(Boolean).map((n) => n[0]).join('').slice(0, 2).toUpperCase()
 
-  const handleLogout = () => {
-    clearStoredUser()
-    router.push('/login')
+  const handleLogout = async () => {
+    await signOut()
+    router.push('/')
   }
 
   const [notifications, setNotifications] = useState({

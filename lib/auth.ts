@@ -1,12 +1,28 @@
-export function getStoredUser(): string | null {
-  if (typeof window === 'undefined') return null
-  return localStorage.getItem('izpiti_user')
+import { createClient } from '@/lib/supabase/client'
+
+export async function signIn(email: string, password: string) {
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  return { user: data?.user ?? null, error }
 }
 
-export function setStoredUser(name: string): void {
-  localStorage.setItem('izpiti_user', name)
+export async function signUp(email: string, password: string, name?: string) {
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { name: name ?? email.split('@')[0] } },
+  })
+  return { user: data?.user ?? null, error }
 }
 
-export function clearStoredUser(): void {
-  localStorage.removeItem('izpiti_user')
+export async function signOut() {
+  const supabase = createClient()
+  await supabase.auth.signOut()
+}
+
+export async function getUser() {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  return user
 }

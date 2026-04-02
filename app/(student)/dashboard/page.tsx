@@ -8,7 +8,7 @@ import { tests } from '@/data/tests'
 import { lessons } from '@/data/lessons'
 import Link from 'next/link'
 import { getDifficultyColor } from '@/lib/utils'
-import { getStoredUser } from '@/lib/auth'
+import { getUser } from '@/lib/auth'
 
 const recommendedTests = tests.filter((t) => !t.status || t.status === 'not_started').slice(0, 3)
 const continueLessons = lessons.filter((l) => l.status === 'in_progress').slice(0, 2)
@@ -17,7 +17,12 @@ export default function DashboardPage() {
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
-    setUserName(getStoredUser() || '')
+    getUser().then(user => {
+      if (user) {
+        const name = user.user_metadata?.name || user.email?.split('@')[0] || ''
+        setUserName(name)
+      }
+    })
   }, [])
 
   const firstName = userName.split(' ')[0] || 'Ученик'

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getStoredUser } from '@/lib/auth'
+import { getUser } from '@/lib/auth'
 
 interface TopBarProps {
   title: string
@@ -12,7 +12,12 @@ export function TopBar({ title }: TopBarProps) {
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
-    setUserName(getStoredUser() || '')
+    getUser().then(user => {
+      if (user) {
+        const name = user.user_metadata?.name || user.email?.split('@')[0] || ''
+        setUserName(name)
+      }
+    })
   }, [])
 
   const initials = userName.split(' ').filter(Boolean).map((n) => n[0]).join('').slice(0, 2).toUpperCase()
