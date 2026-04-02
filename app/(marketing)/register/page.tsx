@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { signUp } from '@/lib/auth'
+import { signUp, signIn } from '@/lib/auth'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -23,8 +23,11 @@ export default function RegisterPage() {
     if (password !== confirmPassword) { setError('Паролите не съвпадат.'); return }
     setLoading(true)
     const { error } = await signUp(email, password, name)
+    if (error) { setLoading(false); setError(error.message); return }
+    // Auto sign-in after registration (in case email confirmation is enabled)
+    const { error: signInError } = await signIn(email, password)
     setLoading(false)
-    if (error) { setError(error.message); return }
+    if (signInError) { setError(signInError.message); return }
     router.push('/dashboard')
   }
 
