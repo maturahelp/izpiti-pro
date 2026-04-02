@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { NavDrawerButton } from '@/components/marketing/NavDrawer'
 
 const navLinks = [
   { href: '#kak-raboti', label: 'Как работи' },
@@ -33,7 +34,9 @@ export function Header() {
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-7">
         <div className="flex items-center justify-between h-[60px]">
-          {/* Logo */}
+          {/* Nav Drawer + Logo */}
+          <div className="flex items-center gap-2">
+            <NavDrawerButton />
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
               <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#1B4FD8" strokeWidth="1.6" strokeLinejoin="round" fill="white"/>
@@ -45,6 +48,7 @@ export function Header() {
             </svg>
             <span className="font-serif font-bold text-text text-[17px] tracking-[-0.02em]">MaturaHelp</span>
           </Link>
+          </div>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-0.5">

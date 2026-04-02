@@ -36,7 +36,7 @@ const config: Config = {
         'warning-light': '#FEF3C7',
       },
       fontFamily: {
-        serif: ['var(--font-display)', 'Georgia', 'serif'],
+        serif: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
