@@ -25,8 +25,7 @@ export default function RegisterPage() {
     const { session, error } = await signUp(email, password, name)
     if (error) { setLoading(false); setError(error.message); return }
     if (session) {
-      // Email confirmation is disabled — session created immediately
-      router.push('/dashboard')
+      window.location.href = '/dashboard'
       return
     }
     // Email confirmation is enabled — try signing in anyway
@@ -36,7 +35,7 @@ export default function RegisterPage() {
       setError('Акаунтът е създаден! Провери имейла си за потвърждение, след което влез.')
       return
     }
-    router.push('/dashboard')
+    window.location.href = '/dashboard'
   }
 
   return (
