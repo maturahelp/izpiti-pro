@@ -1,3 +1,5 @@
+import { mockTests } from './mock-tests'
+
 export type Difficulty = 'лесен' | 'среден' | 'труден'
 export type TestStatus = 'not_started' | 'in_progress' | 'completed'
 
@@ -681,6 +683,7 @@ export const tests: Test[] = [
     avgScore: 62,
     status: 'not_started',
   },
+  ...mockTests,
 ]
 
 export const sampleQuestions: Question[] = [

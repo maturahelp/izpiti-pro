@@ -10,6 +10,7 @@ import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
+import mockPracticeDataset from '@/data/mock_exam_practice.json'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -21,7 +22,9 @@ interface NvoQuestion {
   options?: Record<string, string>
   correct_option?: string
   official_answer?: string
+  answer_guide?: string
   points?: number
+  section?: string
 }
 
 interface NvoExam {
@@ -32,6 +35,38 @@ interface NvoExam {
   context_text?: string
   context_images?: string[]
   questions: NvoQuestion[]
+  source_title?: string
+  chart?: {
+    title: string
+    unit?: string
+    labels: string[]
+    values: number[]
+  }
+  exam_type?: 'nvo_bel' | 'dzi_bel'
+}
+
+interface MockPracticeExam {
+  id: string
+  title: string
+  exam_type: 'nvo_bel' | 'dzi_bel'
+  source_title?: string
+  source_text: string
+  chart?: {
+    title: string
+    unit?: string
+    labels: string[]
+    values: number[]
+  }
+  questions: Array<{
+    number: number
+    type: 'single_choice' | 'open_response'
+    question: string
+    options?: Record<string, string>
+    table_rows?: Record<string, string>
+    correct_option?: string
+    answer_guide?: string | Record<string, string>
+    section?: string
+  }>
 }
 
 type SingleChoiceAnswers = Record<number, string>  // questionNumber → chosen label
@@ -224,6 +259,50 @@ function mapTestId(testId: string): string {
   return testId
 }
 
+function normalizeMockExam(exam: MockPracticeExam): NvoExam {
+  const isNvo = exam.exam_type === 'nvo_bel'
+
+  return {
+    id: exam.id,
+    year: '',
+    subject: isNvo ? 'Български език' : 'Български език и литература',
+    published_at: '',
+    context_text: exam.source_text,
+    context_images: [],
+    source_title: exam.source_title || exam.title,
+    chart: exam.chart,
+    exam_type: exam.exam_type,
+    questions: exam.questions.map((question) => {
+      const rawGuide = question.answer_guide
+      const guideStr =
+        rawGuide == null
+          ? undefined
+          : typeof rawGuide === 'string'
+            ? rawGuide
+            : Object.entries(rawGuide)
+                .map(([k, v]) => `${k}) ${v}`)
+                .join('\n')
+      return {
+        number: question.number,
+        type: question.type,
+        question: question.question,
+        options: question.options ?? question.table_rows,
+        correct_option: question.correct_option,
+        official_answer: guideStr,
+        answer_guide: guideStr,
+        section: question.section,
+      }
+    }),
+  }
+}
+
+const OFFICIAL_EXAMS: NvoExam[] = [
+  ...(nvoDataset as unknown as NvoExam[]),
+  ...(dziDataset as unknown as NvoExam[]),
+]
+
+const MOCK_EXAMS: NvoExam[] = (mockPracticeDataset as { exams: MockPracticeExam[] }).exams.map(normalizeMockExam)
+
 // ---------------------------------------------------------------------------
 // Page component
 // ---------------------------------------------------------------------------
@@ -232,8 +311,8 @@ export default function TestPage() {
   const testId = String(params.id)
   const test = tests.find((t) => t.id === testId) || tests[0]
   const datasetId = mapTestId(test.id)
-  const exam = ([...(nvoDataset as unknown as NvoExam[]), ...(dziDataset as unknown as NvoExam[])])
-    .find((e) => e.id === datasetId) ?? null
+  const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS].find((e) => e.id === datasetId) ?? null
+  const storageKey = `izpiti-pro:test:${test.id}:state:v1`
 
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
@@ -262,6 +341,47 @@ export default function TestPage() {
     }
   }, [submitted, revealAnswers, answers])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const raw = window.localStorage.getItem(storageKey)
+      if (!raw) {
+        setAnswers({})
+        setOpenResponses({})
+        setSubmitted(false)
+        setRevealAnswers(false)
+        return
+      }
+
+      const saved = JSON.parse(raw) as {
+        answers?: SingleChoiceAnswers
+        openResponses?: OpenResponses
+        submitted?: boolean
+        revealAnswers?: boolean
+      }
+
+      setAnswers(saved.answers || {})
+      setOpenResponses(saved.openResponses || {})
+      setSubmitted(Boolean(saved.submitted))
+      setRevealAnswers(Boolean(saved.revealAnswers))
+    } catch {
+      setAnswers({})
+      setOpenResponses({})
+      setSubmitted(false)
+      setRevealAnswers(false)
+    }
+  }, [storageKey])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(storageKey, JSON.stringify({
+      answers,
+      openResponses,
+      submitted,
+      revealAnswers,
+    }))
+  }, [answers, openResponses, submitted, revealAnswers, storageKey])
+
   const handleReset = useCallback(() => {
     setAnswers({})
     setOpenResponses({})
@@ -269,7 +389,10 @@ export default function TestPage() {
     setRevealAnswers(false)
     setContextCollapsed(false)
     setContextMediaCollapsed(false)
-  }, [])
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(storageKey)
+    }
+  }, [storageKey])
 
   if (!exam) {
     return (
@@ -300,6 +423,8 @@ export default function TestPage() {
   const contextParts = splitContextText(exam)
   const hasContext = Boolean(exam.context_text)
   const hasMedia = Boolean(exam.context_images?.length)
+  const hasChart = Boolean(exam.chart?.labels?.length)
+  const totalQuestions = exam.questions.length
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -323,6 +448,7 @@ export default function TestPage() {
             <div>
               <p className="text-xs text-text-muted font-semibold uppercase tracking-wide">Напредък</p>
               <p className="text-sm font-semibold text-text">{answeredCount} / {totalSelectable} тестови отговорени</p>
+              <p className="text-xs text-text-muted">{totalQuestions} въпроса общо</p>
               {(submitted || revealAnswers) && (
                 <p className="text-xs text-text-muted">{score.correct} верни от {score.total}</p>
               )}
@@ -339,7 +465,7 @@ export default function TestPage() {
               onClick={() => setRevealAnswers((v) => !v)}
               className="btn-secondary text-sm px-4 py-2"
             >
-              {revealAnswers ? 'Скрий верните' : 'Покажи верните'}
+              {revealAnswers ? 'Скрий ключа' : 'Покажи ключа'}
             </button>
             <button onClick={handleReset} className="btn-secondary text-sm px-4 py-2">
               Изчисти
@@ -388,9 +514,15 @@ export default function TestPage() {
                     {contextParts.intro}
                   </div>
                 )}
+                {exam.source_title && (
+                  <div className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+                    {exam.source_title}
+                  </div>
+                )}
                 {contextParts.body && (
                   <p className="text-sm text-text leading-relaxed whitespace-pre-wrap">{contextParts.body}</p>
                 )}
+                {hasChart && <ChartCard chart={exam.chart!} />}
               </div>
             )}
             {hasMedia && !contextCollapsed && !contextMediaCollapsed && (
@@ -412,6 +544,14 @@ export default function TestPage() {
         )}
 
         {/* Questions */}
+        {revealAnswers && (
+          <div className="card p-4 border border-amber-200 bg-amber-50/70">
+            <p className="text-sm font-semibold text-amber-800">Ключът за отговори е видим.</p>
+            <p className="text-xs text-amber-700 mt-1">
+              При тестовите въпроси се показва верният избор, а при свободните отговори можеш да свериш отговора си с насоките под задачата.
+            </p>
+          </div>
+        )}
         <div className="space-y-5">
           {exam.questions.map((q) => (
             <QuestionCard
@@ -687,6 +827,50 @@ function QuestionCard({
 
       {/* Feedback */}
       {showFeedback && <FeedbackBox question={question} answers={answers} openEval={openEval} />}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// ChartCard
+// ---------------------------------------------------------------------------
+
+function ChartCard({
+  chart,
+}: {
+  chart: NonNullable<NvoExam['chart']>
+}) {
+  const max = Math.max(...chart.values, 1)
+
+  return (
+    <div className="mt-2 rounded-xl border border-border bg-[#FCFBF7] p-4">
+      <div className="mb-4">
+        <h3 className="text-sm font-semibold text-text">{chart.title}</h3>
+        {chart.unit && (
+          <p className="text-xs text-text-muted mt-1">Стойности в {chart.unit}</p>
+        )}
+      </div>
+      <div className="space-y-3">
+        {chart.labels.map((label, index) => {
+          const value = chart.values[index] ?? 0
+          const width = `${Math.max(8, Math.round((value / max) * 100))}%`
+
+          return (
+            <div key={`${label}-${index}`} className="space-y-1.5">
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <span className="font-medium text-text">{label}</span>
+                <span className="font-semibold text-primary">{value}{chart.unit || ''}</span>
+              </div>
+              <div className="h-3 rounded-full bg-white border border-border overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-sky-400"
+                  style={{ width }}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
