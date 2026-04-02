@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import { MobileNav } from '@/components/dashboard/MobileNav'
-import { getUser } from '@/lib/auth'
+import { createClient } from '@/lib/supabase/client'
 
 export default function StudentLayout({
   children,
@@ -15,13 +15,25 @@ export default function StudentLayout({
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    getUser().then(user => {
-      if (!user) {
-        router.replace('/')
+    const supabase = createClient()
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        router.replace('/login')
       } else {
         setReady(true)
       }
     })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        router.replace('/login')
+      } else {
+        setReady(true)
+      }
+    })
+
+    return () => subscription.unsubscribe()
   }, [router])
 
   if (!ready) return null
