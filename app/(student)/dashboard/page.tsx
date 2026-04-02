@@ -1,6 +1,3 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
@@ -8,24 +5,12 @@ import { tests } from '@/data/tests'
 import { lessons } from '@/data/lessons'
 import Link from 'next/link'
 import { getDifficultyColor } from '@/lib/utils'
-import { getUser } from '@/lib/auth'
 
 const recommendedTests = tests.filter((t) => !t.status || t.status === 'not_started').slice(0, 3)
 const continueLessons = lessons.filter((l) => l.status === 'in_progress').slice(0, 2)
 
 export default function DashboardPage() {
-  const [userName, setUserName] = useState('')
-
-  useEffect(() => {
-    getUser().then(user => {
-      if (user) {
-        const name = user.user_metadata?.name || user.email?.split('@')[0] || ''
-        setUserName(name)
-      }
-    })
-  }, [])
-
-  const firstName = userName.split(' ')[0] || 'Ученик'
+  const firstName = 'Ученик'
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">

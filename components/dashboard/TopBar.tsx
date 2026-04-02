@@ -17,7 +17,7 @@ export function TopBar({ title }: TopBarProps) {
         const name = user.user_metadata?.name || user.email?.split('@')[0] || ''
         setUserName(name)
       }
-    })
+    }).catch(() => {})
   }, [])
 
   const initials = userName.split(' ').filter(Boolean).map((n) => n[0]).join('').slice(0, 2).toUpperCase()
