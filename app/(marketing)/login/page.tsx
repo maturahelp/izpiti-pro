@@ -2,13 +2,12 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { signIn } from '@/lib/auth'
 
 export default function LoginPage() {
-  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -23,9 +22,15 @@ export default function LoginPage() {
       window.location.href = '/dashboard'
       return
     }
-    const { error } = await signIn(email, password)
+    const { user, error } = await signIn(email, password)
     setLoading(false)
-    if (error) { setError(error.message); return }
+    if (error || !user) {
+      const msg = error?.message?.includes('Email not confirmed')
+        ? 'Имейлът не е потвърден. Провери пощата си и кликни линка за потвърждение.'
+        : error?.message || 'Грешен имейл или парола.'
+      setError(msg)
+      return
+    }
     window.location.href = '/dashboard'
   }
 
@@ -70,19 +75,31 @@ export default function LoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Въведи своя имейл"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/50 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
                 autoFocus
+                className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/50 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
               />
             </div>
             <div className="mb-5">
-              <label className="block text-[12.5px] font-semibold text-text mb-1.5">Парола</label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Въведи паролата си"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
-              />
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-[12.5px] font-semibold text-text">Парола</label>
+                <Link href="/forgot-password" className="text-[12px] text-primary hover:underline">Забравена парола?</Link>
+              </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-2.5 pr-14 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(v => !v)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[12px] text-text-muted hover:text-text transition"
+                >
+                  {showPassword ? 'Скрий' : 'Покажи'}
+                </button>
+              </div>
             </div>
             <button
               type="submit"

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { BackgroundPaths } from '@/components/ui/background-paths'
 import { signIn, getUser } from '@/lib/auth'
 import { tests } from '@/data/tests'
@@ -45,6 +46,7 @@ function MaturaLogo() {
 }
 
 function LoginCard({ onLogin }: { onLogin: (name: string) => void }) {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -57,9 +59,17 @@ function LoginCard({ onLogin }: { onLogin: (name: string) => void }) {
     setLoading(true); setError(null)
     const { user, error } = await signIn(email, password)
     setLoading(false)
-    if (error || !user) { setError('Грешен имейл или парола.'); return }
+    if (error || !user) {
+      const msg = error?.message?.includes('Email not confirmed')
+        ? 'Имейлът не е потвърден. Провери пощата си.'
+        : 'Грешен имейл или парола.'
+      setError(msg)
+      return
+    }
     const name = user.user_metadata?.name || email.split('@')[0]
     onLogin(name)
+    router.push('/dashboard')
+    router.refresh()
   }
 
   function handleSocial() {

@@ -72,12 +72,12 @@ export function Header() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="#login"
+              href="/login"
               className="text-[13.5px] font-medium text-text-muted hover:text-text transition-colors duration-150"
             >
               Вход
             </Link>
-            <Link href="/login" className="btn-primary text-[13.5px] px-4 py-2">
+            <Link href="/register" className="btn-primary text-[13.5px] px-4 py-2">
               Започни безплатно
             </Link>
           </div>
@@ -127,10 +127,10 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-3 border-t border-[#E2E8F0] mt-2 flex flex-col gap-2">
-              <Link href="#login" className="btn-secondary text-sm justify-center" onClick={() => setMenuOpen(false)}>
+              <Link href="/login" className="btn-secondary text-sm justify-center" onClick={() => setMenuOpen(false)}>
                 Вход
               </Link>
-              <Link href="/login" className="btn-primary text-sm justify-center">
+              <Link href="/register" className="btn-primary text-sm justify-center">
                 Започни безплатно
               </Link>
             </div>

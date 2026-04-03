@@ -184,9 +184,10 @@ export function LoginGateModal() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [info, setInfo] = useState<string | null>(null)
 
   function resetForm() {
-    setEmail(''); setPassword(''); setName(''); setConfirmPassword(''); setError(null)
+    setEmail(''); setPassword(''); setName(''); setConfirmPassword(''); setError(null); setInfo(null)
   }
 
   function handleTabChange(t: 'login' | 'register') {
@@ -200,7 +201,13 @@ export function LoginGateModal() {
     setLoading(true)
     const { error } = await signIn(email, password)
     setLoading(false)
-    if (error) { setError('Грешен имейл или парола.'); return }
+    if (error) {
+      const msg = error.message?.includes('Email not confirmed')
+        ? 'Имейлът не е потвърден. Провери пощата си.'
+        : 'Грешен имейл или парола.'
+      setError(msg)
+      return
+    }
     closeLoginGate()
     router.push(activeHref || '/dashboard')
     router.refresh()
@@ -213,12 +220,16 @@ export function LoginGateModal() {
     if (password.length < 8) { setError('Паролата трябва да е поне 8 знака.'); return }
     if (password !== confirmPassword) { setError('Паролите не съвпадат.'); return }
     setLoading(true)
-    const { error } = await signUp(email, password, name)
+    const { session, error } = await signUp(email, password, name)
     setLoading(false)
     if (error) { setError(error.message); return }
-    closeLoginGate()
-    router.push(activeHref || '/dashboard')
-    router.refresh()
+    if (session) {
+      closeLoginGate()
+      router.push(activeHref || '/dashboard')
+      router.refresh()
+    } else {
+      setInfo('Акаунтът е създаден! Провери имейла си и кликни линка за потвърждение, за да влезеш.')
+    }
   }
 
   return (
@@ -268,6 +279,11 @@ export function LoginGateModal() {
                 {error && (
                   <div className="mb-4 px-4 py-2.5 rounded-xl bg-red-50 border border-red-200 text-[13px] text-red-600">
                     {error}
+                  </div>
+                )}
+                {info && (
+                  <div className="mb-4 px-4 py-2.5 rounded-xl bg-blue-50 border border-blue-200 text-[13px] text-blue-700">
+                    {info}
                   </div>
                 )}
 

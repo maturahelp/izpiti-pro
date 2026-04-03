@@ -95,6 +95,14 @@ export default function TestsPage() {
         <div className="grid sm:grid-cols-2 gap-4">
           {filtered.map((test) => (
             <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', test.isPremium && 'premium-lock')}>
+              {(() => {
+                const isMock = test.id.startsWith('mock_') || test.id.startsWith('selected_mock_')
+                return isMock ? (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="neutral">Примерен</Badge>
+                  </div>
+                ) : null
+              })()}
               {test.isPremium && <PremiumLock compact />}
 
               <div className="flex items-start justify-between gap-3">
