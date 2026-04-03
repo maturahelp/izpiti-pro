@@ -26,7 +26,7 @@ export const subjects: Subject[] = [
     examType: 'nvo7',
     color: '#1B4FD8',
     topicsCount: 14,
-    testsCount: 28,
+    testsCount: 32,
     lessonsCount: 42,
   },
   {
@@ -46,7 +46,7 @@ export const subjects: Subject[] = [
     examType: 'dzi12',
     color: '#1B4FD8',
     topicsCount: 22,
-    testsCount: 44,
+    testsCount: 48,
     lessonsCount: 66,
   },
   {
@@ -112,7 +112,7 @@ export const subjects: Subject[] = [
 ]
 
 export const topics: Topic[] = [
-  { id: 'bg7-1', subjectId: 'bg-lang-7', name: 'Правопис и пунктуация', order: 1, lessonsCount: 4, testsCount: 3 },
+  { id: 'bg7-1', subjectId: 'bg-lang-7', name: 'Правопис и пунктуация', order: 1, lessonsCount: 4, testsCount: 7 },
   { id: 'bg7-2', subjectId: 'bg-lang-7', name: 'Части на речта', order: 2, lessonsCount: 3, testsCount: 2 },
   { id: 'bg7-3', subjectId: 'bg-lang-7', name: 'Анализ на текст', order: 3, lessonsCount: 5, testsCount: 4 },
   { id: 'bg7-4', subjectId: 'bg-lang-7', name: 'Съчинение-разсъждение', order: 4, lessonsCount: 4, testsCount: 3 },
@@ -124,7 +124,7 @@ export const topics: Topic[] = [
   { id: 'math7-4', subjectId: 'math-7', name: 'Геометрия — триъгълници', order: 4, lessonsCount: 4, testsCount: 3 },
   { id: 'math7-5', subjectId: 'math-7', name: 'Геометрия — четириъгълници', order: 5, lessonsCount: 3, testsCount: 2 },
   { id: 'math7-nvo', subjectId: 'math-7', name: 'НВО — Пълен изпит', order: 6, lessonsCount: 0, testsCount: 8 },
-  { id: 'bg12-1', subjectId: 'bg-lang-12', name: 'Стилистика и изразни средства', order: 1, lessonsCount: 5, testsCount: 4 },
+  { id: 'bg12-1', subjectId: 'bg-lang-12', name: 'Стилистика и изразни средства', order: 1, lessonsCount: 5, testsCount: 8 },
   { id: 'bg12-2', subjectId: 'bg-lang-12', name: 'Анализ на художествен текст', order: 2, lessonsCount: 6, testsCount: 5 },
   { id: 'bg12-3', subjectId: 'bg-lang-12', name: 'Интерпретативно съчинение', order: 3, lessonsCount: 5, testsCount: 4 },
   { id: 'bg12-4', subjectId: 'bg-lang-12', name: 'Хана — Христо Смирненски', order: 4, lessonsCount: 3, testsCount: 2 },

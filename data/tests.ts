@@ -1,4 +1,5 @@
 import { mockTests } from './mock-tests'
+import { beronTests } from './beron-tests'
 
 export type Difficulty = 'лесен' | 'среден' | 'труден'
 export type TestStatus = 'not_started' | 'in_progress' | 'completed'
@@ -684,6 +685,7 @@ export const tests: Test[] = [
     status: 'not_started',
   },
   ...mockTests,
+  ...beronTests,
 ]
 
 export const sampleQuestions: Question[] = [

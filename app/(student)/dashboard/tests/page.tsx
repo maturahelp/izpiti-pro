@@ -97,6 +97,16 @@ export default function TestsPage() {
             <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', test.isPremium && 'premium-lock')}>
               {(() => {
                 const isMock = test.id.startsWith('mock_') || test.id.startsWith('selected_mock_')
+                const isBeron = test.id.startsWith('beron_')
+
+                if (isBeron) {
+                  return (
+                    <div className="absolute top-3 right-3">
+                      <Badge variant="primary">BERON</Badge>
+                    </div>
+                  )
+                }
+
                 return isMock ? (
                   <div className="absolute top-3 right-3">
                     <Badge variant="neutral">Примерен</Badge>

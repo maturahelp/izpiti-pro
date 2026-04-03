@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
+import { beronExamPayload } from '@/data/beron-tests'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -67,6 +68,34 @@ interface MockPracticeExam {
     answer_guide?: string | Record<string, string>
     section?: string
   }>
+}
+
+interface BeronBankQuestion {
+  id: string
+  grade: number
+  rule_id: string
+  topic: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  type: 'multiple_choice' | 'choose_correct_form' | 'fill_in_blank' | 'find_the_error' | 'edit_sentence' | 'explain_rule'
+  question_text: string
+  options?: string[]
+  correct_answer: string
+  explanation: string
+  source_rule_title: string
+  tags: string[]
+}
+
+interface BeronDifficultyTest {
+  id: string
+  bank: 'g7' | 'g12'
+  bank_label: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  difficulty_label: string
+  title: string
+  question_count: number
+  topics: string[]
+  rule_ids: string[]
+  questions: BeronBankQuestion[]
 }
 
 type SingleChoiceAnswers = Record<number, string>  // questionNumber → chosen label
@@ -296,12 +325,56 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
   }
 }
 
+function normalizeBeronExam(test: BeronDifficultyTest): NvoExam {
+  const optionLabels = ['А', 'Б', 'В', 'Г', 'Д', 'Е']
+  const isGrade7 = test.bank === 'g7'
+
+  const sourceText = [
+    `Този BERON тест е съставен по правилата за ${test.bank_label.toLowerCase()} и е подреден на ниво „${test.difficulty_label.toLowerCase()}“ трудност.`,
+    `Основни теми: ${test.topics.join(', ')}.`,
+    `Използвай въпросите за целенасочен преговор по правопис, пунктуация и граматични норми.`,
+  ].join('\n\n')
+
+  return {
+    id: `beron_${test.id}`,
+    year: '',
+    subject: isGrade7 ? 'Български език' : 'Български език и литература',
+    published_at: '',
+    context_text: sourceText,
+    context_images: [],
+    source_title: 'BERON — Правила за правопис и пунктуация',
+    exam_type: isGrade7 ? 'nvo_bel' : 'dzi_bel',
+    questions: test.questions.map((question, index) => {
+      const hasOptions = Boolean(question.options?.length)
+      const options = hasOptions
+        ? Object.fromEntries((question.options || []).map((option, optionIndex) => [optionLabels[optionIndex] || String(optionIndex + 1), option]))
+        : undefined
+
+      const correctOption = hasOptions
+        ? Object.entries(options || {}).find(([, value]) => value === question.correct_answer)?.[0]
+        : undefined
+
+      return {
+        number: index + 1,
+        type: hasOptions ? 'single_choice' : 'open_response',
+        question: question.question_text,
+        options,
+        correct_option: correctOption,
+        official_answer: question.correct_answer,
+        answer_guide: `${question.explanation}\n\nВерен отговор: ${question.correct_answer}`,
+        section: question.topic,
+      }
+    }),
+  }
+}
+
 const OFFICIAL_EXAMS: NvoExam[] = [
   ...(nvoDataset as unknown as NvoExam[]),
   ...(dziDataset as unknown as NvoExam[]),
 ]
 
 const MOCK_EXAMS: NvoExam[] = (mockPracticeDataset as { exams: MockPracticeExam[] }).exams.map(normalizeMockExam)
+const BERON_EXAMS: NvoExam[] = beronExamPayload.tests.map(normalizeBeronExam)
 
 // ---------------------------------------------------------------------------
 // Page component
@@ -311,7 +384,7 @@ export default function TestPage() {
   const testId = String(params.id)
   const test = tests.find((t) => t.id === testId) || tests[0]
   const datasetId = mapTestId(test.id)
-  const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS].find((e) => e.id === datasetId) ?? null
+  const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
   const storageKey = `izpiti-pro:test:${test.id}:state:v1`
 
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
