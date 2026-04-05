@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
-import { studentTests as tests, studentContentScope } from '@/data/student-content'
+import { studentTests as tests } from '@/data/student-content'
 import { getDifficultyColor } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 
@@ -15,8 +15,7 @@ const nvoMocks = mockExams.filter((t) => t.examType === 'nvo7')
 const dziMocks = mockExams.filter((t) => t.examType === 'dzi12')
 
 export default function PracticePage() {
-  const defaultTab = studentContentScope.allowedExamType === 'dzi12' ? 'dzi' : 'nvo'
-  const [tab, setTab] = useState<'nvo' | 'dzi'>(defaultTab)
+  const [tab, setTab] = useState<'nvo' | 'dzi'>('nvo')
   const activeExams = tab === 'nvo' ? nvoMocks : dziMocks
   const showNvoTab = nvoMocks.length > 0
   const showDziTab = dziMocks.length > 0
