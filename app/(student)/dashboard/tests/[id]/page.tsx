@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { tests } from '@/data/tests'
+import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
@@ -382,7 +382,25 @@ const BERON_EXAMS: NvoExam[] = beronExamPayload.tests.map(normalizeBeronExam)
 export default function TestPage() {
   const params = useParams()
   const testId = String(params.id)
-  const test = tests.find((t) => t.id === testId) || tests[0]
+  const test = tests.find((t) => t.id === testId)
+
+  if (!test) {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Тест" />
+        <div className="p-4 md:p-6 max-w-3xl mx-auto">
+          <div className="card p-6 text-center">
+            <h1 className="text-lg font-semibold text-text mb-2">Този тест не е достъпен</h1>
+            <p className="text-sm text-text-muted mb-4">Избраният тест не е наличен за текущия клас или не съществува.</p>
+            <Link href="/dashboard/tests" className="btn-primary justify-center">
+              Към тестовете
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const datasetId = mapTestId(test.id)
   const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
   const storageKey = `izpiti-pro:test:${test.id}:state:v1`
@@ -454,6 +472,44 @@ export default function TestPage() {
       revealAnswers,
     }))
   }, [answers, openResponses, submitted, revealAnswers, storageKey])
+
+  const handleSubmit = useCallback(() => {
+    setSubmitted(true)
+    if (typeof window === 'undefined' || !exam) return
+    const MISTAKES_KEY = 'nvo_mistakes'
+    let existing: Array<{
+      id: string; examId: string; examYear: number | string; examSubject: string
+      questionNumber: number; questionText: string; options: Record<string, string>
+      correctOption: string; questionImage: null; userAnswer: string
+      errorType: null; topics: string[]; firstSeen: string; lastSeen: string
+      attempts: Array<{ date: string; answer: string; correct: boolean }>; mastered: boolean
+    }> = []
+    try { existing = JSON.parse(window.localStorage.getItem(MISTAKES_KEY) || '[]') } catch { existing = [] }
+    const now = new Date().toISOString()
+    exam.questions.filter((q) => q.type === 'single_choice').forEach((q) => {
+      const userAnswer = answers[q.number]
+      if (!userAnswer || userAnswer === q.correct_option) return
+      const id = `${exam.id}_q${q.number}`
+      const existingEntry = existing.find((e) => e.id === id)
+      const attempt = { date: now, answer: userAnswer, correct: false }
+      if (existingEntry) {
+        existingEntry.userAnswer = userAnswer
+        existingEntry.lastSeen = now
+        existingEntry.attempts.push(attempt)
+        existingEntry.mastered = false
+      } else {
+        existing.push({
+          id, examId: exam.id, examYear: exam.year, examSubject: exam.subject,
+          questionNumber: q.number, questionText: q.question,
+          options: q.options ?? {}, correctOption: q.correct_option ?? '',
+          questionImage: null, userAnswer,
+          errorType: null, topics: [], firstSeen: now, lastSeen: now,
+          attempts: [attempt], mastered: false,
+        })
+      }
+    })
+    window.localStorage.setItem(MISTAKES_KEY, JSON.stringify(existing))
+  }, [exam, answers])
 
   const handleReset = useCallback(() => {
     setAnswers({})
@@ -529,7 +585,7 @@ export default function TestPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={() => setSubmitted(true)}
+              onClick={handleSubmit}
               className="btn-primary text-sm px-4 py-2"
             >
               Провери отговорите
@@ -600,17 +656,20 @@ export default function TestPage() {
             )}
             {hasMedia && !contextCollapsed && !contextMediaCollapsed && (
               <div className="px-5 pb-5 space-y-3">
-                {(exam.context_images || []).map((src, i) => (
+                {(exam.context_images || []).map((src, i) => {
+                  const normalizedSrc = src.replace(/^official_assets\//, '/')
+                  return (
                   // eslint-disable-next-line @next/next/no-img-element
                   <figure key={i} className="m-0 rounded-xl overflow-x-auto border border-border bg-white">
                     <img
-                      src={src}
+                      src={normalizedSrc}
                       alt={`Илюстрация ${i + 1}`}
                       className="block w-auto min-w-full max-w-none h-auto rounded-xl"
                       loading="lazy"
                     />
                   </figure>
-                ))}
+                  )
+                })}
               </div>
             )}
           </div>

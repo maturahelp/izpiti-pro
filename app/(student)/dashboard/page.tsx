@@ -1,13 +1,12 @@
 import { TopBar } from '@/components/dashboard/TopBar'
 import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
-import { tests } from '@/data/tests'
-import { lessons } from '@/data/lessons'
+import { studentTests, studentLessons } from '@/data/student-content'
 import Link from 'next/link'
 import { getDifficultyColor } from '@/lib/utils'
 
-const recommendedTests = tests.filter((t) => !t.status || t.status === 'not_started').slice(0, 3)
-const continueLessons = lessons.filter((l) => l.status === 'in_progress').slice(0, 2)
+const recommendedTests = studentTests.filter((t) => !t.status || t.status === 'not_started').slice(0, 3)
+const continueLessons = studentLessons.filter((l) => l.status === 'in_progress').slice(0, 2)
 
 export default function DashboardPage() {
   const firstName = 'Ученик'
@@ -40,8 +39,8 @@ export default function DashboardPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <StatCard label="Завършени тестове" value={0} subtext={`от ${tests.length} на платформата`} />
-          <StatCard label="Завършени уроци" value={0} subtext={`от ${lessons.length} налични`} />
+          <StatCard label="Завършени тестове" value={0} subtext={`от ${studentTests.length} на платформата`} />
+          <StatCard label="Завършени уроци" value={0} subtext={`от ${studentLessons.length} налични`} />
           <StatCard label="Среден резултат" value="0%" subtext="от всички тестове" accent />
           <StatCard label="Поредни дни" value={0} subtext="дни активност" />
         </div>
@@ -115,8 +114,8 @@ export default function DashboardPage() {
             <div className="card p-5">
               <h2 className="font-semibold text-text mb-4 text-sm">Напредък по предмети</h2>
               <div className="space-y-3">
-                <ProgressBar value={0} max={tests.length} label="Тестове" showLabel />
-                <ProgressBar value={0} max={lessons.length} label="Уроци" showLabel />
+                <ProgressBar value={0} max={studentTests.length} label="Тестове" showLabel />
+                <ProgressBar value={0} max={studentLessons.length} label="Уроци" showLabel />
               </div>
               <Link href="/dashboard/progress" className="block mt-4 text-center text-xs text-primary hover:underline font-medium">
                 Виж пълния напредък

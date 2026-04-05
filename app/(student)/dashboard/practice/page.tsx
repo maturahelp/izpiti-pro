@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
-import { tests } from '@/data/tests'
+import { studentTests as tests } from '@/data/student-content'
 import { getDifficultyColor } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 
@@ -17,6 +17,8 @@ const dziMocks = mockExams.filter((t) => t.examType === 'dzi12')
 export default function PracticePage() {
   const [tab, setTab] = useState<'nvo' | 'dzi'>('nvo')
   const activeExams = tab === 'nvo' ? nvoMocks : dziMocks
+  const showNvoTab = nvoMocks.length > 0
+  const showDziTab = dziMocks.length > 0
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -32,46 +34,52 @@ export default function PracticePage() {
         </div>
 
         {/* Tab switcher */}
-        <div className="inline-flex bg-white border border-border rounded-xl p-1 mb-6 gap-1">
-          <button
-            onClick={() => setTab('nvo')}
-            className={cn(
-              'px-5 py-2 rounded-lg text-sm font-semibold transition-all',
-              tab === 'nvo'
-                ? 'bg-primary text-white shadow-sm'
-                : 'text-text-muted hover:text-text',
+        {(showNvoTab || showDziTab) && (
+          <div className="inline-flex bg-white border border-border rounded-xl p-1 mb-6 gap-1">
+            {showNvoTab && (
+              <button
+                onClick={() => setTab('nvo')}
+                className={cn(
+                  'px-5 py-2 rounded-lg text-sm font-semibold transition-all',
+                  tab === 'nvo'
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-text-muted hover:text-text',
+                )}
+              >
+                НВО 7. клас
+                <span
+                  className={cn(
+                    'ml-2 text-xs px-1.5 py-0.5 rounded-full',
+                    tab === 'nvo' ? 'bg-white/20 text-white' : 'bg-gray-100 text-text-muted',
+                  )}
+                >
+                  {nvoMocks.length}
+                </span>
+              </button>
             )}
-          >
-            НВО 7. клас
-            <span
-              className={cn(
-                'ml-2 text-xs px-1.5 py-0.5 rounded-full',
-                tab === 'nvo' ? 'bg-white/20 text-white' : 'bg-gray-100 text-text-muted',
-              )}
-            >
-              {nvoMocks.length}
-            </span>
-          </button>
-          <button
-            onClick={() => setTab('dzi')}
-            className={cn(
-              'px-5 py-2 rounded-lg text-sm font-semibold transition-all',
-              tab === 'dzi'
-                ? 'bg-amber text-white shadow-sm'
-                : 'text-text-muted hover:text-text',
+            {showDziTab && (
+              <button
+                onClick={() => setTab('dzi')}
+                className={cn(
+                  'px-5 py-2 rounded-lg text-sm font-semibold transition-all',
+                  tab === 'dzi'
+                    ? 'bg-amber text-white shadow-sm'
+                    : 'text-text-muted hover:text-text',
+                )}
+              >
+                ДЗИ 12. клас
+                <span
+                  className={cn(
+                    'ml-2 text-xs px-1.5 py-0.5 rounded-full',
+                    tab === 'dzi' ? 'bg-white/20 text-white' : 'bg-gray-100 text-text-muted',
+                  )}
+                >
+                  {dziMocks.length}
+                </span>
+              </button>
             )}
-          >
-            ДЗИ 12. клас
-            <span
-              className={cn(
-                'ml-2 text-xs px-1.5 py-0.5 rounded-full',
-                tab === 'dzi' ? 'bg-white/20 text-white' : 'bg-gray-100 text-text-muted',
-              )}
-            >
-              {dziMocks.length}
-            </span>
-          </button>
-        </div>
+          </div>
+        )}
 
         {/* Exam grid */}
         <div className="grid sm:grid-cols-2 gap-4">

@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { lessons, formatDuration } from '@/data/lessons'
-import { tests } from '@/data/tests'
+import { formatDuration } from '@/data/lessons'
+import { studentLessons as lessons, studentTests as tests } from '@/data/student-content'
 import { Badge } from '@/components/shared/Badge'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import Link from 'next/link'
@@ -12,7 +12,25 @@ import { cn } from '@/lib/utils'
 
 export default function LessonPage() {
   const params = useParams()
-  const lesson = lessons.find((l) => l.id === params.id) || lessons[0]
+  const lesson = lessons.find((l) => l.id === params.id)
+
+  if (!lesson) {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Аудио урок" />
+        <div className="p-4 md:p-6 max-w-3xl mx-auto">
+          <div className="card p-6 text-center">
+            <h1 className="text-lg font-semibold text-text mb-2">Този урок не е достъпен</h1>
+            <p className="text-sm text-text-muted mb-4">Избраният урок не е наличен за текущия клас или не съществува.</p>
+            <Link href="/dashboard/lessons" className="btn-primary justify-center">
+              Към уроците
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const relatedTest = lesson.relatedTestId ? tests.find((t) => t.id === lesson.relatedTestId) : null
 
   const [isPlaying, setIsPlaying] = useState(false)
