@@ -656,17 +656,20 @@ export default function TestPage() {
             )}
             {hasMedia && !contextCollapsed && !contextMediaCollapsed && (
               <div className="px-5 pb-5 space-y-3">
-                {(exam.context_images || []).map((src, i) => (
+                {(exam.context_images || []).map((src, i) => {
+                  const normalizedSrc = src.replace(/^official_assets\//, '/')
+                  return (
                   // eslint-disable-next-line @next/next/no-img-element
                   <figure key={i} className="m-0 rounded-xl overflow-x-auto border border-border bg-white">
                     <img
-                      src={src}
+                      src={normalizedSrc}
                       alt={`Илюстрация ${i + 1}`}
                       className="block w-auto min-w-full max-w-none h-auto rounded-xl"
                       loading="lazy"
                     />
                   </figure>
-                ))}
+                  )
+                })}
               </div>
             )}
           </div>
