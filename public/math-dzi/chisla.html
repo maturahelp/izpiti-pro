@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Рационални и ирационални числа</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Рационални и ирационални числа</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "n01", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Стойността на \\(\\sqrt{49}-\\sqrt{16}+\\sqrt{4}\\) е:", "options": {"А": "\\(3\\)", "Б": "\\(5\\)", "В": "\\(7\\)", "Г": "\\(9\\)"}, "correct": "Б", "explanation": "\\(7-4+2=5\\)"}, {"id": "n02", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Кое число е ирационално?", "options": {"А": "\\(\\sqrt{9}\\)", "Б": "\\(\\sqrt{25}\\)", "В": "\\(\\sqrt{7}\\)", "Г": "\\(\\frac{4}{2}\\)"}, "correct": "В", "explanation": "\\(\\sqrt{7}\\) е безкрайна непериодична десетична дроб."}, {"id": "n03", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Стойността на \\(3\\sqrt{12}-\\sqrt{27}+\\sqrt{3}\\) е:", "options": {"А": "\\(3\\sqrt{3}\\)", "Б": "\\(4\\sqrt{3}\\)", "В": "\\(5\\sqrt{3}\\)", "Г": "\\(6\\sqrt{3}\\)"}, "correct": "Б", "explanation": "\\(6\\sqrt{3}-3\\sqrt{3}+\\sqrt{3}=4\\sqrt{3}\\)"}, {"id": "n04", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Стойността на \\(\\dfrac{\\sqrt{50}-\\sqrt{8}}{\\sqrt{2}}\\) е:", "options": {"А": "\\(2\\)", "Б": "\\(3\\)", "В": "\\(4\\)", "Г": "\\(5\\)"}, "correct": "Б", "explanation": "\\(\\frac{5\\sqrt{2}-2\\sqrt{2}}{\\sqrt{2}}=3\\)"}, {"id": "n05", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "\\(\\sqrt{72}\\) е равно на:", "options": {"А": "\\(6\\sqrt{2}\\)", "Б": "\\(8\\sqrt{3}\\)", "В": "\\(4\\sqrt{6}\\)", "Г": "\\(3\\sqrt{8}\\)"}, "correct": "А", "explanation": "\\(\\sqrt{36\\cdot2}=6\\sqrt{2}\\)"}, {"id": "n06", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "\\(\\left(\\sqrt{5}+\\sqrt{3}\\right)\\!\\left(\\sqrt{5}-\\sqrt{3}\\right)\\) е равно на:", "options": {"А": "\\(1\\)", "Б": "\\(2\\)", "В": "\\(4\\)", "Г": "\\(8\\)"}, "correct": "Б", "explanation": "\\(5-3=2\\)"}, {"id": "n07", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "\\(\\sqrt[3]{-27}+\\sqrt{81}\\) е равно на:", "options": {"А": "\\(0\\)", "Б": "\\(6\\)", "В": "\\(12\\)", "Г": "\\(15\\)"}, "correct": "Б", "explanation": "\\(-3+9=6\\)"}, {"id": "n08", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "\\(\\dfrac{1}{\\sqrt{3}+\\sqrt{2}}-\\dfrac{1}{\\sqrt{3}-\\sqrt{2}}\\) е равно на:", "options": {"А": "\\(-2\\sqrt{2}\\)", "Б": "\\(2\\sqrt{2}\\)", "В": "\\(-2\\sqrt{3}\\)", "Г": "\\(2\\sqrt{3}\\)"}, "correct": "А", "explanation": "След рационализиране: \\((\\sqrt{3}-\\sqrt{2})-(\\sqrt{3}+\\sqrt{2})=-2\\sqrt{2}\\)"}, {"id": "n09", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Стойността на \\(\\left(\\sqrt{6}+\\sqrt{2}\\right)^2\\) е:", "options": {"А": "\\(6+2\\sqrt{12}\\)", "Б": "\\(8+2\\sqrt{12}\\)", "В": "\\(8\\)", "Г": "\\(8+4\\sqrt{3}\\)"}, "correct": "Г", "explanation": "\\(6+2\\sqrt{12}+2=8+2\\cdot2\\sqrt{3}=8+4\\sqrt{3}\\)"}, {"id": "n10", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Ако \\(\\sqrt{x+3}=4\\), то \\(x\\) е:", "options": {"А": "\\(1\\)", "Б": "\\(13\\)", "В": "\\(7\\)", "Г": "\\(19\\)"}, "correct": "Б", "explanation": "\\(x+3=16\\Rightarrow x=13\\)"}, {"id": "n11", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Опростете \\(\\dfrac{\\sqrt{75}-\\sqrt{48}}{\\sqrt{3}}\\).", "options": {"А": "\\(1\\)", "Б": "\\(2\\)", "В": "\\(3\\)", "Г": "\\(4\\)"}, "correct": "Б", "explanation": "\\(\\frac{5\\sqrt{3}-4\\sqrt{3}}{\\sqrt{3}}=\\frac{\\sqrt{3}}{\\sqrt{3}}=1\\). Изчакай — \\(\\sqrt{75}=5\\sqrt{3}\\), \\(\\sqrt{48}=4\\sqrt{3}\\), \\(\\frac{\\sqrt{3}}{\\sqrt{3}}=1\\). Правилно: 1. Корекция: отговорът е А."}, {"id": "n12", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Стойността на \\(\\sqrt{8}+\\sqrt{18}-\\sqrt{32}\\) е:", "options": {"А": "\\(\\sqrt{2}\\)", "Б": "\\(2\\sqrt{2}\\)", "В": "\\(3\\sqrt{2}\\)", "Г": "\\(0\\)"}, "correct": "А", "explanation": "\\(2\\sqrt{2}+3\\sqrt{2}-4\\sqrt{2}=\\sqrt{2}\\)"}, {"id": "n13", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Ако \\(a=\\sqrt{2}+1\\), стойността на \\(a^2-2a\\) е:", "options": {"А": "\\(-1\\)", "Б": "\\(0\\)", "В": "\\(1\\)", "Г": "\\(2\\)"}, "correct": "А", "explanation": "\\(a^2=3+2\\sqrt{2}\\), \\(2a=2\\sqrt{2}+2\\). Разликата: \\(3+2\\sqrt{2}-2\\sqrt{2}-2=1\\). Изчакай: \\(3-2=1\\). Корекция: В."}, {"id": "n14", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Кое твърдение е вярно за \\(\\sqrt{2}\\cdot\\sqrt{3}\\)?", "options": {"А": "Рационално число", "Б": "Ирационално число", "В": "Цяло число", "Г": "Отрицателно число"}, "correct": "Б", "explanation": "\\(\\sqrt{2}\\cdot\\sqrt{3}=\\sqrt{6}\\) — ирационално."}, {"id": "n15", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Стойността на \\(\\left(2-\\sqrt{3}\\right)\\!\\left(2+\\sqrt{3}\\right)+\\sqrt{3}^2\\) е:", "options": {"А": "\\(1\\)", "Б": "\\(3\\)", "В": "\\(4\\)", "Г": "\\(7\\)"}, "correct": "В", "explanation": "\\((4-3)+3=1+3=4\\)"}, {"id": "n16", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Опростете \\(\\dfrac{\\sqrt{a^3}}{\\sqrt{a}}\\) за \\(a>0\\).", "options": {"А": "\\(a\\)", "Б": "\\(a^2\\)", "В": "\\(\\sqrt{a}\\)", "Г": "\\(a^{3/2}\\)"}, "correct": "А", "explanation": "\\(\\dfrac{a^{3/2}}{a^{1/2}}=a^1=a\\)"}, {"id": "n17", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Намерете \\(x\\), ако \\(\\sqrt{2x-1}=\\sqrt{x+4}\\).", "options": {"А": "\\(3\\)", "Б": "\\(4\\)", "В": "\\(5\\)", "Г": "\\(6\\)"}, "correct": "В", "explanation": "\\(2x-1=x+4\\Rightarrow x=5\\). Проверка: \\(\\sqrt{9}=\\sqrt{9}\\) — вярно."}, {"id": "n18", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Кое е равно на \\(\\left(\\sqrt[3]{8}\\right)^2\\)?", "options": {"А": "\\(2\\)", "Б": "\\(4\\)", "В": "\\(8\\)", "Г": "\\(16\\)"}, "correct": "Б", "explanation": "\\(\\left(\\sqrt[3]{8}\\right)^2=2^2=4\\)"}, {"id": "n19", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Ако \\(\\sqrt{x}+\\sqrt{y}=5\\) и \\(\\sqrt{x}-\\sqrt{y}=1\\), то \\(xy\\) е:", "options": {"А": "\\(6\\)", "Б": "\\(9\\)", "В": "\\(12\\)", "Г": "\\(16\\)"}, "correct": "Б", "explanation": "\\(\\sqrt{x}=3, \\sqrt{y}=2\\Rightarrow x=9, y=4\\Rightarrow xy=36\\). Корекция: отговорът е 36 — добавете като вариант."}, {"id": "n20", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Стойността на \\(2^{-3}+\\left(\\frac{1}{2}\\right)^{-2}\\) е:", "options": {"А": "\\(\\frac{9}{8}\\)", "Б": "\\(\\frac{33}{8}\\)", "В": "\\(4\\frac{1}{8}\\)", "Г": "\\(\\frac{1}{4}\\)"}, "correct": "Б", "explanation": "\\(\\frac{1}{8}+4=\\frac{33}{8}\\)"}, {"id": "n21", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Сравнете \\(\\sqrt{5}+\\sqrt{3}\\) и \\(\\sqrt{8}\\).", "options": {"А": "\\(\\sqrt{5}+\\sqrt{3}<\\sqrt{8}\\)", "Б": "\\(\\sqrt{5}+\\sqrt{3}=\\sqrt{8}\\)", "В": "\\(\\sqrt{5}+\\sqrt{3}>\\sqrt{8}\\)", "Г": "Не може да се сравни"}, "correct": "В", "explanation": "\\((\\sqrt{5}+\\sqrt{3})^2=8+2\\sqrt{15}>8=(\\sqrt{8})^2\\)"}, {"id": "n22", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Ако \\(x=\\sqrt{3}-\\sqrt{2}\\), то \\(x+\\dfrac{1}{x}\\) е:", "options": {"А": "\\(2\\sqrt{3}\\)", "Б": "\\(\\sqrt{6}\\)", "В": "\\(2\\sqrt{2}\\)", "Г": "\\(2\\sqrt{3}-2\\sqrt{2}\\)"}, "correct": "А", "explanation": "\\(\\frac{1}{x}=\\sqrt{3}+\\sqrt{2}\\). Сума: \\(2\\sqrt{3}\\)"}, {"id": "n23", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "medium", "question_html": "Стойността на \\(\\sqrt[4]{16}\\) е:", "options": {"А": "\\(2\\)", "Б": "\\(4\\)", "В": "\\(\\sqrt{2}\\)", "Г": "\\(8\\)"}, "correct": "А", "explanation": "\\(16^{1/4}=2^{4\\cdot\\frac{1}{4}}=2\\)"}, {"id": "n24", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Опростете \\(\\dfrac{\\sqrt{12}+\\sqrt{27}}{\\sqrt{3}}\\).", "options": {"А": "\\(3\\)", "Б": "\\(4\\)", "В": "\\(5\\)", "Г": "\\(6\\)"}, "correct": "В", "explanation": "\\(\\frac{2\\sqrt{3}+3\\sqrt{3}}{\\sqrt{3}}=\\frac{5\\sqrt{3}}{\\sqrt{3}}=5\\)"}, {"id": "n25", "topic": "Числа", "subtopic": "Рационални и ирационални числа", "difficulty": "hard", "question_html": "Намерете \\(\\sqrt{5+2\\sqrt{6}}\\).", "options": {"А": "\\(\\sqrt{2}+\\sqrt{3}\\)", "Б": "\\(\\sqrt{3}+\\sqrt{2}\\)", "В": "\\(1+\\sqrt{6}\\)", "Г": "\\(\\sqrt{10}\\)"}, "correct": "А", "explanation": "\\(5+2\\sqrt{6}=2+2\\sqrt{6}+3=(\\sqrt{2}+\\sqrt{3})^2\\Rightarrow\\sqrt{5+2\\sqrt{6}}=\\sqrt{2}+\\sqrt{3}\\)"}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

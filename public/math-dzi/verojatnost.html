@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Вероятност</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Вероятност</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "pr01", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "Монета — вероятността за ези е:", "options": {"А": "\\(\\frac{1}{4}\\)", "Б": "\\(\\frac{1}{2}\\)", "В": "\\(\\frac{3}{4}\\)", "Г": "\\(1\\)"}, "correct": "Б", "explanation": "\\(P=\\frac{1}{2}\\)"}, {"id": "pr02", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "Зар — вероятността за четно число е:", "options": {"А": "\\(\\frac{1}{6}\\)", "Б": "\\(\\frac{1}{3}\\)", "В": "\\(\\frac{1}{2}\\)", "Г": "\\(\\frac{2}{3}\\)"}, "correct": "В", "explanation": "\\(P=\\frac{3}{6}=\\frac{1}{2}\\)"}, {"id": "pr03", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "Урна: 4 бели и 6 черни топки. Вероятността за бяла е:", "options": {"А": "\\(\\frac{2}{5}\\)", "Б": "\\(\\frac{3}{5}\\)", "В": "\\(\\frac{4}{6}\\)", "Г": "\\(\\frac{1}{4}\\)"}, "correct": "А", "explanation": "\\(\\frac{4}{10}=\\frac{2}{5}\\)"}, {"id": "pr04", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "\\(P(A)=0{,}3\\). \\(P(\\bar{A})\\) е:", "options": {"А": "\\(0{,}3\\)", "Б": "\\(0{,}6\\)", "В": "\\(0{,}7\\)", "Г": "\\(1{,}3\\)"}, "correct": "В", "explanation": "\\(1-0.3=0.7\\)"}, {"id": "pr05", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "Два независими зара — вероятността и двата да покажат 6 е:", "options": {"А": "\\(\\frac{1}{6}\\)", "Б": "\\(\\frac{1}{12}\\)", "В": "\\(\\frac{1}{36}\\)", "Г": "\\(\\frac{1}{3}\\)"}, "correct": "В", "explanation": "\\(\\frac{1}{6}\\cdot\\frac{1}{6}=\\frac{1}{36}\\)"}, {"id": "pr06", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "20 ученика, 5 наградени. Вероятността за награден е:", "options": {"А": "\\(\\frac{1}{5}\\)", "Б": "\\(\\frac{1}{4}\\)", "В": "\\(\\frac{3}{4}\\)", "Г": "\\(\\frac{1}{20}\\)"}, "correct": "Б", "explanation": "\\(\\frac{5}{20}=\\frac{1}{4}\\)"}, {"id": "pr07", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "medium", "question_html": "52 карти — вероятността за ас е:", "options": {"А": "\\(\\frac{1}{52}\\)", "Б": "\\(\\frac{1}{13}\\)", "В": "\\(\\frac{1}{4}\\)", "Г": "\\(\\frac{4}{52}\\)"}, "correct": "Б", "explanation": "\\(\\frac{4}{52}=\\frac{1}{13}\\)"}, {"id": "pr08", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "\\(P(A)=0{,}4\\), \\(P(B)=0{,}5\\), независими. \\(P(A\\cap B)\\) е:", "options": {"А": "\\(0{,}9\\)", "Б": "\\(0{,}2\\)", "В": "\\(0{,}45\\)", "Г": "\\(0{,}1\\)"}, "correct": "Б", "explanation": "\\(0.4\\cdot0.5=0.2\\)"}, {"id": "pr09", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "\\(P(A)=0{,}6\\), \\(P(B)=0{,}4\\), независими. \\(P(A\\cup B)\\) е:", "options": {"А": "\\(0{,}76\\)", "Б": "\\(0{,}24\\)", "В": "\\(0{,}84\\)", "Г": "\\(1{,}0\\)"}, "correct": "А", "explanation": "\\(P(A\\cup B)=0.6+0.4-0.24=0.76\\)"}, {"id": "pr10", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Зар — вероятността за число по-голямо от 4 е:", "options": {"А": "\\(\\frac{1}{6}\\)", "Б": "\\(\\frac{1}{3}\\)", "В": "\\(\\frac{1}{2}\\)", "Г": "\\(\\frac{2}{3}\\)"}, "correct": "Б", "explanation": "\\(\\frac{2}{6}=\\frac{1}{3}\\)"}, {"id": "pr11", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Урна: 3 червени, 4 сини, 5 зелени. Вероятността за НЕ-червена е:", "options": {"А": "\\(\\frac{1}{4}\\)", "Б": "\\(\\frac{3}{4}\\)", "В": "\\(\\frac{3}{12}\\)", "Г": "\\(\\frac{2}{3}\\)"}, "correct": "Б", "explanation": "\\(1-\\frac{3}{12}=\\frac{9}{12}=\\frac{3}{4}\\)"}, {"id": "pr12", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Три монети. Вероятността за точно две ezi е:", "options": {"А": "\\(\\frac{1}{4}\\)", "Б": "\\(\\frac{3}{8}\\)", "В": "\\(\\frac{1}{2}\\)", "Г": "\\(\\frac{1}{8}\\)"}, "correct": "Б", "explanation": "\\(\\binom{3}{2}\\cdot\\left(\\frac{1}{2}\\right)^3=\\frac{3}{8}\\)"}, {"id": "pr13", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Карти: изтегляме 2 последователно без връщане. Вероятността и двете да са купи е:", "options": {"А": "\\(\\frac{1}{4}\\)", "Б": "\\(\\frac{13}{52}\\)", "В": "\\(\\frac{1}{17}\\)", "Г": "\\(\\frac{12}{51}\\)"}, "correct": "В", "explanation": "\\(\\frac{13}{52}\\cdot\\frac{12}{51}=\\frac{156}{2652}=\\frac{1}{17}\\)"}, {"id": "pr14", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Ако \\(P(A|B)=0{,}6\\) и \\(P(B)=0{,}5\\), то \\(P(A\\cap B)\\) е:", "options": {"А": "\\(0{,}1\\)", "Б": "\\(0{,}3\\)", "В": "\\(0{,}6\\)", "Г": "\\(1{,}1\\)"}, "correct": "Б", "explanation": "\\(P(A\\cap B)=P(A|B)\\cdot P(B)=0.6\\cdot0.5=0.3\\)"}, {"id": "pr15", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "В клас 15 момчета и 10 момичета. Вероятността случайно избран да е момче е:", "options": {"А": "\\(\\frac{1}{3}\\)", "Б": "\\(\\frac{2}{5}\\)", "В": "\\(\\frac{3}{5}\\)", "Г": "\\(\\frac{1}{2}\\)"}, "correct": "В", "explanation": "\\(\\frac{15}{25}=\\frac{3}{5}\\)"}, {"id": "pr16", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Събитие \\(A\\) и \\(B\\) са несъвместими и \\(P(A)=0{,}3\\), \\(P(B)=0{,}4\\). \\(P(A\\cup B)\\) е:", "options": {"А": "\\(0{,}12\\)", "Б": "\\(0{,}7\\)", "В": "\\(0{,}1\\)", "Г": "\\(1{,}0\\)"}, "correct": "Б", "explanation": "Несъвместими: \\(P(A\\cup B)=P(A)+P(B)=0.7\\)"}, {"id": "pr17", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Колко е вероятността хвърлен зар да покаже простo число?", "options": {"А": "\\(\\frac{1}{3}\\)", "Б": "\\(\\frac{1}{2}\\)", "В": "\\(\\frac{2}{3}\\)", "Г": "\\(\\frac{1}{6}\\)"}, "correct": "Б", "explanation": "Прости числа на зар: 2,3,5. \\(P=\\frac{3}{6}=\\frac{1}{2}\\)"}, {"id": "pr18", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "4 ученика, 2 от тях получават стипендия. Вероятността произволно избраните 2 и двамата да са стипендианти е:", "options": {"А": "\\(\\frac{1}{6}\\)", "Б": "\\(\\frac{1}{4}\\)", "В": "\\(\\frac{1}{3}\\)", "Г": "\\(\\frac{1}{2}\\)"}, "correct": "А", "explanation": "\\(\\frac{\\binom{2}{2}}{\\binom{4}{2}}=\\frac{1}{6}\\)"}, {"id": "pr19", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Вероятността за събитие е \\(\\frac{2}{5}\\). Шансът срещу него е:", "options": {"А": "\\(\\frac{2}{3}\\)", "Б": "\\(\\frac{3}{2}\\)", "В": "\\(\\frac{3}{5}\\)", "Г": "\\(\\frac{5}{2}\\)"}, "correct": "Б", "explanation": "Шанс срещу: \\(\\frac{P(\\bar{A})}{P(A)}=\\frac{3/5}{2/5}=\\frac{3}{2}\\)"}, {"id": "pr20", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Очакваната стойност (average) при хвърляне на зар е:", "options": {"А": "\\(3\\)", "Б": "\\(3{,}5\\)", "В": "\\(4\\)", "Г": "\\(4{,}5\\)"}, "correct": "Б", "explanation": "\\(E=\\frac{1+2+3+4+5+6}{6}=3.5\\)"}, {"id": "pr21", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Три пъти хвърляме зар. Вероятността никога да не се падне 1 е:", "options": {"А": "\\(\\left(\\frac{5}{6}\\right)^3\\)", "Б": "\\(\\left(\\frac{1}{6}\\right)^3\\)", "В": "\\(\\frac{5}{6}\\)", "Г": "\\(1-\\left(\\frac{1}{6}\\right)^3\\)"}, "correct": "А", "explanation": "\\(\\left(\\frac{5}{6}\\right)^3=\\frac{125}{216}\\)"}, {"id": "pr22", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Ако \\(P(A)=0{,}5\\), \\(P(B)=0{,}3\\) и \\(P(A\\cap B)=0{,}1\\), то \\(P(A|B)\\) е:", "options": {"А": "\\(\\frac{1}{3}\\)", "Б": "\\(\\frac{1}{5}\\)", "В": "\\(\\frac{2}{5}\\)", "Г": "\\(\\frac{1}{2}\\)"}, "correct": "А", "explanation": "\\(P(A|B)=\\frac{P(A\\cap B)}{P(B)}=\\frac{0.1}{0.3}=\\frac{1}{3}\\)"}, {"id": "pr23", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Вероятността за поне едно ези при 3 хвърляния на монета е:", "options": {"А": "\\(\\frac{3}{8}\\)", "Б": "\\(\\frac{1}{2}\\)", "В": "\\(\\frac{7}{8}\\)", "Г": "\\(\\frac{1}{8}\\)"}, "correct": "В", "explanation": "\\(1-P(\\text{нито едно})=1-\\left(\\frac{1}{2}\\right)^3=\\frac{7}{8}\\)"}, {"id": "pr24", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Урна: 5 червени и 3 бели. Изтегляме 2 без връщане. Вероятността и двете да са червени е:", "options": {"А": "\\(\\frac{5}{14}\\)", "Б": "\\(\\frac{5}{16}\\)", "В": "\\(\\frac{10}{28}\\)", "Г": "\\(\\frac{25}{64}\\)"}, "correct": "А", "explanation": "\\(\\frac{5}{8}\\cdot\\frac{4}{7}=\\frac{20}{56}=\\frac{5}{14}\\)"}, {"id": "pr25", "topic": "Вероятности и статистика", "subtopic": "Вероятност", "difficulty": "hard", "question_html": "Ако събитията \\(A\\) и \\(B\\) са независими и \\(P(A)=P(B)=p\\), то \\(P(A\\cup B)=0{,}75\\). Стойността на \\(p\\) е:", "options": {"А": "\\(0{,}25\\)", "Б": "\\(0{,}5\\)", "В": "\\(0{,}75\\)", "Г": "\\(0{,}6\\)"}, "correct": "Б", "explanation": "\\(P(A\\cup B)=2p-p^2=0.75\\Rightarrow p^2-2p+0.75=0\\Rightarrow p=0.5\\) или \\(p=1.5\\). Отговор: \\(p=0.5\\)"}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

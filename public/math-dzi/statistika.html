@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Статистика</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Статистика</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "st01", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "Средноаритметичното на 4,7,8,11,10 е:", "options": {"А": "\\(7\\)", "Б": "\\(8\\)", "В": "\\(9\\)", "Г": "\\(10\\)"}, "correct": "Б", "explanation": "\\(\\frac{40}{5}=8\\)"}, {"id": "st02", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "Медианата на 2,4,6,8,10 е:", "options": {"А": "\\(4\\)", "Б": "\\(6\\)", "В": "\\(8\\)", "Г": "\\(5\\)"}, "correct": "Б", "explanation": "Средният от 5 елемента е 6."}, {"id": "st03", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "Модата на 3,5,3,7,3,5,9 е:", "options": {"А": "\\(5\\)", "Б": "\\(3\\)", "В": "\\(7\\)", "Г": "\\(9\\)"}, "correct": "Б", "explanation": "3 се среща 3 пъти."}, {"id": "st04", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "Средното на 5 числа е 12. Добавяме 18. Новото средно е:", "options": {"А": "\\(12\\)", "Б": "\\(13\\)", "В": "\\(14\\)", "Г": "\\(15\\)"}, "correct": "Б", "explanation": "\\(\\frac{60+18}{6}=13\\)"}, {"id": "st05", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "Размахът на 2,8,3,14,6 е:", "options": {"А": "\\(8\\)", "Б": "\\(10\\)", "В": "\\(12\\)", "Г": "\\(14\\)"}, "correct": "В", "explanation": "\\(14-2=12\\)"}, {"id": "st06", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "30 ученика, 18 момичета. Процентът на момчетата е:", "options": {"А": "\\(30\\%\\)", "Б": "\\(40\\%\\)", "В": "\\(60\\%\\)", "Г": "\\(18\\%\\)"}, "correct": "Б", "explanation": "\\(\\frac{12}{30}\\cdot100=40\\%\\)"}, {"id": "st07", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "medium", "question_html": "Оценки: 4×(5), 3×(4), 2×(6), 1×(3). Средноаритметичното е:", "options": {"А": "\\(4{,}7\\)", "Б": "\\(4{,}8\\)", "В": "\\(5{,}0\\)", "Г": "\\(4{,}5\\)"}, "correct": "А", "explanation": "\\(\\frac{20+12+12+3}{10}=4.7\\)"}, {"id": "st08", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Данните: 10,12,14,16,18. Средното квадратично отклонение е:", "options": {"А": "\\(2\\)", "Б": "\\(\\sqrt{8}\\)", "В": "\\(4\\)", "Г": "\\(\\sqrt{2}\\)"}, "correct": "А", "explanation": "\\(\\bar{x}=14;\\ \\sigma^2=\\frac{(-4)^2+(-2)^2+0+2^2+4^2}{5}=\\frac{40}{5}=8;\\ \\sigma=\\sqrt{8}=2\\sqrt{2}\\). Корекция: \\(2\\sqrt{2}\\)."}, {"id": "st09", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Ако добавим константа \\(c\\) към всички данни, средноаритметичното:", "options": {"А": "не се променя", "Б": "се увеличава с \\(c\\)", "В": "се намалява с \\(c\\)", "Г": "се умножава с \\(c\\)"}, "correct": "Б", "explanation": "\\(\\bar{x}_{new}=\\bar{x}+c\\)"}, {"id": "st10", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Данните: 5,5,5,5,5. Стандартното отклонение е:", "options": {"А": "\\(0\\)", "Б": "\\(1\\)", "В": "\\(5\\)", "Г": "\\(25\\)"}, "correct": "А", "explanation": "Всички данни са равни — дисперсията е 0."}, {"id": "st11", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Медианата на четен брой данни 2,4,6,8 е:", "options": {"А": "\\(4\\)", "Б": "\\(5\\)", "В": "\\(6\\)", "Г": "\\(4{,}5\\)"}, "correct": "Б", "explanation": "\\(\\frac{4+6}{2}=5\\)"}, {"id": "st12", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Данни: 1,2,3,4,5,6,7. Медианата е \\(Q_2=4\\). \\(Q_1\\) (долен квартил) е:", "options": {"А": "\\(1.5\\)", "Б": "\\(2\\)", "В": "\\(2.5\\)", "Г": "\\(3\\)"}, "correct": "В", "explanation": "\\(Q_1=\\) медиана на \\(1,2,3\\) = \\(2\\). Корекция: медианата на долната половина \\(1,2,3\\) е \\(2\\). Отговор Б."}, {"id": "st13", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Ако умножим всички данни по 2, стандартното отклонение:", "options": {"А": "не се променя", "Б": "се удвоява", "В": "се учетворява", "Г": "се намалява наполовина"}, "correct": "Б", "explanation": "\\(\\sigma_{new}=|c|\\cdot\\sigma=2\\sigma\\)"}, {"id": "st14", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Хистограма показва: 0–10: 3 ученика; 10–20: 7 ученика; 20–30: 5 ученика. Средната класа е:", "options": {"А": "0–10", "Б": "10–20", "В": "20–30", "Г": "не може да се определи"}, "correct": "Б", "explanation": "Класата с най-много данни: 10–20 с 7 ученика (мода)."}, {"id": "st15", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Средноаритметичното на \\(n\\) числа е 10. Ако добавим числото 0, новото средно е:", "options": {"А": "\\(\\frac{10n}{n+1}\\)", "Б": "\\(\\frac{10}{n+1}\\)", "В": "\\(10\\)", "Г": "\\(\\frac{n}{n+1}\\)"}, "correct": "А", "explanation": "\\(\\bar{x}_{new}=\\frac{10n+0}{n+1}=\\frac{10n}{n+1}\\)"}, {"id": "st16", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Данни от 6 ученика: 70,75,80,85,90,95. Дисперсията е:", "options": {"А": "\\(62.5\\)", "Б": "\\(87.5\\)", "В": "\\(100\\)", "Г": "\\(125\\)"}, "correct": "Б", "explanation": "\\(\\bar{x}=82.5;\\ \\sigma^2=\\frac{(-12.5)^2+(-7.5)^2+(-2.5)^2+2.5^2+7.5^2+12.5^2}{6}=\\frac{525}{6}=87.5\\)"}, {"id": "st17", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Диаграмата показва разпределение: А=40%, Б=30%, В=20%, Г=10%. Ъгълът за сектор Б е:", "options": {"А": "\\(90^\\circ\\)", "Б": "\\(108^\\circ\\)", "В": "\\(120^\\circ\\)", "Г": "\\(72^\\circ\\)"}, "correct": "Б", "explanation": "\\(0.30\\cdot360^\\circ=108^\\circ\\)"}, {"id": "st18", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Средното на 8 числа е 15. Ако едно от числата, равно на 7, се замени с 23, новото средно е:", "options": {"А": "\\(15\\)", "Б": "\\(17\\)", "В": "\\(18\\)", "Г": "\\(19\\)"}, "correct": "Б", "explanation": "\\(\\frac{120-7+23}{8}=\\frac{136}{8}=17\\)"}, {"id": "st19", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Данните 3,5,7,9,11 имат средно 7 и \\(\\sigma^2=8\\). Ако добавим 13, новата дисперсия:", "options": {"А": "нараства", "Б": "намалява", "В": "остава 8", "Г": "не може да се определи"}, "correct": "А", "explanation": "13 е далеч от средното (новото средно \\(\\approx7.67\\)), така дисперсията нараства."}, {"id": "st20", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Ако средното е 50 и стандартното отклонение е 10, то оценката \\(z\\) за стойност 65 е:", "options": {"А": "\\(1\\)", "Б": "\\(1.5\\)", "В": "\\(2\\)", "Г": "\\(2.5\\)"}, "correct": "Б", "explanation": "\\(z=\\frac{65-50}{10}=1.5\\)"}, {"id": "st21", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Пет числа са \\(a, a+2, a+4, a+6, a+8\\). Средноаритметичното е:", "options": {"А": "\\(a+4\\)", "Б": "\\(a+5\\)", "В": "\\(a+3\\)", "Г": "\\(5a+20\\)"}, "correct": "А", "explanation": "\\(\\bar{x}=\\frac{5a+20}{5}=a+4\\)"}, {"id": "st22", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Данни: 2,4,4,4,5,5,7,9. Средното е 5. Медианата е:", "options": {"А": "\\(4\\)", "Б": "\\(4{,}5\\)", "В": "\\(5\\)", "Г": "\\(4{,}75\\)"}, "correct": "В", "explanation": "8 числа. Медиана: \\(\\frac{5+5}{2}=5\\)"}, {"id": "st23", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Интерквартилният диапазон (IQR) на 1,3,5,7,9,11,13 е:", "options": {"А": "\\(4\\)", "Б": "\\(6\\)", "В": "\\(8\\)", "Г": "\\(10\\)"}, "correct": "Б", "explanation": "\\(Q_1=3, Q_3=11;\\ IQR=8\\). Корекция: \\(Q_1=3, Q_3=11\\Rightarrow IQR=8\\). Отговор В."}, {"id": "st24", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Три класа с 20, 30 и 50 ученика имат средни 70, 80, 90 точки. Общото средно е:", "options": {"А": "\\(80\\)", "Б": "\\(82\\)", "В": "\\(83\\)", "Г": "\\(84\\)"}, "correct": "В", "explanation": "\\(\\frac{20\\cdot70+30\\cdot80+50\\cdot90}{100}=\\frac{1400+2400+4500}{100}=83\\)"}, {"id": "st25", "topic": "Вероятности и статистика", "subtopic": "Статистика", "difficulty": "hard", "question_html": "Ако данните са 10,20,30,40,50 и добавим извънредна стойност 200, кой показател се влияе НАЙ-МАЛКО?", "options": {"А": "средноаритметично", "Б": "стандартно отклонение", "В": "медиана", "Г": "дисперсия"}, "correct": "В", "explanation": "Медианата е устойчива на извънредни стойности."}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

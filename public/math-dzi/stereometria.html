@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Стереометрия</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Стереометрия</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "s01", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Обемът на куб с ребро 3 cm е:", "options": {"А": "\\(9\\)", "Б": "\\(18\\)", "В": "\\(27\\)", "Г": "\\(81\\)"}, "correct": "В", "explanation": "\\(V=3^3=27\\,\\text{cm}^3\\)"}, {"id": "s02", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Пълната повърхнина на куб с ребро 4 cm е:", "options": {"А": "\\(64\\)", "Б": "\\(96\\)", "В": "\\(48\\)", "Г": "\\(16\\)"}, "correct": "Б", "explanation": "\\(S=6\\cdot16=96\\,\\text{cm}^2\\)"}, {"id": "s03", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Обемът на цилиндър с \\(r=3\\) cm и \\(h=5\\) cm е:", "options": {"А": "\\(15\\pi\\)", "Б": "\\(30\\pi\\)", "В": "\\(45\\pi\\)", "Г": "\\(90\\pi\\)"}, "correct": "В", "explanation": "\\(V=\\pi\\cdot9\\cdot5=45\\pi\\,\\text{cm}^3\\)"}, {"id": "s04", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Обемът на правилна четириъгълна пирамида с основа 6 cm и \\(h=4\\) cm е:", "options": {"А": "\\(24\\)", "Б": "\\(48\\)", "В": "\\(72\\)", "Г": "\\(144\\)"}, "correct": "Б", "explanation": "\\(V=\\frac{1}{3}\\cdot36\\cdot4=48\\,\\text{cm}^3\\)"}, {"id": "s05", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Обемът на топка с \\(r=3\\) cm е:", "options": {"А": "\\(9\\pi\\)", "Б": "\\(27\\pi\\)", "В": "\\(36\\pi\\)", "Г": "\\(12\\pi\\)"}, "correct": "В", "explanation": "\\(V=\\frac{4}{3}\\pi\\cdot27=36\\pi\\,\\text{cm}^3\\)"}, {"id": "s06", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Повърхнината на топка с \\(d=6\\) cm е:", "options": {"А": "\\(18\\pi\\)", "Б": "\\(36\\pi\\)", "В": "\\(72\\pi\\)", "Г": "\\(108\\pi\\)"}, "correct": "Б", "explanation": "\\(r=3;\\ S=4\\pi\\cdot9=36\\pi\\,\\text{cm}^2\\)"}, {"id": "s07", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Страничната повърхнина на правилна четириъгълна призма с основа 4 cm и \\(h=7\\) cm е:", "options": {"А": "\\(56\\)", "Б": "\\(96\\)", "В": "\\(112\\)", "Г": "\\(28\\)"}, "correct": "В", "explanation": "\\(S_{\\text{стр}}=4\\cdot4\\cdot7=112\\,\\text{cm}^2\\)"}, {"id": "s08", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "medium", "question_html": "Обемът на конус с \\(r=6\\) cm и \\(h=9\\) cm е:", "options": {"А": "\\(54\\pi\\)", "Б": "\\(108\\pi\\)", "В": "\\(162\\pi\\)", "Г": "\\(324\\pi\\)"}, "correct": "Б", "explanation": "\\(V=\\frac{1}{3}\\pi\\cdot36\\cdot9=108\\pi\\,\\text{cm}^3\\)"}, {"id": "s09", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Около­кръжната повърхнина на конус с \\(r=5\\), образувателна \\(l=8\\) cm е:", "options": {"А": "\\(40\\pi\\)", "Б": "\\(25\\pi\\)", "В": "\\(64\\pi\\)", "Г": "\\(13\\pi\\)"}, "correct": "А", "explanation": "\\(S_{\\text{ок}}=\\pi r l=40\\pi\\,\\text{cm}^2\\)"}, {"id": "s10", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Правилна триъгълна призма с основа \\(S=12\\sqrt{3}\\,\\text{cm}^2\\) и \\(h=10\\) cm. Обемът е:", "options": {"А": "\\(60\\sqrt{3}\\)", "Б": "\\(120\\sqrt{3}\\)", "В": "\\(240\\sqrt{3}\\)", "Г": "\\(30\\sqrt{3}\\)"}, "correct": "Б", "explanation": "\\(V=12\\sqrt{3}\\cdot10=120\\sqrt{3}\\,\\text{cm}^3\\)"}, {"id": "s11", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Пълната повърхнина на цилиндър с \\(r=4\\) cm и \\(h=6\\) cm е:", "options": {"А": "\\(40\\pi\\)", "Б": "\\(48\\pi\\)", "В": "\\(80\\pi\\)", "Г": "\\(96\\pi\\)"}, "correct": "В", "explanation": "\\(S=2\\pi r(r+h)=2\\pi\\cdot4\\cdot10=80\\pi\\,\\text{cm}^2\\)"}, {"id": "s12", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Пълната повърхнина на конус с \\(r=3\\) cm и \\(h=4\\) cm е:", "options": {"А": "\\(12\\pi\\)", "Б": "\\(15\\pi\\)", "В": "\\(24\\pi\\)", "Г": "\\(18\\pi\\)"}, "correct": "В", "explanation": "Образувателна: \\(l=\\sqrt{9+16}=5\\). \\(S=\\pi r(r+l)=\\pi\\cdot3\\cdot8=24\\pi\\,\\text{cm}^2\\)"}, {"id": "s13", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Ако обемите на два подобни тела се отнасят като \\(1:8\\), линейното им отношение е:", "options": {"А": "\\(1:2\\)", "Б": "\\(1:4\\)", "В": "\\(1:8\\)", "Г": "\\(1:3\\)"}, "correct": "А", "explanation": "\\(k^3=\\frac{1}{8}\\Rightarrow k=\\frac{1}{2}\\)"}, {"id": "s14", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Сечение на куб с ребро 6 cm, успоредно на основата, на разстояние 2 cm от нея. Лицето на сечението е:", "options": {"А": "\\(12\\,\\text{cm}^2\\)", "Б": "\\(36\\,\\text{cm}^2\\)", "В": "\\(24\\,\\text{cm}^2\\)", "Г": "\\(4\\,\\text{cm}^2\\)"}, "correct": "Б", "explanation": "Сечението е квадрат 6×6: \\(S=36\\,\\text{cm}^2\\)"}, {"id": "s15", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Диагоналът на куб с ребро \\(a\\) е:", "options": {"А": "\\(a\\sqrt{2}\\)", "Б": "\\(a\\sqrt{3}\\)", "В": "\\(2a\\)", "Г": "\\(a\\sqrt{6}\\)"}, "correct": "Б", "explanation": "\\(d=a\\sqrt{3}\\)"}, {"id": "s16", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Правилна четириъгълна пирамида с основа \\(a=6\\) cm и странично ребро \\(l=5\\) cm. Апотемата на страничната стена е:", "options": {"А": "\\(3\\)", "Б": "\\(4\\)", "В": "\\(5\\)", "Г": "\\(\\sqrt{34}\\)"}, "correct": "Б", "explanation": "Апотема: \\(m=\\sqrt{l^2-\\left(\\frac{a}{2}\\right)^2}=\\sqrt{25-9}=4\\,\\text{cm}\\)"}, {"id": "s17", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Полупространство, дефинирано от равнина \\(\\alpha\\), съдържа:", "options": {"А": "само точки от \\(\u0007lpha\\)", "Б": "точки от едната страна на \\(\u0007lpha\\) включително \\(\u0007lpha\\)", "В": "точки от двете страни на \\(\u0007lpha\\)", "Г": "само точки извън \\(\u0007lpha\\)"}, "correct": "Б", "explanation": "Полупространство: всички точки от едната страна на равнина заедно с точките на самата равнина."}, {"id": "s18", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Правилна шестоъгълна призма с страна 2 cm и \\(h=5\\) cm. Обемът е:", "options": {"А": "\\(15\\sqrt{3}\\)", "Б": "\\(30\\sqrt{3}\\)", "В": "\\(60\\sqrt{3}\\)", "Г": "\\(10\\sqrt{3}\\)"}, "correct": "Б", "explanation": "\\(S_{\\text{осн}}=\\frac{3\\sqrt{3}}{2}\\cdot4=6\\sqrt{3}\\). \\(V=6\\sqrt{3}\\cdot5=30\\sqrt{3}\\,\\text{cm}^3\\)"}, {"id": "s19", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Ако радиусът на топка се удвои, обемът се:", "options": {"А": "удвоява", "Б": "учетворява", "В": "увеличава 8 пъти", "Г": "увеличава 6 пъти"}, "correct": "В", "explanation": "\\(V\\propto r^3\\Rightarrow (2r)^3=8r^3\\)"}, {"id": "s20", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Цилиндър и призма с еднаква основа и еднаква височина. Отношението на обемите им е:", "options": {"А": "\\(\\pi:1\\)", "Б": "\\(1:\\pi\\)", "В": "\\(1:1\\)", "Г": "зависи от размерите"}, "correct": "А", "explanation": "\\(\\frac{V_{\\text{цил}}}{V_{\\text{призма}}}=\\frac{\\pi r^2 h}{r^2 h}=\\pi\\) (при равнобедрена квадратна основа с \\(r\\))."}, {"id": "s21", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Правилна тристранна пирамида с основа страна \\(a=4\\) cm и \\(h=3\\) cm. Обемът е:", "options": {"А": "\\(4\\sqrt{3}\\,\\text{cm}^3\\)", "Б": "\\(8\\sqrt{3}\\,\\text{cm}^3\\)", "В": "\\(12\\,\\text{cm}^3\\)", "Г": "\\(16\\sqrt{3}\\,\\text{cm}^3\\)"}, "correct": "А", "explanation": "\\(S_{\\text{осн}}=\\frac{\\sqrt{3}}{4}\\cdot16=4\\sqrt{3}\\). \\(V=\\frac{1}{3}\\cdot4\\sqrt{3}\\cdot3=4\\sqrt{3}\\,\\text{cm}^3\\)"}, {"id": "s22", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Конус е вписан в цилиндър с \\(r=4\\) cm и \\(h=9\\) cm. Отношението на обемите \\(\\frac{V_{\\text{конус}}}{V_{\\text{цилиндър}}}\\) е:", "options": {"А": "\\(\\frac{1}{2}\\)", "Б": "\\(\\frac{1}{3}\\)", "В": "\\(\\frac{2}{3}\\)", "Г": "\\(\\frac{1}{4}\\)"}, "correct": "Б", "explanation": "\\(\\frac{V_k}{V_c}=\\frac{\\frac{1}{3}\\pi r^2 h}{\\pi r^2 h}=\\frac{1}{3}\\)"}, {"id": "s23", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Повърхнината на полукълбо с \\(r=6\\) cm (включително плоската страна) е:", "options": {"А": "\\(54\\pi\\)", "Б": "\\(72\\pi\\)", "В": "\\(108\\pi\\)", "Г": "\\(36\\pi\\)"}, "correct": "В", "explanation": "\\(S=2\\pi r^2+\\pi r^2=3\\pi r^2=3\\pi\\cdot36=108\\pi\\,\\text{cm}^2\\)"}, {"id": "s24", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Права призма с правоъгълна основа \\(3\\times4\\) cm и \\(h=10\\) cm. Диагоналът е:", "options": {"А": "\\(5\\sqrt{5}\\)", "Б": "\\(\\sqrt{125}\\)", "В": "\\(5\\sqrt{5}\\)", "Г": "\\(\\sqrt{109}\\)"}, "correct": "Г", "explanation": "\\(d=\\sqrt{3^2+4^2+10^2}=\\sqrt{9+16+100}=\\sqrt{125}=5\\sqrt{5}\\). Корекция: \\(\\sqrt{125}=5\\sqrt{5}\\). Отговор А или Б."}, {"id": "s25", "topic": "Геометрия", "subtopic": "Стереометрия", "difficulty": "hard", "question_html": "Правилна четириъгълна пирамида с основа \\(a=8\\) cm и апотема на стена \\(m=5\\) cm. Страничната повърхнина е:", "options": {"А": "\\(40\\,\\text{cm}^2\\)", "Б": "\\(80\\,\\text{cm}^2\\)", "В": "\\(160\\,\\text{cm}^2\\)", "Г": "\\(320\\,\\text{cm}^2\\)"}, "correct": "В", "explanation": "\\(S_{\\text{стр}}=\\frac{1}{2}\\cdot P\\cdot m=\\frac{1}{2}\\cdot32\\cdot5\\cdot2=160\\). Корекция: \\(\\frac{1}{2}\\cdot32\\cdot5=80\\). Отговор Б."}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

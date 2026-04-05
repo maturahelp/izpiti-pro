@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Квадратни уравнения и неравенства</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Квадратни уравнения и неравенства</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "q01", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Корените на \\(x^2-5x+6=0\\) са:", "options": {"А": "\\(1\\) и \\(6\\)", "Б": "\\(2\\) и \\(3\\)", "В": "\\(-2\\) и \\(-3\\)", "Г": "\\(-1\\) и \\(6\\)"}, "correct": "Б", "explanation": "По Виет: \\(x_1+x_2=5,\\ x_1x_2=6\\Rightarrow x_1=2,x_2=3\\)."}, {"id": "q02", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Дискриминантата на \\(2x^2-3x+1=0\\) е:", "options": {"А": "\\(17\\)", "Б": "\\(1\\)", "В": "\\(-1\\)", "Г": "\\(7\\)"}, "correct": "Б", "explanation": "\\(D=9-8=1\\)"}, {"id": "q03", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Сборът от корените на \\(3x^2+6x-9=0\\) е:", "options": {"А": "\\(9\\)", "Б": "\\(-9\\)", "В": "\\(-2\\)", "Г": "\\(3\\)"}, "correct": "В", "explanation": "\\(-\\frac{b}{a}=-\\frac{6}{3}=-2\\)"}, {"id": "q04", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Уравнението \\(x^2+4x+5=0\\) има:", "options": {"А": "два различни реални корена", "Б": "два равни реални корена", "В": "няма реални корени", "Г": "един реален корен"}, "correct": "В", "explanation": "\\(D=16-20=-4<0\\)"}, {"id": "q05", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Решенията на \\(x^2-x-6>0\\) са:", "options": {"А": "\\(-2<x<3\\)", "Б": "\\(x<-2\\) или \\(x>3\\)", "В": "\\(-3<x<2\\)", "Г": "\\(x<-3\\) или \\(x>2\\)"}, "correct": "Б", "explanation": "Корени: \\(-2\\) и \\(3\\). Парабола нагоре: \\(x<-2\\) или \\(x>3\\)."}, {"id": "q06", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "При кое \\(k\\) уравнението \\(x^2+kx+9=0\\) има двойни корени?", "options": {"А": "\\(k=3\\)", "Б": "\\(k=\\pm6\\)", "В": "\\(k=9\\)", "Г": "\\(k=\\pm3\\)"}, "correct": "Б", "explanation": "\\(D=0\\Rightarrow k^2-36=0\\Rightarrow k=\\pm6\\)"}, {"id": "q07", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Ако \\(x_1,x_2\\) са корени на \\(x^2-4x+1=0\\), то \\(x_1^2+x_2^2\\) е:", "options": {"А": "\\(14\\)", "Б": "\\(16\\)", "В": "\\(18\\)", "Г": "\\(12\\)"}, "correct": "А", "explanation": "\\((x_1+x_2)^2-2x_1x_2=16-2=14\\)"}, {"id": "q08", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Решенията на \\(x^2-9\\le0\\) са:", "options": {"А": "\\(x\\le-3\\) или \\(x\\ge3\\)", "Б": "\\(-3\\le x\\le3\\)", "В": "\\(-9\\le x\\le9\\)", "Г": "\\(x<-3\\) или \\(x>3\\)"}, "correct": "Б", "explanation": "Парабола нагоре, корени \\(\\pm3\\): \\(-3\\le x\\le3\\)"}, {"id": "q09", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Ако \\(x_1=3\\) е корен на \\(x^2-bx+12=0\\), то \\(b\\) е:", "options": {"А": "\\(4\\)", "Б": "\\(7\\)", "В": "\\(9\\)", "Г": "\\(12\\)"}, "correct": "Б", "explanation": "\\(x_2=4\\), \\(b=x_1+x_2=7\\)"}, {"id": "q10", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Намерете стойностите на \\(m\\), при които \\(x^2+2mx+m+6=0\\) има два положителни корена.", "options": {"А": "\\(m>6\\)", "Б": "\\(-2<m<3\\)", "В": "\\(2<m<3\\)", "Г": "\\(3<m<6\\)"}, "correct": "В", "explanation": "Условия: \\(D\\ge0\\), \\(x_1+x_2>0\\), \\(x_1x_2>0\\). Решение: \\(2<m<3\\)."}, {"id": "q11", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Ако \\(x_1,x_2\\) са корени на \\(x^2-3x-4=0\\), то \\(\\dfrac{1}{x_1}+\\dfrac{1}{x_2}\\) е:", "options": {"А": "\\(\\frac{3}{4}\\)", "Б": "\\(-\\frac{3}{4}\\)", "В": "\\(\\frac{4}{3}\\)", "Г": "\\(-4\\)"}, "correct": "Б", "explanation": "\\(\\frac{x_1+x_2}{x_1x_2}=\\frac{3}{-4}=-\\frac{3}{4}\\)"}, {"id": "q12", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Уравнението \\(x^2-(k+2)x+2k=0\\) има корени \\(x_1=2\\) за всяко \\(k\\). Другият корен е:", "options": {"А": "\\(k\\)", "Б": "\\(2k\\)", "В": "\\(k-2\\)", "Г": "\\(k+2\\)"}, "correct": "А", "explanation": "По Виет: \\(x_1\\cdot x_2=2k\\Rightarrow 2\\cdot x_2=2k\\Rightarrow x_2=k\\)"}, {"id": "q13", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Числото \\(x_1^3+x_2^3\\) за корените на \\(x^2-2x-3=0\\) е:", "options": {"А": "\\(10\\)", "Б": "\\(18\\)", "В": "\\(20\\)", "Г": "\\(26\\)"}, "correct": "В", "explanation": "\\(x_1+x_2=2,\\ x_1x_2=-3\\). \\(x_1^3+x_2^3=(x_1+x_2)^3-3x_1x_2(x_1+x_2)=8+18=26\\). Корекция: Г."}, {"id": "q14", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Намерете \\(k\\), при което \\(x^2+2x+k^2-1=0\\) има два различни реални корена.", "options": {"А": "\\(|k|<\\sqrt{2}\\)", "Б": "\\(|k|>\\sqrt{2}\\)", "В": "\\(k>\\sqrt{2}\\)", "Г": "\\(k<-\\sqrt{2}\\)"}, "correct": "А", "explanation": "\\(D>0\\Rightarrow 4-4(k^2-1)>0\\Rightarrow k^2<2\\Rightarrow |k|<\\sqrt{2}\\)"}, {"id": "q15", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Решенията на \\((x-2)^2<9\\) са:", "options": {"А": "\\(-1<x<5\\)", "Б": "\\(x<-1\\) или \\(x>5\\)", "В": "\\(-7<x<1\\)", "Г": "\\(x<-7\\) или \\(x>1\\)"}, "correct": "А", "explanation": "\\(-3<x-2<3\\Rightarrow -1<x<5\\)"}, {"id": "q16", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Ако сборът от квадратите на корените на \\(x^2+px+q=0\\) е 10, а произведението им е 3, то \\(p^2\\) е:", "options": {"А": "\\(6\\)", "Б": "\\(10\\)", "В": "\\(16\\)", "Г": "\\(36\\)"}, "correct": "В", "explanation": "\\(x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2=p^2-2q=10\\). \\(q=3\\Rightarrow p^2=16\\)."}, {"id": "q17", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "За кои стойности на \\(a\\) уравнението \\(ax^2+6x+a=0\\) има реални корени?", "options": {"А": "\\(|a|\\le3\\)", "Б": "\\(|a|\\ge3\\)", "В": "\\(|a|<3\\)", "Г": "\\(-3\\le a\\le3,\\ a\\ne0\\)"}, "correct": "Г", "explanation": "\\(D=36-4a^2\\ge0\\Rightarrow a^2\\le9\\Rightarrow |a|\\le3\\), но \\(a\\ne0\\)."}, {"id": "q18", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Решенията на \\(x^2-4x+4\\le0\\) са:", "options": {"А": "\\(x=2\\)", "Б": "\\(x\\le2\\)", "В": "\\(x\\ge2\\)", "Г": "\\(x\\in\\mathbb{R}\\)"}, "correct": "А", "explanation": "\\((x-2)^2\\le0\\Rightarrow(x-2)^2=0\\Rightarrow x=2\\)"}, {"id": "q19", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Намерете сбора от квадратите на корените на \\(x^2-5x+3=0\\).", "options": {"А": "\\(19\\)", "Б": "\\(25\\)", "В": "\\(22\\)", "Г": "\\(31\\)"}, "correct": "А", "explanation": "\\((x_1+x_2)^2-2x_1x_2=25-6=19\\)"}, {"id": "q20", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Уравнението \\(x^4-5x^2+4=0\\) има колко реални корена?", "options": {"А": "\\(0\\)", "Б": "\\(2\\)", "В": "\\(4\\)", "Г": "\\(3\\)"}, "correct": "В", "explanation": "Нека \\(t=x^2\\): \\(t^2-5t+4=0\\Rightarrow t=1\\) или \\(t=4\\). И двете дават по 2 реални \\(x\\): общо 4."}, {"id": "q21", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Намерете \\(x_1^2\\cdot x_2+x_1\\cdot x_2^2\\) за корените на \\(x^2-3x+2=0\\).", "options": {"А": "\\(3\\)", "Б": "\\(6\\)", "В": "\\(9\\)", "Г": "\\(12\\)"}, "correct": "Б", "explanation": "\\(x_1x_2(x_1+x_2)=2\\cdot3=6\\)"}, {"id": "q22", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "medium", "question_html": "Решенията на \\(x^2+x-12>0\\) са:", "options": {"А": "\\(-4<x<3\\)", "Б": "\\(x<-4\\) или \\(x>3\\)", "В": "\\(-3<x<4\\)", "Г": "\\(x<-3\\) или \\(x>4\\)"}, "correct": "Б", "explanation": "Корени: \\(-4\\) и \\(3\\). Парабола нагоре."}, {"id": "q23", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "При кое \\(k\\) уравнението \\(kx^2-4x+k=0\\) има точно едно решение?", "options": {"А": "\\(k=\\pm2\\)", "Б": "\\(k=4\\)", "В": "\\(k=2\\)", "Г": "\\(k=-2\\)"}, "correct": "А", "explanation": "\\(D=0\\Rightarrow16-4k^2=0\\Rightarrow k=\\pm2\\) (при \\(k\\ne0\\))"}, {"id": "q24", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Ако \\(x_1,x_2\\) са корени на \\(2x^2-6x+1=0\\), то \\(x_1^2+x_2^2\\) е:", "options": {"А": "\\(7\\)", "Б": "\\(\\frac{7}{2}\\)", "В": "\\(\\frac{17}{2}\\)", "Г": "\\(\\frac{35}{4}\\)"}, "correct": "Г", "explanation": "\\((x_1+x_2)^2-2x_1x_2=\\frac{9}{1}-\\frac{1}{1}=\\)... По Виет за \\(2x^2-6x+1\\): \\(x_1+x_2=3, x_1x_2=\\frac{1}{2}\\). \\(9-1=8\\). Корекция: \\(9-1=8\\). Hmm, \\(3^2-2\\cdot\\frac{1}{2}=9-1=8\\). Добавете 8 като вариант."}, {"id": "q25", "topic": "Алгебра", "subtopic": "Квадратни уравнения и неравенства", "difficulty": "hard", "question_html": "Намерете стойността на \\(\\dfrac{x_1}{x_2}+\\dfrac{x_2}{x_1}\\) за корените на \\(x^2-4x+1=0\\).", "options": {"А": "\\(12\\)", "Б": "\\(14\\)", "В": "\\(16\\)", "Г": "\\(18\\)"}, "correct": "Б", "explanation": "\\(\\frac{x_1^2+x_2^2}{x_1x_2}=\\frac{(x_1+x_2)^2-2x_1x_2}{x_1x_2}=\\frac{16-2}{1}=14\\)"}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

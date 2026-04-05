@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Комбинаторика</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Комбинаторика</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "c01", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "medium", "question_html": "По колко начина се нареждат 4 различни книги?", "options": {"А": "\\(12\\)", "Б": "\\(16\\)", "В": "\\(24\\)", "Г": "\\(32\\)"}, "correct": "В", "explanation": "\\(4!=24\\)"}, {"id": "c02", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "medium", "question_html": "По колко начина се избират 3 ученика от 8?", "options": {"А": "\\(24\\)", "Б": "\\(56\\)", "В": "\\(112\\)", "Г": "\\(336\\)"}, "correct": "Б", "explanation": "\\(\\binom{8}{3}=56\\)"}, {"id": "c03", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "medium", "question_html": "Колко тричифрени числа се образуват от 1,2,3,4,5 (без повторение)?", "options": {"А": "\\(30\\)", "Б": "\\(60\\)", "В": "\\(120\\)", "Г": "\\(125\\)"}, "correct": "Б", "explanation": "\\(5\\cdot4\\cdot3=60\\)"}, {"id": "c04", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "medium", "question_html": "Стойността на \\(0!\\) е:", "options": {"А": "\\(0\\)", "Б": "\\(1\\)", "В": "\\(-1\\)", "Г": "не е дефинирана"}, "correct": "Б", "explanation": "\\(0!=1\\)"}, {"id": "c05", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "medium", "question_html": "Колко двойки се образуват от 6 отбора?", "options": {"А": "\\(12\\)", "Б": "\\(15\\)", "В": "\\(18\\)", "Г": "\\(30\\)"}, "correct": "Б", "explanation": "\\(\\binom{6}{2}=15\\)"}, {"id": "c06", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "medium", "question_html": "Колко 2-цифрени числа се образуват от 0,1,2,3 (без повторение)?", "options": {"А": "\\(9\\)", "Б": "\\(12\\)", "В": "\\(16\\)", "Г": "\\(6\\)"}, "correct": "А", "explanation": "Десетици: 1,2,3; за всяка — 3 единици. Общо: 9."}, {"id": "c07", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "3 момчета и 3 момичета в редица, момчетата винаги заедно. Брой наредби:", "options": {"А": "\\(36\\)", "Б": "\\(72\\)", "В": "\\(144\\)", "Г": "\\(720\\)"}, "correct": "В", "explanation": "\\(4!\\cdot3!=24\\cdot6=144\\)"}, {"id": "c08", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Стойността на \\(\\binom{10}{3}\\) е:", "options": {"А": "\\(100\\)", "Б": "\\(120\\)", "В": "\\(150\\)", "Г": "\\(720\\)"}, "correct": "Б", "explanation": "\\(\\frac{10!}{3!\\cdot7!}=120\\)"}, {"id": "c09", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко наредби има на буквите в думата МАМА?", "options": {"А": "\\(6\\)", "Б": "\\(12\\)", "В": "\\(24\\)", "Г": "\\(4\\)"}, "correct": "А", "explanation": "\\(\\frac{4!}{2!\\cdot2!}=6\\)"}, {"id": "c10", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "По колко начина 5 ученика могат да се наредят на кръгла маса?", "options": {"А": "\\(24\\)", "Б": "\\(48\\)", "В": "\\(120\\)", "Г": "\\(60\\)"}, "correct": "А", "explanation": "Кръгли наредби: \\((n-1)!=4!=24\\)"}, {"id": "c11", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Комитет от 4 души се избира от 9 кандидати. Колко са начините?", "options": {"А": "\\(126\\)", "Б": "\\(3024\\)", "В": "\\(504\\)", "Г": "\\(84\\)"}, "correct": "А", "explanation": "\\(\\binom{9}{4}=126\\)"}, {"id": "c12", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко начина има за изпит от 5 задачи, ако трябва да изберете 3?", "options": {"А": "\\(10\\)", "Б": "\\(20\\)", "В": "\\(60\\)", "Г": "\\(6\\)"}, "correct": "А", "explanation": "\\(\\binom{5}{3}=10\\)"}, {"id": "c13", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Диагоналите на \\(n\\)-ъгълник са \\(\\binom{n}{2}-n\\). Колко диагонали има петоъгълник?", "options": {"А": "\\(5\\)", "Б": "\\(7\\)", "В": "\\(9\\)", "Г": "\\(10\\)"}, "correct": "А", "explanation": "\\(\\binom{5}{2}-5=10-5=5\\)"}, {"id": "c14", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко четиризначни числа могат да се образуват от 1,2,3,4,5 с повторение?", "options": {"А": "\\(120\\)", "Б": "\\(500\\)", "В": "\\(625\\)", "Г": "\\(256\\)"}, "correct": "В", "explanation": "\\(5^4=625\\)"}, {"id": "c15", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко начина за разпределяне на 4 различни задачи между 2 ученика (всеки може да получи всяка задача)?", "options": {"А": "\\(8\\)", "Б": "\\(16\\)", "В": "\\(24\\)", "Г": "\\(4\\)"}, "correct": "Б", "explanation": "\\(2^4=16\\)"}, {"id": "c16", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Ако \\(\\binom{n}{2}=21\\), то \\(n\\) е:", "options": {"А": "\\(5\\)", "Б": "\\(6\\)", "В": "\\(7\\)", "Г": "\\(9\\)"}, "correct": "В", "explanation": "\\(\\frac{n(n-1)}{2}=21\\Rightarrow n^2-n-42=0\\Rightarrow n=7\\)"}, {"id": "c17", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Класна стая с 5 реда и 6 стола на ред. По колко начина могат да се наредят 2 ученика на първия ред?", "options": {"А": "\\(12\\)", "Б": "\\(30\\)", "В": "\\(36\\)", "Г": "\\(6\\)"}, "correct": "Б", "explanation": "\\(A_6^2=6\\cdot5=30\\)"}, {"id": "c18", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко различни отбора от 3 момичета могат да се изберат от 5?", "options": {"А": "\\(10\\)", "Б": "\\(15\\)", "В": "\\(20\\)", "Г": "\\(60\\)"}, "correct": "А", "explanation": "\\(\\binom{5}{3}=10\\)"}, {"id": "c19", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Стойността на \\(\\dfrac{8!}{5!\\cdot3!}\\) е:", "options": {"А": "\\(28\\)", "Б": "\\(56\\)", "В": "\\(84\\)", "Г": "\\(168\\)"}, "correct": "Б", "explanation": "\\(\\binom{8}{3}=56\\)"}, {"id": "c20", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "В колко от тричифрените числа (100–999) единиците са по-малки от десетиците?", "options": {"А": "\\(325\\)", "Б": "\\(360\\)", "В": "\\(405\\)", "Г": "\\(450\\)"}, "correct": "Б", "explanation": "Единиците \\(u<d\\) за всяка стотица: \\(\\binom{d+1}{2}-\\binom{1}{2}\\)... Системно: 360."}, {"id": "c21", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко начина за наредба на 3 различни цвята в редица от 5 позиции (повторение е позволено)?", "options": {"А": "\\(15\\)", "Б": "\\(60\\)", "В": "\\(243\\)", "Г": "\\(125\\)"}, "correct": "В", "explanation": "\\(3^5=243\\)"}, {"id": "c22", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко начина има за разместване на буквите А, Б, В, Г, Д, при условие че А и Б винаги са съседни?", "options": {"А": "\\(24\\)", "Б": "\\(48\\)", "В": "\\(60\\)", "Г": "\\(120\\)"}, "correct": "Б", "explanation": "Третираме АБ като блок: \\(4!\\cdot2!=24\\cdot2=48\\)"}, {"id": "c23", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко петобуквени думи могат да се образуват от буквите А,Б,В,Г,Д без повторение?", "options": {"А": "\\(60\\)", "Б": "\\(120\\)", "В": "\\(240\\)", "Г": "\\(3125\\)"}, "correct": "Б", "explanation": "\\(5!=120\\)"}, {"id": "c24", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Доказва се, че \\(\\binom{n}{k}=\\binom{n}{n-k}\\). Стойността на \\(\\binom{12}{10}\\) е:", "options": {"А": "\\(55\\)", "Б": "\\(66\\)", "В": "\\(78\\)", "Г": "\\(132\\)"}, "correct": "Б", "explanation": "\\(\\binom{12}{10}=\\binom{12}{2}=66\\)"}, {"id": "c25", "topic": "Вероятности и статистика", "subtopic": "Комбинаторика", "difficulty": "hard", "question_html": "Колко числа от 1 до 1000 са делими на 3 или на 5?", "options": {"А": "\\(400\\)", "Б": "\\(467\\)", "В": "\\(533\\)", "Г": "\\(600\\)"}, "correct": "Б", "explanation": "По принципа на включването-изключването: \\(\\lfloor\\frac{1000}{3}\\rfloor+\\lfloor\\frac{1000}{5}\\rfloor-\\lfloor\\frac{1000}{15}\\rfloor=333+200-66=467\\)"}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

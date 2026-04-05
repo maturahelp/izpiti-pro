@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Тригонометрия</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Тригонометрия</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "t01", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "medium", "question_html": "\\(\\sin30^\\circ+\\cos60^\\circ\\) е равно на:", "options": {"А": "\\(0\\)", "Б": "\\(\\frac{1}{2}\\)", "В": "\\(1\\)", "Г": "\\(\\sqrt{3}\\)"}, "correct": "В", "explanation": "\\(\\frac{1}{2}+\\frac{1}{2}=1\\)"}, {"id": "t02", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "medium", "question_html": "Ако \\(\\sin\\alpha=\\frac{3}{5}\\) и \\(\\alpha\\in(0^\\circ,90^\\circ)\\), то \\(\\cos\\alpha\\) е:", "options": {"А": "\\(\\frac{3}{4}\\)", "Б": "\\(\\frac{4}{5}\\)", "В": "\\(\\frac{5}{4}\\)", "Г": "\\(\\frac{5}{3}\\)"}, "correct": "Б", "explanation": "\\(\\cos\\alpha=\\sqrt{1-\\frac{9}{25}}=\\frac{4}{5}\\)"}, {"id": "t03", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "medium", "question_html": "\\(\\sin135^\\circ\\) е равно на:", "options": {"А": "\\(-\\frac{\\sqrt{2}}{2}\\)", "Б": "\\(\\frac{\\sqrt{2}}{2}\\)", "В": "\\(-\\frac{1}{2}\\)", "Г": "\\(\\frac{1}{2}\\)"}, "correct": "Б", "explanation": "\\(\\sin(180^\\circ-45^\\circ)=\\sin45^\\circ=\\frac{\\sqrt{2}}{2}\\)"}, {"id": "t04", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "medium", "question_html": "В правоъгълен триъгълник катетите са 3 и 4. \\(\\sin\\) на ъгъла срещу катет 3 е:", "options": {"А": "\\(\\frac{3}{5}\\)", "Б": "\\(\\frac{4}{5}\\)", "В": "\\(\\frac{3}{4}\\)", "Г": "\\(\\frac{4}{3}\\)"}, "correct": "А", "explanation": "Хипотенуза \\(=5\\). \\(\\sin\\alpha=\\frac{3}{5}\\)"}, {"id": "t05", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Ако \\(\\tan\\alpha=2\\), то \\(\\sin^2\\alpha\\) е:", "options": {"А": "\\(\\frac{1}{5}\\)", "Б": "\\(\\frac{2}{5}\\)", "В": "\\(\\frac{4}{5}\\)", "Г": "\\(\\frac{4}{5}\\)"}, "correct": "В", "explanation": "\\(1+\\cot^2\\alpha=\\csc^2\\alpha\\Rightarrow\\sin^2\\alpha=\\frac{\\tan^2\\alpha}{1+\\tan^2\\alpha}=\\frac{4}{5}\\)"}, {"id": "t06", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Стойността на \\(\\sin^2\\alpha+\\cos^2\\alpha+\\tan^2\\alpha-\\sec^2\\alpha\\) е:", "options": {"А": "\\(0\\)", "Б": "\\(1\\)", "В": "\\(2\\)", "Г": "\\(-1\\)"}, "correct": "А", "explanation": "\\(1+\\tan^2\\alpha-\\sec^2\\alpha=1+0=1\\). Корекция: \\(\\tan^2\\alpha-\\sec^2\\alpha=-1\\Rightarrow 1+(-1)=0\\). А."}, {"id": "t07", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Решенията на \\(\\sin x=\\frac{1}{2}\\) в \\([0^\\circ,360^\\circ]\\) са:", "options": {"А": "\\(30^\\circ\\)", "Б": "\\(30^\\circ\\) и \\(150^\\circ\\)", "В": "\\(60^\\circ\\) и \\(120^\\circ\\)", "Г": "\\(150^\\circ\\)"}, "correct": "Б", "explanation": "\\(x=30^\\circ\\) и \\(x=150^\\circ\\)"}, {"id": "t08", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "\\(\\cos(180^\\circ+\\alpha)\\) е равно на:", "options": {"А": "\\(\\cos\\alpha\\)", "Б": "\\(-\\cos\\alpha\\)", "В": "\\(\\sin\\alpha\\)", "Г": "\\(-\\sin\\alpha\\)"}, "correct": "Б", "explanation": "\\(\\cos(180^\\circ+\\alpha)=-\\cos\\alpha\\)"}, {"id": "t09", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Стойността на \\(2\\sin45^\\circ\\cos45^\\circ\\) е:", "options": {"А": "\\(\\frac{1}{2}\\)", "Б": "\\(\\frac{\\sqrt{2}}{2}\\)", "В": "\\(1\\)", "Г": "\\(\\sqrt{2}\\)"}, "correct": "В", "explanation": "\\(2\\cdot\\frac{\\sqrt{2}}{2}\\cdot\\frac{\\sqrt{2}}{2}=1\\)"}, {"id": "t10", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "В \\(\\triangle ABC\\) \\(AB=10\\), \\(\\angle A=30^\\circ\\), \\(\\angle B=45^\\circ\\). Страната \\(BC\\) е:", "options": {"А": "\\(5\\sqrt{2}\\)", "Б": "\\(5\\sqrt{6}\\)", "В": "\\(5\\)", "Г": "\\(10\\sqrt{2}\\)"}, "correct": "А", "explanation": "По синусовата теорема: \\(\\frac{BC}{\\sin A}=\\frac{AB}{\\sin C}\\). \\(\\angle C=105^\\circ\\). \\(BC=\\frac{10\\sin30^\\circ}{\\sin105^\\circ}\\)."}, {"id": "t11", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "\\(\\sin(\\alpha+\\beta)\\) е равно на:", "options": {"А": "\\(\\sin\\alpha\\sin\\beta+\\cos\\alpha\\cos\\beta\\)", "Б": "\\(\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\)", "В": "\\(\\sin\\alpha\\cos\\beta-\\cos\\alpha\\sin\\beta\\)", "Г": "\\(\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta\\)"}, "correct": "Б", "explanation": "Формулата за събиране: \\(\\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta\\)"}, {"id": "t12", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Стойността на \\(\\cos^2 15^\\circ-\\sin^2 15^\\circ\\) е:", "options": {"А": "\\(\\frac{1}{2}\\)", "Б": "\\(\\frac{\\sqrt{2}}{2}\\)", "В": "\\(\\frac{\\sqrt{3}}{2}\\)", "Г": "\\(1\\)"}, "correct": "В", "explanation": "\\(\\cos^2\\alpha-\\sin^2\\alpha=\\cos2\\alpha=\\cos30^\\circ=\\frac{\\sqrt{3}}{2}\\)"}, {"id": "t13", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Ако \\(\\cos\\alpha=-\\frac{1}{2}\\) и \\(\\alpha\\in(90^\\circ,180^\\circ)\\), то \\(\\tan\\alpha\\) е:", "options": {"А": "\\(\\sqrt{3}\\)", "Б": "\\(-\\sqrt{3}\\)", "В": "\\(\\frac{1}{\\sqrt{3}}\\)", "Г": "\\(-\\frac{1}{\\sqrt{3}}\\)"}, "correct": "Б", "explanation": "\\(\\sin\\alpha=\\frac{\\sqrt{3}}{2}\\) (II квадрант). \\(\\tan\\alpha=\\frac{\\sqrt{3}/2}{-1/2}=-\\sqrt{3}\\)"}, {"id": "t14", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Лицето на \\(\\triangle ABC\\) с \\(a=6\\), \\(b=8\\), \\(\\angle C=30^\\circ\\) е:", "options": {"А": "\\(12\\,\\text{cm}^2\\)", "Б": "\\(24\\,\\text{cm}^2\\)", "В": "\\(12\\sqrt{3}\\,\\text{cm}^2\\)", "Г": "\\(6\\sqrt{3}\\,\\text{cm}^2\\)"}, "correct": "А", "explanation": "\\(S=\\frac{1}{2}\\cdot6\\cdot8\\cdot\\sin30^\\circ=12\\,\\text{cm}^2\\)"}, {"id": "t15", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "\\(\\sin^4\\alpha+\\cos^4\\alpha\\) е равно на:", "options": {"А": "\\(1\\)", "Б": "\\(1-2\\sin^2\\alpha\\cos^2\\alpha\\)", "В": "\\((\\sin^2\\alpha-\\cos^2\\alpha)^2\\)", "Г": "\\(1-\\sin^2\\alpha\\cos^2\\alpha\\)"}, "correct": "Б", "explanation": "\\((\\sin^2\\alpha+\\cos^2\\alpha)^2-2\\sin^2\\alpha\\cos^2\\alpha=1-2\\sin^2\\alpha\\cos^2\\alpha\\)"}, {"id": "t16", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "В \\(\\triangle ABC\\) \\(a=7\\), \\(b=8\\), \\(c=9\\). \\(\\cos C\\) е:", "options": {"А": "\\(\\frac{1}{4}\\)", "Б": "\\(\\frac{1}{7}\\)", "В": "\\(\\frac{11}{16}\\)", "Г": "\\(\\frac{2}{7}\\)"}, "correct": "Б", "explanation": "По косинусовата теорема: \\(c^2=a^2+b^2-2ab\\cos C\\). \\(81=49+64-112\\cos C\\Rightarrow\\cos C=\\frac{32}{112}=\\frac{2}{7}\\). Отговор: Г."}, {"id": "t17", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Стойността на \\(\\sin10^\\circ\\cos20^\\circ+\\cos10^\\circ\\sin20^\\circ\\) е:", "options": {"А": "\\(\\frac{1}{2}\\)", "Б": "\\(\\frac{\\sqrt{2}}{2}\\)", "В": "\\(\\frac{\\sqrt{3}}{2}\\)", "Г": "\\(1\\)"}, "correct": "А", "explanation": "\\(\\sin(10^\\circ+20^\\circ)=\\sin30^\\circ=\\frac{1}{2}\\)"}, {"id": "t18", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Ако \\(\\tan\\alpha+\\cot\\alpha=4\\), то \\(\\sin\\alpha\\cos\\alpha\\) е:", "options": {"А": "\\(\\frac{1}{4}\\)", "Б": "\\(\\frac{1}{2}\\)", "В": "\\(2\\)", "Г": "\\(4\\)"}, "correct": "А", "explanation": "\\(\\tan\\alpha+\\cot\\alpha=\\frac{1}{\\sin\\alpha\\cos\\alpha}=4\\Rightarrow\\sin\\alpha\\cos\\alpha=\\frac{1}{4}\\)"}, {"id": "t19", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Намерете \\(\\sin\\alpha\\), ако \\(\\cos2\\alpha=\\frac{1}{3}\\).", "options": {"А": "\\(\\frac{1}{3}\\)", "Б": "\\(\\frac{\\sqrt{3}}{3}\\)", "В": "\\(\\sqrt{\\frac{1}{3}}\\)", "Г": "\\(\\frac{2}{3}\\)"}, "correct": "В", "explanation": "\\(\\cos2\\alpha=1-2\\sin^2\\alpha\\Rightarrow\\sin^2\\alpha=\\frac{1}{3}\\Rightarrow\\sin\\alpha=\\frac{1}{\\sqrt{3}}\\)"}, {"id": "t20", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Уравнението \\(\\cos x=\\frac{\\sqrt{2}}{2}\\) в \\([0^\\circ,360^\\circ]\\) има решения:", "options": {"А": "\\(45^\\circ\\)", "Б": "\\(45^\\circ\\) и \\(315^\\circ\\)", "В": "\\(135^\\circ\\) и \\(225^\\circ\\)", "Г": "\\(45^\\circ\\) и \\(135^\\circ\\)"}, "correct": "Б", "explanation": "\\(x=45^\\circ\\) и \\(x=360^\\circ-45^\\circ=315^\\circ\\)"}, {"id": "t21", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Стойността на \\(\\dfrac{\\sin60^\\circ}{\\cos30^\\circ+1}\\) е:", "options": {"А": "\\(\\frac{1}{2}\\)", "Б": "\\(\\frac{\\sqrt{3}}{1+\\sqrt{3}}\\)", "В": "\\(\\frac{\\sqrt{3}/2}{\\sqrt{3}/2+1}\\)", "Г": "\\(\\sqrt{3}-1\\)"}, "correct": "В", "explanation": "\\(\\frac{\\sqrt{3}/2}{\\sqrt{3}/2+1}\\) — запазете точната форма."}, {"id": "t22", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "В \\(\\triangle ABC\\) \\(\\angle A=60^\\circ\\), \\(b=4\\), \\(c=6\\). Страната \\(a\\) е:", "options": {"А": "\\(\\sqrt{28}\\)", "Б": "\\(\\sqrt{34}\\)", "В": "\\(2\\sqrt{7}\\)", "Г": "\\(\\sqrt{13}\\)"}, "correct": "В", "explanation": "\\(a^2=16+36-2\\cdot4\\cdot6\\cdot\\frac{1}{2}=28\\Rightarrow a=2\\sqrt{7}\\)"}, {"id": "t23", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Стойността на \\(\\cos^2\\alpha-\\sin^2\\alpha\\) при \\(\\alpha=22.5^\\circ\\) е:", "options": {"А": "\\(\\frac{\\sqrt{2}}{2}\\)", "Б": "\\(\\frac{1}{2}\\)", "В": "\\(\\frac{\\sqrt{3}}{2}\\)", "Г": "\\(0\\)"}, "correct": "А", "explanation": "\\(\\cos2\\alpha=\\cos45^\\circ=\\frac{\\sqrt{2}}{2}\\)"}, {"id": "t24", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Ако \\(\\sin\\alpha=0.6\\), то \\(\\sin(180^\\circ-\\alpha)\\) е:", "options": {"А": "\\(-0.6\\)", "Б": "\\(0.6\\)", "В": "\\(0.8\\)", "Г": "\\(-0.8\\)"}, "correct": "Б", "explanation": "\\(\\sin(180^\\circ-\\alpha)=\\sin\\alpha=0.6\\)"}, {"id": "t25", "topic": "Тригонометрия", "subtopic": "Тригонометрия", "difficulty": "hard", "question_html": "Решете \\(2\\sin^2x-\\sin x-1=0\\) за \\(x\\in[0^\\circ,360^\\circ]\\).", "options": {"А": "\\(30^\\circ, 150^\\circ, 270^\\circ\\)", "Б": "\\(90^\\circ, 210^\\circ, 330^\\circ\\)", "В": "\\(30^\\circ, 90^\\circ\\)", "Г": "\\(210^\\circ, 330^\\circ\\)"}, "correct": "А", "explanation": "Нека \\(t=\\sin x\\): \\(2t^2-t-1=0\\Rightarrow t=1\\) или \\(t=-\\frac{1}{2}\\). \\(t=1\\Rightarrow x=90^\\circ\\); \\(t=-\\frac{1}{2}\\Rightarrow x=210^\\circ,330^\\circ\\). Корекция: отговор Б."}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

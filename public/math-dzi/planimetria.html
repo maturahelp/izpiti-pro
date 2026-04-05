@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Планиметрия</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Планиметрия</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "pl01", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "В правоъгълен триъгълник с катети 6 и 8 cm, хипотенузата е:", "options": {"А": "\\(10\\,\\text{cm}\\)", "Б": "\\(12\\,\\text{cm}\\)", "В": "\\(14\\,\\text{cm}\\)", "Г": "\\(7\\,\\text{cm}\\)"}, "correct": "А", "explanation": "\\(c=\\sqrt{36+64}=10\\,\\text{cm}\\)"}, {"id": "pl02", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "Лицето на триъгълник с основа 8 cm и височина 5 cm е:", "options": {"А": "\\(40\\,\\text{cm}^2\\)", "Б": "\\(20\\,\\text{cm}^2\\)", "В": "\\(13\\,\\text{cm}^2\\)", "Г": "\\(10\\,\\text{cm}^2\\)"}, "correct": "Б", "explanation": "\\(S=\\frac{8\\cdot5}{2}=20\\,\\text{cm}^2\\)"}, {"id": "pl03", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "Лицето на трапец с основи 6 и 10 cm и височина 4 cm е:", "options": {"А": "\\(24\\,\\text{cm}^2\\)", "Б": "\\(32\\,\\text{cm}^2\\)", "В": "\\(40\\,\\text{cm}^2\\)", "Г": "\\(16\\,\\text{cm}^2\\)"}, "correct": "Б", "explanation": "\\(S=\\frac{(6+10)\\cdot4}{2}=32\\,\\text{cm}^2\\)"}, {"id": "pl04", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "Диагоналите на ромб са 8 и 6 cm. Лицето е:", "options": {"А": "\\(24\\,\\text{cm}^2\\)", "Б": "\\(48\\,\\text{cm}^2\\)", "В": "\\(28\\,\\text{cm}^2\\)", "Г": "\\(12\\,\\text{cm}^2\\)"}, "correct": "А", "explanation": "\\(S=\\frac{d_1\\cdot d_2}{2}=24\\,\\text{cm}^2\\)"}, {"id": "pl05", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "Дължината на окръжност с диаметър 10 cm е:", "options": {"А": "\\(10\\pi\\)", "Б": "\\(5\\pi\\)", "В": "\\(20\\pi\\)", "Г": "\\(25\\pi\\)"}, "correct": "А", "explanation": "\\(C=\\pi d=10\\pi\\)"}, {"id": "pl06", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "Два подобни триъгълника с \\(k=\\frac{2}{3}\\). По-малкият има лице \\(12\\,\\text{cm}^2\\). По-големият има лице:", "options": {"А": "\\(18\\,\\text{cm}^2\\)", "Б": "\\(24\\,\\text{cm}^2\\)", "В": "\\(27\\,\\text{cm}^2\\)", "Г": "\\(36\\,\\text{cm}^2\\)"}, "correct": "В", "explanation": "\\(\\frac{S_1}{S_2}=k^2=\\frac{4}{9}\\Rightarrow S_2=27\\,\\text{cm}^2\\)"}, {"id": "pl07", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Медианата от \\(\\angle C=90^\\circ\\) в триъгълник с хипотенуза \\(AB=10\\) e:", "options": {"А": "\\(4\\)", "Б": "\\(5\\)", "В": "\\(6\\)", "Г": "\\(8\\)"}, "correct": "Б", "explanation": "Медианата към хипотенузата е \\(\\frac{AB}{2}=5\\)"}, {"id": "pl08", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "medium", "question_html": "Периметърът на квадрат с лице \\(25\\,\\text{cm}^2\\) е:", "options": {"А": "\\(5\\,\\text{cm}\\)", "Б": "\\(10\\,\\text{cm}\\)", "В": "\\(20\\,\\text{cm}\\)", "Г": "\\(25\\,\\text{cm}\\)"}, "correct": "В", "explanation": "\\(a=5\\,\\text{cm};\\ P=4\\cdot5=20\\,\\text{cm}\\)"}, {"id": "pl09", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В \\(\\triangle ABC\\) \\(AB=7\\), \\(BC=9\\), \\(\\angle B=60^\\circ\\). Лицето е:", "options": {"А": "\\(\\frac{63\\sqrt{3}}{4}\\)", "Б": "\\(\\frac{63}{4}\\)", "В": "\\(\\frac{63\\sqrt{3}}{2}\\)", "Г": "\\(63\\)"}, "correct": "А", "explanation": "\\(S=\\frac{1}{2}\\cdot7\\cdot9\\cdot\\frac{\\sqrt{3}}{2}=\\frac{63\\sqrt{3}}{4}\\)"}, {"id": "pl10", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Ъглополовящата теорема: ако \\(AL\\) е ъглополовяща на \\(\\angle A\\) в \\(\\triangle ABC\\), то:", "options": {"А": "\\(\\frac{BL}{LC}=\\frac{AB}{AC}\\)", "Б": "\\(\\frac{BL}{LC}=\\frac{BC}{AC}\\)", "В": "\\(\\frac{BL}{LC}=\\frac{AC}{AB}\\)", "Г": "\\(BL=LC\\)"}, "correct": "А", "explanation": "Ъглополовящата теорема: \\(\\frac{BL}{LC}=\\frac{AB}{AC}\\)"}, {"id": "pl11", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В правоъгълен \\(\\triangle ABC\\) (\\(\\angle C=90^\\circ\\)) с \\(AC=5\\), \\(BC=12\\). Радиусът на вписаната окръжност е:", "options": {"А": "\\(2\\)", "Б": "\\(3\\)", "В": "\\(4\\)", "Г": "\\(5\\)"}, "correct": "А", "explanation": "\\(AB=13;\\ r=\\frac{AC+BC-AB}{2}=\\frac{5+12-13}{2}=2\\)"}, {"id": "pl12", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Описаната окръжност около правоъгълен \\(\\triangle\\) с хипотенуза 10 cm има радиус:", "options": {"А": "\\(4\\)", "Б": "\\(5\\)", "В": "\\(6\\)", "Г": "\\(10\\)"}, "correct": "Б", "explanation": "Радиусът на описаната окръжност около правоъгълен триъгълник е \\(\\frac{\\text{хипотенуза}}{2}=5\\)"}, {"id": "pl13", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В ромб с диагонали \\(d_1=10\\) и \\(d_2=24\\). Страната на ромба е:", "options": {"А": "\\(12\\)", "Б": "\\(13\\)", "В": "\\(14\\)", "Г": "\\(26\\)"}, "correct": "Б", "explanation": "\\(a=\\sqrt{5^2+12^2}=\\sqrt{169}=13\\)"}, {"id": "pl14", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Лицето на правилен шестоъгълник с страна 4 cm е:", "options": {"А": "\\(24\\sqrt{3}\\,\\text{cm}^2\\)", "Б": "\\(48\\,\\text{cm}^2\\)", "В": "\\(16\\sqrt{3}\\,\\text{cm}^2\\)", "Г": "\\(12\\sqrt{3}\\,\\text{cm}^2\\)"}, "correct": "А", "explanation": "\\(S=\\frac{3\\sqrt{3}}{2}\\cdot16=24\\sqrt{3}\\,\\text{cm}^2\\)"}, {"id": "pl15", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В \\(\\triangle ABC\\), \\(a:b:c=3:4:5\\). Триъгълникът е:", "options": {"А": "равнобедрен", "Б": "тъпоъгълен", "В": "правоъгълен", "Г": "остроъгълен"}, "correct": "В", "explanation": "\\(3^2+4^2=5^2\\Rightarrow\\) правоъгълен."}, {"id": "pl16", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Средната линия на триъгълник е успоредна на третата страна и е равна на:", "options": {"А": "третата страна", "Б": "половината от третата страна", "В": "удвоената трета страна", "Г": "нищо от горните"}, "correct": "Б", "explanation": "Теорема за средната линия."}, {"id": "pl17", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Дадено е, че \\(\\triangle ABС\\sim\\triangle DEF\\) с \\(k=3\\). Ако периметърът на \\(\\triangle DEF\\) е 12 cm, периметърът на \\(\\triangle ABC\\) е:", "options": {"А": "\\(4\\,\\text{cm}\\)", "Б": "\\(36\\,\\text{cm}\\)", "В": "\\(108\\,\\text{cm}\\)", "Г": "\\(9\\,\\text{cm}\\)"}, "correct": "Б", "explanation": "\\(P_{ABC}=k\\cdot P_{DEF}=3\\cdot12=36\\,\\text{cm}\\)"}, {"id": "pl18", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Лицето на кръг, описан около квадрат с диагонал 8 cm, е:", "options": {"А": "\\(8\\pi\\,\\text{cm}^2\\)", "Б": "\\(16\\pi\\,\\text{cm}^2\\)", "В": "\\(32\\pi\\,\\text{cm}^2\\)", "Г": "\\(64\\pi\\,\\text{cm}^2\\)"}, "correct": "Б", "explanation": "\\(R=\\frac{d}{2}=4\\,\\text{cm};\\ S=16\\pi\\,\\text{cm}^2\\)"}, {"id": "pl19", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В равностранен \\(\\triangle\\) с страна \\(a\\), апотемата е:", "options": {"А": "\\(\\frac{a\\sqrt{3}}{2}\\)", "Б": "\\(\\frac{a\\sqrt{3}}{3}\\)", "В": "\\(\\frac{a\\sqrt{3}}{6}\\)", "Г": "\\(a\\sqrt{3}\\)"}, "correct": "Б", "explanation": "Апотема = \\(\\frac{a}{2\\tan60^\\circ}\\cdot2=\\frac{a\\sqrt{3}}{3}\\)... В равностранен триъгълник: медиана=\\(\\frac{a\\sqrt{3}}{2}\\), центроид дели в 2:1, апотема=\\(\\frac{a\\sqrt{3}}{6}\\). Проверете."}, {"id": "pl20", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В \\(\\triangle ABC\\) \\(AB=c\\), \\(BC=a\\), \\(CA=b\\). Формулата на Херон за лицето е:", "options": {"А": "\\(\\sqrt{s(s-a)(s-b)(s-c)}\\)", "Б": "\\(\\frac{abc}{4R}\\)", "В": "\\(\\frac{1}{2}ab\\sin C\\)", "Г": "всички горни"}, "correct": "Г", "explanation": "Всички три формули дават лицето на триъгълника."}, {"id": "pl21", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В трапец \\(ABCD\\) (\\(AB\\parallel CD\\)) \\(AB=10\\), \\(CD=6\\), \\(h=4\\). Лицето е:", "options": {"А": "\\(24\\,\\text{cm}^2\\)", "Б": "\\(32\\,\\text{cm}^2\\)", "В": "\\(40\\,\\text{cm}^2\\)", "Г": "\\(48\\,\\text{cm}^2\\)"}, "correct": "Б", "explanation": "\\(S=\\frac{(10+6)\\cdot4}{2}=32\\,\\text{cm}^2\\)"}, {"id": "pl22", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Ако два успоредни хорди в окръжност имат дължини 6 и 8 cm и са на разстояние 1 cm един от друг, радиусът е:", "options": {"А": "\\(4\\)", "Б": "\\(5\\)", "В": "\\(6\\)", "Г": "\\(7\\)"}, "correct": "Б", "explanation": "Нека \\(d_1=3, d_2=4\\) (половини). \\(r^2=9+h_1^2=16+h_2^2\\), \\(h_1-h_2=1\\). Решение: \\(r=5\\)."}, {"id": "pl23", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Вписаният ъгъл е равен на:", "options": {"А": "централния ъгъл", "Б": "половината от централния ъгъл", "В": "двойния централен ъгъл", "Г": "сбора от централния и вписания ъгъл"}, "correct": "Б", "explanation": "Вписаният ъгъл е равен на половината от съответния централен ъгъл."}, {"id": "pl24", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "В правоъгълен триъгълник, ако единият остър ъгъл е \\(30^\\circ\\), то катетът срещу \\(30^\\circ\\) е:", "options": {"А": "половината от хипотенузата", "Б": "четвъртината от хипотенузата", "В": "равен на хипотенузата", "Г": "равен на другия катет"}, "correct": "А", "explanation": "В правоъгълен триъгълник с ъгъл \\(30^\\circ\\): малкият катет = хипотенуза/2."}, {"id": "pl25", "topic": "Геометрия", "subtopic": "Планиметрия", "difficulty": "hard", "question_html": "Лицето на кръгов сектор с радиус 6 cm и централен ъгъл \\(120^\\circ\\) е:", "options": {"А": "\\(6\\pi\\,\\text{cm}^2\\)", "Б": "\\(12\\pi\\,\\text{cm}^2\\)", "В": "\\(18\\pi\\,\\text{cm}^2\\)", "Г": "\\(36\\pi\\,\\text{cm}^2\\)"}, "correct": "Б", "explanation": "\\(S=\\frac{120}{360}\\cdot\\pi\\cdot36=12\\pi\\,\\text{cm}^2\\)"}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>

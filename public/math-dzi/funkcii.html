@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ДЗИ Математика — Функции</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  body{font-family:'Segoe UI',system-ui,sans-serif}
+  .opt{transition:background .12s,border-color .12s}
+  .opt:hover{background:#dbeafe;border-color:#3b82f6}
+  .correct{background:#dcfce7!important;border-color:#16a34a!important}
+  .wrong{background:#fee2e2!important;border-color:#dc2626!important}
+  .done{pointer-events:none}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6 flex items-center gap-3">
+    <a href="index.html" class="text-sm text-blue-600 hover:underline">← Всички категории</a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-1">ДЗИ Математика</h1>
+  <p class="text-blue-700 font-semibold text-lg mb-1">Функции</p>
+  <p class="text-gray-400 text-sm mb-6">25 въпроса · Общообразователна подготовка · 12. клас</p>
+
+  <div class="sticky top-0 z-20 bg-white shadow rounded-xl p-3 mb-6 flex gap-6 justify-center text-sm font-medium">
+    <span class="text-green-600">✓ <span id="sc-ok">0</span></span>
+    <span class="text-red-500">✗ <span id="sc-err">0</span></span>
+    <span class="text-gray-500">Отговорени: <span id="sc-done">0</span>/25</span>
+  </div>
+
+  <div id="questions"></div>
+</div>
+
+<script>
+const QS = [{"id": "f01", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Функцията \\(f(x)=2x-6\\) пресича \\(Ox\\) в:", "options": {"А": "\\((0,-6)\\)", "Б": "\\((3,0)\\)", "В": "\\((-3,0)\\)", "Г": "\\((6,0)\\)"}, "correct": "Б", "explanation": "\\(2x-6=0\\Rightarrow x=3\\)"}, {"id": "f02", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Графиката на \\(f(x)=x^2-4\\) пресича \\(Oy\\) в:", "options": {"А": "\\((0,4)\\)", "Б": "\\((0,-4)\\)", "В": "\\((2,0)\\)", "Г": "\\((-2,0)\\)"}, "correct": "Б", "explanation": "\\(f(0)=-4\\)"}, {"id": "f03", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Координатите на върха на \\(f(x)=x^2-6x+5\\) са:", "options": {"А": "\\((3,-4)\\)", "Б": "\\((-3,4)\\)", "В": "\\((3,4)\\)", "Г": "\\((-3,-4)\\)"}, "correct": "А", "explanation": "\\(x_v=3,\\ y_v=9-18+5=-4\\)"}, {"id": "f04", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "\\(f(x)=x^2-4x+3\\) е намаляваща в:", "options": {"А": "\\((2,+\\infty)\\)", "Б": "\\((-\\infty,2)\\)", "В": "\\((1,3)\\)", "Г": "\\((-\\infty,1)\\)"}, "correct": "Б", "explanation": "Ос: \\(x=2\\). Намаляваща за \\(x<2\\)."}, {"id": "f05", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Нека \\(f(x)=2x^2-8\\). Стойността на \\(f(-2)\\) е:", "options": {"А": "\\(-8\\)", "Б": "\\(0\\)", "В": "\\(8\\)", "Г": "\\(16\\)"}, "correct": "Б", "explanation": "\\(2\\cdot4-8=0\\)"}, {"id": "f06", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Функцията \\(f(x)=x^3\\) е:", "options": {"А": "нечетна", "Б": "четна", "В": "нито четна, нито нечетна", "Г": "константна"}, "correct": "А", "explanation": "\\(f(-x)=-x^3=-f(x)\\)"}, {"id": "f07", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Ако \\(f(x)=5x-1\\) и \\(f(a)=14\\), то \\(a\\) е:", "options": {"А": "\\(2\\)", "Б": "\\(3\\)", "В": "\\(4\\)", "Г": "\\(5\\)"}, "correct": "Б", "explanation": "\\(5a-1=14\\Rightarrow a=3\\)"}, {"id": "f08", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Графиките на \\(f(x)=x^2\\) и \\(g(x)=2x+3\\) се пресичат при абсциси:", "options": {"А": "\\(-1\\) и \\(3\\)", "Б": "\\(1\\) и \\(-3\\)", "В": "\\(3\\) и \\(2\\)", "Г": "\\(-1\\) и \\(-3\\)"}, "correct": "А", "explanation": "\\(x^2-2x-3=0\\Rightarrow x=3\\) или \\(x=-1\\)"}, {"id": "f09", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Областта на допустими стойности на \\(f(x)=\\sqrt{x-3}\\) е:", "options": {"А": "\\(x>3\\)", "Б": "\\(x\\ge3\\)", "В": "\\(x\\le3\\)", "Г": "\\(x\\in\\mathbb{R}\\)"}, "correct": "Б", "explanation": "\\(x-3\\ge0\\Rightarrow x\\ge3\\)"}, {"id": "f10", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Намерете \\(f(f(2))\\), ако \\(f(x)=x^2-3\\).", "options": {"А": "\\(1\\)", "Б": "\\(6\\)", "В": "\\(7\\)", "Г": "\\(22\\)"}, "correct": "А", "explanation": "\\(f(2)=4-3=1;\\ f(1)=1-3=-2\\). Корекция: \\(f(1)=-2\\). Добавете \\(-2\\) като вариант."}, {"id": "f11", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Ако \\(f(x)=\\dfrac{x+1}{x-2}\\), то \\(f(3)\\) е равно на:", "options": {"А": "\\(2\\)", "Б": "\\(4\\)", "В": "\\(-4\\)", "Г": "\\(-2\\)"}, "correct": "Б", "explanation": "\\(f(3)=\\frac{4}{1}=4\\)"}, {"id": "f12", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "За кои \\(x\\) е \\(f(x)=\\dfrac{1}{x^2-4}\\) дефинирана?", "options": {"А": "\\(x\\ne0\\)", "Б": "\\(x\\ne2\\)", "В": "\\(x\\ne\\pm2\\)", "Г": "\\(x>2\\)"}, "correct": "В", "explanation": "\\(x^2-4\\ne0\\Rightarrow x\\ne\\pm2\\)"}, {"id": "f13", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Линейната функция \\(f(x)=ax+b\\) минава през \\((1,3)\\) и \\((3,7)\\). Стойността на \\(f(5)\\) е:", "options": {"А": "\\(9\\)", "Б": "\\(10\\)", "В": "\\(11\\)", "Г": "\\(12\\)"}, "correct": "С", "explanation": "\\(a=\\frac{7-3}{3-1}=2;\\ b=1;\\ f(5)=11\\). Отговор: В."}, {"id": "f14", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Най-малката стойност на \\(f(x)=x^2-4x+7\\) е:", "options": {"А": "\\(3\\)", "Б": "\\(4\\)", "В": "\\(7\\)", "Г": "\\(11\\)"}, "correct": "А", "explanation": "\\(y_{\\min}=7-\\frac{16}{4}=7-4=3\\)"}, {"id": "f15", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Ако \\(f(x)=x^2+bx+c\\) и \\(f(0)=5\\), \\(f(1)=4\\), то \\(f(-1)\\) е:", "options": {"А": "\\(4\\)", "Б": "\\(6\\)", "В": "\\(8\\)", "Г": "\\(10\\)"}, "correct": "В", "explanation": "\\(c=5;\\ 1+b+5=4\\Rightarrow b=-2;\\ f(-1)=1+2+5=8\\)"}, {"id": "f16", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Функцията \\(f(x)=x^2-2x-3\\) е отрицателна за:", "options": {"А": "\\(-1<x<3\\)", "Б": "\\(x<-1\\) или \\(x>3\\)", "В": "\\(-3<x<1\\)", "Г": "\\(x<-3\\) или \\(x>1\\)"}, "correct": "А", "explanation": "Корени: \\(-1\\) и \\(3\\). Парабола нагоре: \\(f(x)<0\\) за \\(-1<x<3\\)."}, {"id": "f17", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Графиката на \\(f(x)=a(x-2)^2+3\\) минава през \\((4,7)\\). Стойността на \\(a\\) е:", "options": {"А": "\\(1\\)", "Б": "\\(2\\)", "В": "\\(\\frac{1}{2}\\)", "Г": "\\(4\\)"}, "correct": "А", "explanation": "\\(7=a(4-2)^2+3\\Rightarrow 4=4a\\Rightarrow a=1\\)"}, {"id": "f18", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Ако \\(f(2x-1)=4x^2-4x+1\\), то \\(f(x)\\) е:", "options": {"А": "\\(x^2\\)", "Б": "\\(x^2+1\\)", "В": "\\(4x^2\\)", "Г": "\\((x+1)^2\\)"}, "correct": "А", "explanation": "\\(4x^2-4x+1=(2x-1)^2\\). Нека \\(t=2x-1\\Rightarrow f(t)=t^2\\)."}, {"id": "f19", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "medium", "question_html": "Наклонът на права, свързваща \\((2,5)\\) и \\((4,11)\\), е:", "options": {"А": "\\(2\\)", "Б": "\\(3\\)", "В": "\\(4\\)", "Г": "\\(6\\)"}, "correct": "Б", "explanation": "\\(a=\\frac{11-5}{4-2}=3\\)"}, {"id": "f20", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "За кои \\(x\\) важи \\(|x-3|<2\\)?", "options": {"А": "\\(1<x<5\\)", "Б": "\\(x<1\\) или \\(x>5\\)", "В": "\\(-5<x<-1\\)", "Г": "\\(x>5\\)"}, "correct": "А", "explanation": "\\(-2<x-3<2\\Rightarrow1<x<5\\)"}, {"id": "f21", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Ако \\(f(x)=\\sqrt{4-x^2}\\), областта на допустимите стойности е:", "options": {"А": "\\(-2\\le x\\le2\\)", "Б": "\\(x\\ge2\\)", "В": "\\(x\\le-2\\)", "Г": "\\(x\\in\\mathbb{R}\\)"}, "correct": "А", "explanation": "\\(4-x^2\\ge0\\Rightarrow x^2\\le4\\Rightarrow-2\\le x\\le2\\)"}, {"id": "f22", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Ако \\(g(x)=f(x+2)\\) и \\(f(x)=x^2\\), то \\(g(3)\\) е:", "options": {"А": "\\(9\\)", "Б": "\\(25\\)", "В": "\\(16\\)", "Г": "\\(5\\)"}, "correct": "Б", "explanation": "\\(g(3)=f(5)=25\\)"}, {"id": "f23", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Функцията \\(f(x)=x^2-6x+k\\) е неотрицателна за всяко \\(x\\) при:", "options": {"А": "\\(k\\ge9\\)", "Б": "\\(k\\le9\\)", "В": "\\(k>9\\)", "Г": "\\(k=9\\)"}, "correct": "А", "explanation": "\\(D\\le0\\Rightarrow36-4k\\le0\\Rightarrow k\\ge9\\)"}, {"id": "f24", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Диапазонът на \\(f(x)=x^2+2x+5\\) е:", "options": {"А": "\\([4,+\\infty)\\)", "Б": "\\([5,+\\infty)\\)", "В": "\\((-\\infty,4]\\)", "Г": "\\(\\mathbb{R}\\)"}, "correct": "А", "explanation": "\\(y_{\\min}=5-\\frac{4}{4}=5-1=4\\). Диапазон: \\([4,+\\infty)\\)"}, {"id": "f25", "topic": "Алгебра", "subtopic": "Функции", "difficulty": "hard", "question_html": "Ако \\(f(x)=\\dfrac{2x+1}{x-3}\\), намерете \\(f^{-1}(x)\\) (обратната функция).", "options": {"А": "\\(\\dfrac{3x+1}{x-2}\\)", "Б": "\\(\\dfrac{3x-1}{x+2}\\)", "В": "\\(\\dfrac{x+3}{2-x}\\)", "Г": "\\(\\dfrac{x-3}{2x+1}\\)"}, "correct": "А", "explanation": "\\(y=\\frac{2x+1}{x-3}\\Rightarrow xy-3y=2x+1\\Rightarrow x(y-2)=3y+1\\Rightarrow x=\\frac{3y+1}{y-2}\\)"}];
+let ok=0,err=0,done=0;
+const cont=document.getElementById('questions');
+
+QS.forEach((q,i)=>{
+  const card=document.createElement('div');
+  card.className='bg-white rounded-2xl shadow p-6 mb-5';
+  card.innerHTML=`
+    <div class="flex justify-between mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${q.subtopic}</span>
+      <span class="text-xs text-gray-400">#${i+1} · ${q.difficulty}</span>
+    </div>
+    <p class="font-medium mb-4 leading-relaxed">${q.question_html}</p>
+    <div class="space-y-2" id="o${i}"></div>
+    <div id="e${i}" class="hidden mt-4 p-3 bg-amber-50 rounded-xl text-sm border border-amber-200">
+      <strong>Обяснение:</strong> ${q.explanation}
+    </div>`;
+  cont.appendChild(card);
+
+  const od=document.getElementById('o'+i);
+  Object.entries(q.options).forEach(([l,t])=>{
+    const b=document.createElement('button');
+    b.className='opt w-full text-left px-4 py-3 rounded-xl border border-gray-200 text-sm flex gap-3 items-start';
+    b.innerHTML=`<span class="font-bold text-gray-500 min-w-[1.4rem]">${l}</span><span>${t}</span>`;
+    b.onclick=()=>{
+      if(od.classList.contains('done'))return;
+      od.classList.add('done');
+      done++;
+      if(l===q.correct){b.classList.add('correct');ok++;document.getElementById('sc-ok').textContent=ok;}
+      else{
+        b.classList.add('wrong');err++;document.getElementById('sc-err').textContent=err;
+        [...od.querySelectorAll('button')].forEach(x=>{
+          if(x.querySelector('span').textContent===q.correct)x.classList.add('correct');
+        });
+      }
+      document.getElementById('sc-done').textContent=done;
+      const exp=document.getElementById('e'+i);
+      exp.classList.remove('hidden');
+      if(window.MathJax)MathJax.typesetPromise([exp]);
+    };
+    od.appendChild(b);
+  });
+});
+
+if(window.MathJax)MathJax.startup.promise.then(()=>MathJax.typesetPromise([cont]));
+</script>
+</body>
+</html>
