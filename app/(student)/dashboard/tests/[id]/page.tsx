@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { tests } from '@/data/tests'
+import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
@@ -382,7 +382,25 @@ const BERON_EXAMS: NvoExam[] = beronExamPayload.tests.map(normalizeBeronExam)
 export default function TestPage() {
   const params = useParams()
   const testId = String(params.id)
-  const test = tests.find((t) => t.id === testId) || tests[0]
+  const test = tests.find((t) => t.id === testId)
+
+  if (!test) {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Тест" />
+        <div className="p-4 md:p-6 max-w-3xl mx-auto">
+          <div className="card p-6 text-center">
+            <h1 className="text-lg font-semibold text-text mb-2">Този тест не е достъпен</h1>
+            <p className="text-sm text-text-muted mb-4">Избраният тест не е наличен за текущия клас или не съществува.</p>
+            <Link href="/dashboard/tests" className="btn-primary justify-center">
+              Към тестовете
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const datasetId = mapTestId(test.id)
   const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
   const storageKey = `izpiti-pro:test:${test.id}:state:v1`

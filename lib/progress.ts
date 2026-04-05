@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
+import { studentLessons, studentTests } from '@/data/student-content'
 
 export interface ProgressData {
   testsCompleted: number
@@ -124,8 +125,8 @@ export async function fetchProgressData(): Promise<ProgressData> {
     avgScore,
     lessonsCompleted: lessonCompletions.length,
     streakDays,
-    totalTests: 48,
-    totalLessons: 32,
+    totalTests: studentTests.length,
+    totalLessons: studentLessons.length,
     weeklyActivity,
     scoreHistory,
     recentActivity,
@@ -137,7 +138,7 @@ export async function fetchProgressData(): Promise<ProgressData> {
 function emptyProgress(): ProgressData {
   return {
     testsCompleted: 0, avgScore: 0, lessonsCompleted: 0, streakDays: 0,
-    totalTests: 48, totalLessons: 32,
+    totalTests: studentTests.length, totalLessons: studentLessons.length,
     weeklyActivity: [0, 0, 0, 0, 0, 0, 0],
     scoreHistory: [], recentActivity: [], weakTopics: [], strongTopics: [],
   }

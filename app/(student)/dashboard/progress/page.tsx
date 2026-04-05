@@ -6,6 +6,7 @@ import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { fetchProgressData, type ProgressData } from '@/lib/progress'
 import { getScoreColor } from '@/lib/utils'
+import { studentLessons, studentTests } from '@/data/student-content'
 
 export default function ProgressPage() {
   const [data, setData] = useState<ProgressData | null>(null)
@@ -36,9 +37,9 @@ export default function ProgressPage() {
 
         {/* Overview stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <StatCard label="Завършени тестове" value={data.testsCompleted} subtext="от 48 налични" />
+          <StatCard label="Завършени тестове" value={data.testsCompleted} subtext={`от ${studentTests.length} налични`} />
           <StatCard label="Средна оценка" value={data.avgScore > 0 ? `${data.avgScore}%` : '—'} accent />
-          <StatCard label="Завършени уроци" value={data.lessonsCompleted} subtext="от 32 налични" />
+          <StatCard label="Завършени уроци" value={data.lessonsCompleted} subtext={`от ${studentLessons.length} налични`} />
           <StatCard label="Поредни дни" value={data.streakDays} subtext="дни активност" />
         </div>
 

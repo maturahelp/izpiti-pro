@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
-import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
-import { subjects } from '@/data/subjects'
+import { materialTypeLabels, type MaterialType } from '@/data/materials'
+import { studentMaterials as materials, studentSubjects as subjects } from '@/data/student-content'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

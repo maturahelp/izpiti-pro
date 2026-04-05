@@ -34,7 +34,7 @@ export interface Question {
   points: number
 }
 
-export const tests: Test[] = [
+const allTests: Test[] = [
   {
     id: 'test-1',
     title: 'Правопис и пунктуация — основни правила',
@@ -687,6 +687,8 @@ export const tests: Test[] = [
   ...mockTests,
   ...beronTests,
 ]
+
+export const tests: Test[] = allTests.filter((test) => !test.id.startsWith('test-'))
 
 export const sampleQuestions: Question[] = [
   {
