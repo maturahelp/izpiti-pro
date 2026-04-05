@@ -473,6 +473,44 @@ export default function TestPage() {
     }))
   }, [answers, openResponses, submitted, revealAnswers, storageKey])
 
+  const handleSubmit = useCallback(() => {
+    setSubmitted(true)
+    if (typeof window === 'undefined' || !exam) return
+    const MISTAKES_KEY = 'nvo_mistakes'
+    let existing: Array<{
+      id: string; examId: string; examYear: number | string; examSubject: string
+      questionNumber: number; questionText: string; options: Record<string, string>
+      correctOption: string; questionImage: null; userAnswer: string
+      errorType: null; topics: string[]; firstSeen: string; lastSeen: string
+      attempts: Array<{ date: string; answer: string; correct: boolean }>; mastered: boolean
+    }> = []
+    try { existing = JSON.parse(window.localStorage.getItem(MISTAKES_KEY) || '[]') } catch { existing = [] }
+    const now = new Date().toISOString()
+    exam.questions.filter((q) => q.type === 'single_choice').forEach((q) => {
+      const userAnswer = answers[q.number]
+      if (!userAnswer || userAnswer === q.correct_option) return
+      const id = `${exam.id}_q${q.number}`
+      const existingEntry = existing.find((e) => e.id === id)
+      const attempt = { date: now, answer: userAnswer, correct: false }
+      if (existingEntry) {
+        existingEntry.userAnswer = userAnswer
+        existingEntry.lastSeen = now
+        existingEntry.attempts.push(attempt)
+        existingEntry.mastered = false
+      } else {
+        existing.push({
+          id, examId: exam.id, examYear: exam.year, examSubject: exam.subject,
+          questionNumber: q.number, questionText: q.question,
+          options: q.options ?? {}, correctOption: q.correct_option ?? '',
+          questionImage: null, userAnswer,
+          errorType: null, topics: [], firstSeen: now, lastSeen: now,
+          attempts: [attempt], mastered: false,
+        })
+      }
+    })
+    window.localStorage.setItem(MISTAKES_KEY, JSON.stringify(existing))
+  }, [exam, answers])
+
   const handleReset = useCallback(() => {
     setAnswers({})
     setOpenResponses({})
@@ -547,7 +585,7 @@ export default function TestPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={() => setSubmitted(true)}
+              onClick={handleSubmit}
               className="btn-primary text-sm px-4 py-2"
             >
               Провери отговорите
