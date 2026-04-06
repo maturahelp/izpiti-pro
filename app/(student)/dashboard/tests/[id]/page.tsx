@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
-import { beronExamPayload } from '@/data/beron-tests'
+import { beronExamPayload, beronTests } from '@/data/beron-tests'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -382,7 +382,7 @@ const BERON_EXAMS: NvoExam[] = beronExamPayload.tests.map(normalizeBeronExam)
 export default function TestPage() {
   const params = useParams()
   const testId = String(params.id)
-  const test = tests.find((t) => t.id === testId)
+  const test = tests.find((t) => t.id === testId) ?? beronTests.find((t) => t.id === testId)
 
   if (!test) {
     return (
