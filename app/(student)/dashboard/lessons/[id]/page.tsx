@@ -99,7 +99,7 @@ export default function LessonPage() {
                   onChange={(e) => setProgress(Number(e.target.value))}
                   className="w-full h-1.5 rounded-full bg-gray-100 appearance-none cursor-pointer"
                   style={{
-                    background: `linear-gradient(to right, #1B4FD8 ${progress}%, #E4E7EC ${progress}%)`
+                    background: `linear-gradient(to right, #2B6CB0 ${progress}%, #E4E7EC ${progress}%)`
                   }}
                 />
               </div>
@@ -208,7 +208,7 @@ export default function LessonPage() {
             {/* AI help */}
             <div className="card p-5 bg-primary-light border-primary/20">
               <div className="flex items-center gap-2 mb-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                 <h3 className="font-semibold text-primary text-sm">AI помощник</h3>
               </div>
               <p className="text-xs text-primary/70 mb-3">Имаш въпрос по темата? AI-ят ще ти помогне.</p>

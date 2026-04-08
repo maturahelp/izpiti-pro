@@ -4,20 +4,46 @@ import { useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
 import { ProgressBar } from '@/components/shared/ProgressBar'
-import { studentLessons as lessons, studentSubjects as subjects } from '@/data/student-content'
+import { lessons } from '@/data/lessons'
 import { formatDuration } from '@/lib/utils'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
+type LessonSection = 'bulgarian' | 'literature' | 'math' | 'english'
+
+const sectionLabels: Record<LessonSection, string> = {
+  bulgarian: 'Български',
+  literature: 'Литература',
+  math: 'Математика',
+  english: 'Английски',
+}
+
+const literatureKeywords = [
+  'литература',
+  'интерпретативно',
+  'роман',
+  'поема',
+  'стих',
+  'под игото',
+  'художествен',
+]
+
+function getLessonSection(lesson: (typeof lessons)[number]): LessonSection {
+  if (lesson.subjectId.startsWith('math-')) return 'math'
+  if (lesson.subjectId.startsWith('eng-') || lesson.subjectName.toLowerCase().includes('англий')) return 'english'
+
+  const searchable = `${lesson.title} ${lesson.topicName} ${lesson.subjectName}`.toLowerCase()
+  const isLiterature = literatureKeywords.some((keyword) => searchable.includes(keyword))
+  if (isLiterature) return 'literature'
+
+  return 'bulgarian'
+}
+
 export default function LessonsPage() {
-  const [selectedSubject, setSelectedSubject] = useState('all')
-  const [selectedExam, setSelectedExam] = useState('all')
-  const [search, setSearch] = useState('')
+  const [selectedSection, setSelectedSection] = useState<LessonSection>('bulgarian')
 
   const filtered = lessons.filter((l) => {
-    if (search && !l.title.toLowerCase().includes(search.toLowerCase())) return false
-    if (selectedSubject !== 'all' && l.subjectId !== selectedSubject) return false
-    if (selectedExam !== 'all' && l.examType !== selectedExam) return false
+    if (getLessonSection(l) !== selectedSection) return false
     return true
   })
 
@@ -33,32 +59,24 @@ export default function LessonsPage() {
       <TopBar title="Аудио уроци" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
 
-        <p className="text-text-muted text-sm mb-6">{lessons.length} аудио урока по всички теми</p>
-
         {/* Filters */}
-        <div className="card p-4 mb-6">
-          <div className="grid sm:grid-cols-3 gap-3">
-            <div className="relative">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-              </svg>
-              <input
-                type="text"
-                placeholder="Търси урок..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="input-field pl-9"
-              />
-            </div>
-            <select value={selectedExam} onChange={(e) => setSelectedExam(e.target.value)} className="input-field">
-              <option value="all">Всички изпити</option>
-              <option value="nvo7">7. клас НВО</option>
-              <option value="dzi12">12. клас ДЗИ</option>
-            </select>
-            <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} className="input-field">
-              <option value="all">Всички предмети</option>
-              {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
+        <div className="mb-6 -mt-4">
+          <div className="flex flex-wrap justify-center gap-3">
+            {(Object.keys(sectionLabels) as LessonSection[]).map((section) => (
+              <button
+                key={section}
+                type="button"
+                onClick={() => setSelectedSection(section)}
+                className={cn(
+                  'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
+                  selectedSection === section
+                    ? 'bg-primary text-white'
+                    : 'bg-primary-light text-primary hover:bg-primary-light/70'
+                )}
+              >
+                {sectionLabels[section]}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -88,7 +106,7 @@ export default function LessonsPage() {
                   ) : lesson.status === 'completed' ? (
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
                   ) : (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill={lesson.status === 'in_progress' ? '#1B4FD8' : '#6B7280'}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill={lesson.status === 'in_progress' ? '#2B6CB0' : '#6B7280'}>
                       <path d="M5 3l14 9-14 9V3z"/>
                     </svg>
                   )}

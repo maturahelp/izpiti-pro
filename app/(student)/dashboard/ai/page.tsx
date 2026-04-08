@@ -109,7 +109,7 @@ export default function AIPage() {
             {/* Intro header */}
             <div className="text-center py-4">
               <div className="w-12 h-12 rounded-2xl bg-primary-light mx-auto mb-3 flex items-center justify-center">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" strokeWidth="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2">
                   <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
                 </svg>
               </div>
@@ -124,7 +124,7 @@ export default function AIPage() {
               >
                 {msg.role === 'assistant' && (
                   <div className="w-8 h-8 rounded-xl bg-primary-light flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" strokeWidth="2">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2">
                       <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
                     </svg>
                   </div>
@@ -142,7 +142,7 @@ export default function AIPage() {
             {isTyping && (
               <div className="flex justify-start gap-3">
                 <div className="w-8 h-8 rounded-xl bg-primary-light flex items-center justify-center flex-shrink-0">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" strokeWidth="2">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2">
                     <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
                   </svg>
                 </div>

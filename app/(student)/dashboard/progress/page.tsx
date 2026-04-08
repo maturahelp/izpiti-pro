@@ -103,7 +103,7 @@ export default function ProgressPage() {
                         item.type === 'lesson' ? 'bg-success-light' : 'bg-amber-light'
                       }`}>
                         {item.type === 'test' ? (
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" strokeWidth="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>
                         ) : item.type === 'lesson' ? (
                           <svg width="11" height="11" viewBox="0 0 24 24" fill="#16A34A"><path d="M5 3l14 9-14 9V3z"/></svg>
                         ) : (

@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
+import { Manrope, Montserrat } from 'next/font/google'
 import './globals.css'
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-display',
+const manrope = Manrope({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-sans',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
 })
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ['latin', 'cyrillic'],
-  variable: '--font-sans',
+  variable: '--font-alt',
   display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
 })
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="bg" className={`${plusJakarta.variable} ${inter.variable}`}>
+    <html lang="bg" className={`${manrope.variable} ${montserrat.variable}`}>
       <body>{children}</body>
     </html>
   )

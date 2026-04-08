@@ -10,9 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#2563EB',
-          dark: '#1d4ed8',
-          light: '#EFF6FF',
+          DEFAULT: '#7AAEE0',
+          dark: '#5B94CC',
+          light: '#EBF4FF',
         },
         amber: {
           DEFAULT: '#B45309',
@@ -38,7 +38,6 @@ const config: Config = {
       fontFamily: {
         serif: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         DEFAULT: '0.5rem',
@@ -51,8 +50,8 @@ const config: Config = {
         card: '0 1px 2px rgba(15,23,42,0.04), 0 0 0 1px rgba(15,23,42,0.03)',
         'card-hover': '0 8px 24px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04), 0 0 0 1px rgba(15,23,42,0.04)',
         modal: '0 24px 64px rgba(15,23,42,0.12), 0 4px 8px rgba(15,23,42,0.04)',
-        'button-primary': '0 1px 2px rgba(27,79,216,0.2), inset 0 1px 0 rgba(255,255,255,0.1)',
-        'button-primary-hover': '0 4px 12px rgba(27,79,216,0.3)',
+        'button-primary': '0 1px 2px rgba(122,174,224,0.2), inset 0 1px 0 rgba(255,255,255,0.1)',
+        'button-primary-hover': '0 4px 12px rgba(122,174,224,0.3)',
       },
     },
   },
