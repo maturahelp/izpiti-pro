@@ -2,10 +2,12 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
+import { belTheory } from '@/data/bel-theory'
 import { cn } from '@/lib/utils'
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
@@ -81,9 +83,12 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 }
 
 export default function MaterialsPage() {
+  const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
+  const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
@@ -241,22 +246,49 @@ export default function MaterialsPage() {
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {section.items.map((item, itemIndex) => {
                       const globalIdx = ruleTopicIndex[section.title]?.[item] ?? -1
+                      const key = `${section.title}-${item}`
+                      const isExpanded = expandedRuleKey === key
+
                       return (
-                        <Link
-                          key={`${section.title}-${item}`}
-                          href={globalIdx >= 0 ? `/dashboard/materials/rule/${globalIdx}` : '#'}
-                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                        >
-                          <p className="text-xs font-semibold text-text-muted mb-1">
-                            {section.title}
-                          </p>
-                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">
-                            {item}
-                          </h3>
-                          <p className="text-xs font-semibold text-primary">
-                            Отвори правило #{itemIndex + 1}
-                          </p>
-                        </Link>
+                        <div key={key} className="flex flex-col gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setExpandedRuleKey(isExpanded ? null : key)}
+                            className={cn(
+                              'card p-4 text-left transition-all duration-200 hover:-translate-y-0.5 w-full',
+                              isExpanded && 'border-primary/40 bg-primary/5'
+                            )}
+                          >
+                            <p className="text-xs font-semibold text-text-muted mb-1">
+                              {section.title}
+                            </p>
+                            <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                              {item}
+                            </h3>
+                            <p className="text-xs font-semibold text-primary">
+                              Правило #{itemIndex + 1}
+                            </p>
+                          </button>
+
+                          {isExpanded && (
+                            <div className="flex gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setTheoryIndex(globalIdx)}
+                                className="flex-1 rounded-xl border border-[#1E4D7B]/30 bg-[#F2F8FF] text-[#1E4D7B] text-xs font-semibold py-2 hover:bg-[#1E4D7B]/10 transition-colors"
+                              >
+                                Теория
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
+                                className="flex-1 rounded-xl bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
+                              >
+                                Тест
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       )
                     })}
                   </div>
@@ -404,6 +436,66 @@ export default function MaterialsPage() {
           </div>
         </div>
       )}
+
+      {theoryIndex !== null && belTheory[theoryIndex] && (() => {
+        const t = belTheory[theoryIndex]
+        return (
+          <div
+            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+            onClick={() => setTheoryIndex(null)}
+          >
+            <div
+              className="w-full max-w-lg rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+                <div>
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Теория</p>
+                  <h3 className="text-base font-bold text-text leading-snug">{t.title}</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setTheoryIndex(null)}
+                  className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
+                  aria-label="Затвори"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div className="p-5 space-y-4">
+                <div className="rounded-xl bg-[#F2F8FF] border border-[#D7E7F7] p-4">
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Правило</p>
+                  <p className="text-sm text-text leading-relaxed">{t.rule}</p>
+                </div>
+
+                <div className="rounded-xl bg-success/5 border border-success/20 p-4">
+                  <p className="text-xs font-semibold text-success uppercase tracking-wide mb-1">Пример</p>
+                  <p className="text-sm text-text font-medium">{t.example}</p>
+                </div>
+
+                <div className="rounded-xl bg-danger/5 border border-danger/20 p-4">
+                  <p className="text-xs font-semibold text-danger uppercase tracking-wide mb-1">Типична грешка</p>
+                  <p className="text-sm text-text leading-relaxed">{t.commonMistake}</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTheoryIndex(null)
+                    router.push(`/dashboard/materials/rule/${theoryIndex}`)
+                  }}
+                  className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 hover:bg-primary-dark transition-colors"
+                >
+                  Направи теста →
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
