@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>БЕЛ Теми - Практически тест</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="bel-topics-quiz.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Български език</p>
+          <h1>Практически въпроси по всички теми</h1>
+          <p class="hero-text">
+            Сайтът събира всички теми от скрийншотите и показва по 10 въпроса
+            за всяка тема. Въпросите са за самопроверка и преговор.
+          </p>
+        </div>
+        <div class="hero-stats">
+          <article class="stat-card">
+            <span>Теми</span>
+            <strong id="topicCount">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Въпроси</span>
+            <strong id="questionCount">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Фокус</span>
+            <strong id="focusCount">0</strong>
+          </article>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="sidebar panel">
+          <div class="panel-block">
+            <label class="field">
+              <span>Раздел</span>
+              <select id="sectionSelect"></select>
+            </label>
+            <label class="field">
+              <span>Тема</span>
+              <select id="topicSelect"></select>
+            </label>
+          </div>
+
+          <div class="panel-block controls">
+            <button id="shuffleBtn" class="primary-btn">Разбъркай въпросите</button>
+            <button id="submitBtn" class="secondary-btn">Провери отговорите</button>
+            <button id="resetBtn" class="secondary-btn">Изчисти отговорите</button>
+          </div>
+
+          <div class="panel-block summary">
+            <p><span>Избран раздел</span><strong id="currentSection">-</strong></p>
+            <p><span>Избрана тема</span><strong id="currentTopic">-</strong></p>
+            <p><span>Въпроси</span><strong id="currentQuestionCount">0</strong></p>
+            <p><span>Фокусирани</span><strong id="currentFocusState">-</strong></p>
+            <p><span>Резултат</span><strong id="scoreValue">0 / 0</strong></p>
+          </div>
+        </aside>
+
+        <section class="content panel">
+          <div class="content-topbar">
+            <div>
+              <p class="eyebrow">Practice Mode</p>
+              <h2 id="topicHeading">Избери тема</h2>
+            </div>
+            <p class="content-note">
+              Всеки въпрос е създаден като насочваща задача за преговор по
+              конкретната тема.
+            </p>
+          </div>
+
+          <div id="questionList" class="question-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="questionTemplate">
+      <article class="question-card">
+        <div class="question-head">
+          <span class="question-index"></span>
+          <span class="question-text"></span>
+        </div>
+        <div class="question-meta">
+          <span class="focus-badge">Фокус към темата: потвърден</span>
+          <span class="practice-badge">4 опции</span>
+        </div>
+        <div class="options"></div>
+        <div class="feedback" hidden></div>
+      </article>
+    </template>
+
+    <template id="optionTemplate">
+      <label class="option-row">
+        <input type="radio" />
+        <span class="option-letter"></span>
+        <span class="option-text"></span>
+      </label>
+    </template>
+
+    <script src="bel-topics-quiz.js" defer></script>
+  </body>
+</html>
