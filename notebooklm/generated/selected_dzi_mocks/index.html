@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selected DZI Mocks</title>
+  <style>
+    :root{--bg:#f6f2ea;--ink:#221d18;--muted:#6e655b;--panel:#fffdf8;--line:#ddd1c3;--accent:#255f67}
+    *{box-sizing:border-box} body{margin:0;font-family:Georgia,serif;background:linear-gradient(180deg,#faf8f3,var(--bg));color:var(--ink)}
+    .wrap{width:min(1220px,calc(100vw - 28px));margin:0 auto;padding:28px 0 44px}
+    .hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 24px rgba(0,0,0,.05)}
+    .hero{padding:24px;margin-bottom:16px} h1{margin:0 0 8px;font-size:clamp(2rem,4vw,3rem)}
+    .sub{color:var(--muted);line-height:1.6}
+    .tools{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+    select{padding:13px 14px;border-radius:16px;border:1px solid var(--line);background:#fff;font:inherit}
+    .card{padding:22px}
+    .chiprow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .chip{padding:6px 10px;border-radius:999px;background:#eef4f5;color:#1f5057;font-size:.88rem}
+    .context{padding:16px;border-radius:16px;background:#f8fbfb;border-left:4px solid #abd0d4;line-height:1.7;margin-bottom:16px}
+    .infographic{margin-bottom:16px;padding:16px;border-radius:16px;background:#fbf7ef;border:1px solid #eadfce}
+    .barrow{display:grid;grid-template-columns:220px 1fr 56px;gap:10px;align-items:center;margin:8px 0}
+    .bar{height:14px;border-radius:999px;background:#e7ddd2;overflow:hidden}
+    .fill{height:100%;background:linear-gradient(90deg,#255f67,#4d8d95)}
+    .q{padding:12px 0;border-top:1px solid #eee4d8}
+    .q:first-of-type{border-top:none}
+    .opts{display:grid;gap:6px;margin-top:8px}
+    .opt{padding:9px 11px;border:1px solid #ece2d8;border-radius:12px;background:#fff}
+    .ans{margin-top:8px;padding:10px 12px;border-radius:12px;background:#eff8f2;border:1px solid #cbe5d2;color:#225c36}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Selected Mock DZI Exams</h1>
+      <p class="sub">Full mock DZI papers generated from the 10 selected text and chart pairs.</p>
+    </section>
+    <section class="tools">
+      <select id="exam"></select>
+    </section>
+    <section id="root"></section>
+  </main>
+  <script>
+    const examEl=document.getElementById('exam'); const root=document.getElementById('root'); let payload;
+    function esc(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
+    function fmt(s){return esc(s).replaceAll('\n\n','<br><br>').replaceAll('\n','<br>')}
+    function render(){
+      const exam=payload.exams[Number(examEl.value||0)];
+      const chart=exam.diagram_summary;
+      root.innerHTML=`<article class="card">
+        <div class="chiprow">
+          <span class="chip">${esc(exam.id)}</span>
+          <span class="chip">${esc(exam.source_title)}</span>
+          <span class="chip">${exam.questions.length} въпроса</span>
+        </div>
+        <div class="context"><strong>Текст</strong><br>${fmt(exam.source_text)}</div>
+        <div class="infographic"><strong>${esc(chart.title)}</strong>${chart.labels.map((label,i)=>`<div class="barrow"><div>${esc(label)}</div><div class="bar"><div class="fill" style="width:${chart.values[i]}%"></div></div><div>${chart.values[i]}${esc(chart.unit)}</div></div>`).join('')}</div>
+        ${exam.questions.map(q=>`<div class="q"><div><strong>${q.number}.</strong> ${esc(q.question)}</div>${q.options?`<div class="opts">${Object.entries(q.options).map(([k,v])=>`<div class="opt"><strong>${k}.</strong> ${esc(v)}</div>`).join('')}</div>`:''}${q.pairs?`<div class="opts">${Object.entries(q.pairs).map(([k,v])=>`<div class="opt"><strong>${esc(k)}</strong> -> ${esc(v)}</div>`).join('')}</div>`:''}<div class="ans"><strong>Насока:</strong> ${esc(q.answer_guide)}</div></div>`).join('')}
+      </article>`;
+    }
+    fetch('./selected_dzi_mocks.json').then(r=>r.json()).then(data=>{
+      payload=data;
+      examEl.innerHTML=payload.exams.map((exam,i)=>`<option value="${i}">${esc(exam.title)} - ${esc(exam.source_title)}</option>`).join('');
+      render();
+      examEl.addEventListener('change', render);
+    });
+  </script>
+</body>
+</html>

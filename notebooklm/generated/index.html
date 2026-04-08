@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEL Question Bank Preview</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: rgba(255, 252, 246, 0.9);
+      --panel-strong: #fffdf8;
+      --ink: #1c1a18;
+      --muted: #6a635c;
+      --accent: #a64b2a;
+      --accent-soft: #eab9a7;
+      --line: rgba(28, 26, 24, 0.12);
+      --good: #1f6d52;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(166, 75, 42, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(31, 109, 82, 0.14), transparent 24%),
+        linear-gradient(180deg, #f8f4ed 0%, var(--bg) 100%);
+    }
+
+    .shell {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.82), rgba(255,248,240,0.92));
+      box-shadow: 0 18px 50px rgba(48, 36, 27, 0.08);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 3vw, 3.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      margin: 0;
+      max-width: 72ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, minmax(140px, 190px));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar > * {
+      min-width: 0;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .results {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      box-shadow: 0 10px 30px rgba(48, 36, 27, 0.06);
+    }
+
+    .card-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .id {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f7ede7;
+      color: #6f3925;
+      font-size: 0.83rem;
+      border: 1px solid rgba(166, 75, 42, 0.18);
+    }
+
+    .context {
+      margin: 0 0 14px;
+      padding: 14px 16px;
+      background: #fbf6f0;
+      border-left: 4px solid var(--accent-soft);
+      border-radius: 14px;
+      line-height: 1.65;
+    }
+
+    .question {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0 0 12px;
+    }
+
+    .options {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 14px;
+    }
+
+    .option {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    .answer {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(31, 109, 82, 0.08);
+      border: 1px solid rgba(31, 109, 82, 0.18);
+      color: var(--good);
+      line-height: 1.55;
+    }
+
+    .empty {
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <h1>BEL Question Bank Preview</h1>
+      <p class="sub">Synthetic BEL question set generated from the local NVO and DZI source datasets derived from your <code>pdf</code> and <code>dzi</code> folders. Use the filters below to review style, section, and question type.</p>
+      <div class="meta" id="meta"></div>
+    </section>
+
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="Search by keyword, id, answer, or context">
+      <select id="style">
+        <option value="">All styles</option>
+      </select>
+      <select id="section">
+        <option value="">All sections</option>
+      </select>
+      <select id="type">
+        <option value="">All types</option>
+      </select>
+    </section>
+
+    <section class="results" id="results"></section>
+  </main>
+
+  <script>
+    const metaEl = document.getElementById('meta');
+    const resultsEl = document.getElementById('results');
+    const searchEl = document.getElementById('search');
+    const styleEl = document.getElementById('style');
+    const sectionEl = document.getElementById('section');
+    const typeEl = document.getElementById('type');
+
+    let allQuestions = [];
+
+    function fillSelect(el, values) {
+      values.forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        el.appendChild(option);
+      });
+    }
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+    }
+
+    function renderMeta(payload) {
+      const chips = [
+        `Questions: ${payload.question_count}`,
+        `Styles: ${[...new Set(payload.questions.map(q => q.style))].join(', ')}`,
+        `Source dirs: pdf, dzi`,
+        `Generated: ${new Date(payload.generated_at).toLocaleString()}`
+      ];
+      metaEl.innerHTML = chips.map(text => `<span class="chip">${text}</span>`).join('');
+    }
+
+    function renderQuestions(questions) {
+      if (!questions.length) {
+        resultsEl.innerHTML = '<div class="empty">No questions match the current filters.</div>';
+        return;
+      }
+
+      resultsEl.innerHTML = questions.map(question => {
+        const context = question.context_text
+          ? `<div class="context"><strong>${escapeHtml(question.context_title || 'Контекст')}:</strong> ${escapeHtml(question.context_text)}</div>`
+          : '';
+
+        const options = question.options
+          ? `<div class="options">${Object.entries(question.options).map(([label, value]) =>
+              `<div class="option"><strong>${label}.</strong> ${escapeHtml(value)}</div>`
+            ).join('')}</div>`
+          : '';
+
+        const correct = question.correct_option
+          ? `Правилен отговор: ${escapeHtml(question.correct_option)}`
+          : 'Очакван отговор';
+
+        return `
+          <article class="card">
+            <div class="card-head">
+              <div class="id">${escapeHtml(question.id)}</div>
+              <div class="tags">
+                <span class="tag">${escapeHtml(question.style)}</span>
+                <span class="tag">${escapeHtml(question.section)}</span>
+                <span class="tag">${escapeHtml(question.type)}</span>
+              </div>
+            </div>
+            ${context}
+            <p class="question">${escapeHtml(question.question)}</p>
+            ${options}
+            <div class="answer"><strong>${correct}</strong><br>${escapeHtml(question.official_answer)}</div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function applyFilters() {
+      const needle = searchEl.value.trim().toLowerCase();
+      const style = styleEl.value;
+      const section = sectionEl.value;
+      const type = typeEl.value;
+
+      const filtered = allQuestions.filter(question => {
+        if (style && question.style !== style) return false;
+        if (section && question.section !== section) return false;
+        if (type && question.type !== type) return false;
+
+        if (!needle) return true;
+
+        const haystack = [
+          question.id,
+          question.question,
+          question.official_answer,
+          question.context_title || '',
+          question.context_text || '',
+          ...(question.options ? Object.values(question.options) : [])
+        ].join(' ').toLowerCase();
+
+        return haystack.includes(needle);
+      });
+
+      renderQuestions(filtered);
+    }
+
+    async function start() {
+      const response = await fetch('./synthetic_bel_question_bank_500.json');
+      const payload = await response.json();
+      allQuestions = payload.questions;
+
+      fillSelect(styleEl, [...new Set(allQuestions.map(q => q.style))].sort());
+      fillSelect(sectionEl, [...new Set(allQuestions.map(q => q.section))].sort());
+      fillSelect(typeEl, [...new Set(allQuestions.map(q => q.type))].sort());
+
+      renderMeta(payload);
+      renderQuestions(allQuestions);
+
+      [searchEl, styleEl, sectionEl, typeEl].forEach(el => {
+        el.addEventListener('input', applyFilters);
+        el.addEventListener('change', applyFilters);
+      });
+    }
+
+    start().catch(error => {
+      resultsEl.innerHTML = `<div class="empty">Failed to load preview: ${escapeHtml(String(error))}</div>`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock NVO / DZI Preview</title>
+  <style>
+    :root { --bg:#f6f3ed; --ink:#201c18; --muted:#6f665d; --panel:#fffdf8; --line:#ddd2c5; --accent:#0d5c63; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Georgia,serif; color:var(--ink); background:linear-gradient(180deg,#fbfaf7, var(--bg)); }
+    .wrap { width:min(1180px, calc(100vw - 28px)); margin:0 auto; padding:28px 0 48px; }
+    .hero,.card { background:var(--panel); border:1px solid var(--line); border-radius:24px; box-shadow:0 10px 28px rgba(0,0,0,.05); }
+    .hero { padding:24px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:clamp(2rem, 4vw, 3.2rem); }
+    .sub { color:var(--muted); max-width:75ch; line-height:1.6; }
+    .tools { display:grid; grid-template-columns:1fr 240px; gap:12px; margin-bottom:18px; }
+    .topcards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
+    .pick { padding:18px; border-radius:20px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+    .pick strong { display:block; font-size:1.1rem; margin-bottom:6px; }
+    select { width:100%; padding:13px 14px; border-radius:16px; border:1px solid var(--line); background:#fff; font:inherit; }
+    .card { padding:22px; margin-bottom:18px; }
+    .meta { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+    .chip { padding:6px 10px; border-radius:999px; background:#eef5f5; color:#19464b; font-size:.88rem; }
+    .context { padding:14px 16px; border-left:4px solid #a6c8ca; background:#f8fbfb; border-radius:12px; line-height:1.6; margin-bottom:16px; }
+    .infographic { margin-bottom:16px; padding:16px; border-radius:16px; background:#fbf7ef; border:1px solid #eadfce; }
+    .barrow { display:grid; grid-template-columns:180px 1fr 48px; gap:10px; align-items:center; margin:8px 0; }
+    .bar { height:14px; border-radius:999px; background:#e6ddd1; overflow:hidden; }
+    .fill { height:100%; background:linear-gradient(90deg, #0d5c63, #4f8f95); }
+    .q { padding:12px 0; border-top:1px solid #eee4d8; }
+    .q:first-of-type { border-top:none; }
+    .n { font-weight:700; }
+    .opts { margin:8px 0; display:grid; gap:6px; }
+    .opt { padding:9px 11px; border:1px solid #ece2d8; border-radius:12px; background:#fff; }
+    .ans { margin-top:8px; padding:10px 12px; border-radius:12px; background:#eff8f2; color:#225b34; border:1px solid #cae6d2; }
+    @media (max-width: 760px) { .tools { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Mock NVO / DZI BEL Exams</h1>
+      <p class="sub">Preview of the newly generated full mock papers built from the local BEL exam structure in the notebooklm workspace. NVO and DZI are both available below.</p>
+    </section>
+    <section class="topcards">
+      <div class="pick" id="pick-nvo"><strong>NVO BEL</strong>10 mock exams with longer source texts and infographic blocks.</div>
+      <div class="pick" id="pick-dzi"><strong>DZI BEL</strong>10 mock exams with text sets, language block, literature block, and final writing task.</div>
+    </section>
+    <section class="tools">
+      <select id="kind">
+        <option value="nvo">NVO BEL</option>
+        <option value="dzi">DZI BEL</option>
+      </select>
+      <select id="exam"></select>
+    </section>
+    <section id="root"></section>
+  </main>
+  <script>
+    const kindEl = document.getElementById('kind');
+    const examEl = document.getElementById('exam');
+    const root = document.getElementById('root');
+    document.getElementById('pick-nvo').addEventListener('click', () => { kindEl.value = 'nvo'; fillExamSelect(); render(); });
+    document.getElementById('pick-dzi').addEventListener('click', () => { kindEl.value = 'dzi'; fillExamSelect(); render(); });
+    let payload;
+    function esc(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
+    function fmt(s){return esc(s).replaceAll('\n\n','<br><br>').replaceAll('\n','<br>')}
+    function list(){ return kindEl.value === 'nvo' ? payload.nvo_exams : payload.dzi_exams; }
+    function fillExamSelect(){
+      const exams = list();
+      examEl.innerHTML = exams.map((exam, i) => `<option value="${i}">${esc(exam.title)}</option>`).join('');
+    }
+    function render(){
+      const exam = list()[Number(examEl.value || 0)];
+      const infographicData = exam.infographic || exam.diagram_summary;
+      const infographic = infographicData
+        ? `<div class="infographic"><strong>${esc(infographicData.title || 'Инфографика')}</strong>${infographicData.note ? `<div style="margin-top:8px;color:#6f665d;">${esc(infographicData.note)}</div>` : ''}${(infographicData.labels || []).map((label, i) => `<div class="barrow"><div>${esc(label)}</div><div class="bar"><div class="fill" style="width:${infographicData.values[i]}%"></div></div><div>${infographicData.values[i]}${esc(infographicData.unit || '%')}</div></div>`).join('')}</div>`
+        : '';
+      const context = exam.exam_type === 'nvo_bel'
+        ? `<div class="context"><strong>${esc(exam.context_title)}</strong><br>${fmt(exam.context_text)}</div>${infographic}`
+        : `<div class="context"><strong>Текст 1</strong><br>${fmt(exam.text_1)}<br><br><strong>Текст 2</strong><br>${fmt(exam.text_2)}</div>${infographic}`;
+      root.innerHTML = `<article class="card">
+        <div class="meta">
+          <span class="chip">${esc(exam.id)}</span>
+          <span class="chip">${esc(exam.exam_type)}</span>
+          <span class="chip">${exam.questions.length} въпроса</span>
+        </div>
+        ${context}
+        ${exam.questions.map(q => `
+          <div class="q">
+            <div class="n">${q.number}. ${esc(q.question)}</div>
+            ${q.options ? `<div class="opts">${Object.entries(q.options).map(([k,v]) => `<div class="opt"><strong>${k}.</strong> ${esc(v)}</div>`).join('')}</div>` : ''}
+            ${q.table_rows ? `<div class="opts">${Object.entries(q.table_rows).map(([k,v]) => `<div class="opt"><strong>${k}.</strong> ${esc(v)}</div>`).join('')}</div>` : ''}
+            ${q.pairs ? `<div class="opts">${Object.entries(q.pairs).map(([k,v]) => `<div class="opt"><strong>${esc(k)}</strong> -> ${esc(v)}</div>`).join('')}</div>` : ''}
+            <div class="ans"><strong>Насока за отговор:</strong> ${esc(typeof q.answer_guide === 'string' ? q.answer_guide : JSON.stringify(q.answer_guide))}</div>
+          </div>`).join('')}
+      </article>`;
+    }
+    fetch('./mock_nvo_dzi_exams.json').then(r => r.json()).then(data => {
+      payload = data;
+      fillExamSelect();
+      render();
+      kindEl.addEventListener('change', () => { fillExamSelect(); render(); });
+      examEl.addEventListener('change', render);
+    });
+  </script>
+</body>
+</html>

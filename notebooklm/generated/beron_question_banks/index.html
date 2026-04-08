@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BERON Difficulty Tests Preview</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --panel: #fffdf8;
+      --panel-2: #f7fbff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dccfb8;
+      --accent: #215f76;
+      --accent-soft: #e6f1f5;
+      --ok: #1f7a4d;
+      --ok-soft: #e8f6ee;
+      --warn: #9a6b14;
+      --shadow: 0 16px 36px rgba(53, 39, 23, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(33,95,118,0.08), transparent 28%),
+        linear-gradient(180deg, #faf7f1 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.04;
+      color: #1c3f4d;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 840px;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(8px);
+      padding: 14px;
+      border: 1px solid rgba(220, 207, 184, 0.9);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 12px;
+      z-index: 2;
+      margin-bottom: 18px;
+    }
+
+    .toolbar label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font: inherit;
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.72);
+      color: #274755;
+      font-size: 0.92rem;
+    }
+
+    .list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .card-head {
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid #efe3d1;
+      background: linear-gradient(180deg, #fffefb 0%, #f8f4eb 100%);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .grade7 { background: #e7f0f7; color: #1f5b79; }
+    .grade12 { background: #f6ebd7; color: #8c5a10; }
+    .mixed { background: #ede7f8; color: #5d3a91; }
+    .easy { background: #eaf7ef; color: #226647; }
+    .medium { background: #fff2db; color: #9b6508; }
+    .hard { background: #fde8e8; color: #a53b3b; }
+    .type { background: #edf5f8; color: #235d73; }
+
+    .title {
+      font-size: 1.2rem;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .card-body {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .test-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .summary-box {
+      border: 1px solid #e7dac7;
+      border-radius: 16px;
+      background: #fffdfa;
+      padding: 12px 14px;
+    }
+
+    .summary-box strong {
+      display: block;
+      font-size: 1.1rem;
+      color: #234b5c;
+    }
+
+    .questions-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .question-card {
+      border: 1px solid #e9dece;
+      border-radius: 18px;
+      background: #fffcf7;
+      padding: 14px;
+    }
+
+    .question-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .question-number {
+      font-weight: 700;
+      color: #234b5c;
+    }
+
+    .section-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .question-text {
+      font-size: 1.02rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      padding: 11px 13px;
+      border: 1px solid #e7dac7;
+      border-radius: 14px;
+      background: #fffdfa;
+      line-height: 1.5;
+    }
+
+    .answer-box {
+      border: 1px solid #cfe7d6;
+      background: var(--ok-soft);
+      color: #1d5a3d;
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .explanation {
+      border: 1px solid #d6e8ef;
+      background: var(--panel-2);
+      border-radius: 16px;
+      padding: 14px;
+      line-height: 1.6;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #f1eee8;
+      border: 1px solid #e3d7c6;
+      color: #6c5a44;
+      font-size: 0.8rem;
+    }
+
+    .empty {
+      padding: 32px 18px;
+      text-align: center;
+      color: var(--muted);
+      background: rgba(255,255,255,0.72);
+      border: 1px dashed var(--border);
+      border-radius: 20px;
+    }
+
+    @media (max-width: 980px) {
+      .toolbar { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { padding-inline: 12px; }
+      .toolbar { grid-template-columns: 1fr; }
+      .card-head, .card-body { padding: 14px; }
+      .test-summary { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>BERON Difficulty Tests</h1>
+    <p class="intro">
+      Въпросите от <strong>beron_rules_normalized.json</strong> вече са подредени в отделни тестове по трудност.
+      Всеки тест съдържа приблизително 20 въпроса, когато наличните данни го позволяват.
+    </p>
+
+    <div class="toolbar">
+      <div>
+        <label for="bankFilter">Банка</label>
+        <select id="bankFilter">
+          <option value="all">Всички</option>
+          <option value="g7">7. клас</option>
+          <option value="g12">12. клас</option>
+          <option value="mixed">Смесен преговор</option>
+        </select>
+      </div>
+      <div>
+        <label for="difficultyFilter">Трудност</label>
+        <select id="difficultyFilter">
+          <option value="all">Всички</option>
+          <option value="easy">Лесна</option>
+          <option value="medium">Средна</option>
+          <option value="hard">Трудна</option>
+        </select>
+      </div>
+      <div>
+        <label for="topicFilter">Тема</label>
+        <select id="topicFilter">
+          <option value="all">Всички</option>
+        </select>
+      </div>
+      <div>
+        <label for="searchInput">Търсене</label>
+        <input id="searchInput" type="text" placeholder="напр. запетая, член, пряка реч" />
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div class="list" id="questionList"></div>
+  </div>
+
+  <script>
+    const SOURCES = [
+      { key: 'g7', label: '7. клас', className: 'grade7', file: '/questions_grade7_tests.json' },
+      { key: 'g12', label: '12. клас', className: 'grade12', file: '/questions_grade12_tests.json' },
+      { key: 'mixed', label: 'Смесен преговор', className: 'mixed', file: '/questions_review_mixed_tests.json' },
+    ];
+
+    const els = {
+      bank: document.getElementById('bankFilter'),
+      difficulty: document.getElementById('difficultyFilter'),
+      topic: document.getElementById('topicFilter'),
+      search: document.getElementById('searchInput'),
+      stats: document.getElementById('stats'),
+      list: document.getElementById('questionList'),
+    };
+
+    let tests = [];
+
+    const humanType = {
+      multiple_choice: 'Избор между отговори',
+      choose_correct_form: 'Избор на правилна форма',
+      fill_in_blank: 'Попълване',
+      find_the_error: 'Откриване на грешка',
+      edit_sentence: 'Редактиране',
+      explain_rule: 'Обяснение на правило',
+    };
+
+    const humanDifficulty = {
+      easy: 'Лесна',
+      medium: 'Средна',
+      hard: 'Трудна',
+    };
+
+    async function loadData() {
+      const loaded = await Promise.all(
+        SOURCES.map(async (source) => {
+          const data = await fetch(source.file).then((r) => r.json());
+          return data.map((item) => ({ ...item, bank: source.key, bankLabel: source.label, bankClass: source.className }));
+        })
+      );
+      tests = loaded.flat();
+      hydrateFilters();
+      render();
+    }
+
+    function hydrateFilters() {
+      const topics = [...new Set(tests.flatMap((test) => test.topics || []))].sort((a, b) => a.localeCompare(b, 'bg'));
+
+      for (const topic of topics) {
+        const opt = document.createElement('option');
+        opt.value = topic;
+        opt.textContent = topic;
+        els.topic.appendChild(opt);
+      }
+    }
+
+    function filteredTests() {
+      const bank = els.bank.value;
+      const difficulty = els.difficulty.value;
+      const topic = els.topic.value;
+      const search = els.search.value.trim().toLowerCase();
+
+      return tests.filter((test) => {
+        if (bank !== 'all' && test.bank !== bank) return false;
+        if (difficulty !== 'all' && test.difficulty !== difficulty) return false;
+        if (topic !== 'all' && !(test.topics || []).includes(topic)) return false;
+        if (!search) return true;
+        const haystack = [
+          test.title,
+          ...(test.topics || []),
+          ...(test.rule_ids || []),
+          ...test.questions.flatMap((q) => [
+            q.question_text,
+            q.correct_answer,
+            q.explanation,
+            q.topic,
+            q.source_rule_title,
+            ...(q.tags || []),
+          ]),
+        ].join(' ').toLowerCase();
+        return haystack.includes(search);
+      });
+    }
+
+    function renderStats(items) {
+      const counts = {
+        totalTests: items.length,
+        totalQuestions: items.reduce((sum, test) => sum + test.question_count, 0),
+        g7: items.filter((test) => test.bank === 'g7').length,
+        g12: items.filter((test) => test.bank === 'g12').length,
+        mixed: items.filter((test) => test.bank === 'mixed').length,
+      };
+
+      els.stats.innerHTML = `
+        <span class="pill"><strong>${counts.totalTests}</strong> теста</span>
+        <span class="pill"><strong>${counts.totalQuestions}</strong> въпроса общо</span>
+        <span class="pill"><strong>${counts.g7}</strong> теста за 7. клас</span>
+        <span class="pill"><strong>${counts.g12}</strong> теста за 12. клас</span>
+        <span class="pill"><strong>${counts.mixed}</strong> смесени теста</span>
+      `;
+    }
+
+    function badge(text, className) {
+      return `<span class="badge ${className}">${text}</span>`;
+    }
+
+    function renderQuestionCard(q, index) {
+      const options = q.options?.length
+        ? `
+            <div>
+              <div class="section-title">Варианти</div>
+              <div class="options">
+                ${q.options.map((opt) => `<div class="option">${opt}</div>`).join('')}
+              </div>
+            </div>
+          `
+        : '';
+
+      const tags = q.tags?.length
+        ? `<div class="tags">${q.tags.map((tag) => `<span class="tag">${tag}</span>`).join('')}</div>`
+        : '';
+
+      return `
+        <div class="question-card">
+          <div class="question-head">
+            <span class="question-number">Въпрос ${index + 1}</span>
+            ${badge(humanType[q.type] || q.type, 'type')}
+          </div>
+          <div class="card-body" style="padding: 0; gap: 12px;">
+            <div>
+              <div class="section-title">Въпрос</div>
+              <div class="question-text">${q.question_text.replace(/\n/g, '<br>')}</div>
+            </div>
+            ${options}
+            <div class="answer-box">
+              <div class="section-title">Верен отговор</div>
+              <div>${q.correct_answer}</div>
+            </div>
+            <div class="explanation">
+              <div class="section-title">Обяснение</div>
+              <div>${q.explanation}</div>
+            </div>
+            <div>
+              <div class="section-title">Източник</div>
+              <div><strong>${q.source_rule_title}</strong><br><span style="color: var(--muted);">${q.rule_id}</span></div>
+            </div>
+            ${tags}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCard(test) {
+      return `
+        <article class="card">
+          <div class="card-head">
+            <div class="meta">
+              ${badge(test.bankLabel, test.bankClass)}
+              ${badge(test.difficulty_label, test.difficulty)}
+              ${badge(`${test.question_count} въпроса`, 'type')}
+            </div>
+            <h2 class="title">${test.title}</h2>
+          </div>
+          <div class="card-body">
+            <div class="test-summary">
+              <div class="summary-box">
+                <div class="section-title">Трудност</div>
+                <strong>${test.difficulty_label}</strong>
+              </div>
+              <div class="summary-box">
+                <div class="section-title">Въпроси</div>
+                <strong>${test.question_count}</strong>
+              </div>
+              <div class="summary-box">
+                <div class="section-title">Теми</div>
+                <strong>${(test.topics || []).length}</strong>
+              </div>
+            </div>
+            <div>
+              <div class="section-title">Основни теми</div>
+              <div class="tags">${(test.topics || []).map((topic) => `<span class="tag">${topic}</span>`).join('')}</div>
+            </div>
+            <div class="questions-grid">
+              ${test.questions.map(renderQuestionCard).join('')}
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function render() {
+      const items = filteredTests();
+      renderStats(items);
+      if (!items.length) {
+        els.list.innerHTML = `<div class="empty">Няма тестове по тези филтри.</div>`;
+        return;
+      }
+      els.list.innerHTML = items.map(renderCard).join('');
+    }
+
+    Object.values(els).forEach((el) => {
+      if (el instanceof HTMLInputElement || el instanceof HTMLSelectElement) {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+      }
+    });
+
+    loadData().catch((error) => {
+      els.list.innerHTML = `<div class="empty">Грешка при зареждане: ${error.message}</div>`;
+    });
+  </script>
+</body>
+</html>
