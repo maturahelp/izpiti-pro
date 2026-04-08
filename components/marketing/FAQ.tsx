@@ -40,61 +40,62 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section id="chesto-zadavani-vaprosi" className="py-20 md:py-28 bg-[#F8FAFC]">
+    <section id="chesto-zadavani-vaprosi" className="py-20 md:py-28 bg-white">
       <div className="max-w-2xl mx-auto px-5 sm:px-7">
         <FadeIn className="text-center mb-14">
           <p className="section-label mb-3">ЧЗВ</p>
-          <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
+          <h2 className="text-[2rem] md:text-[2.6rem] font-black text-[#0F172A] tracking-[-0.04em] mb-4">
             Често задавани въпроси
           </h2>
-          <p className="text-[16px] text-text-muted leading-[1.7]">
+          <p className="text-[16px] text-[#64748B] leading-[1.7]">
             Не намираш отговор? Пиши ни на{' '}
-            <a href="mailto:support@maturahelp.bg" className="text-primary hover:text-primary-dark transition-colors underline underline-offset-2 decoration-primary/30 hover:decoration-primary/60">
+            <a href="mailto:support@maturahelp.bg" className="text-primary hover:text-primary-dark transition-colors underline underline-offset-2 decoration-primary/30 hover:decoration-primary/60 font-bold">
               support@maturahelp.bg
             </a>
           </p>
         </FadeIn>
 
-        <StaggerChildren className="space-y-2">
+        <StaggerChildren className="space-y-2.5">
           {faqs.map((faq, i) => (
             <StaggerItem key={faq.q}>
               <div className={cn(
                 'rounded-2xl border transition-all duration-200 overflow-hidden',
                 openIndex === i
-                  ? 'bg-white border-[#E2E8F0] shadow-[0_2px_8px_rgba(15,23,42,0.06),0_0_0_1px_rgba(15,23,42,0.03)]'
-                  : 'bg-white/60 border-[#E2E8F0] hover:bg-white hover:border-[#D1D9E6]'
+                  ? 'bg-white border-[#1B4FD8]/20 shadow-[0_4px_16px_rgba(27,79,216,0.08),0_1px_4px_rgba(27,79,216,0.05)]'
+                  : 'bg-[#F8FAFC] border-[#E2E8F0] hover:bg-white hover:border-[#CBD5E1] hover:shadow-[0_2px_8px_rgba(15,23,42,0.06)]'
               )}>
                 <button
                   className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors duration-150"
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 >
                   <span className={cn(
-                    'font-semibold text-[14px] pr-4 tracking-[-0.01em] transition-colors duration-150',
-                    openIndex === i ? 'text-text' : 'text-text/80'
+                    'font-extrabold text-[14px] pr-4 tracking-[-0.02em] transition-colors duration-150',
+                    openIndex === i ? 'text-[#0F172A]' : 'text-[#0F172A]/75'
                   )}>
                     {faq.q}
                   </span>
-                  <motion.div
-                    animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] }}
-                    className="flex-shrink-0"
-                  >
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      className={cn(
-                        'transition-colors duration-150',
-                        openIndex === i ? 'text-primary' : 'text-text-light'
-                      )}
+                  <div className={cn(
+                    'w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200',
+                    openIndex === i ? 'bg-primary' : 'bg-[#E2E8F0]'
+                  )}>
+                    <motion.div
+                      animate={{ rotate: openIndex === i ? 180 : 0 }}
+                      transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] }}
                     >
-                      <path d="M6 9l6 6 6-6" />
-                    </svg>
-                  </motion.div>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        className={openIndex === i ? 'text-white' : 'text-[#64748B]'}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </motion.div>
+                  </div>
                 </button>
                 <AnimatePresence initial={false}>
                   {openIndex === i && (
@@ -106,7 +107,8 @@ export function FAQ() {
                       style={{ overflow: 'hidden' }}
                     >
                       <div className="px-6 pb-5">
-                        <p className="text-[13.5px] text-text-muted leading-[1.75]">{faq.a}</p>
+                        <div className="w-full h-px bg-[#E2E8F0] mb-4" />
+                        <p className="text-[13.5px] text-[#475569] leading-[1.8]">{faq.a}</p>
                       </div>
                     </motion.div>
                   )}

@@ -1,4 +1,4 @@
-import { FadeIn, StaggerChildren, StaggerItem } from '@/components/ui/fade-in'
+import { FadeIn } from '@/components/ui/fade-in'
 import Link from 'next/link'
 
 const steps = [
@@ -26,37 +26,42 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="kak-raboti" className="py-20 md:py-28 bg-white border-y border-[#E2E8F0]">
-      <div className="max-w-6xl mx-auto px-5 sm:px-7">
-        <FadeIn className="text-center mb-14">
-          <p className="section-label mb-3">Как работи</p>
-          <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
+    <section id="kak-raboti" className="py-20 md:py-28 bg-[#FAF8F4] border-y border-[#E5E5E5]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <FadeIn className="mb-14">
+          <p className="section-label mb-4">Как работи</p>
+          <h2 className="text-[2rem] md:text-[2.8rem] font-extrabold text-[#0D0D0D] tracking-[-0.04em] leading-[1.05] max-w-2xl">
             От нула до уверено на изпита
           </h2>
-          <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
+          <p className="text-[16px] text-[#6B6B6B] max-w-xl mt-4 leading-[1.7]">
             Четири стъпки, с които започваш подготовката и виждаш реален напредък.
           </p>
         </FadeIn>
 
-        <StaggerChildren className="grid sm:grid-cols-2 gap-x-10 gap-y-8 max-w-3xl mx-auto">
-          {steps.map((s) => (
-            <StaggerItem key={s.step}>
-              <div className="flex gap-4 group">
-                <div className="flex-shrink-0 flex flex-col items-center">
-                  <div className="w-9 h-9 rounded-xl border border-[#E2E8F0] bg-white flex items-center justify-center shadow-[0_1px_2px_rgba(15,23,42,0.06)] group-hover:border-primary/30 group-hover:bg-primary/[0.04] transition-colors duration-200">
-                    <span className="text-[11px] font-bold text-primary/80 tabular-nums">{s.step}</span>
-                  </div>
-                </div>
-                <div className="pt-1">
-                  <h3 className="font-semibold text-text text-[14.5px] mb-1.5 tracking-[-0.01em]">{s.title}</h3>
-                  <p className="text-[13.5px] text-text-muted leading-relaxed">{s.description}</p>
-                </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-[#E5E5E5]">
+          {steps.map((s, i) => (
+            <div
+              key={s.step}
+              className={`p-7 bg-white hover:bg-[#FAF8F4] transition-colors duration-200 ${i < 3 ? 'border-r-0 sm:border-r border-b sm:border-b-0 border-[#E5E5E5]' : ''} ${i === 1 ? 'sm:border-b lg:border-b-0' : ''} ${i === 2 ? 'sm:border-r-0 border-b sm:border-b lg:border-b-0 lg:border-r border-[#E5E5E5]' : ''}`}
+            >
+              {/* Giant step number */}
+              <div
+                className="text-[5rem] font-extrabold leading-none mb-4 tracking-[-0.05em] select-none"
+                style={{ color: i % 2 === 0 ? '#2563EB' : '#E5E5E5' }}
+              >
+                {s.step}
               </div>
-            </StaggerItem>
+              <h3 className="font-extrabold text-[#0D0D0D] text-[15px] mb-2 tracking-[-0.02em] leading-snug">
+                {s.title}
+              </h3>
+              <p className="text-[13.5px] text-[#6B6B6B] leading-relaxed">
+                {s.description}
+              </p>
+            </div>
           ))}
-        </StaggerChildren>
+        </div>
 
-        <FadeIn delay={0.2} className="text-center mt-12">
+        <FadeIn delay={0.2} className="mt-8">
           <Link href="/dashboard" className="btn-secondary px-6 py-2.5 text-[14px]">
             Разгледай как работи
           </Link>

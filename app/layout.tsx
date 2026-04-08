@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Inter } from 'next/font/google'
+import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
 import './globals.css'
 
-const playfair = Playfair_Display({
-  subsets: ['latin', 'cyrillic'],
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="bg" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="bg" className={`${plusJakarta.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   )

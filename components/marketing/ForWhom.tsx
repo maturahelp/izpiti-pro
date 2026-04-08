@@ -43,34 +43,45 @@ const groups = [
   },
 ]
 
+const groupColors = [
+  { color: '#1B4FD8', bg: 'rgba(27,79,216,0.08)', border: 'rgba(27,79,216,0.15)' },
+  { color: '#059669', bg: 'rgba(5,150,105,0.08)', border: 'rgba(5,150,105,0.15)' },
+  { color: '#B45309', bg: 'rgba(180,83,9,0.08)', border: 'rgba(180,83,9,0.15)' },
+  { color: '#7C3AED', bg: 'rgba(124,58,237,0.08)', border: 'rgba(124,58,237,0.15)' },
+]
+
 export function ForWhom() {
   return (
-    <section className="py-20 md:py-28 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 sm:px-7">
         <FadeIn className="text-center mb-14">
           <p className="section-label mb-3">За кого</p>
-          <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
+          <h2 className="text-[2rem] md:text-[2.6rem] font-black text-[#0F172A] tracking-[-0.04em] mb-4">
             За кого е платформата
           </h2>
-          <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
+          <p className="text-[16px] text-[#64748B] max-w-xl mx-auto leading-[1.7]">
             MaturaHelp е създадена за ученици и родители, които искат подредена и достъпна подготовка за НВО и ДЗИ.
           </p>
         </FadeIn>
 
-        <StaggerChildren className="grid sm:grid-cols-2 gap-4">
-          {groups.map((group) => (
-            <StaggerItem key={group.title}>
-              <div className="card p-6 flex gap-4 h-full hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_2px_4px_rgba(15,23,42,0.04)] hover:-translate-y-0.5 transition-all duration-200">
-                <div className="w-10 h-10 rounded-xl bg-primary/[0.07] flex items-center justify-center flex-shrink-0 border border-primary/10 mt-0.5 text-primary">
-                  {group.icon}
+        <StaggerChildren className="grid sm:grid-cols-2 gap-5">
+          {groups.map((group, i) => {
+            const c = groupColors[i % groupColors.length]
+            return (
+              <StaggerItem key={group.title}>
+                <div className="group relative rounded-2xl p-6 flex gap-4 h-full border border-[#E2E8F0] bg-white hover:border-transparent hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10),0_4px_8px_rgba(15,23,42,0.05)] transition-all duration-200 shadow-[0_2px_8px_rgba(15,23,42,0.04)]">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-200"
+                    style={{ backgroundColor: c.bg, border: `1px solid ${c.border}`, color: c.color }}>
+                    {group.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-[#0F172A] text-[15px] mb-1.5 tracking-[-0.02em]">{group.title}</h3>
+                    <p className="text-[13.5px] text-[#64748B] leading-relaxed">{group.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-text text-[14.5px] mb-1.5 tracking-[-0.01em]">{group.title}</h3>
-                  <p className="text-[13.5px] text-text-muted leading-relaxed">{group.description}</p>
-                </div>
-              </div>
-            </StaggerItem>
-          ))}
+              </StaggerItem>
+            )
+          })}
         </StaggerChildren>
       </div>
     </section>

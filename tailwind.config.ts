@@ -10,9 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#1B4FD8',
-          dark: '#1337B5',
-          light: '#EEF2FF',
+          DEFAULT: '#2563EB',
+          dark: '#1d4ed8',
+          light: '#EFF6FF',
         },
         amber: {
           DEFAULT: '#B45309',
@@ -38,6 +38,7 @@ const config: Config = {
       fontFamily: {
         serif: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         DEFAULT: '0.5rem',
