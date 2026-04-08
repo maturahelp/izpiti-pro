@@ -1,11 +1,23 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { cn } from '@/lib/utils'
+
+// Build a lookup: (sectionTitle, itemTitle) → global topic index
+// Matches the flat order in bel_topics_question_bank.json
+const ruleTopicIndex: Record<string, Record<string, number>> = {}
+let _idx = 0
+for (const section of bulgarianRuleSections) {
+  ruleTopicIndex[section.title] = {}
+  for (const item of section.items) {
+    ruleTopicIndex[section.title][item] = _idx++
+  }
+}
 
 const typeIcons: Record<MaterialType, JSX.Element> = {
   notes: (
@@ -227,23 +239,26 @@ export default function MaterialsPage() {
                   </h3>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {section.items.map((item, itemIndex) => (
-                      <button
-                        key={`${section.title}-${item}`}
-                        type="button"
-                        className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                      >
-                        <p className="text-xs font-semibold text-text-muted mb-1">
-                          {section.title}
-                        </p>
-                        <h3 className="font-semibold text-text text-sm leading-snug mb-3">
-                          {item}
-                        </h3>
-                        <p className="text-xs font-semibold text-primary">
-                          Отвори правило #{itemIndex + 1}
-                        </p>
-                      </button>
-                    ))}
+                    {section.items.map((item, itemIndex) => {
+                      const globalIdx = ruleTopicIndex[section.title]?.[item] ?? -1
+                      return (
+                        <Link
+                          key={`${section.title}-${item}`}
+                          href={globalIdx >= 0 ? `/dashboard/materials/rule/${globalIdx}` : '#'}
+                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                        >
+                          <p className="text-xs font-semibold text-text-muted mb-1">
+                            {section.title}
+                          </p>
+                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                            {item}
+                          </h3>
+                          <p className="text-xs font-semibold text-primary">
+                            Отвори правило #{itemIndex + 1}
+                          </p>
+                        </Link>
+                      )
+                    })}
                   </div>
                 </section>
               ))}
