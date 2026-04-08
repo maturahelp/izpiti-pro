@@ -59,6 +59,10 @@ const sectionLabels: Record<MaterialSection, string> = {
   english: 'Английски',
 }
 
+const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
+  'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
+}
+
 const literatureKeywords = [
   'литература',
   'художествен',
@@ -126,7 +130,9 @@ export default function MaterialsPage() {
   const bulgarianRuleGroups = bulgarianRuleSections
     .map((section) => {
       const sectionMatch = section.title.toLowerCase().includes(normalizedQuery)
-      const items = section.items.filter((item) => {
+      const hiddenIndexes = new Set(hiddenBulgarianRulesByIndex[section.title] ?? [])
+      const items = section.items.filter((item, itemIndex) => {
+        if (hiddenIndexes.has(itemIndex)) return false
         if (!normalizedQuery) return true
         if (sectionMatch) return true
         return item.toLowerCase().includes(normalizedQuery)
