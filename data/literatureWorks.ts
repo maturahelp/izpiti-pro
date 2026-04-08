@@ -30,7 +30,7 @@ export const literatureWorks: LiteratureWork[] = [
     id: 'lit-02',
     author: 'Алеко Константинов',
     title: 'Бай Ганьо журналист',
-    image: '/JPEG/Родното и чуждото/Бай Ганьо журналист.jpg',
+    image: '/JPEG/Родното и чуждото/bay-ganyo-journalist.jpg',
     theme: 'Родното и чуждото',
   },
   {
@@ -44,7 +44,7 @@ export const literatureWorks: LiteratureWork[] = [
     id: 'lit-04',
     author: 'Иван Вазов',
     title: 'Паисий',
-    image: '/JPEG/Миналото и паметта/Паисий.jpg',
+    image: '/JPEG/Миналото и паметта/paisiy.jpg',
     theme: 'Миналото и паметта',
   },
   {
