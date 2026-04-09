@@ -8,6 +8,7 @@ import { materials, materialTypeLabels, type MaterialType } from '@/data/materia
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
+import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
 
@@ -357,7 +358,84 @@ export default function MaterialsPage() {
               )}
             </div>
           </div>
-        ) : (
+        ) : selectedSection === 'english' ? (() => {
+          const filteredEnglish = officialEnglishMockExams.filter((exam) => {
+            if (!normalizedQuery) return true
+            const searchable = `${exam.year} ${exam.level ?? ''} ${exam.session ?? ''} ${exam.source_title ?? ''}`.toLowerCase()
+            return searchable.includes(normalizedQuery)
+          })
+
+          // Group by year descending
+          const byYear = new Map<number, typeof filteredEnglish>()
+          for (const exam of filteredEnglish) {
+            const list = byYear.get(exam.year) ?? []
+            list.push(exam)
+            byYear.set(exam.year, list)
+          }
+          const years = Array.from(byYear.keys()).sort((a, b) => b - a)
+
+          const sessionLabel = (s: string | null | undefined) => {
+            const map: Record<string, string> = {
+              май: 'Май', юни: 'Юни', август: 'Август', септември: 'Септември',
+              примерна: 'Примерна', пробна: 'Пробна',
+            }
+            return s ? (map[s] ?? s) : 'Сесия'
+          }
+
+          return (
+            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+              <p className="text-sm text-text-muted mb-4">
+                Намерени: <strong className="text-text">{filteredEnglish.length}</strong> изпита
+              </p>
+
+              <div className="space-y-6">
+                {years.map((year) => (
+                  <section key={year}>
+                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                      {year} г.
+                    </h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {(byYear.get(year) ?? []).map((exam) => (
+                        <div key={exam.id} className="card p-4 flex flex-col gap-3">
+                          <div>
+                            <p className="text-xs font-semibold text-text-muted mb-1">
+                              {sessionLabel(exam.session)} {exam.year}{exam.level ? ` · ${exam.level}` : ''}
+                            </p>
+                            <h3 className="font-semibold text-text text-sm leading-snug">
+                              {exam.level ? `Английски език ${exam.level}` : 'Английски език'}
+                            </h3>
+                            {exam.source_title && (
+                              <p className="text-xs text-text-muted mt-1 line-clamp-2 leading-relaxed">
+                                {exam.source_title}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-3 text-xs text-text-muted">
+                            <span>{exam.questions.length} задачи</span>
+                            <span>{exam.questions.filter((q) => q.section === 'writing').length} писмена</span>
+                          </div>
+                          <Link
+                            href={`/english-mock/${encodeURIComponent(exam.id)}`}
+                            className="w-full text-center text-xs font-semibold py-2 rounded-lg bg-primary text-white hover:bg-primary-dark transition-colors"
+                          >
+                            Отвори изпита
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+
+                {filteredEnglish.length === 0 && (
+                  <div className="text-center py-10 text-text-muted">
+                    <p className="font-medium mb-1">Няма намерени изпити</p>
+                    <p className="text-sm">Опитай с друга ключова дума.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })() : (
           <>
             <p className="text-sm text-text-muted mb-4">
               Намерени: <strong className="text-text">{filtered.length}</strong> материала
