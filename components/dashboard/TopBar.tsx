@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getUser } from '@/lib/auth'
+import { useGrade } from '@/lib/grade-context'
 
 interface TopBarProps {
   title: string
@@ -10,6 +11,7 @@ interface TopBarProps {
 
 export function TopBar({ title }: TopBarProps) {
   const [userName, setUserName] = useState('')
+  const { grade, setGrade } = useGrade()
 
   useEffect(() => {
     getUser().then(user => {
@@ -25,6 +27,32 @@ export function TopBar({ title }: TopBarProps) {
   return (
     <header className="h-14 bg-white border-b border-border flex items-center justify-between px-6 sticky top-0 z-30">
       <h1 className="font-semibold text-text text-base">{title}</h1>
+
+      {/* Grade toggle */}
+      <div className="absolute left-1/2 -translate-x-1/2 flex items-center bg-gray-100 rounded-full p-0.5">
+        <button
+          type="button"
+          onClick={() => setGrade('7')}
+          className={`px-4 py-1 rounded-full text-sm font-semibold transition-all duration-200 ${
+            grade === '7'
+              ? 'bg-white text-primary shadow-sm'
+              : 'text-text-muted hover:text-text'
+          }`}
+        >
+          7 клас
+        </button>
+        <button
+          type="button"
+          onClick={() => setGrade('12')}
+          className={`px-4 py-1 rounded-full text-sm font-semibold transition-all duration-200 ${
+            grade === '12'
+              ? 'bg-white text-primary shadow-sm'
+              : 'text-text-muted hover:text-text'
+          }`}
+        >
+          12 клас
+        </button>
+      </div>
       <div className="flex items-center gap-3">
         <Link
           href="/dashboard/subscription"

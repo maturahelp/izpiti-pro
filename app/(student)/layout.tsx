@@ -1,5 +1,6 @@
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import { MobileNav } from '@/components/dashboard/MobileNav'
+import { GradeProvider } from '@/lib/grade-context'
 
 export default function StudentLayout({
   children,
@@ -7,14 +8,16 @@ export default function StudentLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-bg">
-      <div className="hidden md:block">
-        <Sidebar />
+    <GradeProvider>
+      <div className="min-h-screen bg-bg">
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
+        <div className="md:ml-56">
+          {children}
+        </div>
+        <MobileNav />
       </div>
-      <div className="md:ml-56">
-        {children}
-      </div>
-      <MobileNav />
-    </div>
+    </GradeProvider>
   )
 }
