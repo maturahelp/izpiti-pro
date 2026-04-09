@@ -3,6 +3,7 @@
 import { TopBar } from '@/components/dashboard/TopBar'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useGrade } from '@/lib/grade-context'
 
 type VideoSection = 'bulgarian' | 'literature' | 'math' | 'english'
 
@@ -14,7 +15,23 @@ const sectionLabels: Record<VideoSection, string> = {
 }
 
 export default function VideoLessonsPage() {
+  const { grade } = useGrade()
   const [selectedSection, setSelectedSection] = useState<VideoSection>('bulgarian')
+
+  if (grade === '7') {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Видео уроци" />
+        <div className="flex flex-col items-center justify-center py-24 text-center text-text-muted">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
+            <circle cx="12" cy="12" r="9"/><polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none"/>
+          </svg>
+          <p className="font-semibold text-base mb-1">Видео уроците за 7. клас</p>
+          <p className="text-sm">скоро ще бъдат добавени</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">

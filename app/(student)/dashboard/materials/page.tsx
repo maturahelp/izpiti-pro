@@ -8,6 +8,7 @@ import { materials, materialTypeLabels, type MaterialType } from '@/data/materia
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
+import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
@@ -86,7 +87,20 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
   return 'bulgarian'
 }
 
+function Grade7Empty() {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center text-text-muted">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+      </svg>
+      <p className="font-semibold text-base mb-1">Материалите за 7. клас</p>
+      <p className="text-sm">скоро ще бъдат добавени</p>
+    </div>
+  )
+}
+
 export default function MaterialsPage() {
+  const { grade } = useGrade()
   const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
@@ -144,6 +158,15 @@ export default function MaterialsPage() {
   const bulgarianRulesCount = bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
+
+  if (grade === '7') {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Материали" />
+        <Grade7Empty />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">

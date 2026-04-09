@@ -6,16 +6,23 @@ import { Badge } from '@/components/shared/Badge'
 import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import { getDifficultyColor } from '@/lib/utils'
+import { useGrade } from '@/lib/grade-context'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-type TestSection = 'bel' | 'math' | 'english'
+type TestSection12 = 'bel' | 'math' | 'english'
+type TestSection7 = 'bel' | 'math'
 type TestMode = 'sample_dzi' | 'past_dzi' | 'practice'
 
-const sectionLabels: Record<TestSection, string> = {
+const sectionLabels12: Record<TestSection12, string> = {
   bel: 'БЕЛ',
   math: 'Математика',
   english: 'Английски',
+}
+
+const sectionLabels7: Record<TestSection7, string> = {
+  bel: 'БЕЛ',
+  math: 'Математика',
 }
 
 const modeLabels: Record<TestMode, string> = {
@@ -24,7 +31,7 @@ const modeLabels: Record<TestMode, string> = {
   practice: 'Упражнения',
 }
 
-function getTestSection(test: (typeof tests)[number]): TestSection {
+function getTestSection(test: (typeof tests)[number]): string {
   if (test.subjectId.startsWith('math-')) return 'math'
   if (test.subjectId.startsWith('eng-') || test.subjectName.toLowerCase().includes('англий')) return 'english'
   return 'bel'
@@ -37,12 +44,20 @@ function getTestMode(test: (typeof tests)[number]): TestMode {
 }
 
 export default function TestsPage() {
-  const [selectedSection, setSelectedSection] = useState<TestSection>('bel')
+  const { grade } = useGrade()
+  const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
+  const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
   const [selectedMode, setSelectedMode] = useState<TestMode>('sample_dzi')
 
   const filtered = tests.filter((t) => {
-    if (getTestSection(t) !== selectedSection) return false
-    if (getTestMode(t) !== selectedMode) return false
+    if (grade === '7') {
+      if (t.examType !== 'nvo7') return false
+      if (getTestSection(t) !== selectedSection7) return false
+    } else {
+      if (t.examType !== 'dzi12') return false
+      if (getTestSection(t) !== selectedSection12) return false
+      if (getTestMode(t) !== selectedMode) return false
+    }
     return true
   })
 
@@ -54,42 +69,61 @@ export default function TestsPage() {
         {/* Filters */}
         <div className="mb-6 -mt-4 space-y-3">
           <div className="flex flex-wrap justify-center gap-3">
-            {(Object.keys(sectionLabels) as TestSection[]).map((section) => (
-              <button
-                key={section}
-                type="button"
-                onClick={() => setSelectedSection(section)}
-                className={cn(
-                  'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
-                  selectedSection === section
-                    ? 'bg-primary text-white'
-                    : 'bg-primary-light text-primary hover:bg-primary-light/70'
-                )}
-              >
-                {sectionLabels[section]}
-              </button>
-            ))}
+            {grade === '7'
+              ? (Object.keys(sectionLabels7) as TestSection7[]).map((section) => (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => setSelectedSection7(section)}
+                    className={cn(
+                      'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
+                      selectedSection7 === section
+                        ? 'bg-primary text-white'
+                        : 'bg-primary-light text-primary hover:bg-primary-light/70'
+                    )}
+                  >
+                    {sectionLabels7[section]}
+                  </button>
+                ))
+              : (Object.keys(sectionLabels12) as TestSection12[]).map((section) => (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => setSelectedSection12(section)}
+                    className={cn(
+                      'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
+                      selectedSection12 === section
+                        ? 'bg-primary text-white'
+                        : 'bg-primary-light text-primary hover:bg-primary-light/70'
+                    )}
+                  >
+                    {sectionLabels12[section]}
+                  </button>
+                ))
+            }
           </div>
 
-          <div className="flex justify-center">
-            <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-              {(Object.keys(modeLabels) as TestMode[]).map((mode) => (
-                <button
-                  key={mode}
-                  type="button"
-                  onClick={() => setSelectedMode(mode)}
-                  className={cn(
-                    'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
-                    selectedMode === mode
-                      ? 'bg-white text-primary shadow-sm'
-                      : 'text-text-muted hover:text-text'
-                  )}
-                >
-                  {modeLabels[mode]}
-                </button>
-              ))}
+          {grade === '12' && (
+            <div className="flex justify-center">
+              <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
+                {(Object.keys(modeLabels) as TestMode[]).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => setSelectedMode(mode)}
+                    className={cn(
+                      'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
+                      selectedMode === mode
+                        ? 'bg-white text-primary shadow-sm'
+                        : 'text-text-muted hover:text-text'
+                    )}
+                  >
+                    {modeLabels[mode]}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Results count */}

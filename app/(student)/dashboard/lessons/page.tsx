@@ -8,6 +8,7 @@ import { lessons } from '@/data/lessons'
 import { formatDuration } from '@/lib/utils'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { useGrade } from '@/lib/grade-context'
 
 type LessonSection = 'bulgarian' | 'literature' | 'math' | 'english'
 
@@ -40,7 +41,23 @@ function getLessonSection(lesson: (typeof lessons)[number]): LessonSection {
 }
 
 export default function LessonsPage() {
+  const { grade } = useGrade()
   const [selectedSection, setSelectedSection] = useState<LessonSection>('bulgarian')
+
+  if (grade === '7') {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Аудио уроци" />
+        <div className="flex flex-col items-center justify-center py-24 text-center text-text-muted">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 010 7"/>
+          </svg>
+          <p className="font-semibold text-base mb-1">Аудио уроците за 7. клас</p>
+          <p className="text-sm">скоро ще бъдат добавени</p>
+        </div>
+      </div>
+    )
+  }
 
   const filtered = lessons.filter((l) => {
     if (getLessonSection(l) !== selectedSection) return false

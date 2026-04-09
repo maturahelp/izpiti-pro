@@ -3,6 +3,7 @@
 import { TopBar } from '@/components/dashboard/TopBar'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useGrade } from '@/lib/grade-context'
 
 type TablesSection = 'bulgarian' | 'literature' | 'math' | 'english'
 
@@ -14,7 +15,23 @@ const sectionLabels: Record<TablesSection, string> = {
 }
 
 export default function TablesCardsPage() {
+  const { grade } = useGrade()
   const [selectedSection, setSelectedSection] = useState<TablesSection>('bulgarian')
+
+  if (grade === '7') {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Таблици и карти" />
+        <div className="flex flex-col items-center justify-center py-24 text-center text-text-muted">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+          </svg>
+          <p className="font-semibold text-base mb-1">Таблиците и картите за 7. клас</p>
+          <p className="text-sm">скоро ще бъдат добавени</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
