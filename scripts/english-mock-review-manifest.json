@@ -1,0 +1,25 @@
+{
+  "port": 3346,
+  "screenshots": [
+    {
+      "id": "dzi_english_2025_may_b2",
+      "label": "2025-b2"
+    },
+    {
+      "id": "dzi_english_2023_may_b2",
+      "label": "2023-b2"
+    },
+    {
+      "id": "dzi_english_2021_may",
+      "label": "2021-classic"
+    },
+    {
+      "id": "dzi_english_2008_june",
+      "label": "2008-classic"
+    },
+    {
+      "id": "dzi_english_2007_примерна_sample",
+      "label": "2007-sample"
+    }
+  ]
+}
