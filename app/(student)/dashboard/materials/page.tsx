@@ -87,22 +87,20 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
   return 'bulgarian'
 }
 
-function Grade7Empty() {
-  return (
-    <div className="flex flex-col items-center justify-center py-24 text-center text-text-muted">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
-        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-      </svg>
-      <p className="font-semibold text-base mb-1">Материалите за 7. клас</p>
-      <p className="text-sm">скоро ще бъдат добавени</p>
-    </div>
-  )
+const grade7Sections = ['bulgarian', 'literature', 'math'] as const
+type Grade7Section = typeof grade7Sections[number]
+
+const grade7SectionLabels: Record<Grade7Section, string> = {
+  bulgarian: 'Български',
+  literature: 'Литература',
+  math: 'Математика',
 }
 
 export default function MaterialsPage() {
   const { grade } = useGrade()
   const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
+  const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
@@ -163,7 +161,34 @@ export default function MaterialsPage() {
     return (
       <div className="min-h-screen pb-20 md:pb-0">
         <TopBar title="Материали" />
-        <Grade7Empty />
+        <div className="p-4 md:p-6 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {grade7Sections.map((section) => (
+              <button
+                key={section}
+                type="button"
+                onClick={() => setGrade7Section(section)}
+                className={cn(
+                  'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                  grade7Section === section
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-white text-text border-border hover:bg-primary-light'
+                )}
+              >
+                {grade7SectionLabels[section]}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-col items-center justify-center py-20 text-center text-text-muted">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            </svg>
+            <p className="font-semibold text-base mb-1">
+              Материалите за {grade7SectionLabels[grade7Section]} (7. клас)
+            </p>
+            <p className="text-sm">скоро ще бъдат добавени</p>
+          </div>
+        </div>
       </div>
     )
   }
