@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type TestSection12 = 'bel' | 'math' | 'english'
-type TestSection7 = 'bel' | 'math'
+type TestSection7 = 'bulgarian' | 'literature' | 'math'
 type TestMode = 'sample_dzi' | 'past_dzi' | 'practice'
 
 const sectionLabels12: Record<TestSection12, string> = {
@@ -21,7 +21,8 @@ const sectionLabels12: Record<TestSection12, string> = {
 }
 
 const sectionLabels7: Record<TestSection7, string> = {
-  bel: 'БЕЛ',
+  bulgarian: 'Български',
+  literature: 'Литература',
   math: 'Математика',
 }
 
@@ -34,6 +35,7 @@ const modeLabels: Record<TestMode, string> = {
 function getTestSection(test: (typeof tests)[number]): string {
   if (test.subjectId.startsWith('math-')) return 'math'
   if (test.subjectId.startsWith('eng-') || test.subjectName.toLowerCase().includes('англий')) return 'english'
+  if (test.examType === 'nvo7') return 'bulgarian'
   return 'bel'
 }
 
@@ -46,7 +48,7 @@ function getTestMode(test: (typeof tests)[number]): TestMode {
 export default function TestsPage() {
   const { grade } = useGrade()
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
-  const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
+  const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bulgarian')
   const [selectedMode, setSelectedMode] = useState<TestMode>('sample_dzi')
 
   const filtered = tests.filter((t) => {
