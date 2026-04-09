@@ -197,10 +197,10 @@ export default function MaterialsPage() {
                 Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
               </p>
               <div className="space-y-6">
-                {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
+                {nvoLiteratureGroups.map(({ theme, works }) => (
                   <section key={theme}>
                     <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                      {themeIndex + 1}. {theme}
+                      {theme}
                     </h3>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {works.map((work) => (
