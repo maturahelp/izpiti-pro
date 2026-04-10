@@ -103,6 +103,7 @@ export default function MaterialsPage() {
   const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
+  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -280,13 +281,18 @@ export default function MaterialsPage() {
                     </svg>
                     <span>Слушай аудио урока</span>
                   </button>
-                  <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-[#1E4D7B] text-white hover:bg-[#163b5f] transition-colors inline-flex items-center justify-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="9" />
-                      <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
-                    </svg>
-                    <span>Гледай видео урока</span>
-                  </button>
+                  {activeNvoWork.videoUrl && (
+                    <button
+                      onClick={() => setActiveVideoUrl(activeNvoWork.videoUrl!)}
+                      className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-[#1E4D7B] text-white hover:bg-[#163b5f] transition-colors inline-flex items-center justify-center gap-2"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="9" />
+                        <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
+                      </svg>
+                      <span>Гледай видео урока</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => {
                       setActiveNvoWorkId(null)
@@ -304,6 +310,40 @@ export default function MaterialsPage() {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeVideoUrl && (
+          <div
+            className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setActiveVideoUrl(null)}
+          >
+            <div
+              className="w-full max-w-3xl rounded-2xl bg-black overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-4 py-3 bg-[#1E4D7B]">
+                <span className="text-sm font-semibold text-white">Видео урок</span>
+                <button
+                  type="button"
+                  onClick={() => setActiveVideoUrl(null)}
+                  className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
+                  aria-label="Затвори"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <video
+                key={activeVideoUrl}
+                src={activeVideoUrl}
+                controls
+                autoPlay
+                className="w-full aspect-video bg-black"
+              />
             </div>
           </div>
         )}

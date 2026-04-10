@@ -4,6 +4,7 @@ export interface NvoLiteratureWork {
   title: string
   image: string
   theme: string
+  videoUrl?: string
 }
 
 export const nvoLiteratureThemeOrder = [
@@ -19,6 +20,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Вятър ечи, Балкан стене',
     image: '/nvo-literature/vyatar-echi-balkan-stene.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/vyatar-echi-balkan-stene.mp4',
   },
   {
     id: 'nvo-lit-02',
@@ -26,6 +28,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Стани, стани, юнак балкански!',
     image: '/nvo-literature/stani-stani-yunak-balkanskii.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/stani-stani-yunak-balkanski.mp4',
   },
   {
     id: 'nvo-lit-03',
@@ -33,6 +36,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Отечество любезно, как хубаво си ти!',
     image: '/nvo-literature/otechestvo-liubezno.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/otechestvo-lyubezno.mp4',
   },
   {
     id: 'nvo-lit-04',
@@ -40,6 +44,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Хубава си, моя горо',
     image: '/nvo-literature/hubava-si-moya-goro.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/hubava-si-moya-goro.mp4',
   },
   {
     id: 'nvo-lit-05',
@@ -47,6 +52,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Неразделни',
     image: '/nvo-literature/nerazdelni.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/nerazdelni.mp4',
   },
   {
     id: 'nvo-lit-06',
@@ -54,6 +60,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'На прощаване в 1868 г.',
     image: '/nvo-literature/na-proshchavane-1868.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/na-proshchavane-1868.mp4',
   },
   {
     id: 'nvo-lit-07',
@@ -61,6 +68,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Хайдути',
     image: '/nvo-literature/haiduti.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/haiduti.mp4',
   },
   {
     id: 'nvo-lit-08',
@@ -68,6 +76,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Заточеници',
     image: '/nvo-literature/zatochenitsi.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/zatochenitsi.mp4',
   },
   {
     id: 'nvo-lit-09',
@@ -75,6 +84,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Из „Немили-недраги"',
     image: '/nvo-literature/nemili-nedragi.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/nemili-nedragi.mp4',
   },
   {
     id: 'nvo-lit-10',
@@ -82,6 +92,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Опълченците на Шипка',
     image: '/nvo-literature/opalchensite-na-shipka.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/opalchensite-na-shipka.mp4',
   },
   {
     id: 'nvo-lit-11',
@@ -89,6 +100,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Из „Под игото" — Представлението',
     image: '/nvo-literature/pod-igoto-predstavlenieto.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/pod-igoto-predstavlenieto.mp4',
   },
   {
     id: 'nvo-lit-12',
@@ -96,6 +108,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Радини вълнения',
     image: '/nvo-literature/radini-valneniya.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/pod-igoto-radini-valneniya.mp4',
   },
   {
     id: 'nvo-lit-13',
@@ -103,6 +116,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Българският език',
     image: '/nvo-literature/bulgarskiyat-ezik.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/bulgarskiyat-ezik.mp4',
   },
   {
     id: 'nvo-lit-14',
@@ -110,6 +124,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Една българка',
     image: '/nvo-literature/edna-bulgarka.jpg',
     theme: 'І. Българинът във възрожденския свят',
+    videoUrl: '/nvo-videos/edna-bulgarka.mp4',
   },
   // ІІ. ЧОВЕКЪТ В ОБЩЕСТВОТО — НОРМИ, ЦЕННОСТИ И КОНФЛИКТИ
   {
@@ -118,6 +133,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Из „До Чикаго и назад"',
     image: '/nvo-literature/do-chikago-i-nazad.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/do-chikago-i-nazad.mp4',
   },
   {
     id: 'nvo-lit-16',
@@ -125,6 +141,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Бай Ганьо пътува',
     image: '/nvo-literature/bai-ganio-patuva.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/bai-ganyo-patuva.mp4',
   },
   {
     id: 'nvo-lit-17',
@@ -132,6 +149,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'По жицата',
     image: '/nvo-literature/po-zhitsata.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/po-zhitsata.mp4',
   },
   {
     id: 'nvo-lit-18',
@@ -139,6 +157,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Серафим',
     image: '/nvo-literature/serafim.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/serafim.mp4',
   },
   {
     id: 'nvo-lit-19',
@@ -146,6 +165,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'По жътва',
     image: '/nvo-literature/po-zhatva.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/po-zhatva.mp4',
   },
   {
     id: 'nvo-lit-20',
@@ -153,6 +173,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Косачи',
     image: '/nvo-literature/kosachi.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/kosachi.mp4',
   },
   {
     id: 'nvo-lit-21',
@@ -160,6 +181,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Братчетата на Гаврош',
     image: '/nvo-literature/bratchetata-na-gavrosh.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/bratchetata-na-gavrosh.mp4',
   },
   {
     id: 'nvo-lit-22',
@@ -167,5 +189,6 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
     title: 'Художник',
     image: '/nvo-literature/hudozhnik.jpg',
     theme: 'ІІ. Човекът в обществото',
+    videoUrl: '/nvo-videos/hudozhnik.mp4',
   },
 ]
