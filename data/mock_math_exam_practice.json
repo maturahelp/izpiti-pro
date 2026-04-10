@@ -1,0 +1,4707 @@
+{
+  "generated_at": "2026-04-08T16:23:28.664867+00:00",
+  "counts": {
+    "nvo_math": 10,
+    "total": 10
+  },
+  "exams": [
+    {
+      "id": "mock_nvo_math_01",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #1",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Изразът \\(a^3-a^2-a+1\\) е тъждествено равен на израза:",
+          "options": {
+            "А": "\\((a-1)(a^2+1)\\)",
+            "Б": "\\((a-1)(a+1)^2\\)",
+            "В": "\\((a+1)(a^2+1)\\)",
+            "Г": "\\((a+1)(a-1)^2\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\((a+1)(a-1)^2\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2018_math_q02",
+            "official_year": "2018",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "В турнир по спортна стрелба участват \\(x\\) отбора. Във всеки отбор има по \\(y\\) момчета и 2 пъти по-малко момичета. С кой от следващите изрази може да се определи броят на играчите, които участват в турнира?",
+          "options": {
+            "А": "\\(x\\left(y+\\dfrac{y}{2}\\right)\\)",
+            "Б": "\\(x(y+2y)\\)",
+            "В": "\\(xy+\\dfrac{y}{2}\\)",
+            "Г": "\\(xy+2y\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(x\\left(y+\\dfrac{y}{2}\\right)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2018_math_q06",
+            "official_year": "2018",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Камион и лека кола тръгват едновременно един срещу друг от два пункта, които са на разстояние \\(400\\,\\text{km}\\) един от друг. Ако превозните средства се движат с постоянна скорост, съответно \\(60\\,\\text{km}\\)/h и \\(90\\,\\text{km}\\)/h, те ще се срещнат след:",
+          "options": {
+            "А": "2 h 20 min",
+            "Б": "2 h 40 min",
+            "В": "2 h 36 min",
+            "Г": "2 h"
+          },
+          "correct_option": "Б",
+          "answer_guide": "2 h 40 min",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2018_math_q07",
+            "official_year": "2018",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "За равностранния \\(\\triangle ABC\\) точката \\(M\\) е средата на \\(AB\\) и \\(MN \\perp BC\\). Ако \\(AB=24\\,\\text{cm}\\), то дължината на \\(CN\\) е:",
+          "options": {
+            "А": "\\(18\\,\\text{cm}\\)",
+            "Б": "\\(16\\,\\text{cm}\\)",
+            "В": "\\(20\\,\\text{cm}\\)",
+            "Г": "\\(12\\,\\text{cm}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(18\\,\\text{cm}\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2018_math_q11",
+            "official_year": "2018",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "На чертежа е даден \\(\\triangle ABC\\). Ъглополовящата на \\(\\angle ACB\\) и симетралата на страната \\(AC\\) се пресичат в точка \\(D\\) \\((D \\notin AB)\\). Ако \\(\\angle BAC=10^\\circ\\), то мярката на \\(\\angle ABC\\) е:",
+          "options": {
+            "А": "\\(120^\\circ\\)",
+            "Б": "\\(150^\\circ\\)",
+            "В": "\\(160^\\circ\\)",
+            "Г": "\\(90^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(150^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2018_math_q13",
+            "official_year": "2018",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Решенията на неравенството −4x + 8 ≤ 0 са числата от интервала:",
+          "options": {
+            "А": "( - ∞;2]",
+            "Б": "( - ∞;−2]",
+            "В": "[−2; + ∞)",
+            "Г": "[2; + ∞)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "[2; + ∞)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2018_math_q04",
+            "official_year": "2018",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(1 - 3x\\ge 0\\) са числата от интервала:",
+          "options": {
+            "А": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right)\\)",
+            "Б": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+            "В": "\\(\\left[\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "Г": "\\(\\left(\\dfrac{1}{3}; + \\infty\\right)\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2019_math_q08",
+            "official_year": "2019",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Числото \\(5{,}08\\) е равно на числото:",
+          "options": {
+            "А": "\\(5\\dfrac{2}{25}\\)",
+            "Б": "\\(\\dfrac{508}{1000}\\)",
+            "В": "\\(5\\dfrac{4}{5}\\)",
+            "Г": "\\(5\\dfrac{1}{125}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(5\\dfrac{2}{25}\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q02",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "През ноември цената на лаптоп била 1049 лв. За Коледа цената му била намалена с 10% от нея, а през януари била увеличена с 20% от новата цена. Цената на лаптопа след двете промени се изчислява с помощта на израза:",
+          "options": {
+            "А": "\\(1049 - 0{,}10\\)",
+            "Б": "\\(1049 + (0{,}20 - 0{,}10)\\cdot1049\\)",
+            "В": "\\(1049 + 0{,}20\\cdot1049\\)",
+            "Г": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q07",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "Лицето на околната повърхнина на прав кръгов цилиндър с диаметър \\(10\\,\\text{cm}\\) и височина \\(3\\,\\text{dm}\\) е:",
+          "options": {
+            "А": "\\(350\\pi\\,\\text{cm}^2\\)",
+            "Б": "\\(600\\pi\\,\\text{cm}^2\\)",
+            "В": "\\(300\\pi\\,\\text{cm}^2\\)",
+            "Г": "\\(325\\pi\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(300\\pi\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q09",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Спортна площадка има формата, изобразена на чертежа с плътната линия. Ако PMNK е правоъгълник, KN = \\(20\\,\\text{m}\\), MN = \\(15\\,\\text{m}\\) и KT = \\(23\\,\\text{m}\\), то обиколката на площадката (в метри) e:",
+          "options": {
+            "А": "70 + 6π",
+            "Б": "35 + 6π",
+            "В": "70 + 9π Отговорите на задачите от 18. до 20. включително запишете на съответното място в листа за отговори.",
+            "Г": "35 + 3π"
+          },
+          "correct_option": "А",
+          "answer_guide": "70 + 6π",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q17",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "Кутия за сладки има форма на куб с обем \\(1000\\,\\text{cm}^3\\). Ръбът на кутията е с дължина:",
+          "options": {
+            "А": "\\(5\\,\\text{cm}\\)",
+            "Б": "\\(10\\,\\text{cm}\\)",
+            "В": "\\(15\\,\\text{cm}\\)",
+            "Г": "\\(20\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(10\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q09",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точката О, като a и b са перпендикулярни. По данните от чертежа намерете мярката на най - малкия от трите ъгъла \\(α\\), \\(β\\) и \\(γ\\).",
+          "options": {
+            "А": "\\(90^\\circ\\)",
+            "Б": "\\(45^\\circ\\)",
+            "В": "\\(40^\\circ\\)",
+            "Г": "\\(50^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q11",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "Успоредните прави a и b са пресечени от правата c. По данните от чертежа мярката на \\(α\\) е:",
+          "options": {
+            "А": "\\(50^\\circ\\)",
+            "Б": "\\(60^\\circ\\)",
+            "В": "\\(30^\\circ\\)",
+            "Г": "\\(15^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(50^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q12",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "На чертежа симетралата s на страната AC на \\(\\triangle ABC\\) пресича отсечката AB в точка Q. Ако AB = \\(14\\,\\text{cm}\\) и BC = \\(4\\,\\text{cm}\\), то периметърът на \\(\\triangle QBC\\) е равен на:",
+          "options": {
+            "А": "\\(18\\,\\text{cm}\\)",
+            "Б": "\\(14\\,\\text{cm}\\)",
+            "В": "\\(9\\,\\text{cm}\\)",
+            "Г": "\\(10\\,\\text{cm}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(18\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q15",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "На чертежа е дадена правилна осмоъгълна пирамида. Лицето на една от околните ѝ стени е \\(18\\,\\text{cm}^2\\). Лицето на околната повърхнина на пирамидата е:",
+          "options": {
+            "А": "\\(162\\,\\text{cm}^2\\)",
+            "Б": "\\(108\\,\\text{cm}^2\\)",
+            "В": "\\(144\\,\\text{cm}^2\\)",
+            "Г": "\\(126\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(144\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q11",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точка O. По данните от чертежа мярката на ъгъл \\(α\\) е:",
+          "options": {
+            "А": "\\(125^\\circ\\)",
+            "Б": "\\(145^\\circ\\)",
+            "В": "\\(135^\\circ\\)",
+            "Г": "\\(100^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q12",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "В квадратна мрежа с единична отсечка x cm е начертан ромб ABCD. Ако обиколката на ромба е \\(40\\,\\text{cm}\\), то лицето му е:",
+          "options": {
+            "А": "\\(50\\,\\text{cm}^2\\)",
+            "Б": "\\(20\\,\\text{cm}^2\\)",
+            "В": "\\(80\\,\\text{cm}^2\\)",
+            "Г": "\\(40\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(80\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q17",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "Мярката на ъгъл, който е от своя съседен, е равна на: 4",
+          "options": {
+            "А": "\\(36^\\circ\\) Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли.",
+            "Б": "\\(80^\\circ\\)",
+            "В": "\\(100^\\circ\\)",
+            "Г": "\\(144^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q11",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "Вероятността при хвърляне на зар да се падне просто число е:",
+          "options": {
+            "А": "\\(0\\)",
+            "Б": "\\(\\dfrac{1}{3}\\)",
+            "В": "\\(\\dfrac{1}{2}\\)",
+            "Г": "\\(\\dfrac{2}{3}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{1}{2}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2019_math_q07",
+            "official_year": "2019",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "На всяко едно от седем еднакви картончета е записана по една от седемте букви на думата УЧЕБНИК. Картончетата са поставени в урна. По случаен начин е изтеглено едно от тях. Каква е вероятността върху него да е записана буква, означаваща гласен звук?",
+          "options": {
+            "А": "\\(\\dfrac{3}{7}\\)",
+            "Б": "\\(\\dfrac{6}{7}\\)",
+            "В": "\\(1\\)",
+            "Г": "\\(\\dfrac{4}{7}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(\\dfrac{3}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2020_math_q06",
+            "official_year": "2020",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "10",
+            "Б": "16",
+            "В": "14",
+            "Г": "12"
+          },
+          "correct_option": "Б",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "15",
+            "Б": "40",
+            "В": "20",
+            "Г": "10 Видове изпълнения"
+          },
+          "correct_option": "Г",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_02",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #2",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Кое от дадените равенства е вярно?",
+          "options": {
+            "А": "\\(\\dfrac{3}{2}:2 = \\dfrac{1}{2}:\\dfrac{1}{3}\\)",
+            "Б": "\\( - 5:( - 3) = 10:( - 6)\\)",
+            "В": "\\(\\dfrac{2}{7} = \\dfrac{3}{6}\\)",
+            "Г": "\\(\\dfrac{1{,}2}{60} = \\dfrac{0{,}1}{5}\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(\\dfrac{1{,}2}{60} = \\dfrac{0{,}1}{5}\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2019_math_q01",
+            "official_year": "2019",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(2y - 4y^2\\) за \\(y = - 0{,}5\\) е:",
+          "options": {
+            "А": "\\(0\\)",
+            "Б": "\\( - 4\\)",
+            "В": "\\( - 2\\)",
+            "Г": "\\(2\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\( - 2\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2019_math_q02",
+            "official_year": "2019",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Изразът \\(1 - (1 - x)^2\\) е тъждествено равен на:",
+          "options": {
+            "А": "\\( - 2x + x^2\\)",
+            "Б": "\\(2 + 2x - x^2\\)",
+            "В": "\\(2 - 2x + x^2\\)",
+            "Г": "\\(2x - x^2\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(2x - x^2\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2019_math_q03",
+            "official_year": "2019",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Изразът \\(4x^2y - 8xy + 12xy^2\\) е тъждествено равен на:",
+          "options": {
+            "А": "\\(4xy(x + 2 + 3y)\\)",
+            "Б": "\\(4xy(x - 4 + 3y)\\)",
+            "В": "\\(4xy(x - 4 + 8y)\\)",
+            "Г": "\\(4xy(x - 2 + 3y)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(4xy(x - 2 + 3y)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2019_math_q04",
+            "official_year": "2019",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Коренът на уравнението \\((x - 10)^2 = (2 - x)^2\\) е:",
+          "options": {
+            "А": "\\( - 4\\)",
+            "Б": "\\(6\\)",
+            "В": "\\( - 6\\)",
+            "Г": "\\(4\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(6\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2019_math_q05",
+            "official_year": "2019",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Цялото число, което е решение на уравнението \\(3x - 1 = 13\\), е:",
+          "options": {
+            "А": "\\(5\\)",
+            "Б": "\\( - 1\\)",
+            "В": "\\( - 4\\)",
+            "Г": "\\(4\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\( - 4\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2021_math_q08",
+            "official_year": "2021",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "В един клас има 25 ученици, от които 18 са момчета. Колко процента са момичетата в този клас?",
+          "options": {
+            "А": "72%",
+            "Б": "28%",
+            "В": "18%",
+            "Г": "7%"
+          },
+          "correct_option": "Б",
+          "answer_guide": "28%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2022_math_q06",
+            "official_year": "2022",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Числената стойност на израза \\(2{,}25 + 0{,}75\\cdot\\left( - \\dfrac{4}{3}\\right)\\) е:",
+          "options": {
+            "А": "\\(1{,}25\\)",
+            "Б": "\\( - 4\\)",
+            "В": "\\(2{,}25\\)",
+            "Г": "\\( - 1{,}25\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(1{,}25\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q01",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Най - малкото цяло число, което е решение на неравенството \\(5x + 1\\ge 3x + 16\\)",
+          "options": {
+            "А": "\\(1\\)",
+            "Б": "\\(8\\)",
+            "В": "\\(7\\)",
+            "Г": "\\(2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(8\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q05",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "По данните от чертежа мярката на по-малкия ъгъл, получен при пресичането на правите a и b, е:",
+          "options": {
+            "А": "\\(110^\\circ\\)",
+            "Б": "\\(70^\\circ\\)",
+            "В": "\\(50^\\circ\\)",
+            "Г": "\\(30^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(70^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q13",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "По данните от чертежа градусната мярка на външния ъгъл при върха В на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(100^\\circ\\)",
+            "Б": "\\(140^\\circ\\)",
+            "В": "\\(80^\\circ\\)",
+            "Г": "\\(110^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q14",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "Трите измерения на правоъгълен паралелепипед са \\(20\\,\\text{cm}\\), \\(300\\,\\text{mm}\\) и \\(5\\,\\text{dm}\\). Обемът му в кубически дециметри е:",
+          "options": {
+            "А": "30",
+            "Б": "300",
+            "В": "3",
+            "Г": "3000 За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея."
+          },
+          "correct_option": "А",
+          "answer_guide": "30",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q18",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Един от ъглите, получени при пресичането на две прави, е 80% от другия. Мярката на съседния му ъгъл е:",
+          "options": {
+            "А": "\\(80^\\circ\\)",
+            "Б": "\\(100^\\circ\\)",
+            "В": "\\(144^\\circ\\)",
+            "Г": "\\(36^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q11",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "Правите \\(a\\) и \\(b\\) са успоредни. По данните от чертежа градусната мярка на ъгъл \\(x\\) е:",
+          "options": {
+            "А": "\\(66^\\circ\\)",
+            "Б": "\\(45^\\circ\\)",
+            "В": "\\(87^\\circ\\)",
+            "Г": "\\(135^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(87^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q12",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Околната повърхнина на прав кръгов конус е \\(15\\pi\\,\\text{cm}^2\\). Ако образувателната на конуса е \\(5\\,\\text{cm}\\), то диаметърът на основата е:",
+          "options": {
+            "А": "\\(3\\,\\text{cm}\\)",
+            "Б": "\\(10\\,\\text{cm}\\)",
+            "В": "\\(6\\,\\text{cm}\\)",
+            "Г": "\\(15\\,\\text{cm}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(6\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q18",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "За боядисване на \\(1\\,\\text{m}^2\\) стена се използват 200 грама боя. Колко килограма боя е необходима за боядисване на правоъгълна стена с размери \\(5\\,\\text{m}\\) и \\(6\\,\\text{m}\\)?",
+          "options": {
+            "А": "\\(0{,}6\\)",
+            "Б": "\\(0{,}06\\)",
+            "В": "\\(60\\)",
+            "Г": "\\(6\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(6\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q09",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "При пресичането на две прави мярката на един от получените ъгли е равна на сбора от мерките на двата му съседни ъгъла. Мярката на по-големия от ъглите е:",
+          "options": {
+            "А": "\\(60^\\circ\\)",
+            "Б": "\\(120^\\circ\\)",
+            "В": "\\(90^\\circ\\)",
+            "Г": "\\(150^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(120^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q10",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "В равнобедрения \\(\\triangle ABC\\), където \\(AC = BC\\), ъгълат между бедрата е \\(20^\\circ\\), а симетралата на бедрото \\(AC\\) пресича \\(BC\\) в точка \\(F\\). Мерките на ъглите на \\(\\triangle ABF\\) са:",
+          "options": {
+            "А": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+            "Б": "\\(80^\\circ, 80^\\circ, 20^\\circ\\)",
+            "В": "\\(140^\\circ, 20^\\circ, 20^\\circ\\)",
+            "Г": "\\(70^\\circ, 90^\\circ, 20^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q13",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "На чертежа правите \\(c\\) и \\(d\\) са успоредни. По данните от чертежа мярката на ъгъл \\(\\alpha\\) е:",
+          "options": {
+            "А": "\\(62^\\circ\\)",
+            "Б": "\\(45^\\circ\\)",
+            "В": "\\(35^\\circ\\)",
+            "Г": "\\(83^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(35^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q09",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "В кутия има 3 червени молива и два пъти повече зелени. Вероятността произволно изваден молив да е червен, е:",
+          "options": {
+            "А": "\\(\\dfrac{2}{3}\\)",
+            "Б": "\\(\\dfrac{2}{5}\\)",
+            "В": "\\(\\dfrac{3}{5}\\)",
+            "Г": "\\(\\dfrac{1}{3}\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(\\dfrac{1}{3}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2021_math_q09",
+            "official_year": "2021",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "В кутия са поставени 3 жълти, 2 зелени и 2 червени топчета. На случаен принцип се изтегля едно топче. Каква е вероятността изтегленото топче да НЕ е жълто?",
+          "options": {
+            "А": "\\(\\dfrac{5}{7}\\)",
+            "Б": "\\(\\dfrac{2}{7}\\)",
+            "В": "\\(\\dfrac{4}{7}\\)",
+            "Г": "\\(\\dfrac{3}{7}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{4}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2022_math_q09",
+            "official_year": "2022",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Средният брой точки на ученик от четири контролни изпитвания е 23,75. Колко точки трябва да получи на следващото изпитване, така че средният брой точки от тези пет изпитвания да е 25?",
+          "options": {
+            "А": "30",
+            "Б": "25",
+            "В": "40",
+            "Г": "35"
+          },
+          "correct_option": "А",
+          "answer_guide": "30",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2025_math_q08",
+            "official_year": "2025",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "14",
+            "Б": "10",
+            "В": "16",
+            "Г": "12"
+          },
+          "correct_option": "В",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2019",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_03",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #3",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Уравнението \\(\\lvert x + 7\\rvert = 3\\) има:",
+          "options": {
+            "А": "корени \\( - 4\\) и \\( - 10\\)",
+            "Б": "единствен корен \\( - 10\\)",
+            "В": "корени \\(4\\) и \\(10\\)",
+            "Г": "единствен корен \\( - 4\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "корени \\( - 4\\) и \\( - 10\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2019_math_q06",
+            "official_year": "2019",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(200 - 20\\cdot\\left( - 2\\dfrac{1}{2}\\right)\\) е:",
+          "options": {
+            "А": "\\( - 72\\)",
+            "Б": "\\(208\\)",
+            "В": "\\( - 450\\)",
+            "Г": "\\(250\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(250\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q01",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Изразът \\((3 - x)^2 - x(x - 3) + 9\\) е тъждествено равен на израза:",
+          "options": {
+            "А": "\\( - 3x + 18\\)",
+            "Б": "\\( - 2x^2 - 9x + 18\\)",
+            "В": "\\( - 2x^2 - 3x + 18\\)",
+            "Г": "\\( - 3x\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\( - 3x + 18\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q03",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Изразът \\(\\dfrac{( - a - 2b)^2}{ - a - 2b}\\) e тъждествено равен на израза:",
+          "options": {
+            "А": "\\((a + 2b)(a + 2b + 1)\\)",
+            "Б": "\\(( - a - 2b)(a + 2b + 1)\\)",
+            "В": "\\(( - a - 2b)(a + 2b - 1)\\)",
+            "Г": "\\((a + 2b)(a + 2b - 1)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\((a + 2b)(a + 2b - 1)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q04",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Сега бащата на Тодор е 3 пъти по-възрастен от сина си. Ако синът сега е на \\(x\\) години, то кой от изразите показва на колко години е бил бащата преди 5 години?",
+          "options": {
+            "А": "\\(\\dfrac{x}{3} - 5\\)",
+            "Б": "\\(5x - 3\\)",
+            "В": "\\(3x - 5\\)",
+            "Г": "\\(3x + 5\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(3x - 5\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q05",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Колко процента e маслеността на прясно мляко, ако при смесването му с 3 литра прясно мляко с масленост 3% се получават 5 литра прясно мляко с масленост 3,6%?",
+          "options": {
+            "А": "4,5%",
+            "Б": "6,4%",
+            "В": "6%",
+            "Г": "4%"
+          },
+          "correct_option": "А",
+          "answer_guide": "4,5%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q17",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Най - голямото цяло число, което е решение на неравенството \\(8 - x > 6(x - 1)\\), е:",
+          "options": {
+            "А": "\\( - 2\\)",
+            "Б": "\\(2\\)",
+            "В": "\\(1\\)",
+            "Г": "\\( - 1\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(1\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2025_math_q05",
+            "official_year": "2025",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "В тренировка по ориентиране Ивет изминава 20% от определен маршрут за \\(\\dfrac{1}{6}\\) часа. Какъв процент от този маршрут ще измине за 45 минути?",
+          "options": {
+            "А": "45%",
+            "Б": "75%",
+            "В": "90%",
+            "Г": "54%"
+          },
+          "correct_option": "В",
+          "answer_guide": "90%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2025_math_q18",
+            "official_year": "2025",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Решенията на неравенството −4x + 8 ≤ 0 са числата от интервала:",
+          "options": {
+            "А": "( - ∞;−2]",
+            "Б": "[2; + ∞)",
+            "В": "[−2; + ∞)",
+            "Г": "( - ∞;2]"
+          },
+          "correct_option": "Б",
+          "answer_guide": "[2; + ∞)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2018_math_q04",
+            "official_year": "2018",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "На чертежа в координатна система \\(Oxy\\) с единична отсечка \\(1\\,\\text{cm}\\) са отбелязани точките \\(A\\) и \\(B\\). Точката \\(C\\) е симетрична на точка \\(A\\) спрямо ординатната ос \\(Oy\\). Лицето на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(9\\,\\text{cm}^2\\)",
+            "Б": "\\(20\\,\\text{cm}^2\\)",
+            "В": "\\(10\\,\\text{cm}^2\\)",
+            "Г": "\\(18\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(9\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q10",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Лъчът \\(AL\\) е ъглополовящата на външния ъгъл при върха \\(A\\) в \\(\\triangle ABC\\) и \\(AL\\) е успореден на \\(BC\\). Ако \\(BC = 6\\,\\text{cm}\\) и периметърът на \\(\\triangle ABC\\) е \\(20\\,\\text{cm}\\), то дължината на страната \\(AB\\) е:",
+          "options": {
+            "А": "\\(6\\,\\text{cm}\\)",
+            "Б": "\\(7\\,\\text{cm}\\)",
+            "В": "\\(8\\,\\text{cm}\\)",
+            "Г": "\\(9\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(7\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q11",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "Цветарник с форма на куб има обиколка на основата \\(12\\,\\text{dm}\\). Колко литра почва са необходими за запълването на \\(\\dfrac{2}{3}\\) от обема на цветарника?",
+          "options": {
+            "А": "\\(12\\,\\text{L}\\)",
+            "Б": "\\(15\\,\\text{L}\\)",
+            "В": "\\(18\\,\\text{L}\\)",
+            "Г": "\\(9\\,\\text{L}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(18\\,\\text{L}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q13",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Мерките на два от ъглите на успоредник се отнасят както \\(2:7\\). Разликата от мерките на двата ъгъла е:",
+          "options": {
+            "А": "\\(140^\\circ\\)",
+            "Б": "\\(150^\\circ\\)",
+            "В": "\\(100^\\circ\\)",
+            "Г": "\\(40^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q15",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "Лицето на околната повърхнина на прав кръгов цилиндър с диаметър \\(10\\,\\text{cm}\\) и височина \\(3\\,\\text{dm}\\) е:",
+          "options": {
+            "А": "\\(600\\pi\\,\\text{cm}^2\\)",
+            "Б": "\\(300\\pi\\,\\text{cm}^2\\)",
+            "В": "\\(350\\pi\\,\\text{cm}^2\\)",
+            "Г": "\\(325\\pi\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(300\\pi\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q09",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Спортна площадка има формата, изобразена на чертежа с плътната линия. Ако PMNK е правоъгълник, KN = \\(20\\,\\text{m}\\), MN = \\(15\\,\\text{m}\\) и KT = \\(23\\,\\text{m}\\), то обиколката на площадката (в метри) e:",
+          "options": {
+            "А": "35 + 6π",
+            "Б": "70 + 6π",
+            "В": "70 + 9π Отговорите на задачите от 18. до 20. включително запишете на съответното място в листа за отговори.",
+            "Г": "35 + 3π"
+          },
+          "correct_option": "Б",
+          "answer_guide": "70 + 6π",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q17",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "Кутия за сладки има форма на куб с обем \\(1000\\,\\text{cm}^3\\). Ръбът на кутията е с дължина:",
+          "options": {
+            "А": "\\(5\\,\\text{cm}\\)",
+            "Б": "\\(10\\,\\text{cm}\\)",
+            "В": "\\(20\\,\\text{cm}\\)",
+            "Г": "\\(15\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(10\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q09",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точката О, като a и b са перпендикулярни. По данните от чертежа намерете мярката на най - малкия от трите ъгъла \\(α\\), \\(β\\) и \\(γ\\).",
+          "options": {
+            "А": "\\(45^\\circ\\)",
+            "Б": "\\(90^\\circ\\)",
+            "В": "\\(40^\\circ\\)",
+            "Г": "\\(50^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q11",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "Успоредните прави a и b са пресечени от правата c. По данните от чертежа мярката на \\(α\\) е:",
+          "options": {
+            "А": "\\(15^\\circ\\)",
+            "Б": "\\(30^\\circ\\)",
+            "В": "\\(60^\\circ\\)",
+            "Г": "\\(50^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(50^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q12",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "На чертежа симетралата s на страната AC на \\(\\triangle ABC\\) пресича отсечката AB в точка Q. Ако AB = \\(14\\,\\text{cm}\\) и BC = \\(4\\,\\text{cm}\\), то периметърът на \\(\\triangle QBC\\) е равен на:",
+          "options": {
+            "А": "\\(9\\,\\text{cm}\\)",
+            "Б": "\\(18\\,\\text{cm}\\)",
+            "В": "\\(10\\,\\text{cm}\\)",
+            "Г": "\\(14\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(18\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q15",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "На еднакви картончета са написани буквите К, А, Р, Л, О, В, О. Каква е вероятността на произволно избрано картонче да е написана буквата О?",
+          "options": {
+            "А": "\\(\\dfrac{3}{7}\\)",
+            "Б": "\\(\\dfrac{2}{7}\\)",
+            "В": "\\(\\dfrac{1}{7}\\)",
+            "Г": "\\(\\dfrac{4}{7}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{2}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2023_math_q09",
+            "official_year": "2023",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "Колело е разделено на 8 еднакви сектора, във всеки от които е написана по една от следните думи: успех, късмет и здраве. Колелото е завъртяно и след спирането стрелката сочи точно един сектор. Каква е вероятността това да е сектор с думата успех?",
+          "options": {
+            "А": "\\(\\dfrac{1}{4}\\)",
+            "Б": "\\(\\dfrac{3}{8}\\)",
+            "В": "\\(\\dfrac{1}{8}\\)",
+            "Г": "\\(\\dfrac{3}{4}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{3}{8}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2024_math_q08",
+            "official_year": "2024",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "40",
+            "Б": "15",
+            "В": "20",
+            "Г": "10 Видове изпълнения"
+          },
+          "correct_option": "Г",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Средният брой точки на ученик от четири контролни изпитвания е 23,75. Колко точки трябва да получи на следващото изпитване, така че средният брой точки от тези пет изпитвания да е 25?",
+          "options": {
+            "А": "25",
+            "Б": "40",
+            "В": "30",
+            "Г": "35"
+          },
+          "correct_option": "В",
+          "answer_guide": "30",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2025_math_q08",
+            "official_year": "2025",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2018",
+          "2019",
+          "2020",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_04",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #4",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Иван имал в касичката си 35 лв., преди да даде на сестра си Мария сума от \\(x\\) лева. След като получила сумата от брат си и изхарчила 5 лв. от тях, Мария имала сума, равна на останалата сума в касичката на Иван. Сумата, която Иван дал на Мария, е:",
+          "options": {
+            "А": "10 лв.",
+            "Б": "5 лв.",
+            "В": "15 лв.",
+            "Г": "20 лв."
+          },
+          "correct_option": "Г",
+          "answer_guide": "20 лв.",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q08",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Пресичащите се прави a и b на чертежа не са перпендикулярни. Кое от следните твърдения за мерките на получените ъгли е вярно?",
+          "options": {
+            "А": "3 + 4 = \\(90^\\circ\\)",
+            "Б": "1 + 4 = \\(180^\\circ\\)",
+            "В": "2 + 3 = \\(90^\\circ\\)",
+            "Г": "1 + 3 = \\(180^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "1 + 4 = \\(180^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q10",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "На чертежа AH и BL са съответно височина и ъглополовяща в \\(\\triangle ABC\\), като AHBL = P и \\(\\angle ABL = 15^\\circ\\). Mярката на LPH е:",
+          "options": {
+            "А": "\\(115^\\circ\\)",
+            "Б": "\\(75^\\circ\\)",
+            "В": "\\(135^\\circ\\)",
+            "Г": "\\(105^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(105^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q13",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Дадени са \\(\\triangle ABC\\) и \\(\\triangle NMP\\), за които AC = NP, BC = MP и ACB = \\(\\angle NPM = 56^\\circ\\). Ако \\(\\angle CAB = 47^\\circ\\), то градусната мярка на NMP е:",
+          "options": {
+            "А": "\\(77^\\circ\\)",
+            "Б": "\\(97^\\circ\\)",
+            "В": "\\(47^\\circ\\)",
+            "Г": "\\(56^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(77^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q14",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "В \\(\\triangle ABC\\) на чертежа ъглополовящите на ъглите \\(\\angle BAC\\) и \\(\\angle ACB\\) се пресичат в точка \\(O\\) и \\(\\angle AOC=110^\\circ\\). Мярката на \\(\\angle ABC\\) е:",
+          "options": {
+            "А": "\\(55^\\circ\\)",
+            "Б": "\\(30^\\circ\\)",
+            "В": "\\(90^\\circ\\)",
+            "Г": "\\(40^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(40^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2020_math_q16",
+            "official_year": "2020",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(1 - 3x\\ge 0\\) са числата от интервала:",
+          "options": {
+            "А": "\\(\\left(\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "Б": "\\(\\left[\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "В": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+            "Г": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right)\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2019_math_q08",
+            "official_year": "2019",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Числото \\(5{,}08\\) е равно на числото:",
+          "options": {
+            "А": "\\(5\\dfrac{1}{125}\\)",
+            "Б": "\\(\\dfrac{508}{1000}\\)",
+            "В": "\\(5\\dfrac{2}{25}\\)",
+            "Г": "\\(5\\dfrac{4}{5}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(5\\dfrac{2}{25}\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q02",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "През ноември цената на лаптоп била 1049 лв. За Коледа цената му била намалена с 10% от нея, а през януари била увеличена с 20% от новата цена. Цената на лаптопа след двете промени се изчислява с помощта на израза:",
+          "options": {
+            "А": "\\(1049 + 0{,}20\\cdot1049\\)",
+            "Б": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)",
+            "В": "\\(1049 + (0{,}20 - 0{,}10)\\cdot1049\\)",
+            "Г": "\\(1049 - 0{,}10\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q07",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Цялото число, което е решение на уравнението \\(3x - 1 = 13\\), е:",
+          "options": {
+            "А": "\\( - 1\\)",
+            "Б": "\\(4\\)",
+            "В": "\\(5\\)",
+            "Г": "\\( - 4\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\( - 4\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2021_math_q08",
+            "official_year": "2021",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "На чертежа е дадена правилна осмоъгълна пирамида. Лицето на една от околните ѝ стени е \\(18\\,\\text{cm}^2\\). Лицето на околната повърхнина на пирамидата е:",
+          "options": {
+            "А": "\\(108\\,\\text{cm}^2\\)",
+            "Б": "\\(144\\,\\text{cm}^2\\)",
+            "В": "\\(126\\,\\text{cm}^2\\)",
+            "Г": "\\(162\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(144\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q11",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точка O. По данните от чертежа мярката на ъгъл \\(α\\) е:",
+          "options": {
+            "А": "\\(135^\\circ\\)",
+            "Б": "\\(100^\\circ\\)",
+            "В": "\\(145^\\circ\\)",
+            "Г": "\\(125^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q12",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "В квадратна мрежа с единична отсечка x cm е начертан ромб ABCD. Ако обиколката на ромба е \\(40\\,\\text{cm}\\), то лицето му е:",
+          "options": {
+            "А": "\\(40\\,\\text{cm}^2\\)",
+            "Б": "\\(80\\,\\text{cm}^2\\)",
+            "В": "\\(20\\,\\text{cm}^2\\)",
+            "Г": "\\(50\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(80\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q17",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Мярката на ъгъл, който е от своя съседен, е равна на: 4",
+          "options": {
+            "А": "\\(144^\\circ\\)",
+            "Б": "\\(80^\\circ\\)",
+            "В": "\\(100^\\circ\\)",
+            "Г": "\\(36^\\circ\\) Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q11",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "По данните от чертежа мярката на по-малкия ъгъл, получен при пресичането на правите a и b, е:",
+          "options": {
+            "А": "\\(110^\\circ\\)",
+            "Б": "\\(30^\\circ\\)",
+            "В": "\\(70^\\circ\\)",
+            "Г": "\\(50^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(70^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q13",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "По данните от чертежа градусната мярка на външния ъгъл при върха В на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(110^\\circ\\)",
+            "Б": "\\(140^\\circ\\)",
+            "В": "\\(80^\\circ\\)",
+            "Г": "\\(100^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q14",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "Трите измерения на правоъгълен паралелепипед са \\(20\\,\\text{cm}\\), \\(300\\,\\text{mm}\\) и \\(5\\,\\text{dm}\\). Обемът му в кубически дециметри е:",
+          "options": {
+            "А": "3000 За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея.",
+            "Б": "300",
+            "В": "3",
+            "Г": "30"
+          },
+          "correct_option": "Г",
+          "answer_guide": "30",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q18",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Един от ъглите, получени при пресичането на две прави, е 80% от другия. Мярката на съседния му ъгъл е:",
+          "options": {
+            "А": "\\(80^\\circ\\)",
+            "Б": "\\(144^\\circ\\)",
+            "В": "\\(36^\\circ\\)",
+            "Г": "\\(100^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q11",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "Правите \\(a\\) и \\(b\\) са успоредни. По данните от чертежа градусната мярка на ъгъл \\(x\\) е:",
+          "options": {
+            "А": "\\(66^\\circ\\)",
+            "Б": "\\(45^\\circ\\)",
+            "В": "\\(87^\\circ\\)",
+            "Г": "\\(135^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(87^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q12",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "Околната повърхнина на прав кръгов конус е \\(15\\pi\\,\\text{cm}^2\\). Ако образувателната на конуса е \\(5\\,\\text{cm}\\), то диаметърът на основата е:",
+          "options": {
+            "А": "\\(6\\,\\text{cm}\\)",
+            "Б": "\\(15\\,\\text{cm}\\)",
+            "В": "\\(10\\,\\text{cm}\\)",
+            "Г": "\\(3\\,\\text{cm}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(6\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q18",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "В кутия има \\(n\\) молива, от които 10 са червени, а останалите са черни. Вероятността случайно изваден молив да е черен се пресмята с израза:",
+          "options": {
+            "А": "\\(n - 10\\)",
+            "Б": "\\(\\dfrac{n}{10}\\)",
+            "В": "\\(\\dfrac{n - 10}{n}\\)",
+            "Г": "\\(\\dfrac{10}{n}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{n - 10}{n}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2024_math_q20",
+            "official_year": "2024",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "В тест по математика всяка задача има по четири възможни отговора, от които само един е правилен. Ученик избира по случаен начин един от отговорите на първата задача. Каква е вероятността той да е избрал правилния отговор?",
+          "options": {
+            "А": "\\(\\dfrac{1}{3}\\)",
+            "Б": "\\(\\dfrac{3}{4}\\)",
+            "В": "\\(\\dfrac{1}{4}\\)",
+            "Г": "\\(\\dfrac{2}{3}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{1}{4}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2025_math_q07",
+            "official_year": "2025",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "16",
+            "Б": "10",
+            "В": "14",
+            "Г": "12"
+          },
+          "correct_option": "А",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "40",
+            "Б": "20",
+            "В": "15",
+            "Г": "10 Видове изпълнения"
+          },
+          "correct_option": "Г",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_05",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #5",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(2021 - 2020\\cdot( - 0{,}1)\\) е:",
+          "options": {
+            "А": "\\(2219\\)",
+            "Б": "\\(1\\)",
+            "В": "\\( - 0{,}1\\)",
+            "Г": "\\(2223\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(2223\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q01",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(a^2 - b^2\\) при \\(a = 10{,}5\\) и \\(b = 9{,}5\\) е:",
+          "options": {
+            "А": "\\(18{,}5\\)",
+            "Б": "\\(19{,}5\\)",
+            "В": "\\(20\\)",
+            "Г": "\\(19\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(20\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q02",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(M = - 4\\cdot 3^{ - 8} - 2\\cdot 5^{ - 4}\\) е:",
+          "options": {
+            "А": "\\(22\\)",
+            "Б": "\\( - 22\\)",
+            "В": "\\( - 18\\)",
+            "Г": "\\(18\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\( - 22\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q03",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Коренът на уравнението \\(x - \\dfrac{3}{4} = \\dfrac{9}{4}\\) е:",
+          "options": {
+            "А": "\\(8\\)",
+            "Б": "\\(\\dfrac{3}{2}\\)",
+            "В": "\\(3\\)",
+            "Г": "\\(12\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(3\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q04",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(42 - 3y\\le 0\\) се представят с интервала:",
+          "options": {
+            "А": "\\([14; + \\infty)\\)",
+            "Б": "\\([ - 14; + \\infty)\\)",
+            "В": "\\((14; + \\infty)\\)",
+            "Г": "\\(( - \\infty;14]\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\([14; + \\infty)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q05",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "В един клас има 25 ученици, от които 18 са момчета. Колко процента са момичетата в този клас?",
+          "options": {
+            "А": "28%",
+            "Б": "7%",
+            "В": "18%",
+            "Г": "72%"
+          },
+          "correct_option": "А",
+          "answer_guide": "28%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2022_math_q06",
+            "official_year": "2022",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Числената стойност на израза \\(2{,}25 + 0{,}75\\cdot\\left( - \\dfrac{4}{3}\\right)\\) е:",
+          "options": {
+            "А": "\\(2{,}25\\)",
+            "Б": "\\( - 1{,}25\\)",
+            "В": "\\( - 4\\)",
+            "Г": "\\(1{,}25\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(1{,}25\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q01",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Най - малкото цяло число, което е решение на неравенството \\(5x + 1\\ge 3x + 16\\)",
+          "options": {
+            "А": "\\(7\\)",
+            "Б": "\\(2\\)",
+            "В": "\\(8\\)",
+            "Г": "\\(1\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(8\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q05",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Колко процента e маслеността на прясно мляко, ако при смесването му с 3 литра прясно мляко с масленост 3% се получават 5 литра прясно мляко с масленост 3,6%?",
+          "options": {
+            "А": "6,4%",
+            "Б": "4,5%",
+            "В": "4%",
+            "Г": "6%"
+          },
+          "correct_option": "Б",
+          "answer_guide": "4,5%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q17",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "За боядисване на \\(1\\,\\text{m}^2\\) стена се използват 200 грама боя. Колко килограма боя е необходима за боядисване на правоъгълна стена с размери \\(5\\,\\text{m}\\) и \\(6\\,\\text{m}\\)?",
+          "options": {
+            "А": "\\(0{,}6\\)",
+            "Б": "\\(0{,}06\\)",
+            "В": "\\(60\\)",
+            "Г": "\\(6\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(6\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q09",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "При пресичането на две прави мярката на един от получените ъгли е равна на сбора от мерките на двата му съседни ъгъла. Мярката на по-големия от ъглите е:",
+          "options": {
+            "А": "\\(120^\\circ\\)",
+            "Б": "\\(150^\\circ\\)",
+            "В": "\\(60^\\circ\\)",
+            "Г": "\\(90^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(120^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q10",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "В равнобедрения \\(\\triangle ABC\\), където \\(AC = BC\\), ъгълат между бедрата е \\(20^\\circ\\), а симетралата на бедрото \\(AC\\) пресича \\(BC\\) в точка \\(F\\). Мерките на ъглите на \\(\\triangle ABF\\) са:",
+          "options": {
+            "А": "\\(70^\\circ, 90^\\circ, 20^\\circ\\)",
+            "Б": "\\(140^\\circ, 20^\\circ, 20^\\circ\\)",
+            "В": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+            "Г": "\\(80^\\circ, 80^\\circ, 20^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q13",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "На чертежа правите \\(c\\) и \\(d\\) са успоредни. По данните от чертежа мярката на ъгъл \\(\\alpha\\) е:",
+          "options": {
+            "А": "\\(45^\\circ\\)",
+            "Б": "\\(83^\\circ\\)",
+            "В": "\\(62^\\circ\\)",
+            "Г": "\\(35^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(35^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q09",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "На чертежа в координатна система \\(Oxy\\) с единична отсечка \\(1\\,\\text{cm}\\) са отбелязани точките \\(A\\) и \\(B\\). Точката \\(C\\) е симетрична на точка \\(A\\) спрямо ординатната ос \\(Oy\\). Лицето на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(20\\,\\text{cm}^2\\)",
+            "Б": "\\(9\\,\\text{cm}^2\\)",
+            "В": "\\(10\\,\\text{cm}^2\\)",
+            "Г": "\\(18\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(9\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q10",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Лъчът \\(AL\\) е ъглополовящата на външния ъгъл при върха \\(A\\) в \\(\\triangle ABC\\) и \\(AL\\) е успореден на \\(BC\\). Ако \\(BC = 6\\,\\text{cm}\\) и периметърът на \\(\\triangle ABC\\) е \\(20\\,\\text{cm}\\), то дължината на страната \\(AB\\) е:",
+          "options": {
+            "А": "\\(9\\,\\text{cm}\\)",
+            "Б": "\\(7\\,\\text{cm}\\)",
+            "В": "\\(6\\,\\text{cm}\\)",
+            "Г": "\\(8\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(7\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q11",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "Цветарник с форма на куб има обиколка на основата \\(12\\,\\text{dm}\\). Колко литра почва са необходими за запълването на \\(\\dfrac{2}{3}\\) от обема на цветарника?",
+          "options": {
+            "А": "\\(15\\,\\text{L}\\)",
+            "Б": "\\(9\\,\\text{L}\\)",
+            "В": "\\(12\\,\\text{L}\\)",
+            "Г": "\\(18\\,\\text{L}\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(18\\,\\text{L}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q13",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Мерките на два от ъглите на успоредник се отнасят както \\(2:7\\). Разликата от мерките на двата ъгъла е:",
+          "options": {
+            "А": "\\(150^\\circ\\)",
+            "Б": "\\(100^\\circ\\)",
+            "В": "\\(140^\\circ\\)",
+            "Г": "\\(40^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q15",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "Лицето на околната повърхнина на прав кръгов цилиндър с диаметър \\(10\\,\\text{cm}\\) и височина \\(3\\,\\text{dm}\\) е:",
+          "options": {
+            "А": "\\(325\\pi\\,\\text{cm}^2\\)",
+            "Б": "\\(600\\pi\\,\\text{cm}^2\\)",
+            "В": "\\(300\\pi\\,\\text{cm}^2\\)",
+            "Г": "\\(350\\pi\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(300\\pi\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q09",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "Спортна площадка има формата, изобразена на чертежа с плътната линия. Ако PMNK е правоъгълник, KN = \\(20\\,\\text{m}\\), MN = \\(15\\,\\text{m}\\) и KT = \\(23\\,\\text{m}\\), то обиколката на площадката (в метри) e:",
+          "options": {
+            "А": "70 + 9π Отговорите на задачите от 18. до 20. включително запишете на съответното място в листа за отговори.",
+            "Б": "35 + 6π",
+            "В": "35 + 3π",
+            "Г": "70 + 6π"
+          },
+          "correct_option": "Г",
+          "answer_guide": "70 + 6π",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q17",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "Вероятността при хвърляне на зар да се падне просто число е:",
+          "options": {
+            "А": "\\(0\\)",
+            "Б": "\\(\\dfrac{2}{3}\\)",
+            "В": "\\(\\dfrac{1}{2}\\)",
+            "Г": "\\(\\dfrac{1}{3}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{1}{2}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2019_math_q07",
+            "official_year": "2019",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "На всяко едно от седем еднакви картончета е записана по една от седемте букви на думата УЧЕБНИК. Картончетата са поставени в урна. По случаен начин е изтеглено едно от тях. Каква е вероятността върху него да е записана буква, означаваща гласен звук?",
+          "options": {
+            "А": "\\(\\dfrac{4}{7}\\)",
+            "Б": "\\(\\dfrac{3}{7}\\)",
+            "В": "\\(\\dfrac{6}{7}\\)",
+            "Г": "\\(1\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{3}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2020_math_q06",
+            "official_year": "2020",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Средният брой точки на ученик от четири контролни изпитвания е 23,75. Колко точки трябва да получи на следващото изпитване, така че средният брой точки от тези пет изпитвания да е 25?",
+          "options": {
+            "А": "30",
+            "Б": "35",
+            "В": "40",
+            "Г": "25"
+          },
+          "correct_option": "А",
+          "answer_guide": "30",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2025_math_q08",
+            "official_year": "2025",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "14",
+            "Б": "16",
+            "В": "12",
+            "Г": "10"
+          },
+          "correct_option": "Б",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_06",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #6",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Изразът \\((y - x)^2 - y + x\\) е тъждествено равен на:",
+          "options": {
+            "А": "\\((y - x)(y - x + 1)\\)",
+            "Б": "\\((y - x)(x - y)\\)",
+            "В": "\\((x - y)(x - y - 1)\\)",
+            "Г": "\\((x - y)(x - y + 1)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\((x - y)(x - y + 1)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q06",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Кабелен оператор предлага на клиентите си годишен абонаментен план, като за първите шест месеца се заплаща по \\(x\\) лева на месец, а за останалите шест месеца месечната такса се удвоява. Изразът, който задава цената в лева на абонамента за една година, е:",
+          "options": {
+            "А": "\\(2x\\)",
+            "Б": "\\(18x\\)",
+            "В": "\\(12x\\)",
+            "Г": "\\(x^2 + x\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(18x\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q07",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "В \\(\\triangle ABC\\) симетралата \\(s\\) на страната \\(AC\\) пресича \\(AB\\) в точка \\(M\\). Ако \\(CM\\) е медиана и \\(\\angle MCB=36^\\circ\\), то мярката на \\(\\angle BAC\\) е:",
+          "options": {
+            "А": "\\(36^\\circ\\)",
+            "Б": "\\(90^\\circ\\)",
+            "В": "\\(18^\\circ\\)",
+            "Г": "\\(54^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(54^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q15",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "На географска карта на \\(9\\,\\text{cm}\\) съответстват \\(3690\\,\\text{km}\\) действително разстояние. Ако разстоянието между два града на картата е \\(3\\,\\text{cm}\\), то действителното разстояние между тях в километри е:",
+          "options": {
+            "А": "\\(11070\\,\\text{km}\\) За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея.",
+            "Б": "\\(1230\\,\\text{km}\\)",
+            "В": "\\(410\\,\\text{km}\\)",
+            "Г": "\\(123\\,\\text{km}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(1230\\,\\text{km}\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2021_math_q18",
+            "official_year": "2021",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Стойността на израза \\( - 20{,}5 + 0{,}5\\cdot\\left( - \\dfrac{1}{5}\\right)\\) е:",
+          "options": {
+            "А": "\\(4\\)",
+            "Б": "\\( - 4\\)",
+            "В": "\\( - 20{,}6\\)",
+            "Г": "\\( - 20{,}4\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\( - 20{,}6\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q01",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Най - голямото цяло число, което е решение на неравенството \\(8 - x > 6(x - 1)\\), е:",
+          "options": {
+            "А": "\\(1\\)",
+            "Б": "\\( - 2\\)",
+            "В": "\\(2\\)",
+            "Г": "\\( - 1\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(1\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2025_math_q05",
+            "official_year": "2025",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "В тренировка по ориентиране Ивет изминава 20% от определен маршрут за \\(\\dfrac{1}{6}\\) часа. Какъв процент от този маршрут ще измине за 45 минути?",
+          "options": {
+            "А": "45%",
+            "Б": "90%",
+            "В": "75%",
+            "Г": "54%"
+          },
+          "correct_option": "Б",
+          "answer_guide": "90%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2025_math_q18",
+            "official_year": "2025",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Решенията на неравенството −4x + 8 ≤ 0 са числата от интервала:",
+          "options": {
+            "А": "( - ∞;2]",
+            "Б": "[2; + ∞)",
+            "В": "[−2; + ∞)",
+            "Г": "( - ∞;−2]"
+          },
+          "correct_option": "Б",
+          "answer_guide": "[2; + ∞)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2018_math_q04",
+            "official_year": "2018",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(1 - 3x\\ge 0\\) са числата от интервала:",
+          "options": {
+            "А": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+            "Б": "\\(\\left(\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "В": "\\(\\left[\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "Г": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right)\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2019_math_q08",
+            "official_year": "2019",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "Кутия за сладки има форма на куб с обем \\(1000\\,\\text{cm}^3\\). Ръбът на кутията е с дължина:",
+          "options": {
+            "А": "\\(10\\,\\text{cm}\\)",
+            "Б": "\\(15\\,\\text{cm}\\)",
+            "В": "\\(20\\,\\text{cm}\\)",
+            "Г": "\\(5\\,\\text{cm}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(10\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q09",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точката О, като a и b са перпендикулярни. По данните от чертежа намерете мярката на най - малкия от трите ъгъла \\(α\\), \\(β\\) и \\(γ\\).",
+          "options": {
+            "А": "\\(50^\\circ\\)",
+            "Б": "\\(90^\\circ\\)",
+            "В": "\\(40^\\circ\\)",
+            "Г": "\\(45^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q11",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "Успоредните прави a и b са пресечени от правата c. По данните от чертежа мярката на \\(α\\) е:",
+          "options": {
+            "А": "\\(60^\\circ\\)",
+            "Б": "\\(15^\\circ\\)",
+            "В": "\\(30^\\circ\\)",
+            "Г": "\\(50^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(50^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q12",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "На чертежа симетралата s на страната AC на \\(\\triangle ABC\\) пресича отсечката AB в точка Q. Ако AB = \\(14\\,\\text{cm}\\) и BC = \\(4\\,\\text{cm}\\), то периметърът на \\(\\triangle QBC\\) е равен на:",
+          "options": {
+            "А": "\\(9\\,\\text{cm}\\)",
+            "Б": "\\(10\\,\\text{cm}\\)",
+            "В": "\\(18\\,\\text{cm}\\)",
+            "Г": "\\(14\\,\\text{cm}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(18\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q15",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "На чертежа е дадена правилна осмоъгълна пирамида. Лицето на една от околните ѝ стени е \\(18\\,\\text{cm}^2\\). Лицето на околната повърхнина на пирамидата е:",
+          "options": {
+            "А": "\\(108\\,\\text{cm}^2\\)",
+            "Б": "\\(144\\,\\text{cm}^2\\)",
+            "В": "\\(126\\,\\text{cm}^2\\)",
+            "Г": "\\(162\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(144\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q11",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точка O. По данните от чертежа мярката на ъгъл \\(α\\) е:",
+          "options": {
+            "А": "\\(145^\\circ\\)",
+            "Б": "\\(135^\\circ\\)",
+            "В": "\\(125^\\circ\\)",
+            "Г": "\\(100^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q12",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "В квадратна мрежа с единична отсечка x cm е начертан ромб ABCD. Ако обиколката на ромба е \\(40\\,\\text{cm}\\), то лицето му е:",
+          "options": {
+            "А": "\\(80\\,\\text{cm}^2\\)",
+            "Б": "\\(50\\,\\text{cm}^2\\)",
+            "В": "\\(40\\,\\text{cm}^2\\)",
+            "Г": "\\(20\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(80\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q17",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Мярката на ъгъл, който е от своя съседен, е равна на: 4",
+          "options": {
+            "А": "\\(80^\\circ\\)",
+            "Б": "\\(100^\\circ\\)",
+            "В": "\\(36^\\circ\\) Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли.",
+            "Г": "\\(144^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q11",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "По данните от чертежа мярката на по-малкия ъгъл, получен при пресичането на правите a и b, е:",
+          "options": {
+            "А": "\\(110^\\circ\\)",
+            "Б": "\\(30^\\circ\\)",
+            "В": "\\(50^\\circ\\)",
+            "Г": "\\(70^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(70^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q13",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "По данните от чертежа градусната мярка на външния ъгъл при върха В на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(110^\\circ\\)",
+            "Б": "\\(100^\\circ\\)",
+            "В": "\\(140^\\circ\\)",
+            "Г": "\\(80^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q14",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "В кутия има 3 червени молива и два пъти повече зелени. Вероятността произволно изваден молив да е червен, е:",
+          "options": {
+            "А": "\\(\\dfrac{1}{3}\\)",
+            "Б": "\\(\\dfrac{2}{5}\\)",
+            "В": "\\(\\dfrac{2}{3}\\)",
+            "Г": "\\(\\dfrac{3}{5}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(\\dfrac{1}{3}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2021_math_q09",
+            "official_year": "2021",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "В кутия са поставени 3 жълти, 2 зелени и 2 червени топчета. На случаен принцип се изтегля едно топче. Каква е вероятността изтегленото топче да НЕ е жълто?",
+          "options": {
+            "А": "\\(\\dfrac{3}{7}\\)",
+            "Б": "\\(\\dfrac{2}{7}\\)",
+            "В": "\\(\\dfrac{4}{7}\\)",
+            "Г": "\\(\\dfrac{5}{7}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{4}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2022_math_q09",
+            "official_year": "2022",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "15",
+            "Б": "10 Видове изпълнения",
+            "В": "20",
+            "Г": "40"
+          },
+          "correct_option": "Б",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Средният брой точки на ученик от четири контролни изпитвания е 23,75. Колко точки трябва да получи на следващото изпитване, така че средният брой точки от тези пет изпитвания да е 25?",
+          "options": {
+            "А": "40",
+            "Б": "30",
+            "В": "25",
+            "Г": "35"
+          },
+          "correct_option": "Б",
+          "answer_guide": "30",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2025_math_q08",
+            "official_year": "2025",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_07",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #7",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(a^2 - 2ab + b^2\\) при \\(a = 6{,}5\\) и \\(b = 3{,}5\\) е:",
+          "options": {
+            "А": "\\(9\\)",
+            "Б": "\\(100\\)",
+            "В": "\\(10\\)",
+            "Г": "\\(3\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(9\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q02",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Изразът \\(a^2 - 2ab + 3a - 6b\\) е тъждествено равен на израза:",
+          "options": {
+            "А": "\\((a + 2b)(a + 3)\\)",
+            "Б": "\\((a + 2b)(a - 3)\\)",
+            "В": "\\((a - 2b)(a - 3)\\)",
+            "Г": "\\((a - 2b)(a + 3)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\((a - 2b)(a + 3)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q03",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Коренът на уравнението \\(3x + 4 - (x - 4) = 0\\) е:",
+          "options": {
+            "А": "\\( - 8\\)",
+            "Б": "\\( - 4\\)",
+            "В": "\\(4\\)",
+            "Г": "\\(0\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\( - 4\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q04",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(x\\le - \\dfrac{1}{5}\\) са представени с интервала:",
+          "options": {
+            "А": "\\(\\left( - \\infty; - \\dfrac{1}{5}\\right]\\)",
+            "Б": "\\(\\left[ - \\dfrac{1}{5}; + \\infty\\right)\\)",
+            "В": "\\(\\left( - \\infty; - \\dfrac{1}{5}\\right)\\)",
+            "Г": "\\(\\left( - \\dfrac{1}{5}; + \\infty\\right)\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(\\left( - \\infty; - \\dfrac{1}{5}\\right]\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q05",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Решенията на уравнението \\(\\lvert x - 4\\rvert - 5 = - 2\\) са:",
+          "options": {
+            "А": "\\(1 и 7\\)",
+            "Б": "\\( - 1 и 7\\)",
+            "В": "\\( - 7 и - 1\\)",
+            "Г": "\\( - 7 и 1\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(1 и 7\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q08",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Числото \\(5{,}08\\) е равно на числото:",
+          "options": {
+            "А": "\\(5\\dfrac{4}{5}\\)",
+            "Б": "\\(\\dfrac{508}{1000}\\)",
+            "В": "\\(5\\dfrac{2}{25}\\)",
+            "Г": "\\(5\\dfrac{1}{125}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(5\\dfrac{2}{25}\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q02",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "През ноември цената на лаптоп била 1049 лв. За Коледа цената му била намалена с 10% от нея, а през януари била увеличена с 20% от новата цена. Цената на лаптопа след двете промени се изчислява с помощта на израза:",
+          "options": {
+            "А": "\\(1049 + (0{,}20 - 0{,}10)\\cdot1049\\)",
+            "Б": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)",
+            "В": "\\(1049 - 0{,}10\\)",
+            "Г": "\\(1049 + 0{,}20\\cdot1049\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q07",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Цялото число, което е решение на уравнението \\(3x - 1 = 13\\), е:",
+          "options": {
+            "А": "\\( - 1\\)",
+            "Б": "\\( - 4\\)",
+            "В": "\\(4\\)",
+            "Г": "\\(5\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\( - 4\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2021_math_q08",
+            "official_year": "2021",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "В един клас има 25 ученици, от които 18 са момчета. Колко процента са момичетата в този клас?",
+          "options": {
+            "А": "7%",
+            "Б": "72%",
+            "В": "28%",
+            "Г": "18%"
+          },
+          "correct_option": "В",
+          "answer_guide": "28%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2022_math_q06",
+            "official_year": "2022",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "Трите измерения на правоъгълен паралелепипед са \\(20\\,\\text{cm}\\), \\(300\\,\\text{mm}\\) и \\(5\\,\\text{dm}\\). Обемът му в кубически дециметри е:",
+          "options": {
+            "А": "3000 За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея.",
+            "Б": "3",
+            "В": "30",
+            "Г": "300"
+          },
+          "correct_option": "В",
+          "answer_guide": "30",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q18",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Един от ъглите, получени при пресичането на две прави, е 80% от другия. Мярката на съседния му ъгъл е:",
+          "options": {
+            "А": "\\(36^\\circ\\)",
+            "Б": "\\(80^\\circ\\)",
+            "В": "\\(100^\\circ\\)",
+            "Г": "\\(144^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q11",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "Правите \\(a\\) и \\(b\\) са успоредни. По данните от чертежа градусната мярка на ъгъл \\(x\\) е:",
+          "options": {
+            "А": "\\(45^\\circ\\)",
+            "Б": "\\(87^\\circ\\)",
+            "В": "\\(66^\\circ\\)",
+            "Г": "\\(135^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(87^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q12",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Околната повърхнина на прав кръгов конус е \\(15\\pi\\,\\text{cm}^2\\). Ако образувателната на конуса е \\(5\\,\\text{cm}\\), то диаметърът на основата е:",
+          "options": {
+            "А": "\\(3\\,\\text{cm}\\)",
+            "Б": "\\(15\\,\\text{cm}\\)",
+            "В": "\\(10\\,\\text{cm}\\)",
+            "Г": "\\(6\\,\\text{cm}\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(6\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q18",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "За боядисване на \\(1\\,\\text{m}^2\\) стена се използват 200 грама боя. Колко килограма боя е необходима за боядисване на правоъгълна стена с размери \\(5\\,\\text{m}\\) и \\(6\\,\\text{m}\\)?",
+          "options": {
+            "А": "\\(60\\)",
+            "Б": "\\(0{,}06\\)",
+            "В": "\\(6\\)",
+            "Г": "\\(0{,}6\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(6\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q09",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "При пресичането на две прави мярката на един от получените ъгли е равна на сбора от мерките на двата му съседни ъгъла. Мярката на по-големия от ъглите е:",
+          "options": {
+            "А": "\\(150^\\circ\\)",
+            "Б": "\\(120^\\circ\\)",
+            "В": "\\(60^\\circ\\)",
+            "Г": "\\(90^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(120^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q10",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "В равнобедрения \\(\\triangle ABC\\), където \\(AC = BC\\), ъгълат между бедрата е \\(20^\\circ\\), а симетралата на бедрото \\(AC\\) пресича \\(BC\\) в точка \\(F\\). Мерките на ъглите на \\(\\triangle ABF\\) са:",
+          "options": {
+            "А": "\\(70^\\circ, 90^\\circ, 20^\\circ\\)",
+            "Б": "\\(80^\\circ, 80^\\circ, 20^\\circ\\)",
+            "В": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+            "Г": "\\(140^\\circ, 20^\\circ, 20^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q13",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "На чертежа правите \\(c\\) и \\(d\\) са успоредни. По данните от чертежа мярката на ъгъл \\(\\alpha\\) е:",
+          "options": {
+            "А": "\\(83^\\circ\\)",
+            "Б": "\\(62^\\circ\\)",
+            "В": "\\(35^\\circ\\)",
+            "Г": "\\(45^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(35^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q09",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "На чертежа в координатна система \\(Oxy\\) с единична отсечка \\(1\\,\\text{cm}\\) са отбелязани точките \\(A\\) и \\(B\\). Точката \\(C\\) е симетрична на точка \\(A\\) спрямо ординатната ос \\(Oy\\). Лицето на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(10\\,\\text{cm}^2\\)",
+            "Б": "\\(18\\,\\text{cm}^2\\)",
+            "В": "\\(20\\,\\text{cm}^2\\)",
+            "Г": "\\(9\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(9\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q10",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "Лъчът \\(AL\\) е ъглополовящата на външния ъгъл при върха \\(A\\) в \\(\\triangle ABC\\) и \\(AL\\) е успореден на \\(BC\\). Ако \\(BC = 6\\,\\text{cm}\\) и периметърът на \\(\\triangle ABC\\) е \\(20\\,\\text{cm}\\), то дължината на страната \\(AB\\) е:",
+          "options": {
+            "А": "\\(7\\,\\text{cm}\\)",
+            "Б": "\\(6\\,\\text{cm}\\)",
+            "В": "\\(8\\,\\text{cm}\\)",
+            "Г": "\\(9\\,\\text{cm}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(7\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q11",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "На еднакви картончета са написани буквите К, А, Р, Л, О, В, О. Каква е вероятността на произволно избрано картонче да е написана буквата О?",
+          "options": {
+            "А": "\\(\\dfrac{3}{7}\\)",
+            "Б": "\\(\\dfrac{1}{7}\\)",
+            "В": "\\(\\dfrac{2}{7}\\)",
+            "Г": "\\(\\dfrac{4}{7}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{2}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2023_math_q09",
+            "official_year": "2023",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "Колело е разделено на 8 еднакви сектора, във всеки от които е написана по една от следните думи: успех, късмет и здраве. Колелото е завъртяно и след спирането стрелката сочи точно един сектор. Каква е вероятността това да е сектор с думата успех?",
+          "options": {
+            "А": "\\(\\dfrac{1}{8}\\)",
+            "Б": "\\(\\dfrac{3}{8}\\)",
+            "В": "\\(\\dfrac{1}{4}\\)",
+            "Г": "\\(\\dfrac{3}{4}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{3}{8}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2024_math_q08",
+            "official_year": "2024",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "16",
+            "Б": "14",
+            "В": "10",
+            "Г": "12"
+          },
+          "correct_option": "А",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "20",
+            "Б": "40",
+            "В": "15",
+            "Г": "10 Видове изпълнения"
+          },
+          "correct_option": "Г",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_08",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #8",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Мария има \\(a\\) лева, с които може да си купи точно два шоколада по 2 лева и три вафли с еднаква цена. Изразът, който представя цената на една вафла в лева, е:",
+          "options": {
+            "А": "\\(\\dfrac{a - 2}{3}\\)",
+            "Б": "\\(\\dfrac{a - 4}{3}\\)",
+            "В": "\\(\\dfrac{a + 4}{3}\\)",
+            "Г": "\\(a - 4\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{a - 4}{3}\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q10",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "На чертежа \\(\\triangle ABC\\) е равнобедрен(АC = BC), CH e височина, AH = \\(3\\,\\text{cm}\\) и AH:HC = 3:4. Дължината на бедрото ВС е:",
+          "options": {
+            "А": "\\(4\\,\\text{cm}\\)",
+            "Б": "\\(6\\,\\text{cm}\\)",
+            "В": "\\(5\\,\\text{cm}\\)",
+            "Г": "\\(3\\,\\text{cm}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(5\\,\\text{cm}\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2022_math_q15",
+            "official_year": "2022",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Стойността на израза (12.32−32). е: 11",
+          "options": {
+            "А": "16",
+            "Б": "64",
+            "В": "2",
+            "Г": "0"
+          },
+          "correct_option": "Б",
+          "answer_guide": "64",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q01",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(0{,}99^2 - 0{,}01^2\\) е:",
+          "options": {
+            "А": "1",
+            "Б": "0,98",
+            "В": "0,982",
+            "Г": "0,1"
+          },
+          "correct_option": "Б",
+          "answer_guide": "0,98",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q03",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Кое от уравненията няма решение?",
+          "options": {
+            "А": "\\( - x + 1 = 1\\)",
+            "Б": "\\(x + 1 = 1\\)",
+            "В": "\\( - x + 1 = - 2\\)",
+            "Г": "\\(x + 1 = 0\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\( - x + 1 = 1\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q04",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "Числената стойност на израза \\(2{,}25 + 0{,}75\\cdot\\left( - \\dfrac{4}{3}\\right)\\) е:",
+          "options": {
+            "А": "\\(1{,}25\\)",
+            "Б": "\\( - 1{,}25\\)",
+            "В": "\\( - 4\\)",
+            "Г": "\\(2{,}25\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(1{,}25\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q01",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Най - малкото цяло число, което е решение на неравенството \\(5x + 1\\ge 3x + 16\\)",
+          "options": {
+            "А": "\\(7\\)",
+            "Б": "\\(1\\)",
+            "В": "\\(2\\)",
+            "Г": "\\(8\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(8\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q05",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Колко процента e маслеността на прясно мляко, ако при смесването му с 3 литра прясно мляко с масленост 3% се получават 5 литра прясно мляко с масленост 3,6%?",
+          "options": {
+            "А": "4%",
+            "Б": "4,5%",
+            "В": "6,4%",
+            "Г": "6%"
+          },
+          "correct_option": "Б",
+          "answer_guide": "4,5%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q17",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Най - голямото цяло число, което е решение на неравенството \\(8 - x > 6(x - 1)\\), е:",
+          "options": {
+            "А": "\\( - 2\\)",
+            "Б": "\\(1\\)",
+            "В": "\\(2\\)",
+            "Г": "\\( - 1\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(1\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2025_math_q05",
+            "official_year": "2025",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "Цветарник с форма на куб има обиколка на основата \\(12\\,\\text{dm}\\). Колко литра почва са необходими за запълването на \\(\\dfrac{2}{3}\\) от обема на цветарника?",
+          "options": {
+            "А": "\\(18\\,\\text{L}\\)",
+            "Б": "\\(12\\,\\text{L}\\)",
+            "В": "\\(15\\,\\text{L}\\)",
+            "Г": "\\(9\\,\\text{L}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(18\\,\\text{L}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q13",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Мерките на два от ъглите на успоредник се отнасят както \\(2:7\\). Разликата от мерките на двата ъгъла е:",
+          "options": {
+            "А": "\\(40^\\circ\\)",
+            "Б": "\\(140^\\circ\\)",
+            "В": "\\(150^\\circ\\)",
+            "Г": "\\(100^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q15",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "Лицето на околната повърхнина на прав кръгов цилиндър с диаметър \\(10\\,\\text{cm}\\) и височина \\(3\\,\\text{dm}\\) е:",
+          "options": {
+            "А": "\\(325\\pi\\,\\text{cm}^2\\)",
+            "Б": "\\(300\\pi\\,\\text{cm}^2\\)",
+            "В": "\\(600\\pi\\,\\text{cm}^2\\)",
+            "Г": "\\(350\\pi\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(300\\pi\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q09",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Спортна площадка има формата, изобразена на чертежа с плътната линия. Ако PMNK е правоъгълник, KN = \\(20\\,\\text{m}\\), MN = \\(15\\,\\text{m}\\) и KT = \\(23\\,\\text{m}\\), то обиколката на площадката (в метри) e:",
+          "options": {
+            "А": "70 + 9π Отговорите на задачите от 18. до 20. включително запишете на съответното място в листа за отговори.",
+            "Б": "70 + 6π",
+            "В": "35 + 3π",
+            "Г": "35 + 6π"
+          },
+          "correct_option": "Б",
+          "answer_guide": "70 + 6π",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q17",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "Кутия за сладки има форма на куб с обем \\(1000\\,\\text{cm}^3\\). Ръбът на кутията е с дължина:",
+          "options": {
+            "А": "\\(15\\,\\text{cm}\\)",
+            "Б": "\\(20\\,\\text{cm}\\)",
+            "В": "\\(10\\,\\text{cm}\\)",
+            "Г": "\\(5\\,\\text{cm}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(10\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q09",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точката О, като a и b са перпендикулярни. По данните от чертежа намерете мярката на най - малкия от трите ъгъла \\(α\\), \\(β\\) и \\(γ\\).",
+          "options": {
+            "А": "\\(50^\\circ\\)",
+            "Б": "\\(90^\\circ\\)",
+            "В": "\\(40^\\circ\\)",
+            "Г": "\\(45^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q11",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "Успоредните прави a и b са пресечени от правата c. По данните от чертежа мярката на \\(α\\) е:",
+          "options": {
+            "А": "\\(15^\\circ\\)",
+            "Б": "\\(50^\\circ\\)",
+            "В": "\\(30^\\circ\\)",
+            "Г": "\\(60^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(50^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q12",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "На чертежа симетралата s на страната AC на \\(\\triangle ABC\\) пресича отсечката AB в точка Q. Ако AB = \\(14\\,\\text{cm}\\) и BC = \\(4\\,\\text{cm}\\), то периметърът на \\(\\triangle QBC\\) е равен на:",
+          "options": {
+            "А": "\\(14\\,\\text{cm}\\)",
+            "Б": "\\(10\\,\\text{cm}\\)",
+            "В": "\\(18\\,\\text{cm}\\)",
+            "Г": "\\(9\\,\\text{cm}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(18\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q15",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "На чертежа е дадена правилна осмоъгълна пирамида. Лицето на една от околните ѝ стени е \\(18\\,\\text{cm}^2\\). Лицето на околната повърхнина на пирамидата е:",
+          "options": {
+            "А": "\\(144\\,\\text{cm}^2\\)",
+            "Б": "\\(108\\,\\text{cm}^2\\)",
+            "В": "\\(126\\,\\text{cm}^2\\)",
+            "Г": "\\(162\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(144\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q11",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точка O. По данните от чертежа мярката на ъгъл \\(α\\) е:",
+          "options": {
+            "А": "\\(135^\\circ\\)",
+            "Б": "\\(100^\\circ\\)",
+            "В": "\\(125^\\circ\\)",
+            "Г": "\\(145^\\circ\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q12",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "В кутия има \\(n\\) молива, от които 10 са червени, а останалите са черни. Вероятността случайно изваден молив да е черен се пресмята с израза:",
+          "options": {
+            "А": "\\(\\dfrac{n - 10}{n}\\)",
+            "Б": "\\(n - 10\\)",
+            "В": "\\(\\dfrac{10}{n}\\)",
+            "Г": "\\(\\dfrac{n}{10}\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(\\dfrac{n - 10}{n}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2024_math_q20",
+            "official_year": "2024",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "В тест по математика всяка задача има по четири възможни отговора, от които само един е правилен. Ученик избира по случаен начин един от отговорите на първата задача. Каква е вероятността той да е избрал правилния отговор?",
+          "options": {
+            "А": "\\(\\dfrac{2}{3}\\)",
+            "Б": "\\(\\dfrac{3}{4}\\)",
+            "В": "\\(\\dfrac{1}{3}\\)",
+            "Г": "\\(\\dfrac{1}{4}\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(\\dfrac{1}{4}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2025_math_q07",
+            "official_year": "2025",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Средният брой точки на ученик от четири контролни изпитвания е 23,75. Колко точки трябва да получи на следващото изпитване, така че средният брой точки от тези пет изпитвания да е 25?",
+          "options": {
+            "А": "35",
+            "Б": "30",
+            "В": "25",
+            "Г": "40"
+          },
+          "correct_option": "Б",
+          "answer_guide": "30",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2025_math_q08",
+            "official_year": "2025",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "14",
+            "Б": "10",
+            "В": "12",
+            "Г": "16"
+          },
+          "correct_option": "Г",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_09",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #9",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(5(x + 5)\\le 7(3x - 1)\\) са представени чрез интервала:",
+          "options": {
+            "А": "\\(( - \\infty; 2 ]\\)",
+            "Б": "\\([2; + \\infty)\\)",
+            "В": "\\(( - \\infty; 2 )\\)",
+            "Г": "\\((2; + \\infty)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\((2; + \\infty)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q05",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Един велосипедист се движи със скорост \\(20\\,\\text{m}\\)/s, а друг велосипедист изминава \\(1296\\,\\text{m}\\) за 1 минута. С колко метра в секунда вторият велосипедист е по-бърз от първия?",
+          "options": {
+            "А": "\\(20,6\\,\\text{m}\\)/s",
+            "Б": "\\(0,6\\,\\text{m}\\)/s",
+            "В": "\\(21,6\\,\\text{m}\\)/s",
+            "Г": "\\(1,6\\,\\text{m}\\)/s"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(1,6\\,\\text{m}\\)/s",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q07",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Изразът \\(x^2 - 6x - xy + 6y\\) е тъждествено равен на израза:",
+          "options": {
+            "А": "\\((x - y)(x + 6)\\)",
+            "Б": "\\((x + y)(x + 6)\\)",
+            "В": "\\((x + y)(x - 6)\\)",
+            "Г": "\\((x - y)(x - 6)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\((x - y)(x - 6)\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q08",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "По данните от чертежа мярката на \\(\\angle ABC\\) е:",
+          "options": {
+            "А": "\\(100^\\circ\\)",
+            "Б": "\\(60^\\circ\\)",
+            "В": "\\(90^\\circ\\)",
+            "Г": "\\(30^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(90^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q13",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "На чертежа \\(\\triangle ABC\\cong\\triangle PMT\\). Отсечките \\(BC\\) и \\(MT\\) се пресичат в точка \\(O\\), \\(\\angle MOC = 70^\\circ\\) и \\(\\angle ACB = 80^\\circ\\). Мярката на \\(\\angle BAC\\) е:",
+          "options": {
+            "А": "\\(75^\\circ\\)",
+            "Б": "\\(35^\\circ\\)",
+            "В": "\\(80^\\circ\\)",
+            "Г": "\\(65^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(65^\\circ\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2023_math_q16",
+            "official_year": "2023",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "В тренировка по ориентиране Ивет изминава 20% от определен маршрут за \\(\\dfrac{1}{6}\\) часа. Какъв процент от този маршрут ще измине за 45 минути?",
+          "options": {
+            "А": "90%",
+            "Б": "75%",
+            "В": "54%",
+            "Г": "45%"
+          },
+          "correct_option": "А",
+          "answer_guide": "90%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2025_math_q18",
+            "official_year": "2025",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Решенията на неравенството −4x + 8 ≤ 0 са числата от интервала:",
+          "options": {
+            "А": "( - ∞;−2]",
+            "Б": "( - ∞;2]",
+            "В": "[2; + ∞)",
+            "Г": "[−2; + ∞)"
+          },
+          "correct_option": "В",
+          "answer_guide": "[2; + ∞)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2018_math_q04",
+            "official_year": "2018",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "Решенията на неравенството \\(1 - 3x\\ge 0\\) са числата от интервала:",
+          "options": {
+            "А": "\\(\\left[\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "Б": "\\(\\left(\\dfrac{1}{3}; + \\infty\\right)\\)",
+            "В": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+            "Г": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right)\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\left( - \\infty;\\dfrac{1}{3}\\right]\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2019_math_q08",
+            "official_year": "2019",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Числото \\(5{,}08\\) е равно на числото:",
+          "options": {
+            "А": "\\(5\\dfrac{4}{5}\\)",
+            "Б": "\\(\\dfrac{508}{1000}\\)",
+            "В": "\\(5\\dfrac{2}{25}\\)",
+            "Г": "\\(5\\dfrac{1}{125}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(5\\dfrac{2}{25}\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q02",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "В квадратна мрежа с единична отсечка x cm е начертан ромб ABCD. Ако обиколката на ромба е \\(40\\,\\text{cm}\\), то лицето му е:",
+          "options": {
+            "А": "\\(40\\,\\text{cm}^2\\)",
+            "Б": "\\(20\\,\\text{cm}^2\\)",
+            "В": "\\(50\\,\\text{cm}^2\\)",
+            "Г": "\\(80\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(80\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2021_math_q17",
+            "official_year": "2021",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "Мярката на ъгъл, който е от своя съседен, е равна на: 4",
+          "options": {
+            "А": "\\(80^\\circ\\)",
+            "Б": "\\(36^\\circ\\) Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли.",
+            "В": "\\(100^\\circ\\)",
+            "Г": "\\(144^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q11",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "По данните от чертежа мярката на по-малкия ъгъл, получен при пресичането на правите a и b, е:",
+          "options": {
+            "А": "\\(70^\\circ\\)",
+            "Б": "\\(30^\\circ\\)",
+            "В": "\\(50^\\circ\\)",
+            "Г": "\\(110^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(70^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q13",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "По данните от чертежа градусната мярка на външния ъгъл при върха В на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(100^\\circ\\)",
+            "Б": "\\(110^\\circ\\)",
+            "В": "\\(140^\\circ\\)",
+            "Г": "\\(80^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q14",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "Трите измерения на правоъгълен паралелепипед са \\(20\\,\\text{cm}\\), \\(300\\,\\text{mm}\\) и \\(5\\,\\text{dm}\\). Обемът му в кубически дециметри е:",
+          "options": {
+            "А": "30",
+            "Б": "3000 За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея.",
+            "В": "300",
+            "Г": "3"
+          },
+          "correct_option": "А",
+          "answer_guide": "30",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2022_math_q18",
+            "official_year": "2022",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Един от ъглите, получени при пресичането на две прави, е 80% от другия. Мярката на съседния му ъгъл е:",
+          "options": {
+            "А": "\\(100^\\circ\\)",
+            "Б": "\\(144^\\circ\\)",
+            "В": "\\(36^\\circ\\)",
+            "Г": "\\(80^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q11",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "Правите \\(a\\) и \\(b\\) са успоредни. По данните от чертежа градусната мярка на ъгъл \\(x\\) е:",
+          "options": {
+            "А": "\\(66^\\circ\\)",
+            "Б": "\\(135^\\circ\\)",
+            "В": "\\(87^\\circ\\)",
+            "Г": "\\(45^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(87^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q12",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Околната повърхнина на прав кръгов конус е \\(15\\pi\\,\\text{cm}^2\\). Ако образувателната на конуса е \\(5\\,\\text{cm}\\), то диаметърът на основата е:",
+          "options": {
+            "А": "\\(3\\,\\text{cm}\\)",
+            "Б": "\\(6\\,\\text{cm}\\)",
+            "В": "\\(10\\,\\text{cm}\\)",
+            "Г": "\\(15\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(6\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2023_math_q18",
+            "official_year": "2023",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "За боядисване на \\(1\\,\\text{m}^2\\) стена се използват 200 грама боя. Колко килограма боя е необходима за боядисване на правоъгълна стена с размери \\(5\\,\\text{m}\\) и \\(6\\,\\text{m}\\)?",
+          "options": {
+            "А": "\\(0{,}6\\)",
+            "Б": "\\(60\\)",
+            "В": "\\(0{,}06\\)",
+            "Г": "\\(6\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(6\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q09",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "При пресичането на две прави мярката на един от получените ъгли е равна на сбора от мерките на двата му съседни ъгъла. Мярката на по-големия от ъглите е:",
+          "options": {
+            "А": "\\(90^\\circ\\)",
+            "Б": "\\(150^\\circ\\)",
+            "В": "\\(60^\\circ\\)",
+            "Г": "\\(120^\\circ\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(120^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q10",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "Вероятността при хвърляне на зар да се падне просто число е:",
+          "options": {
+            "А": "\\(\\dfrac{2}{3}\\)",
+            "Б": "\\(\\dfrac{1}{2}\\)",
+            "В": "\\(\\dfrac{1}{3}\\)",
+            "Г": "\\(0\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{1}{2}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2019_math_q07",
+            "official_year": "2019",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "На всяко едно от седем еднакви картончета е записана по една от седемте букви на думата УЧЕБНИК. Картончетата са поставени в урна. По случаен начин е изтеглено едно от тях. Каква е вероятността върху него да е записана буква, означаваща гласен звук?",
+          "options": {
+            "А": "\\(\\dfrac{4}{7}\\)",
+            "Б": "\\(\\dfrac{3}{7}\\)",
+            "В": "\\(\\dfrac{6}{7}\\)",
+            "Г": "\\(1\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(\\dfrac{3}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2020_math_q06",
+            "official_year": "2020",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "15",
+            "Б": "40",
+            "В": "20",
+            "Г": "10 Видове изпълнения"
+          },
+          "correct_option": "Г",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Средният брой точки на ученик от четири контролни изпитвания е 23,75. Колко точки трябва да получи на следващото изпитване, така че средният брой точки от тези пет изпитвания да е 25?",
+          "options": {
+            "А": "40",
+            "Б": "30",
+            "В": "35",
+            "Г": "25"
+          },
+          "correct_option": "Б",
+          "answer_guide": "30",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2025_math_q08",
+            "official_year": "2025",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    },
+    {
+      "id": "mock_nvo_math_10",
+      "exam_type": "nvo_math",
+      "title": "Примерен НВО Математика #10",
+      "source_title": "НВО математика — official-ish mock",
+      "source_text": "20 задачи с акцент върху числа, алгебра, геометрия, вероятности и данни.",
+      "topic_focus": [
+        "Алгебра",
+        "Вероятност",
+        "Геометрия",
+        "Статистика",
+        "Числа"
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(5 - 5x\\) при \\(x = - \\dfrac{1}{5}\\) е:",
+          "options": {
+            "А": "\\(4\\)",
+            "Б": "\\(10\\)",
+            "В": "\\(6\\)",
+            "Г": "\\(0\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(6\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2024_math_q02",
+            "official_year": "2024",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 2,
+          "type": "single_choice",
+          "question": "Изразът \\((2 - 3x)^2\\) е тъждествено равен на израза:",
+          "options": {
+            "А": "\\(4 - 12x - 9x^2\\)",
+            "Б": "\\(4 - 12x + 9x^2\\)",
+            "В": "\\(4 + 12x - 9x^2\\)",
+            "Г": "\\(4 + 12x + 9x^2\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(4 - 12x + 9x^2\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2024_math_q03",
+            "official_year": "2024",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 3,
+          "type": "single_choice",
+          "question": "Коренът на уравнението \\(2 - (x - 3) = - 3x - 5\\) е:",
+          "options": {
+            "А": "\\( - 5\\)",
+            "Б": "\\(1\\)",
+            "В": "\\(3\\)",
+            "Г": "\\( - 2\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\( - 5\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2024_math_q04",
+            "official_year": "2024",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 4,
+          "type": "single_choice",
+          "question": "Сборът от корените на уравнението 5− x−4 = 1 е:",
+          "options": {
+            "А": "8",
+            "Б": "0",
+            "В": "−4",
+            "Г": "−8"
+          },
+          "correct_option": "А",
+          "answer_guide": "8",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2024_math_q06",
+            "official_year": "2024",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 5,
+          "type": "single_choice",
+          "question": "Стойността на израза \\(1012^2 - 2000\\cdot 1012 + 1000^2\\) е:",
+          "options": {
+            "А": "\\(2012^2\\)",
+            "Б": "\\(122\\)",
+            "В": "\\(12\\)",
+            "Г": "\\(0\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(122\\)",
+          "section": "Алгебра",
+          "source_tags": {
+            "source_id": "2024_math_q07",
+            "official_year": "2024",
+            "topic_bucket": "Алгебра"
+          }
+        },
+        {
+          "number": 6,
+          "type": "single_choice",
+          "question": "През ноември цената на лаптоп била 1049 лв. За Коледа цената му била намалена с 10% от нея, а през януари била увеличена с 20% от новата цена. Цената на лаптопа след двете промени се изчислява с помощта на израза:",
+          "options": {
+            "А": "\\(1049 + 0{,}20\\cdot1049\\)",
+            "Б": "\\(1049 - 0{,}10\\)",
+            "В": "\\(1049 + (0{,}20 - 0{,}10)\\cdot1049\\)",
+            "Г": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(1{,}20\\cdot(0{,}90\\cdot1049)\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2020_math_q07",
+            "official_year": "2020",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 7,
+          "type": "single_choice",
+          "question": "Цялото число, което е решение на уравнението \\(3x - 1 = 13\\), е:",
+          "options": {
+            "А": "\\(4\\)",
+            "Б": "\\( - 1\\)",
+            "В": "\\( - 4\\)",
+            "Г": "\\(5\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\( - 4\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2021_math_q08",
+            "official_year": "2021",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 8,
+          "type": "single_choice",
+          "question": "В един клас има 25 ученици, от които 18 са момчета. Колко процента са момичетата в този клас?",
+          "options": {
+            "А": "72%",
+            "Б": "18%",
+            "В": "28%",
+            "Г": "7%"
+          },
+          "correct_option": "В",
+          "answer_guide": "28%",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2022_math_q06",
+            "official_year": "2022",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 9,
+          "type": "single_choice",
+          "question": "Числената стойност на израза \\(2{,}25 + 0{,}75\\cdot\\left( - \\dfrac{4}{3}\\right)\\) е:",
+          "options": {
+            "А": "\\(2{,}25\\)",
+            "Б": "\\( - 4\\)",
+            "В": "\\( - 1{,}25\\)",
+            "Г": "\\(1{,}25\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(1{,}25\\)",
+          "section": "Числа",
+          "source_tags": {
+            "source_id": "2024_math_q01",
+            "official_year": "2024",
+            "topic_bucket": "Числа"
+          }
+        },
+        {
+          "number": 10,
+          "type": "single_choice",
+          "question": "В равнобедрения \\(\\triangle ABC\\), където \\(AC = BC\\), ъгълат между бедрата е \\(20^\\circ\\), а симетралата на бедрото \\(AC\\) пресича \\(BC\\) в точка \\(F\\). Мерките на ъглите на \\(\\triangle ABF\\) са:",
+          "options": {
+            "А": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+            "Б": "\\(70^\\circ, 90^\\circ, 20^\\circ\\)",
+            "В": "\\(80^\\circ, 80^\\circ, 20^\\circ\\)",
+            "Г": "\\(140^\\circ, 20^\\circ, 20^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(60^\\circ, 80^\\circ, 40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2024_math_q13",
+            "official_year": "2024",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 11,
+          "type": "single_choice",
+          "question": "На чертежа правите \\(c\\) и \\(d\\) са успоредни. По данните от чертежа мярката на ъгъл \\(\\alpha\\) е:",
+          "options": {
+            "А": "\\(35^\\circ\\)",
+            "Б": "\\(62^\\circ\\)",
+            "В": "\\(83^\\circ\\)",
+            "Г": "\\(45^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(35^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q09",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 12,
+          "type": "single_choice",
+          "question": "На чертежа в координатна система \\(Oxy\\) с единична отсечка \\(1\\,\\text{cm}\\) са отбелязани точките \\(A\\) и \\(B\\). Точката \\(C\\) е симетрична на точка \\(A\\) спрямо ординатната ос \\(Oy\\). Лицето на \\(\\triangle ABC\\) е:",
+          "options": {
+            "А": "\\(20\\,\\text{cm}^2\\)",
+            "Б": "\\(10\\,\\text{cm}^2\\)",
+            "В": "\\(9\\,\\text{cm}^2\\)",
+            "Г": "\\(18\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(9\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q10",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 13,
+          "type": "single_choice",
+          "question": "Лъчът \\(AL\\) е ъглополовящата на външния ъгъл при върха \\(A\\) в \\(\\triangle ABC\\) и \\(AL\\) е успореден на \\(BC\\). Ако \\(BC = 6\\,\\text{cm}\\) и периметърът на \\(\\triangle ABC\\) е \\(20\\,\\text{cm}\\), то дължината на страната \\(AB\\) е:",
+          "options": {
+            "А": "\\(9\\,\\text{cm}\\)",
+            "Б": "\\(7\\,\\text{cm}\\)",
+            "В": "\\(6\\,\\text{cm}\\)",
+            "Г": "\\(8\\,\\text{cm}\\)"
+          },
+          "correct_option": "Б",
+          "answer_guide": "\\(7\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q11",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 14,
+          "type": "single_choice",
+          "question": "Цветарник с форма на куб има обиколка на основата \\(12\\,\\text{dm}\\). Колко литра почва са необходими за запълването на \\(\\dfrac{2}{3}\\) от обема на цветарника?",
+          "options": {
+            "А": "\\(9\\,\\text{L}\\)",
+            "Б": "\\(15\\,\\text{L}\\)",
+            "В": "\\(18\\,\\text{L}\\)",
+            "Г": "\\(12\\,\\text{L}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(18\\,\\text{L}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q13",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 15,
+          "type": "single_choice",
+          "question": "Мерките на два от ъглите на успоредник се отнасят както \\(2:7\\). Разликата от мерките на двата ъгъла е:",
+          "options": {
+            "А": "\\(40^\\circ\\)",
+            "Б": "\\(150^\\circ\\)",
+            "В": "\\(100^\\circ\\)",
+            "Г": "\\(140^\\circ\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(100^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2025_math_q15",
+            "official_year": "2025",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 16,
+          "type": "single_choice",
+          "question": "Лицето на околната повърхнина на прав кръгов цилиндър с диаметър \\(10\\,\\text{cm}\\) и височина \\(3\\,\\text{dm}\\) е:",
+          "options": {
+            "А": "\\(325\\pi\\,\\text{cm}^2\\)",
+            "Б": "\\(600\\pi\\,\\text{cm}^2\\)",
+            "В": "\\(350\\pi\\,\\text{cm}^2\\)",
+            "Г": "\\(300\\pi\\,\\text{cm}^2\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(300\\pi\\,\\text{cm}^2\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q09",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 17,
+          "type": "single_choice",
+          "question": "Спортна площадка има формата, изобразена на чертежа с плътната линия. Ако PMNK е правоъгълник, KN = \\(20\\,\\text{m}\\), MN = \\(15\\,\\text{m}\\) и KT = \\(23\\,\\text{m}\\), то обиколката на площадката (в метри) e:",
+          "options": {
+            "А": "70 + 6π",
+            "Б": "35 + 6π",
+            "В": "70 + 9π Отговорите на задачите от 18. до 20. включително запишете на съответното място в листа за отговори.",
+            "Г": "35 + 3π"
+          },
+          "correct_option": "А",
+          "answer_guide": "70 + 6π",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2019_math_q17",
+            "official_year": "2019",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 18,
+          "type": "single_choice",
+          "question": "Кутия за сладки има форма на куб с обем \\(1000\\,\\text{cm}^3\\). Ръбът на кутията е с дължина:",
+          "options": {
+            "А": "\\(15\\,\\text{cm}\\)",
+            "Б": "\\(20\\,\\text{cm}\\)",
+            "В": "\\(10\\,\\text{cm}\\)",
+            "Г": "\\(5\\,\\text{cm}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(10\\,\\text{cm}\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q09",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 19,
+          "type": "single_choice",
+          "question": "Правите a, b и c се пресичат в точката О, като a и b са перпендикулярни. По данните от чертежа намерете мярката на най - малкия от трите ъгъла \\(α\\), \\(β\\) и \\(γ\\).",
+          "options": {
+            "А": "\\(40^\\circ\\)",
+            "Б": "\\(45^\\circ\\)",
+            "В": "\\(50^\\circ\\)",
+            "Г": "\\(90^\\circ\\)"
+          },
+          "correct_option": "А",
+          "answer_guide": "\\(40^\\circ\\)",
+          "section": "Геометрия",
+          "source_tags": {
+            "source_id": "2020_math_q11",
+            "official_year": "2020",
+            "topic_bucket": "Геометрия"
+          }
+        },
+        {
+          "number": 20,
+          "type": "single_choice",
+          "question": "В кутия има 3 червени молива и два пъти повече зелени. Вероятността произволно изваден молив да е червен, е:",
+          "options": {
+            "А": "\\(\\dfrac{2}{5}\\)",
+            "Б": "\\(\\dfrac{3}{5}\\)",
+            "В": "\\(\\dfrac{1}{3}\\)",
+            "Г": "\\(\\dfrac{2}{3}\\)"
+          },
+          "correct_option": "В",
+          "answer_guide": "\\(\\dfrac{1}{3}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2021_math_q09",
+            "official_year": "2021",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 21,
+          "type": "single_choice",
+          "question": "В кутия са поставени 3 жълти, 2 зелени и 2 червени топчета. На случаен принцип се изтегля едно топче. Каква е вероятността изтегленото топче да НЕ е жълто?",
+          "options": {
+            "А": "\\(\\dfrac{5}{7}\\)",
+            "Б": "\\(\\dfrac{3}{7}\\)",
+            "В": "\\(\\dfrac{2}{7}\\)",
+            "Г": "\\(\\dfrac{4}{7}\\)"
+          },
+          "correct_option": "Г",
+          "answer_guide": "\\(\\dfrac{4}{7}\\)",
+          "section": "Вероятност",
+          "source_tags": {
+            "source_id": "2022_math_q09",
+            "official_year": "2022",
+            "topic_bucket": "Вероятност"
+          }
+        },
+        {
+          "number": 22,
+          "type": "single_choice",
+          "question": "Бойко има с 4 лева повече от Ани и с 4 лева по-малко от Валя. Колко лева има Валя, ако средноаритметичното от парите на тримата приятели е 12 лева?",
+          "options": {
+            "А": "10",
+            "Б": "14",
+            "В": "16",
+            "Г": "12"
+          },
+          "correct_option": "В",
+          "answer_guide": "16",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2023_math_q10",
+            "official_year": "2023",
+            "topic_bucket": "Статистика"
+          }
+        },
+        {
+          "number": 23,
+          "type": "single_choice",
+          "question": "Училищно тържество е с продължителност 90 минути. По данните от диаграмата продължителността на спортните изпълнения в минути е:",
+          "options": {
+            "А": "10 Видове изпълнения",
+            "Б": "15",
+            "В": "20",
+            "Г": "40"
+          },
+          "correct_option": "А",
+          "answer_guide": "10 Видове изпълнения",
+          "section": "Статистика",
+          "source_tags": {
+            "source_id": "2024_math_q19",
+            "official_year": "2024",
+            "topic_bucket": "Статистика"
+          }
+        }
+      ],
+      "influences": {
+        "official_years": [
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "topic_pdf_themes": [
+          "Числа.",
+          "Алгебра",
+          "Фигури и",
+          "Измерване"
+        ]
+      }
+    }
+  ]
+}

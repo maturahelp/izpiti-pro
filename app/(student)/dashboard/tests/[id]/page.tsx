@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
+import mockMathPracticeDataset from '@/data/mock_math_exam_practice.json'
 import { beronExamPayload, beronTests } from '@/data/beron-tests'
 
 // ---------------------------------------------------------------------------
@@ -43,15 +44,16 @@ interface NvoExam {
     labels: string[]
     values: number[]
   }
-  exam_type?: 'nvo_bel' | 'dzi_bel'
+  exam_type?: 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math'
 }
 
 interface MockPracticeExam {
   id: string
   title: string
-  exam_type: 'nvo_bel' | 'dzi_bel'
+  exam_type: 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math'
   source_title?: string
-  source_text: string
+  source_text?: string
+  topic_focus?: string[]
   chart?: {
     title: string
     unit?: string
@@ -237,6 +239,64 @@ function getOpenResponseLabels(question: NvoQuestion): string[] {
   return [...new Set(labels)]
 }
 
+function getOpenResponseConfig(
+  exam: NvoExam,
+  question: NvoQuestion,
+): { labels: string[]; input: 'text' | 'textarea'; rows?: number; placeholder?: string } {
+  const parsedLabels = getOpenResponseLabels(question)
+  if (parsedLabels.length) {
+    return {
+      labels: parsedLabels,
+      input: 'textarea',
+      rows: 2,
+      placeholder: 'Запиши своя отговор',
+    }
+  }
+
+  const section = question.section || ''
+  const text = normalizeMathText(question.question || '')
+
+  if (section === 'writing') {
+    return {
+      labels: ['Отговор'],
+      input: 'textarea',
+      rows: 10,
+      placeholder: 'Напиши пълния си текст тук...',
+    }
+  }
+
+  if (section === 'sentence_transformations') {
+    return {
+      labels: ['Отговор'],
+      input: 'text',
+      placeholder: 'Попълни липсващата част на изречението',
+    }
+  }
+
+  if (/(\b[Dd]WA\b|\bдве\b|\btwo\b).*(reasons|things|benefits|ways|examples|conclusions|arguments)/i.test(text)) {
+    return {
+      labels: ['Отговор 1', 'Отговор 2'],
+      input: 'text',
+      placeholder: 'Запиши кратък отговор',
+    }
+  }
+
+  if (section === 'open_reading') {
+    return {
+      labels: ['Отговор'],
+      input: 'text',
+      placeholder: 'Запиши кратък свободен отговор',
+    }
+  }
+
+  return {
+    labels: ['Отговор'],
+    input: 'textarea',
+    rows: 2,
+    placeholder: 'Запиши своя отговор',
+  }
+}
+
 function splitContextText(exam: NvoExam): { intro: string; body: string } {
   const text = (exam.context_text || '').trim()
   if (!text || !exam.subject.includes('Български')) return { intro: '', body: text }
@@ -289,14 +349,15 @@ function mapTestId(testId: string): string {
 }
 
 function normalizeMockExam(exam: MockPracticeExam): NvoExam {
-  const isNvo = exam.exam_type === 'nvo_bel'
+  const isNvo = exam.exam_type === 'nvo_bel' || exam.exam_type === 'nvo_math'
+  const isMath = exam.exam_type === 'nvo_math' || exam.exam_type === 'dzi_math'
 
   return {
     id: exam.id,
     year: '',
-    subject: isNvo ? 'Български език' : 'Български език и литература',
+    subject: isMath ? 'Математика' : isNvo ? 'Български език' : 'Български език и литература',
     published_at: '',
-    context_text: exam.source_text,
+    context_text: exam.source_text || (exam.topic_focus?.length ? `Основни теми: ${exam.topic_focus.join(', ')}.` : ''),
     context_images: [],
     source_title: exam.source_title || exam.title,
     chart: exam.chart,
@@ -373,7 +434,10 @@ const OFFICIAL_EXAMS: NvoExam[] = [
   ...(dziDataset as unknown as NvoExam[]),
 ]
 
-const MOCK_EXAMS: NvoExam[] = (mockPracticeDataset as { exams: MockPracticeExam[] }).exams.map(normalizeMockExam)
+const MOCK_EXAMS: NvoExam[] = [
+  ...(mockPracticeDataset as { exams: MockPracticeExam[] }).exams,
+  ...(mockMathPracticeDataset as { exams: MockPracticeExam[] }).exams,
+].map(normalizeMockExam)
 const BERON_EXAMS: NvoExam[] = beronExamPayload.tests.map(normalizeBeronExam)
 
 // ---------------------------------------------------------------------------
@@ -409,7 +473,7 @@ export default function TestPage() {
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
   const [submitted, setSubmitted] = useState(false)
   const [revealAnswers, setRevealAnswers] = useState(false)
-  const [contextCollapsed, setContextCollapsed] = useState(false)
+  const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
 
   // Inject MathJax on mount, retrigger after state changes
@@ -786,8 +850,9 @@ function QuestionCard({
   }
 
   const openState = openResponses[question.number] || {}
-  const labels = getOpenResponseLabels(question)
-  const effectiveLabels = labels.length ? labels : ['Отговор']
+  const openConfig = getOpenResponseConfig(exam, question)
+  const labels = openConfig.labels
+  const effectiveLabels = labels
 
   const openEval = (() => {
     if (question.type !== 'open_response') return null
@@ -936,20 +1001,37 @@ function QuestionCard({
                   <label className="text-xs font-bold text-amber-700">
                     {labels.length ? `${label}) Твоят отговор` : 'Твоят отговор'}
                   </label>
-                  <textarea
-                    rows={2}
-                    placeholder={labels.length ? `Запиши решението за ${label})` : 'Запиши своя отговор'}
-                    value={val}
-                    onChange={(e) => onOpenResponse(question.number, label, e.target.value)}
-                    className={cn(
-                      'w-full resize-y border rounded-xl px-3 py-2 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
-                      isCorrect
-                        ? 'border-green-400 bg-green-50 focus:ring-green-200'
-                        : isIncorrect
-                        ? 'border-red-300 bg-red-50 focus:ring-red-200'
-                        : 'border-border focus:ring-primary/20'
-                    )}
-                  />
+                  {openConfig.input === 'text' ? (
+                    <input
+                      type="text"
+                      placeholder={openConfig.placeholder}
+                      value={val}
+                      onChange={(e) => onOpenResponse(question.number, label, e.target.value)}
+                      className={cn(
+                        'w-full border rounded-xl px-3 py-2 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
+                        isCorrect
+                          ? 'border-green-400 bg-green-50 focus:ring-green-200'
+                          : isIncorrect
+                          ? 'border-red-300 bg-red-50 focus:ring-red-200'
+                          : 'border-border focus:ring-primary/20'
+                      )}
+                    />
+                  ) : (
+                    <textarea
+                      rows={openConfig.rows ?? 2}
+                      placeholder={openConfig.placeholder}
+                      value={val}
+                      onChange={(e) => onOpenResponse(question.number, label, e.target.value)}
+                      className={cn(
+                        'w-full resize-y border rounded-xl px-3 py-2 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
+                        isCorrect
+                          ? 'border-green-400 bg-green-50 focus:ring-green-200'
+                          : isIncorrect
+                          ? 'border-red-300 bg-red-50 focus:ring-red-200'
+                          : 'border-border focus:ring-primary/20'
+                      )}
+                    />
+                  )}
                 </div>
               )
             })}
