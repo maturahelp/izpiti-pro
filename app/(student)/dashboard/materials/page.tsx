@@ -53,12 +53,11 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
   ),
 }
 
-type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
+type MaterialSection = 'bulgarian' | 'literature' | 'english'
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
   literature: 'Литература',
-  math: 'Математика',
   english: 'Английски',
 }
 
@@ -79,7 +78,6 @@ const literatureKeywords = [
 ]
 
 function getMaterialSection(material: (typeof materials)[number]): MaterialSection {
-  if (material.subjectId.startsWith('math-')) return 'math'
   if (material.subjectId.startsWith('eng-') || material.subjectName.toLowerCase().includes('англий')) return 'english'
 
   const searchableText = `${material.title} ${material.topicName} ${material.description}`.toLowerCase()
