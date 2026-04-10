@@ -238,12 +238,12 @@ export default function MaterialsPage() {
             <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
               <p className="text-sm text-text-muted mb-4">
                 Учебни теми: <strong className="text-text">{curriculumTopics.length}</strong> теми •{' '}
-                <strong className="text-text">130</strong> упражнения
+                <strong className="text-text">{curriculumTopics.reduce((sum, t) => sum + t.exercises.length, 0)}</strong> упражнения
               </p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {curriculumTopics.map((topic, idx) => (
                   <Link
-                    key={idx}
+                    key={topic.number}
                     href={`/dashboard/materials/curriculum-topic/${idx}`}
                     className="card p-4 block transition-transform duration-200 hover:-translate-y-0.5"
                   >

@@ -89,7 +89,7 @@ export default function CurriculumTopicPage() {
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-text-muted mb-4">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted mb-4">
           <button
             type="button"
             onClick={() => router.push('/dashboard/materials')}
