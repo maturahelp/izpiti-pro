@@ -12,6 +12,16 @@ import { belTheory } from '@/data/bel-theory'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
+import curriculumTopicsData from '@/data/bel_curriculum_topics_content.json'
+
+const curriculumTopics = curriculumTopicsData.topics as Array<{
+  number: number
+  title: string
+  definition: string
+  key_points: string[]
+  common_mistakes: string[]
+  exercises: unknown[]
+}>
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
 // Matches the flat order in bel_topics_question_bank.json
@@ -221,6 +231,34 @@ export default function MaterialsPage() {
                       ))}
                     </div>
                   </section>
+                ))}
+              </div>
+            </div>
+          ) : grade7Section === 'bulgarian' ? (
+            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+              <p className="text-sm text-text-muted mb-4">
+                Учебни теми: <strong className="text-text">{curriculumTopics.length}</strong> теми •{' '}
+                <strong className="text-text">130</strong> упражнения
+              </p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {curriculumTopics.map((topic, idx) => (
+                  <Link
+                    key={idx}
+                    href={`/dashboard/materials/curriculum-topic/${idx}`}
+                    className="card p-4 block transition-transform duration-200 hover:-translate-y-0.5"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center">
+                        {topic.number}
+                      </span>
+                      <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wide">
+                        {topic.exercises.length} упражнения
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-text text-sm leading-snug mb-2">{topic.title}</h3>
+                    <p className="text-xs text-text-muted leading-relaxed line-clamp-2">{topic.definition}</p>
+                    <p className="mt-3 text-xs font-semibold text-primary">Отвори темата →</p>
+                  </Link>
                 ))}
               </div>
             </div>
