@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
@@ -212,9 +213,11 @@ export default function MaterialsPage() {
                         >
                           <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
                           <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
-                          <img
+                          <Image
                             src={work.image}
                             alt={work.title}
+                            width={600}
+                            height={338}
                             className="w-full h-auto object-contain rounded-lg border border-border"
                           />
                           <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
@@ -267,9 +270,11 @@ export default function MaterialsPage() {
               </div>
               <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
                 <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                  <img
+                  <Image
                     src={activeNvoWork.image}
                     alt={activeNvoWork.title}
+                    width={900}
+                    height={506}
                     className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
                   />
                 </div>
