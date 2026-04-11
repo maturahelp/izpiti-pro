@@ -10,6 +10,9 @@ import {
   type GeneratedEnglishQuestion,
 } from '@/lib/english-generated-materials'
 
+const readingSections = generatedEnglishMaterialSections.filter((section) => section.mode === 'reading')
+const writingSections = generatedEnglishMaterialSections.filter((section) => section.mode === 'writing')
+
 export default function EnglishGeneratedMaterialsPage() {
   const [choiceAnswers, setChoiceAnswers] = useState<Record<number, string>>({})
   const [openAnswers, setOpenAnswers] = useState<Record<number, string>>({})
@@ -72,55 +75,144 @@ export default function EnglishGeneratedMaterialsPage() {
           </header>
 
           <div className="px-4 py-4 md:px-8 md:py-8">
-            {generatedEnglishMaterialSections.map((section, sectionIndex) => (
-              <section
+            <MaterialCategoryHeader
+              eyebrow="Reading"
+              title="45 Reading Comprehension Tests"
+              description="Each reading test contains one passage and 10 ABCD questions. These are grouped separately from writing so they can be moved directly into the reading part of the materials section."
+              stats={`${generatedEnglishReadingQuestionCount} ABCD questions`}
+            />
+
+            {readingSections.map((section, sectionIndex) => (
+              <MaterialSection
                 key={section.id}
-                className={sectionIndex === 0 ? '' : 'mt-10 border-t border-dashed border-stone-300 pt-10'}
-              >
-                <div className="border border-stone-300 bg-[#fcf7ee] px-4 py-4 md:px-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
-                    {section.mode === 'writing' ? 'Writing' : 'Reading Comprehension'}
-                  </p>
-                  <h3 className="mt-2 font-serif text-2xl">{section.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-stone-700">{section.sourceNote}</p>
-                </div>
+                section={section}
+                className={sectionIndex === 0 ? 'mt-5' : 'mt-10 border-t border-dashed border-stone-300 pt-10'}
+                choiceAnswers={choiceAnswers}
+                openAnswers={openAnswers}
+                revealed={revealed}
+                setChoiceAnswers={setChoiceAnswers}
+                setOpenAnswers={setOpenAnswers}
+                setRevealed={setRevealed}
+              />
+            ))}
 
-                {section.passage && (
-                  <div className="border-x border-b border-stone-300 bg-white px-5 py-6 md:px-10">
-                    <div className="space-y-5 text-[1.04rem] leading-8 text-stone-900">
-                      {section.passage.map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
+            <MaterialCategoryHeader
+              eyebrow="Writing"
+              title="50 Writing Prompts"
+              description="Formal letters, opinion essays, stories and descriptions are grouped here as a separate writing bank."
+              stats={`${generatedEnglishWritingQuestionCount} writing tasks`}
+              className="mt-12"
+            />
 
-                <div className="border-x border-b border-stone-300 bg-[#fffdfa]">
-                  {section.questions.map((question) => (
-                    <QuestionRow
-                      key={question.id}
-                      question={question}
-                      choiceValue={choiceAnswers[question.id]}
-                      openValue={openAnswers[question.id] || ''}
-                      revealed={Boolean(revealed[question.id])}
-                      onChoiceChange={(value) =>
-                        setChoiceAnswers((prev) => ({ ...prev, [question.id]: value }))
-                      }
-                      onOpenChange={(value) =>
-                        setOpenAnswers((prev) => ({ ...prev, [question.id]: value }))
-                      }
-                      onToggleReveal={() =>
-                        setRevealed((prev) => ({ ...prev, [question.id]: !prev[question.id] }))
-                      }
-                    />
-                  ))}
-                </div>
-              </section>
+            {writingSections.map((section, sectionIndex) => (
+              <MaterialSection
+                key={section.id}
+                section={section}
+                className={sectionIndex === 0 ? 'mt-5' : 'mt-10 border-t border-dashed border-stone-300 pt-10'}
+                choiceAnswers={choiceAnswers}
+                openAnswers={openAnswers}
+                revealed={revealed}
+                setChoiceAnswers={setChoiceAnswers}
+                setOpenAnswers={setOpenAnswers}
+                setRevealed={setRevealed}
+              />
             ))}
           </div>
         </article>
       </section>
     </main>
+  )
+}
+
+function MaterialCategoryHeader({
+  eyebrow,
+  title,
+  description,
+  stats,
+  className = '',
+}: {
+  eyebrow: string
+  title: string
+  description: string
+  stats: string
+  className?: string
+}) {
+  return (
+    <div className={`${className} rounded-[2rem] border border-stone-300 bg-stone-950 px-5 py-6 text-white md:px-8`}>
+      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200">{eyebrow}</p>
+      <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h3 className="font-serif text-3xl">{title}</h3>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-stone-200">{description}</p>
+        </div>
+        <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold">
+          {stats}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+function MaterialSection({
+  section,
+  className,
+  choiceAnswers,
+  openAnswers,
+  revealed,
+  setChoiceAnswers,
+  setOpenAnswers,
+  setRevealed,
+}: {
+  section: (typeof generatedEnglishMaterialSections)[number]
+  className: string
+  choiceAnswers: Record<number, string>
+  openAnswers: Record<number, string>
+  revealed: Record<number, boolean>
+  setChoiceAnswers: React.Dispatch<React.SetStateAction<Record<number, string>>>
+  setOpenAnswers: React.Dispatch<React.SetStateAction<Record<number, string>>>
+  setRevealed: React.Dispatch<React.SetStateAction<Record<number, boolean>>>
+}) {
+  return (
+    <section className={className}>
+      <div className="border border-stone-300 bg-[#fcf7ee] px-4 py-4 md:px-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
+          {section.mode === 'writing' ? 'Writing' : 'Reading Comprehension'}
+        </p>
+        <h3 className="mt-2 font-serif text-2xl">{section.title}</h3>
+        <p className="mt-2 text-sm leading-7 text-stone-700">{section.sourceNote}</p>
+      </div>
+
+      {section.passage && (
+        <div className="border-x border-b border-stone-300 bg-white px-5 py-6 md:px-10">
+          <div className="space-y-5 text-[1.04rem] leading-8 text-stone-900">
+            {section.passage.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="border-x border-b border-stone-300 bg-[#fffdfa]">
+        {section.questions.map((question) => (
+          <QuestionRow
+            key={question.id}
+            question={question}
+            choiceValue={choiceAnswers[question.id]}
+            openValue={openAnswers[question.id] || ''}
+            revealed={Boolean(revealed[question.id])}
+            onChoiceChange={(value) =>
+              setChoiceAnswers((prev) => ({ ...prev, [question.id]: value }))
+            }
+            onOpenChange={(value) =>
+              setOpenAnswers((prev) => ({ ...prev, [question.id]: value }))
+            }
+            onToggleReveal={() =>
+              setRevealed((prev) => ({ ...prev, [question.id]: !prev[question.id] }))
+            }
+          />
+        ))}
+      </div>
+    </section>
   )
 }
 
