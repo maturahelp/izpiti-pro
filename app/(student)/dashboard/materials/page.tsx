@@ -7,6 +7,7 @@ import { materials, materialTypeLabels, type MaterialType } from '@/data/materia
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
+import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { cn } from '@/lib/utils'
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
@@ -51,6 +52,16 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
 
 type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
 type GradeLevel = '7' | '12'
+
+interface CurriculumTopic {
+  number: number
+  title: string
+  definition: string
+  key_points: string[]
+  exercises: unknown[]
+}
+
+const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
@@ -152,6 +163,21 @@ export default function MaterialsPage() {
   const bulgarianRulesCount = selectedGrade === '12'
     ? bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
     : 0
+
+  const filteredBelCurriculumTopics = belCurriculumTopics
+    .map((topic, topicIndex) => ({ topic, topicIndex }))
+    .filter(({ topic }) => {
+      if (selectedGrade !== '7') return false
+      if (!normalizedQuery) return true
+
+      const searchableText = [
+        topic.title,
+        topic.definition,
+        ...topic.key_points,
+      ].join(' ').toLowerCase()
+
+      return searchableText.includes(normalizedQuery)
+    })
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
   const activeTextWork = activeTextWorkId ? literatureWorks.find((w) => w.id === activeTextWorkId) : null
@@ -296,15 +322,52 @@ export default function MaterialsPage() {
         ) : selectedSection === 'bulgarian' ? (
           <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
             <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{bulgarianRulesCount}</strong> правила и термини
+              Намерени:{' '}
+              <strong className="text-text">
+                {selectedGrade === '7' ? filteredBelCurriculumTopics.length : bulgarianRulesCount}
+              </strong>{' '}
+              {selectedGrade === '7' ? 'учебни теми' : 'правила и термини'}
             </p>
 
             <div className="space-y-6">
               {selectedGrade === '7' && (
-                <div className="text-center py-10 text-text-muted">
-                  <p className="font-medium mb-1">Теорията и тестовете тук са за 12. клас</p>
-                  <p className="text-sm">Избери „12. клас“, за да ги видиш.</p>
-                </div>
+                <>
+                  {filteredBelCurriculumTopics.length > 0 ? (
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {filteredBelCurriculumTopics.map(({ topic, topicIndex }) => (
+                        <button
+                          key={topic.number}
+                          type="button"
+                          onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}`)}
+                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                        >
+                          <p className="text-xs font-semibold text-primary mb-1">
+                            Учебна тема #{topic.number}
+                          </p>
+                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                            {topic.title}
+                          </h3>
+                          <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
+                            {topic.definition}
+                          </p>
+                          <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#1E4D7B]">
+                            <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
+                              {topic.key_points.length} ключови точки
+                            </span>
+                            <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
+                              {topic.exercises.length} въпроса
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-10 text-text-muted">
+                      <p className="font-medium mb-1">Няма намерени учебни теми</p>
+                      <p className="text-sm">Опитай с друга ключова дума.</p>
+                    </div>
+                  )}
+                </>
               )}
 
               {selectedGrade === '12' && bulgarianRuleGroups.map((section, sectionIndex) => (
@@ -365,7 +428,7 @@ export default function MaterialsPage() {
                 </section>
               ))}
 
-              {bulgarianRulesCount === 0 && (
+              {selectedGrade === '12' && bulgarianRulesCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
                   <p className="font-medium mb-1">Няма намерени правила</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
