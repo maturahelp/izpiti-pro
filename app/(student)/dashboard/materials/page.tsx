@@ -63,6 +63,8 @@ const sectionLabels: Record<MaterialSection, string> = {
   english: 'Английски',
 }
 
+const grade12Sections: MaterialSection[] = ['bulgarian', 'literature', 'english']
+
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
 }
@@ -229,6 +231,12 @@ export default function MaterialsPage() {
   useEffect(() => {
     if (activeNvoWorkId) setActiveNvoWorkPanel('text')
   }, [activeNvoWorkId])
+
+  useEffect(() => {
+    if (grade !== '7' && !grade12Sections.includes(selectedSection)) {
+      setSelectedSection('bulgarian')
+    }
+  }, [grade, selectedSection])
 
   if (grade === '7') {
     return (
@@ -416,7 +424,7 @@ export default function MaterialsPage() {
           <div className="hidden md:block" />
 
           <div className="flex flex-wrap justify-center gap-2">
-            {(Object.keys(sectionLabels) as MaterialSection[]).map((section) => {
+            {grade12Sections.map((section) => {
               const isActive = selectedSection === section
 
               return (
