@@ -76,6 +76,7 @@ export default function EnglishGeneratedMaterialsPage() {
 
           <div className="px-4 py-4 md:px-8 md:py-8">
             <MaterialCategoryHeader
+              id="reading"
               eyebrow="Reading"
               title="45 Reading Comprehension Tests"
               description="Each reading test contains one passage and 10 ABCD questions. These are grouped separately from writing so they can be moved directly into the reading part of the materials section."
@@ -97,6 +98,7 @@ export default function EnglishGeneratedMaterialsPage() {
             ))}
 
             <MaterialCategoryHeader
+              id="writing"
               eyebrow="Writing"
               title="50 Writing Prompts"
               description="Formal letters, opinion essays, stories and descriptions are grouped here as a separate writing bank."
@@ -125,12 +127,14 @@ export default function EnglishGeneratedMaterialsPage() {
 }
 
 function MaterialCategoryHeader({
+  id,
   eyebrow,
   title,
   description,
   stats,
   className = '',
 }: {
+  id: string
   eyebrow: string
   title: string
   description: string
@@ -138,7 +142,7 @@ function MaterialCategoryHeader({
   className?: string
 }) {
   return (
-    <div className={`${className} rounded-[2rem] border border-stone-300 bg-stone-950 px-5 py-6 text-white md:px-8`}>
+    <div id={id} className={`${className} scroll-mt-6 rounded-[2rem] border border-stone-300 bg-stone-950 px-5 py-6 text-white md:px-8`}>
       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200">{eyebrow}</p>
       <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
         <div>
