@@ -1,4 +1,5 @@
 import { mockTests } from './mock-tests'
+import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 
 export type Difficulty = 'лесен' | 'среден' | 'труден'
 export type TestStatus = 'not_started' | 'in_progress' | 'completed'
@@ -32,6 +33,38 @@ export interface Question {
   explanation: string
   points: number
 }
+
+const englishOfficialTests: Test[] = officialEnglishMockExams.map((exam) => {
+  const sessionLabel =
+    exam.session === 'август'
+      ? 'август'
+      : exam.session === 'юни'
+        ? 'юни'
+        : exam.session === 'септември'
+          ? 'септември'
+          : exam.session === 'примерна' || exam.session === 'пробна'
+            ? exam.session
+            : 'май'
+
+  const levelSuffix = exam.level ? ` (${exam.level})` : ''
+
+  return {
+    id: exam.id,
+    title: `ДЗИ Английски език — ${sessionLabel} ${exam.year}${levelSuffix}`,
+    subjectId: 'english-12',
+    subjectName: 'Английски език',
+    topicId: 'english12-dzi',
+    topicName: 'ДЗИ — Официални изпити',
+    examType: 'dzi12',
+    difficulty: 'труден',
+    questionsCount: exam.questions.length,
+    timeMinutes: 180,
+    isPremium: false,
+    completedCount: 0,
+    avgScore: 0,
+    status: 'not_started',
+  }
+})
 
 const allTests: Test[] = [
   // ── Real NVO exams from MaturaHelp.com ──────────────────────────────────────
@@ -550,6 +583,7 @@ const allTests: Test[] = [
     avgScore: 0,
     status: 'not_started',
   },
+  ...englishOfficialTests,
   // ── End real NVO exams ───────────────────────────────────────────────────────
   {
     id: 'test-7',

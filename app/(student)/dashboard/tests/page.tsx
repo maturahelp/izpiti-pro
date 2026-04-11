@@ -14,13 +14,12 @@ import {
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-type TestSection12 = 'bel' | 'math' | 'english'
+type TestSection12 = 'bel' | 'english'
 type TestSection7 = 'bel' | 'math'
 type TestMode = 'sample_dzi' | 'past_dzi' | 'practice'
 
 const sectionLabels12: Record<TestSection12, string> = {
   bel: 'БЕЛ',
-  math: 'Математика',
   english: 'Английски',
 }
 
@@ -43,7 +42,7 @@ function getTestSection(test: (typeof tests)[number]): string {
 
 function getTestMode(test: (typeof tests)[number]): TestMode {
   if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
-  if (test.id.startsWith('dzi-bel-')) return 'past_dzi'
+  if (test.id.startsWith('dzi-bel-') || test.id.startsWith('dzi_english_')) return 'past_dzi'
   return 'practice'
 }
 

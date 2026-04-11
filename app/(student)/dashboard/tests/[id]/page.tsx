@@ -13,6 +13,7 @@ import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
 import mockMathPracticeDataset from '@/data/mock_math_exam_practice.json'
 import { beronExamPayload, beronTests } from '@/data/beron-tests'
+import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -432,6 +433,7 @@ function normalizeBeronExam(test: BeronDifficultyTest): NvoExam {
 const OFFICIAL_EXAMS: NvoExam[] = [
   ...(nvoDataset as unknown as NvoExam[]),
   ...(dziDataset as unknown as NvoExam[]),
+  ...(officialEnglishMockExams as unknown as NvoExam[]),
 ]
 
 const MOCK_EXAMS: NvoExam[] = [
