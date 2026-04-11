@@ -127,9 +127,38 @@ export default function TestsPage() {
         </div>
 
         {/* Results count */}
-        <p className="text-sm text-text-muted mb-4">
-          Намерени: <strong className="text-text">{filtered.length}</strong> теста
-        </p>
+        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice') && (
+          <p className="text-sm text-text-muted mb-4">
+            Намерени: <strong className="text-text">{filtered.length}</strong> теста
+          </p>
+        )}
+
+        {/* English practice: link to generated materials bank */}
+        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice' && (
+          <div className="mb-4 grid sm:grid-cols-2 gap-4">
+            <div className="card-hover p-5 flex flex-col gap-4">
+              <div>
+                <span className="badge text-xs bg-emerald-100 text-emerald-700 mb-2 inline-block">500 задачи</span>
+                <h3 className="font-semibold text-text text-sm leading-snug">Генерирани упражнения по Английски ДЗИ</h3>
+                <p className="text-xs text-text-muted mt-1">450 четивни задачи с избор · 50 писмени задачи</p>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-text-muted">
+                <span>45 текста за четене</span>
+                <span>·</span>
+                <span>4 вида писане</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="badge text-xs bg-blue-100 text-blue-700">Упражнение</span>
+                <Link
+                  href="/english-generated"
+                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark"
+                >
+                  Отвори
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid sm:grid-cols-2 gap-4">
           {filtered.map((test) => (
@@ -209,7 +238,7 @@ export default function TestsPage() {
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice') && (
           <div className="text-center py-16 text-text-muted">
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
