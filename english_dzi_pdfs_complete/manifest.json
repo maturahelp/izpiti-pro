@@ -1,0 +1,251 @@
+{
+  "count": 35,
+  "failures": [],
+  "files": [
+    {
+      "id": "dzi_english_2025_may_b2",
+      "title": "Матура по Английски език B2 – 23.05.2025",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2025/05/matura-angliiski-b2-23-05-2025.pdf",
+      "file": "01_dzi_english_2025_may_b2.pdf",
+      "bytes": 641676
+    },
+    {
+      "id": "dzi_english_2024_may_b2",
+      "title": "Матура по Английски език B2 – 20.05.2024",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2024/05/matura-angliiski-b2-20-05-2024.pdf",
+      "file": "02_dzi_english_2024_may_b2.pdf",
+      "bytes": 644608
+    },
+    {
+      "id": "dzi_english_2023_may_b2",
+      "title": "Матура по Английски език B2 – 23.05.2023",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2023/05/matura-angliiski-b2-23-05-2023.pdf",
+      "file": "03_dzi_english_2023_may_b2.pdf",
+      "bytes": 723138
+    },
+    {
+      "id": "dzi_english_2022_may_b2",
+      "title": "Матура по Английски език B2 – 20.05.2022",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2022/05/matura-angliiski-b2-20-05-2022.pdf",
+      "file": "04_dzi_english_2022_may_b2.pdf",
+      "bytes": 653564
+    },
+    {
+      "id": "dzi_english_2021_may",
+      "title": "Матура по Английски език – 21.05.2021",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2021/05/matura-angliiski-21-05.2021.pdf",
+      "file": "05_dzi_english_2021_may.pdf",
+      "bytes": 1073877
+    },
+    {
+      "id": "dzi_english_2020_aug",
+      "title": "Матура по Английски език – 28.08.2020 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/09/matura-angliiski-28-08-2020.pdf",
+      "file": "06_dzi_english_2020_aug.pdf",
+      "bytes": 826977
+    },
+    {
+      "id": "dzi_english_2020_june",
+      "title": "Матура по Английски език – 04.06.2020",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/06/matura-angliiski-4-06-2020.pdf",
+      "file": "07_dzi_english_2020_june.pdf",
+      "bytes": 487255
+    },
+    {
+      "id": "dzi_english_2020_june",
+      "title": "Матура по Английски език – 03.06.2020",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/06/matura-angliiski-3-06-2020.pdf",
+      "file": "08_dzi_english_2020_june-2.pdf",
+      "bytes": 299812
+    },
+    {
+      "id": "dzi_english_2019_aug",
+      "title": "Матура по Английски език – 29.08.2019 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-29-08-2019.pdf",
+      "file": "09_dzi_english_2019_aug.pdf",
+      "bytes": 786768
+    },
+    {
+      "id": "dzi_english_2019_may",
+      "title": "Матура по Английски език – 23.05.2019",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/02/matura-angliiski-23-may-2019.pdf",
+      "file": "10_dzi_english_2019_may.pdf",
+      "bytes": 950320
+    },
+    {
+      "id": "dzi_english_2018_aug",
+      "title": "Матура по Английски език – 29.08.2018 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-29-08-2018.pdf",
+      "file": "11_dzi_english_2018_aug.pdf",
+      "bytes": 1844895
+    },
+    {
+      "id": "dzi_english_2018_may",
+      "title": "Матура по Английски език – 23.05.2018",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-23-05-2018.pdf",
+      "file": "12_dzi_english_2018_may.pdf",
+      "bytes": 771873
+    },
+    {
+      "id": "dzi_english_2017_aug",
+      "title": "Матура по Английски език – 29.08.2017 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-29-08-2017.pdf",
+      "file": "13_dzi_english_2017_aug.pdf",
+      "bytes": 246310
+    },
+    {
+      "id": "dzi_english_2017_may",
+      "title": "Матура по Английски език – 22.05.2017",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-22-05-2017.pdf",
+      "file": "14_dzi_english_2017_may.pdf",
+      "bytes": 1273986
+    },
+    {
+      "id": "dzi_english_2016_aug",
+      "title": "Матура по Английски език – 30.08.2016 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-30-08-2016.pdf",
+      "file": "15_dzi_english_2016_aug.pdf",
+      "bytes": 486005
+    },
+    {
+      "id": "dzi_english_2016_may",
+      "title": "Матура по Английски език – 20.05.2016",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-20-05-2016.pdf",
+      "file": "16_dzi_english_2016_may.pdf",
+      "bytes": 705142
+    },
+    {
+      "id": "dzi_english_2015_aug",
+      "title": "Матура по Английски език – 28.08.2015 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-28-08-2015.pdf",
+      "file": "17_dzi_english_2015_aug.pdf",
+      "bytes": 420357
+    },
+    {
+      "id": "dzi_english_2015_may",
+      "title": "Матура по Английски език – 22.05.2015",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-22-05-2015.pdf",
+      "file": "18_dzi_english_2015_may.pdf",
+      "bytes": 673090
+    },
+    {
+      "id": "dzi_english_2014_aug",
+      "title": "Матура по Английски език – 29.08.2014 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-29-08-2014.pdf",
+      "file": "19_dzi_english_2014_aug.pdf",
+      "bytes": 273104
+    },
+    {
+      "id": "dzi_english_2014_may",
+      "title": "Матура по Английски език – 23.05.2014",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-23-05-2014.pdf",
+      "file": "20_dzi_english_2014_may.pdf",
+      "bytes": 794362
+    },
+    {
+      "id": "dzi_english_2013_aug",
+      "title": "Матура по Английски език – 30.08.2013 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-30-08-2013.pdf",
+      "file": "21_dzi_english_2013_aug.pdf",
+      "bytes": 260554
+    },
+    {
+      "id": "dzi_english_2013_may",
+      "title": "Матура по Английски език – 23.05.2013",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-23-05-2013.pdf",
+      "file": "22_dzi_english_2013_may.pdf",
+      "bytes": 499658
+    },
+    {
+      "id": "dzi_english_2012_aug",
+      "title": "Матура по Английски език – 31.08.2012 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-31-08-2012.pdf",
+      "file": "23_dzi_english_2012_aug.pdf",
+      "bytes": 254436
+    },
+    {
+      "id": "dzi_english_2012_may_sample",
+      "title": "Матура по Английски език – 29.05.2012 – примерна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-29-05-2012.pdf",
+      "file": "24_dzi_english_2012_may_sample.pdf",
+      "bytes": 257635
+    },
+    {
+      "id": "dzi_english_2012_may",
+      "title": "Матура по Английски език – 23.05.2012",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-23-05-2012.pdf",
+      "file": "25_dzi_english_2012_may.pdf",
+      "bytes": 248922
+    },
+    {
+      "id": "dzi_english_2011_aug",
+      "title": "Матура по Английски език – 01.09.2011 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-01-09-2011.pdf",
+      "file": "26_dzi_english_2011_aug.pdf",
+      "bytes": 297922
+    },
+    {
+      "id": "dzi_english_2011_may",
+      "title": "Матура по Английски език – 19.05.2011",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-19-05-2011.pdf",
+      "file": "27_dzi_english_2011_may.pdf",
+      "bytes": 328000
+    },
+    {
+      "id": "dzi_english_2010_aug",
+      "title": "Матура по Английски език – 01.09.2010 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-01-09-2010.pdf",
+      "file": "28_dzi_english_2010_aug.pdf",
+      "bytes": 693985
+    },
+    {
+      "id": "dzi_english_2010_may",
+      "title": "Матура по Английски език – 17.05.2010",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-17-05-2010.pdf",
+      "file": "29_dzi_english_2010_may.pdf",
+      "bytes": 320115
+    },
+    {
+      "id": "dzi_english_2009_aug",
+      "title": "Матура по Английски език – 01.09.2009 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-01-09-2009.pdf",
+      "file": "30_dzi_english_2009_aug.pdf",
+      "bytes": 261350
+    },
+    {
+      "id": "dzi_english_2009_may",
+      "title": "Матура по Английски език – 19.05.2009",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-19-05-2009.pdf",
+      "file": "31_dzi_english_2009_may.pdf",
+      "bytes": 344595
+    },
+    {
+      "id": "dzi_english_2008_aug",
+      "title": "Матура по Английски език – 02.09.2008 – поправителна",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-02-09-2008.pdf",
+      "file": "32_dzi_english_2008_aug.pdf",
+      "bytes": 275702
+    },
+    {
+      "id": "dzi_english_2008_june",
+      "title": "Матура по Английски език – 03.06.2008",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-03-06-2008.pdf",
+      "file": "33_dzi_english_2008_june.pdf",
+      "bytes": 52958
+    },
+    {
+      "id": "dzi_english_2007_пробна_sample",
+      "title": "Матура по Английски език – 2007 (пробна матура)",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/matura-angliiski-probna-2007.pdf",
+      "file": "34_dzi_english_2007_пробна_sample.pdf",
+      "bytes": 199113
+    },
+    {
+      "id": "dzi_english_2007_примерна_sample",
+      "title": "Матура по Английски език – 2007 (примерна матура)",
+      "source_url": "https://zamatura.eu/wp-content/uploads/2020/08/primerna-matura-angliiski-2007.pdf",
+      "file": "35_dzi_english_2007_примерна_sample.pdf",
+      "bytes": 153280
+    }
+  ]
+}
