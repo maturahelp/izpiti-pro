@@ -8,6 +8,7 @@ import { materials, materialTypeLabels, type MaterialType } from '@/data/materia
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
+import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
@@ -169,6 +170,7 @@ export default function MaterialsPage() {
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
   const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
+  const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
 
   const nvoLiteratureGroups = nvoLiteratureThemeOrder
     .map((theme) => ({
@@ -355,17 +357,31 @@ export default function MaterialsPage() {
                 ) : (
                   <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
                     <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                      <img
-                        src={encodeURI(activeNvoWork.image)}
-                        alt={activeNvoWork.title}
-                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                      />
+                      {activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
+                        <video
+                          controls
+                          preload="metadata"
+                          className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
+                        >
+                          <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
+                          Браузърът не поддържа видео.
+                        </video>
+                      ) : (
+                        <img
+                          src={encodeURI(activeNvoWork.image)}
+                          alt={activeNvoWork.title}
+                          className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                        />
+                      )}
                     </div>
                     <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                       <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('audio')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Аудио</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                      {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
+                        <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
+                      )}
                       {activeNvoWorkPanel === 'exercise' && (
                         <button
                           type="button"
