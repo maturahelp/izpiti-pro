@@ -7,7 +7,6 @@ import { materials, materialTypeLabels, type MaterialType } from '@/data/materia
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
-import { dziTextByWorkId } from '@/data/dzi-texts'
 import { cn } from '@/lib/utils'
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
@@ -93,6 +92,9 @@ export default function MaterialsPage() {
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [activeTextWorkId, setActiveTextWorkId] = useState<string | null>(null)
+  const [activeTextContent, setActiveTextContent] = useState('')
+  const [textLoading, setTextLoading] = useState(false)
+  const [textError, setTextError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -152,8 +154,24 @@ export default function MaterialsPage() {
     : 0
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
-  const activeTextPdf = activeTextWorkId ? dziTextByWorkId[activeTextWorkId] : null
   const activeTextWork = activeTextWorkId ? literatureWorks.find((w) => w.id === activeTextWorkId) : null
+
+  const openTextForWork = async (workId: string) => {
+    setActiveTextWorkId(workId)
+    setTextLoading(true)
+    setTextError(null)
+    setActiveTextContent('')
+    try {
+      const response = await fetch(`/dzi-texts/${workId}.txt`)
+      if (!response.ok) throw new Error('Неуспешно зареждане')
+      const text = await response.text()
+      setActiveTextContent(text.trim())
+    } catch {
+      setTextError('Текстът не може да бъде зареден в момента.')
+    } finally {
+      setTextLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -241,7 +259,12 @@ export default function MaterialsPage() {
                   </h3>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {works.map((work) => (
-                      <div key={work.id} className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5">
+                      <button
+                        key={work.id}
+                        type="button"
+                        onClick={() => setActiveWorkId(work.id)}
+                        className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                      >
                         <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
                         <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
                         <img
@@ -249,23 +272,7 @@ export default function MaterialsPage() {
                           alt={work.title}
                           className="w-full h-auto object-contain rounded-lg border border-border"
                         />
-                        <div className="mt-3 grid grid-cols-2 gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setActiveWorkId(work.id)}
-                            className="rounded-lg border border-primary/30 bg-white text-primary text-xs font-semibold py-2 hover:bg-primary/5 transition-colors"
-                          >
-                            Отвори
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setActiveTextWorkId(work.id)}
-                            className="rounded-lg bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
-                          >
-                            Прочети текста
-                          </button>
-                        </div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </section>
@@ -494,10 +501,10 @@ export default function MaterialsPage() {
                   </svg>
                   <span>Направи упражнението</span>
                 </button>
-                {selectedGrade === '12' && dziTextByWorkId[activeWork.id] && (
+                {selectedGrade === '12' && (
                   <button
                     type="button"
-                    onClick={() => setActiveTextWorkId(activeWork.id)}
+                    onClick={() => openTextForWork(activeWork.id)}
                     className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-white text-primary border border-primary/30 hover:bg-primary/5 transition-colors inline-flex items-center justify-center gap-2"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -513,10 +520,14 @@ export default function MaterialsPage() {
         </div>
       )}
 
-      {activeTextPdf && activeTextWork && (
+      {activeTextWorkId && activeTextWork && (
         <div
           className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
-          onClick={() => setActiveTextWorkId(null)}
+          onClick={() => {
+            setActiveTextWorkId(null)
+            setActiveTextContent('')
+            setTextError(null)
+          }}
         >
           <div
             className="w-full max-w-6xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
@@ -530,7 +541,11 @@ export default function MaterialsPage() {
               </div>
               <button
                 type="button"
-                onClick={() => setActiveTextWorkId(null)}
+                onClick={() => {
+                  setActiveTextWorkId(null)
+                  setActiveTextContent('')
+                  setTextError(null)
+                }}
                 className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
                 aria-label="Затвори"
               >
@@ -540,11 +555,19 @@ export default function MaterialsPage() {
               </button>
             </div>
 
-            <iframe
-              src={activeTextPdf}
-              title={`Текст на ${activeTextWork.title}`}
-              className="w-full h-[calc(86vh-73px)]"
-            />
+            <div className="h-[calc(86vh-73px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
+              {textLoading && (
+                <p className="text-sm text-text-muted">Зареждане на текста...</p>
+              )}
+              {!textLoading && textError && (
+                <p className="text-sm text-danger">{textError}</p>
+              )}
+              {!textLoading && !textError && activeTextContent && (
+                <pre className="whitespace-pre-wrap break-words text-[15px] leading-7 text-text font-sans">
+                  {activeTextContent}
+                </pre>
+              )}
+            </div>
           </div>
         </div>
       )}
