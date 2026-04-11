@@ -92,6 +92,7 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 
 const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 type Grade7Section = typeof grade7Sections[number]
+type WorkPanel = 'text' | 'audio' | 'video' | 'exercise'
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
   bulgarian: 'Български',
@@ -109,6 +110,8 @@ export default function MaterialsPage() {
   const [activeWorkText, setActiveWorkText] = useState<string>('')
   const [activeWorkTextLoading, setActiveWorkTextLoading] = useState(false)
   const [activeWorkTextError, setActiveWorkTextError] = useState<string | null>(null)
+  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('text')
+  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('text')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -219,6 +222,14 @@ export default function MaterialsPage() {
     }
   }, [activeWorkId])
 
+  useEffect(() => {
+    if (activeWorkId) setActiveWorkPanel('text')
+  }, [activeWorkId])
+
+  useEffect(() => {
+    if (activeNvoWorkId) setActiveNvoWorkPanel('text')
+  }, [activeNvoWorkId])
+
   if (grade === '7') {
     return (
       <div className="min-h-screen pb-20 md:pb-0">
@@ -264,7 +275,7 @@ export default function MaterialsPage() {
                           <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
                           <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
                           <img
-                            src={work.image}
+                            src={encodeURI(work.image)}
                             alt={work.title}
                             className="w-full h-auto object-contain rounded-lg border border-border"
                           />
@@ -319,36 +330,74 @@ export default function MaterialsPage() {
               <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
                 <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
                   <img
-                    src={activeNvoWork.image}
+                    src={encodeURI(activeNvoWork.image)}
                     alt={activeNvoWork.title}
                     className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
                   />
                 </div>
-                <div className="p-4 md:p-6 flex flex-col justify-center gap-3">
-                  <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors inline-flex items-center justify-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                      <path d="M15.5 8.5a5 5 0 010 7" />
-                      <path d="M18.5 5.5a9 9 0 010 13" />
-                    </svg>
-                    <span>Слушай аудио урока</span>
-                  </button>
-                  <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-[#1E4D7B] text-white hover:bg-[#163b5f] transition-colors inline-flex items-center justify-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="9" />
-                      <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
-                    </svg>
-                    <span>Гледай видео урока</span>
-                  </button>
-                  <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-amber text-white hover:bg-amber/90 transition-colors inline-flex items-center justify-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="4" y="3" width="16" height="18" rx="2" />
-                      <path d="M8 8h8" />
-                      <path d="M8 12h5" />
-                      <path d="M8 16l2 2 4-4" />
-                    </svg>
-                    <span>Направи упражнението</span>
-                  </button>
+                <div className="p-4 md:p-6 flex flex-col gap-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setActiveNvoWorkPanel('text')}
+                      className={cn(
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        activeNvoWorkPanel === 'text'
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-white text-text border-border hover:bg-primary-light'
+                      )}
+                    >
+                      Текст
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveNvoWorkPanel('audio')}
+                      className={cn(
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        activeNvoWorkPanel === 'audio'
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-white text-text border-border hover:bg-primary-light'
+                      )}
+                    >
+                      Аудио урок
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveNvoWorkPanel('video')}
+                      className={cn(
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        activeNvoWorkPanel === 'video'
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-white text-text border-border hover:bg-primary-light'
+                      )}
+                    >
+                      Видео урок
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveNvoWorkPanel('exercise')}
+                      className={cn(
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        activeNvoWorkPanel === 'exercise'
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-white text-text border-border hover:bg-primary-light'
+                      )}
+                    >
+                      Упражнение
+                    </button>
+                  </div>
+
+                  <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
+                    {activeNvoWorkPanel === 'text' ? (
+                      <p className="text-sm text-text-muted">Текстът за 7. клас ще бъде добавен тук.</p>
+                    ) : activeNvoWorkPanel === 'audio' ? (
+                      <p className="text-sm text-text-muted">Аудио урокът ще бъде добавен тук.</p>
+                    ) : activeNvoWorkPanel === 'video' ? (
+                      <p className="text-sm text-text-muted">Видео урокът ще бъде добавен тук.</p>
+                    ) : (
+                      <p className="text-sm text-text-muted">Упражнението ще бъде добавено тук.</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -702,17 +751,75 @@ export default function MaterialsPage() {
                 />
               </div>
 
-              <div className="p-4 md:p-6">
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-3">Пълен текст</p>
+              <div className="p-4 md:p-6 flex flex-col gap-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkPanel('text')}
+                    className={cn(
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      activeWorkPanel === 'text'
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white text-text border-border hover:bg-primary-light'
+                    )}
+                  >
+                    Текст
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkPanel('audio')}
+                    className={cn(
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      activeWorkPanel === 'audio'
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white text-text border-border hover:bg-primary-light'
+                    )}
+                  >
+                    Аудио урок
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkPanel('video')}
+                    className={cn(
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      activeWorkPanel === 'video'
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white text-text border-border hover:bg-primary-light'
+                    )}
+                  >
+                    Видео урок
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveWorkPanel('exercise')}
+                    className={cn(
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      activeWorkPanel === 'exercise'
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white text-text border-border hover:bg-primary-light'
+                    )}
+                  >
+                    Упражнение
+                  </button>
+                </div>
+
                 <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
-                  {activeWorkTextLoading ? (
-                    <p className="text-sm text-text-muted">Зареждане...</p>
-                  ) : activeWorkTextError ? (
-                    <p className="text-sm text-danger">{activeWorkTextError}</p>
+                  {activeWorkPanel === 'text' ? (
+                    activeWorkTextLoading ? (
+                      <p className="text-sm text-text-muted">Зареждане...</p>
+                    ) : activeWorkTextError ? (
+                      <p className="text-sm text-danger">{activeWorkTextError}</p>
+                    ) : (
+                      <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
+                        {activeWorkText}
+                      </pre>
+                    )
+                  ) : activeWorkPanel === 'audio' ? (
+                    <p className="text-sm text-text-muted">Аудио урокът ще бъде добавен тук.</p>
+                  ) : activeWorkPanel === 'video' ? (
+                    <p className="text-sm text-text-muted">Видео урокът ще бъде добавен тук.</p>
                   ) : (
-                    <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
-                      {activeWorkText}
-                    </pre>
+                    <p className="text-sm text-text-muted">Упражнението ще бъде добавено тук.</p>
                   )}
                 </div>
               </div>
