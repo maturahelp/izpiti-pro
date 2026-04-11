@@ -105,8 +105,7 @@ const grade7SectionLabels: Record<Grade7Section, string> = {
 export default function MaterialsPage() {
   const { grade } = useGrade()
   const router = useRouter()
-  const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
-  const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
+  const selectedSection: MaterialSection = 'literature'
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
   const [activeWorkText, setActiveWorkText] = useState<string>('')
@@ -232,80 +231,44 @@ export default function MaterialsPage() {
     if (activeNvoWorkId) setActiveNvoWorkPanel('text')
   }, [activeNvoWorkId])
 
-  useEffect(() => {
-    if (grade !== '7' && !grade12Sections.includes(selectedSection)) {
-      setSelectedSection('bulgarian')
-    }
-  }, [grade, selectedSection])
-
   if (grade === '7') {
     return (
       <div className="min-h-screen pb-20 md:pb-0">
         <TopBar title="Материали" />
         <div className="p-4 md:p-6 max-w-5xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
-            {grade7Sections.map((section) => (
-              <button
-                key={section}
-                type="button"
-                onClick={() => setGrade7Section(section)}
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
-                  grade7Section === section
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-white text-text border-border hover:bg-primary-light'
-                )}
-              >
-                {grade7SectionLabels[section]}
-              </button>
-            ))}
+          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <p className="text-sm text-text-muted mb-4">
+              Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
+            </p>
+            <div className="space-y-6">
+              {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
+                <section key={theme}>
+                  <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                    {themeIndex + 1}. {theme}
+                  </h3>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {works.map((work) => (
+                      <button
+                        key={work.id}
+                        type="button"
+                        onClick={() => setActiveNvoWorkId(work.id)}
+                        className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                      >
+                        <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
+                        <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
+                        <img
+                          src={encodeURI(work.image)}
+                          alt={work.title}
+                          className="w-full h-auto object-contain rounded-lg border border-border"
+                        />
+                        <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
           </div>
-
-          {grade7Section === 'literature' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
-              </p>
-              <div className="space-y-6">
-                {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
-                  <section key={theme}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                      {themeIndex + 1}. {theme}
-                    </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {works.map((work) => (
-                        <button
-                          key={work.id}
-                          type="button"
-                          onClick={() => setActiveNvoWorkId(work.id)}
-                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                        >
-                          <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
-                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
-                          <img
-                            src={encodeURI(work.image)}
-                            alt={work.title}
-                            className="w-full h-auto object-contain rounded-lg border border-border"
-                          />
-                          <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-20 text-center text-text-muted">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
-                <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-              </svg>
-              <p className="font-semibold text-base mb-1">
-                Материалите за {grade7SectionLabels[grade7Section]} (7. клас)
-              </p>
-              <p className="text-sm">скоро ще бъдат добавени</p>
-            </div>
-          )}
         </div>
 
         {activeNvoWork && (
@@ -335,21 +298,14 @@ export default function MaterialsPage() {
                   </svg>
                 </button>
               </div>
-              <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
-                <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                  <img
-                    src={encodeURI(activeNvoWork.image)}
-                    alt={activeNvoWork.title}
-                    className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                  />
-                </div>
-                <div className="p-4 md:p-6 flex flex-col gap-3">
-                  <div className="grid grid-cols-2 gap-2">
+              <div className="flex min-h-[72vh]">
+                <aside className="w-[170px] border-r border-border p-4 md:p-5 bg-[#F8FBFF]">
+                  <div className="flex flex-col gap-2">
                     <button
                       type="button"
                       onClick={() => setActiveNvoWorkPanel('text')}
                       className={cn(
-                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                         activeNvoWorkPanel === 'text'
                           ? 'bg-primary text-white border-primary'
                           : 'bg-white text-text border-border hover:bg-primary-light'
@@ -361,19 +317,19 @@ export default function MaterialsPage() {
                       type="button"
                       onClick={() => setActiveNvoWorkPanel('audio')}
                       className={cn(
-                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                         activeNvoWorkPanel === 'audio'
                           ? 'bg-primary text-white border-primary'
                           : 'bg-white text-text border-border hover:bg-primary-light'
                       )}
                     >
-                      Аудио урок
+                      Аудио
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveNvoWorkPanel('video')}
                       className={cn(
-                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                         activeNvoWorkPanel === 'video'
                           ? 'bg-primary text-white border-primary'
                           : 'bg-white text-text border-border hover:bg-primary-light'
@@ -385,7 +341,7 @@ export default function MaterialsPage() {
                       type="button"
                       onClick={() => setActiveNvoWorkPanel('exercise')}
                       className={cn(
-                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                        'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                         activeNvoWorkPanel === 'exercise'
                           ? 'bg-primary text-white border-primary'
                           : 'bg-white text-text border-border hover:bg-primary-light'
@@ -394,8 +350,10 @@ export default function MaterialsPage() {
                       Упражнение
                     </button>
                   </div>
+                </aside>
 
-                  <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
+                <div className="flex-1 p-4 md:p-6">
+                  <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 h-full max-h-[70vh] overflow-y-auto">
                     {activeNvoWorkPanel === 'text' ? (
                       <p className="text-sm text-text-muted">Текстът за 7. клас ще бъде добавен тук.</p>
                     ) : activeNvoWorkPanel === 'audio' ? (
@@ -403,7 +361,19 @@ export default function MaterialsPage() {
                     ) : activeNvoWorkPanel === 'video' ? (
                       <p className="text-sm text-text-muted">Видео урокът ще бъде добавен тук.</p>
                     ) : (
-                      <p className="text-sm text-text-muted">Упражнението ще бъде добавено тук.</p>
+                      <div className="space-y-3">
+                        <p className="text-sm text-text-muted">Отвори упражненията в секция „Тестове“.</p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveNvoWorkId(null)
+                            router.push('/dashboard/tests')
+                          }}
+                          className="rounded-xl bg-primary text-white text-sm font-semibold px-4 py-2.5 hover:bg-primary-dark transition-colors"
+                        >
+                          Към секция Тестове
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -420,32 +390,7 @@ export default function MaterialsPage() {
       <TopBar title="Материали" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
 
-        <div className="mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
-          <div className="hidden md:block" />
-
-          <div className="flex flex-wrap justify-center gap-2">
-            {grade12Sections.map((section) => {
-              const isActive = selectedSection === section
-
-              return (
-                <button
-                  key={section}
-                  type="button"
-                  onClick={() => setSelectedSection(section)}
-                  className={cn(
-                    'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
-                    isActive
-                      ? 'bg-primary text-white border-primary'
-                      : 'bg-white text-text border-border hover:bg-primary-light'
-                  )}
-                >
-                  <span>{sectionLabels[section]}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          <div className="flex justify-center md:justify-end">
+        <div className="mb-4 flex justify-center md:justify-end">
             <label className="relative w-full max-w-[180px]">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -461,7 +406,6 @@ export default function MaterialsPage() {
                 className="w-full rounded-xl border border-border bg-white py-1.5 pl-8 pr-2 text-xs text-text placeholder:text-text-muted/70 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
               />
             </label>
-          </div>
         </div>
 
         {selectedSection === 'literature' ? (
@@ -750,22 +694,14 @@ export default function MaterialsPage() {
               </button>
             </div>
 
-            <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
-              <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                <img
-                  src={encodeURI(activeWork.image)}
-                  alt={activeWork.title}
-                  className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                />
-              </div>
-
-              <div className="p-4 md:p-6 flex flex-col gap-3">
-                <div className="grid grid-cols-2 gap-2">
+            <div className="flex min-h-[72vh]">
+              <aside className="w-[170px] border-r border-border p-4 md:p-5 bg-[#F8FBFF]">
+                <div className="flex flex-col gap-2">
                   <button
                     type="button"
                     onClick={() => setActiveWorkPanel('text')}
                     className={cn(
-                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                       activeWorkPanel === 'text'
                         ? 'bg-primary text-white border-primary'
                         : 'bg-white text-text border-border hover:bg-primary-light'
@@ -777,19 +713,19 @@ export default function MaterialsPage() {
                     type="button"
                     onClick={() => setActiveWorkPanel('audio')}
                     className={cn(
-                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                       activeWorkPanel === 'audio'
                         ? 'bg-primary text-white border-primary'
                         : 'bg-white text-text border-border hover:bg-primary-light'
                     )}
                   >
-                    Аудио урок
+                    Аудио
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveWorkPanel('video')}
                     className={cn(
-                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                       activeWorkPanel === 'video'
                         ? 'bg-primary text-white border-primary'
                         : 'bg-white text-text border-border hover:bg-primary-light'
@@ -801,7 +737,7 @@ export default function MaterialsPage() {
                     type="button"
                     onClick={() => setActiveWorkPanel('exercise')}
                     className={cn(
-                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors',
+                      'rounded-xl py-2.5 px-3 text-xs font-semibold border transition-colors text-left',
                       activeWorkPanel === 'exercise'
                         ? 'bg-primary text-white border-primary'
                         : 'bg-white text-text border-border hover:bg-primary-light'
@@ -810,8 +746,10 @@ export default function MaterialsPage() {
                     Упражнение
                   </button>
                 </div>
+              </aside>
 
-                <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
+              <div className="flex-1 p-4 md:p-6">
+                <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 h-full max-h-[70vh] overflow-y-auto">
                   {activeWorkPanel === 'text' ? (
                     activeWorkTextLoading ? (
                       <p className="text-sm text-text-muted">Зареждане...</p>
@@ -827,7 +765,19 @@ export default function MaterialsPage() {
                   ) : activeWorkPanel === 'video' ? (
                     <p className="text-sm text-text-muted">Видео урокът ще бъде добавен тук.</p>
                   ) : (
-                    <p className="text-sm text-text-muted">Упражнението ще бъде добавено тук.</p>
+                    <div className="space-y-3">
+                      <p className="text-sm text-text-muted">Отвори упражненията в секция „Тестове“.</p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveWorkId(null)
+                          router.push('/dashboard/tests')
+                        }}
+                        className="rounded-xl bg-primary text-white text-sm font-semibold px-4 py-2.5 hover:bg-primary-dark transition-colors"
+                      >
+                        Към секция Тестове
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
