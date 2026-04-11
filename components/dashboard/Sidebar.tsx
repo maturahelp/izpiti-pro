@@ -4,17 +4,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
-type NavChild = {
-  href: string
-  label: string
-  icon: JSX.Element
-}
-
 type NavItem = {
   href: string
   label: string
   icon: JSX.Element
-  children?: NavChild[]
 }
 
 const navItems = [
@@ -31,6 +24,17 @@ const navItems = [
     ),
   },
   {
+    href: '/dashboard/tests',
+    label: 'Тестове',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+        <rect x="9" y="3" width="6" height="4" rx="1" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
     href: '/dashboard/materials',
     label: 'Материали',
     icon: (
@@ -39,49 +43,6 @@ const navItems = [
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
       </svg>
     ),
-    children: [
-      {
-        href: '/dashboard/tests',
-        label: 'Тестове',
-        icon: (
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
-            <rect x="9" y="3" width="6" height="4" rx="1" />
-            <path d="M9 12h6M9 16h4" />
-          </svg>
-        ),
-      },
-      {
-        href: '/dashboard/lessons',
-        label: 'Аудио уроци',
-        icon: (
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-            <path d="M15.5 8.5a5 5 0 010 7" />
-          </svg>
-        ),
-      },
-      {
-        href: '/dashboard/video-lessons',
-        label: 'Видео уроци',
-        icon: (
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="9" />
-            <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
-          </svg>
-        ),
-      },
-      {
-        href: '/dashboard/tables-cards',
-        label: 'Таблици и карти',
-        icon: (
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <path d="M3 9h18M9 21V9" />
-          </svg>
-        ),
-      },
-    ],
   },
   {
     href: '/dashboard/ai',
@@ -124,15 +85,6 @@ export function Sidebar() {
     return pathname.startsWith(href)
   }
 
-  const materialChildHrefs = [
-    '/dashboard/tests',
-    '/dashboard/lessons',
-    '/dashboard/video-lessons',
-    '/dashboard/tables-cards',
-  ]
-
-  const isMaterialsActive = isActive('/dashboard/materials') || materialChildHrefs.some((href) => pathname.startsWith(href))
-
   return (
     <aside className="fixed left-0 top-0 h-full w-56 bg-sidebar flex flex-col z-40">
       {/* Logo */}
@@ -155,41 +107,12 @@ export function Sidebar() {
             <Link
               href={item.href}
               className={cn(
-                item.href === '/dashboard/materials'
-                  ? (isMaterialsActive ? 'sidebar-item-active' : 'sidebar-item')
-                  : (isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')
+                isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item'
               )}
             >
               {item.icon}
               {item.label}
             </Link>
-
-            {item.href === '/dashboard/materials' && item.children && (
-              <div
-                className={cn(
-                  'ml-7 border-l border-white/10 pl-2 transition-all duration-250 ease-out overflow-hidden',
-                  isMaterialsActive ? 'mt-1 max-h-60 opacity-100' : 'mt-0 max-h-0 opacity-0 pointer-events-none'
-                )}
-              >
-                <div className="space-y-0.5 pb-0.5">
-                {item.children.map((child) => (
-                  <Link
-                    key={child.href}
-                    href={child.href}
-                    className={cn(
-                      'flex items-center gap-2 rounded-lg px-2 py-1.5 text-[13px] font-medium transition-colors',
-                      pathname.startsWith(child.href)
-                        ? 'bg-sidebar-hover text-white'
-                        : 'text-white/70 hover:text-white hover:bg-sidebar-hover/70'
-                    )}
-                  >
-                    {child.icon}
-                    {child.label}
-                  </Link>
-                ))}
-                </div>
-              </div>
-            )}
           </div>
         ))}
       </nav>

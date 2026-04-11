@@ -7,6 +7,10 @@ import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import { getDifficultyColor } from '@/lib/utils'
 import { useGrade } from '@/lib/grade-context'
+import {
+  generatedEnglishReadingQuestionCount,
+  generatedEnglishWritingQuestionCount,
+} from '@/lib/english-generated-materials'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
@@ -138,20 +142,46 @@ export default function TestsPage() {
           <div className="mb-4 grid sm:grid-cols-2 gap-4">
             <div className="card-hover p-5 flex flex-col gap-4">
               <div>
-                <span className="badge text-xs bg-emerald-100 text-emerald-700 mb-2 inline-block">500 задачи</span>
-                <h3 className="font-semibold text-text text-sm leading-snug">Генерирани упражнения по Английски ДЗИ</h3>
-                <p className="text-xs text-text-muted mt-1">450 четивни задачи с избор · 50 писмени задачи</p>
+                <span className="badge text-xs bg-emerald-100 text-emerald-700 mb-2 inline-block">
+                  {generatedEnglishReadingQuestionCount} въпроса
+                </span>
+                <h3 className="font-semibold text-text text-sm leading-snug">Reading Comprehension Bank</h3>
+                <p className="text-xs text-text-muted mt-1">45 пълни reading теста с текст и по 10 ABCD въпроса</p>
               </div>
               <div className="flex items-center gap-3 text-xs text-text-muted">
                 <span>45 текста за четене</span>
                 <span>·</span>
-                <span>4 вида писане</span>
+                <span>ABCD формат</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="badge text-xs bg-blue-100 text-blue-700">Упражнение</span>
+                <span className="badge text-xs bg-blue-100 text-blue-700">Reading</span>
                 <Link
-                  href="/english-generated"
+                  href="/english-generated#reading"
                   className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark"
+                >
+                  Отвори
+                </Link>
+              </div>
+            </div>
+
+            <div className="card-hover p-5 flex flex-col gap-4">
+              <div>
+                <span className="badge text-xs bg-amber-light text-amber mb-2 inline-block">
+                  {generatedEnglishWritingQuestionCount} задачи
+                </span>
+                <h3 className="font-semibold text-text text-sm leading-snug">Writing Prompts Bank</h3>
+                <p className="text-xs text-text-muted mt-1">Formal letters, opinion essays, stories и descriptions</p>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-text-muted">
+                <span>Word limits</span>
+                <span>·</span>
+                <span>Checklists</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="badge text-xs bg-amber-light text-amber">Writing</span>
+                <Link
+                  href="/english-generated#writing"
+                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-amber text-white hover:bg-amber/90"
                 >
                   Отвори
                 </Link>

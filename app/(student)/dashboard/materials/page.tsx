@@ -7,10 +7,6 @@ import { materials, materialTypeLabels, type MaterialType } from '@/data/materia
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
-import {
-  generatedEnglishReadingQuestionCount,
-  generatedEnglishWritingQuestionCount,
-} from '@/lib/english-generated-materials'
 import { cn } from '@/lib/utils'
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
@@ -379,93 +375,17 @@ export default function MaterialsPage() {
           </div>
         ) : selectedSection === 'english' ? (
           <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-            {selectedGrade === '7' ? (
-              <div className="text-center py-10 text-text-muted">
-                <p className="font-medium mb-1">Материалите по английски тук са за 12. клас</p>
-                <p className="text-sm">Избери „12. клас“, за да отвориш подготовката за ДЗИ.</p>
-              </div>
-            ) : (
-              <>
-                <div className="mb-5">
-                  <p className="text-sm text-text-muted">
-                    Намерени: <strong className="text-text">2</strong> банки с материали
-                  </p>
-                  <p className="mt-1 text-xs text-text-muted">
-                    Общо {generatedEnglishReadingQuestionCount + generatedEnglishWritingQuestionCount} задачи за ДЗИ по английски език.
-                  </p>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <button
-                    type="button"
-                    onClick={() => router.push('/english-generated#reading')}
-                    className="card-hover p-5 text-left flex flex-col gap-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary-light text-primary flex items-center justify-center flex-shrink-0">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                          <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <span className="badge text-[10px] text-primary bg-primary-light">Reading</span>
-                        <h3 className="mt-2 font-semibold text-text text-sm leading-snug">
-                          Reading Comprehension Bank
-                        </h3>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-text-muted leading-relaxed">
-                      45 пълни reading теста с текст и по 10 ABCD въпроса. Подходящо за ДЗИ B2 подготовка.
-                    </p>
-
-                    <div className="flex items-center justify-between text-xs text-text-muted">
-                      <span>12. клас · Английски</span>
-                      <span>{generatedEnglishReadingQuestionCount} въпроса</span>
-                    </div>
-
-                    <span className="w-full text-center text-xs font-semibold py-2 rounded-lg bg-primary text-white">
-                      Отвори Reading
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => router.push('/english-generated#writing')}
-                    className="card-hover p-5 text-left flex flex-col gap-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-amber-light text-amber flex items-center justify-center flex-shrink-0">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M12 20h9" />
-                          <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <span className="badge badge-amber text-[10px]">Writing</span>
-                        <h3 className="mt-2 font-semibold text-text text-sm leading-snug">
-                          Writing Prompts Bank
-                        </h3>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-text-muted leading-relaxed">
-                      50 писмени задачи: formal letters, opinion essays, stories и descriptions с word limits и checklists.
-                    </p>
-
-                    <div className="flex items-center justify-between text-xs text-text-muted">
-                      <span>12. клас · Английски</span>
-                      <span>{generatedEnglishWritingQuestionCount} задачи</span>
-                    </div>
-
-                    <span className="w-full text-center text-xs font-semibold py-2 rounded-lg bg-amber text-white">
-                      Отвори Writing
-                    </span>
-                  </button>
-                </div>
-              </>
-            )}
+            <div className="text-center py-10 text-text-muted">
+              <p className="font-medium mb-1">Тестовете по английски са преместени в отделна секция</p>
+              <p className="text-sm">Отвори „Тестове“ → „Английски“ → „Упражнения“, за да решаваш reading и writing задачите.</p>
+              <button
+                type="button"
+                onClick={() => router.push('/dashboard/tests')}
+                className="mt-4 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+              >
+                Към Тестове
+              </button>
+            </div>
           </div>
         ) : (
           <>
