@@ -1,27 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
-import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
-import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
-import { useGrade } from '@/lib/grade-context'
+import { dziTextByWorkId } from '@/data/dzi-texts'
 import { cn } from '@/lib/utils'
-import curriculumTopicsData from '@/data/bel_curriculum_topics_content.json'
-
-const curriculumTopics = curriculumTopicsData.topics as Array<{
-  number: number
-  title: string
-  definition: string
-  key_points: string[]
-  common_mistakes: string[]
-  exercises: unknown[]
-}>
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
 // Matches the flat order in bel_topics_question_bank.json
@@ -63,11 +50,13 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
   ),
 }
 
-type MaterialSection = 'bulgarian' | 'literature' | 'english'
+type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
+type GradeLevel = '7' | '12'
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
   literature: 'Литература',
+  math: 'Математика',
   english: 'Английски',
 }
 
@@ -88,6 +77,7 @@ const literatureKeywords = [
 ]
 
 function getMaterialSection(material: (typeof materials)[number]): MaterialSection {
+  if (material.subjectId.startsWith('math-')) return 'math'
   if (material.subjectId.startsWith('eng-') || material.subjectName.toLowerCase().includes('англий')) return 'english'
 
   const searchableText = `${material.title} ${material.topicName} ${material.description}`.toLowerCase()
@@ -97,23 +87,12 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
   return 'bulgarian'
 }
 
-const grade7Sections = ['bulgarian', 'literature', 'math'] as const
-type Grade7Section = typeof grade7Sections[number]
-
-const grade7SectionLabels: Record<Grade7Section, string> = {
-  bulgarian: 'Български',
-  literature: 'Литература',
-  math: 'Математика',
-}
-
 export default function MaterialsPage() {
-  const { grade } = useGrade()
   const router = useRouter()
+  const [selectedGrade, setSelectedGrade] = useState<GradeLevel>('12')
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
-  const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
-  const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
-  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null)
+  const [activeTextWorkId, setActiveTextWorkId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -122,6 +101,8 @@ export default function MaterialsPage() {
 
   const filtered = materials.filter((m) => {
     if (getMaterialSection(m) !== selectedSection) return false
+    if (selectedGrade === '7' && !m.subjectId.endsWith('-7')) return false
+    if (selectedGrade === '12' && !m.subjectId.endsWith('-12')) return false
     if (!normalizedQuery) return true
 
     const searchableText = `${m.title} ${m.topicName} ${m.description} ${m.subjectName}`.toLowerCase()
@@ -142,6 +123,7 @@ export default function MaterialsPage() {
       theme,
       works: literatureWorks.filter((work) => {
         if (work.theme !== theme) return false
+        if (selectedGrade !== '12') return false
         if (!normalizedQuery) return true
         const searchableText = `${work.title} ${work.author} ${work.theme}`.toLowerCase()
         return searchableText.includes(normalizedQuery)
@@ -165,234 +147,41 @@ export default function MaterialsPage() {
     })
     .filter((section) => section.items.length > 0)
 
-  const bulgarianRulesCount = bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
+  const bulgarianRulesCount = selectedGrade === '12'
+    ? bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
+    : 0
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
-  const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
-
-  const nvoLiteratureGroups = nvoLiteratureThemeOrder
-    .map((theme) => ({
-      theme,
-      works: nvoLiteratureWorks.filter((w) => w.theme === theme),
-    }))
-    .filter((group) => group.works.length > 0)
-
-  if (grade === '7') {
-    return (
-      <div className="min-h-screen pb-20 md:pb-0">
-        <TopBar title="Материали" />
-        <div className="p-4 md:p-6 max-w-5xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
-            {grade7Sections.map((section) => (
-              <button
-                key={section}
-                type="button"
-                onClick={() => setGrade7Section(section)}
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
-                  grade7Section === section
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-white text-text border-border hover:bg-primary-light'
-                )}
-              >
-                {grade7SectionLabels[section]}
-              </button>
-            ))}
-          </div>
-
-          {grade7Section === 'literature' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
-              </p>
-              <div className="space-y-6">
-                {nvoLiteratureGroups.map(({ theme, works }) => (
-                  <section key={theme}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                      {theme}
-                    </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {works.map((work) => (
-                        <button
-                          key={work.id}
-                          type="button"
-                          onClick={() => setActiveNvoWorkId(work.id)}
-                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                        >
-                          <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
-                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
-                          <img
-                            src={work.image}
-                            alt={work.title}
-                            className="w-full h-auto object-contain rounded-lg border border-border"
-                          />
-                          <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
-          ) : grade7Section === 'bulgarian' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Учебни теми: <strong className="text-text">{curriculumTopics.length}</strong> теми •{' '}
-                <strong className="text-text">{curriculumTopics.reduce((sum, t) => sum + t.exercises.length, 0)}</strong> упражнения
-              </p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {curriculumTopics.map((topic, idx) => (
-                  <Link
-                    key={topic.number}
-                    href={`/dashboard/materials/curriculum-topic/${idx}`}
-                    className="card p-4 block transition-transform duration-200 hover:-translate-y-0.5"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center">
-                        {topic.number}
-                      </span>
-                      <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wide">
-                        {topic.exercises.length} упражнения
-                      </span>
-                    </div>
-                    <h3 className="font-semibold text-text text-sm leading-snug mb-2">{topic.title}</h3>
-                    <p className="text-xs text-text-muted leading-relaxed line-clamp-2">{topic.definition}</p>
-                    <p className="mt-3 text-xs font-semibold text-primary">Отвори темата →</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-20 text-center text-text-muted">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
-                <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-              </svg>
-              <p className="font-semibold text-base mb-1">
-                Материалите за {grade7SectionLabels[grade7Section]} (7. клас)
-              </p>
-              <p className="text-sm">скоро ще бъдат добавени</p>
-            </div>
-          )}
-        </div>
-
-        {activeNvoWork && (
-          <div
-            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
-            onClick={() => setActiveNvoWorkId(null)}
-          >
-            <div
-              className="w-full max-w-5xl rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
-                <div>
-                  <p className="text-xs font-semibold text-primary uppercase tracking-wide">Литература — 7. клас</p>
-                  <h3 className="text-lg md:text-xl font-bold text-text">{activeNvoWork.title}</h3>
-                  <p className="text-sm text-text-muted mt-1">{activeNvoWork.author}</p>
-                  <p className="text-xs text-text-muted mt-1">{activeNvoWork.theme}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setActiveNvoWorkId(null)}
-                  className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center"
-                  aria-label="Затвори"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                  </svg>
-                </button>
-              </div>
-              <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
-                <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                  <img
-                    src={activeNvoWork.image}
-                    alt={activeNvoWork.title}
-                    className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                  />
-                </div>
-                <div className="p-4 md:p-6 flex flex-col justify-center gap-3">
-                  <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors inline-flex items-center justify-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                      <path d="M15.5 8.5a5 5 0 010 7" />
-                      <path d="M18.5 5.5a9 9 0 010 13" />
-                    </svg>
-                    <span>Слушай аудио урока</span>
-                  </button>
-                  {activeNvoWork.videoUrl && (
-                    <button
-                      onClick={() => setActiveVideoUrl(activeNvoWork.videoUrl!)}
-                      className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-[#1E4D7B] text-white hover:bg-[#163b5f] transition-colors inline-flex items-center justify-center gap-2"
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="12" r="9" />
-                        <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
-                      </svg>
-                      <span>Гледай видео урока</span>
-                    </button>
-                  )}
-                  <button
-                    onClick={() => {
-                      setActiveNvoWorkId(null)
-                      router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)
-                    }}
-                    className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-amber text-white hover:bg-amber/90 transition-colors inline-flex items-center justify-center gap-2"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="4" y="3" width="16" height="18" rx="2" />
-                      <path d="M8 8h8" />
-                      <path d="M8 12h5" />
-                      <path d="M8 16l2 2 4-4" />
-                    </svg>
-                    <span>Направи упражнението</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeVideoUrl && (
-          <div
-            className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4"
-            onClick={() => setActiveVideoUrl(null)}
-          >
-            <div
-              className="w-full max-w-3xl rounded-2xl bg-black overflow-hidden shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between px-4 py-3 bg-[#1E4D7B]">
-                <span className="text-sm font-semibold text-white">Видео урок</span>
-                <button
-                  type="button"
-                  onClick={() => setActiveVideoUrl(null)}
-                  className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
-                  aria-label="Затвори"
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video
-                key={activeVideoUrl}
-                src={activeVideoUrl}
-                controls
-                autoPlay
-                className="w-full aspect-video bg-black"
-              />
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
+  const activeTextPdf = activeTextWorkId ? dziTextByWorkId[activeTextWorkId] : null
+  const activeTextWork = activeTextWorkId ? literatureWorks.find((w) => w.id === activeTextWorkId) : null
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <TopBar title="Материали" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
+
+        <div className="mb-3 flex justify-center">
+          <div className="inline-flex rounded-xl border border-border bg-white p-1">
+            {([
+              { value: '7', label: '7. клас' },
+              { value: '12', label: '12. клас' },
+            ] as const).map((grade) => (
+              <button
+                key={grade.value}
+                type="button"
+                onClick={() => setSelectedGrade(grade.value)}
+                className={cn(
+                  'px-4 py-1.5 text-xs font-semibold rounded-lg transition-colors',
+                  selectedGrade === grade.value
+                    ? 'bg-primary text-white'
+                    : 'text-text-muted hover:text-text'
+                )}
+              >
+                {grade.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
           <div className="hidden md:block" />
@@ -452,12 +241,7 @@ export default function MaterialsPage() {
                   </h3>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {works.map((work) => (
-                      <button
-                        key={work.id}
-                        type="button"
-                        onClick={() => setActiveWorkId(work.id)}
-                        className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                      >
+                      <div key={work.id} className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5">
                         <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
                         <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
                         <img
@@ -465,14 +249,36 @@ export default function MaterialsPage() {
                           alt={work.title}
                           className="w-full h-auto object-contain rounded-lg border border-border"
                         />
-                        <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
-                      </button>
+                        <div className="mt-3 grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setActiveWorkId(work.id)}
+                            className="rounded-lg border border-primary/30 bg-white text-primary text-xs font-semibold py-2 hover:bg-primary/5 transition-colors"
+                          >
+                            Отвори
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setActiveTextWorkId(work.id)}
+                            className="rounded-lg bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
+                          >
+                            Прочети текста
+                          </button>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </section>
               ))}
 
-              {filteredLiteratureCount === 0 && (
+              {selectedGrade === '7' && (
+                <div className="text-center py-10 text-text-muted">
+                  <p className="font-medium mb-1">Текстовете са активни за 12. клас</p>
+                  <p className="text-sm">Избери „12. клас“, за да отвориш произведенията и оригиналните текстове.</p>
+                </div>
+              )}
+
+              {selectedGrade === '12' && filteredLiteratureCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
                   <p className="font-medium mb-1">Няма намерени произведения</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
@@ -487,7 +293,14 @@ export default function MaterialsPage() {
             </p>
 
             <div className="space-y-6">
-              {bulgarianRuleGroups.map((section, sectionIndex) => (
+              {selectedGrade === '7' && (
+                <div className="text-center py-10 text-text-muted">
+                  <p className="font-medium mb-1">Теорията и тестовете тук са за 12. клас</p>
+                  <p className="text-sm">Избери „12. клас“, за да ги видиш.</p>
+                </div>
+              )}
+
+              {selectedGrade === '12' && bulgarianRuleGroups.map((section, sectionIndex) => (
                 <section key={section.title}>
                   <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
                     {sectionIndex + 1}. {section.title}
@@ -553,84 +366,7 @@ export default function MaterialsPage() {
               )}
             </div>
           </div>
-        ) : selectedSection === 'english' ? (() => {
-          const filteredEnglish = officialEnglishMockExams.filter((exam) => {
-            if (!normalizedQuery) return true
-            const searchable = `${exam.year} ${exam.level ?? ''} ${exam.session ?? ''} ${exam.source_title ?? ''}`.toLowerCase()
-            return searchable.includes(normalizedQuery)
-          })
-
-          // Group by year descending
-          const byYear = new Map<number, typeof filteredEnglish>()
-          for (const exam of filteredEnglish) {
-            const list = byYear.get(exam.year) ?? []
-            list.push(exam)
-            byYear.set(exam.year, list)
-          }
-          const years = Array.from(byYear.keys()).sort((a, b) => b - a)
-
-          const sessionLabel = (s: string | null | undefined) => {
-            const map: Record<string, string> = {
-              май: 'Май', юни: 'Юни', август: 'Август', септември: 'Септември',
-              примерна: 'Примерна', пробна: 'Пробна',
-            }
-            return s ? (map[s] ?? s) : 'Сесия'
-          }
-
-          return (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{filteredEnglish.length}</strong> изпита
-              </p>
-
-              <div className="space-y-6">
-                {years.map((year) => (
-                  <section key={year}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                      {year} г.
-                    </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {(byYear.get(year) ?? []).map((exam) => (
-                        <div key={exam.id} className="card p-4 flex flex-col gap-3">
-                          <div>
-                            <p className="text-xs font-semibold text-text-muted mb-1">
-                              {sessionLabel(exam.session)} {exam.year}{exam.level ? ` · ${exam.level}` : ''}
-                            </p>
-                            <h3 className="font-semibold text-text text-sm leading-snug">
-                              {exam.level ? `Английски език ${exam.level}` : 'Английски език'}
-                            </h3>
-                            {exam.source_title && (
-                              <p className="text-xs text-text-muted mt-1 line-clamp-2 leading-relaxed">
-                                {exam.source_title}
-                              </p>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-3 text-xs text-text-muted">
-                            <span>{exam.questions.length} задачи</span>
-                            <span>{exam.questions.filter((q) => q.section === 'writing').length} писмена</span>
-                          </div>
-                          <Link
-                            href={`/english-mock/${encodeURIComponent(exam.id)}`}
-                            className="w-full text-center text-xs font-semibold py-2 rounded-lg bg-primary text-white hover:bg-primary-dark transition-colors"
-                          >
-                            Отвори изпита
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-
-                {filteredEnglish.length === 0 && (
-                  <div className="text-center py-10 text-text-muted">
-                    <p className="font-medium mb-1">Няма намерени изпити</p>
-                    <p className="text-sm">Опитай с друга ключова дума.</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )
-        })() : (
+        ) : (
           <>
             <p className="text-sm text-text-muted mb-4">
               Намерени: <strong className="text-text">{filtered.length}</strong> материала
@@ -758,8 +494,57 @@ export default function MaterialsPage() {
                   </svg>
                   <span>Направи упражнението</span>
                 </button>
+                {selectedGrade === '12' && dziTextByWorkId[activeWork.id] && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTextWorkId(activeWork.id)}
+                    className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-white text-primary border border-primary/30 hover:bg-primary/5 transition-colors inline-flex items-center justify-center gap-2"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Прочети текста</span>
+                  </button>
+                )}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {activeTextPdf && activeTextWork && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+          onClick={() => setActiveTextWorkId(null)}
+        >
+          <div
+            className="w-full max-w-6xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">12. клас · Текст</p>
+                <h3 className="text-base md:text-lg font-bold text-text">{activeTextWork.title}</h3>
+                <p className="text-xs text-text-muted mt-1">{activeTextWork.author}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveTextWorkId(null)}
+                className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
+                aria-label="Затвори"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <iframe
+              src={activeTextPdf}
+              title={`Текст на ${activeTextWork.title}`}
+              className="w-full h-[calc(86vh-73px)]"
+            />
           </div>
         </div>
       )}
