@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
+
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
@@ -21,36 +21,8 @@ for (const section of bulgarianRuleSections) {
   }
 }
 
-const typeIcons: Record<MaterialType, JSX.Element> = {
-  notes: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-      <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-    </svg>
-  ),
-  pdf: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-      <polyline points="14 2 14 8 20 8"/>
-      <path d="M9 15v-4M12 15v-6M15 15v-2"/>
-    </svg>
-  ),
-  summary: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M4 6h16M4 10h16M4 14h10"/>
-    </svg>
-  ),
-  scheme: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="3" y="3" width="7" height="7"/>
-      <rect x="14" y="3" width="7" height="7"/>
-      <rect x="3" y="14" width="7" height="7"/>
-      <path d="M17.5 17.5h.01M17.5 14H20M17.5 21H20M17.5 17.5H14"/>
-    </svg>
-  ),
-}
 
-type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
+type MaterialSection = 'bulgarian' | 'literature'
 type GradeLevel = '7' | '12'
 
 interface CurriculumTopic {
@@ -66,36 +38,12 @@ const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
   literature: 'Литература',
-  math: 'Математика',
-  english: 'Английски',
 }
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
 }
 
-const literatureKeywords = [
-  'литература',
-  'художествен',
-  'анализ',
-  'роман',
-  'поема',
-  'стих',
-  'цитат',
-  'интерпретативно',
-  'под игото',
-]
-
-function getMaterialSection(material: (typeof materials)[number]): MaterialSection {
-  if (material.subjectId.startsWith('math-')) return 'math'
-  if (material.subjectId.startsWith('eng-') || material.subjectName.toLowerCase().includes('англий')) return 'english'
-
-  const searchableText = `${material.title} ${material.topicName} ${material.description}`.toLowerCase()
-  const isLiterature = literatureKeywords.some((keyword) => searchableText.includes(keyword))
-
-  if (isLiterature) return 'literature'
-  return 'bulgarian'
-}
 
 export default function MaterialsPage() {
   const router = useRouter()
@@ -111,25 +59,6 @@ export default function MaterialsPage() {
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
-
-  const filtered = materials.filter((m) => {
-    if (getMaterialSection(m) !== selectedSection) return false
-    if (selectedGrade === '7' && !m.subjectId.endsWith('-7')) return false
-    if (selectedGrade === '12' && !m.subjectId.endsWith('-12')) return false
-    if (!normalizedQuery) return true
-
-    const searchableText = `${m.title} ${m.topicName} ${m.description} ${m.subjectName}`.toLowerCase()
-    if (!searchableText.includes(normalizedQuery)) return false
-
-    return true
-  })
-
-  const typeColors: Record<MaterialType, string> = {
-    notes: 'text-primary bg-primary-light',
-    pdf: 'text-danger bg-danger-light',
-    summary: 'text-success bg-success-light',
-    scheme: 'text-amber bg-amber-light',
-  }
 
   const literatureGroups = literatureThemeOrder
     .map((theme) => ({
@@ -436,84 +365,7 @@ export default function MaterialsPage() {
               )}
             </div>
           </div>
-        ) : selectedSection === 'english' ? (
-          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-            <div className="text-center py-10 text-text-muted">
-              <p className="font-medium mb-1">Тестовете по английски са преместени в отделна секция</p>
-              <p className="text-sm">Отвори „Тестове“ → „Английски“ → „Упражнения“, за да решаваш reading и writing задачите.</p>
-              <button
-                type="button"
-                onClick={() => router.push('/dashboard/tests')}
-                className="mt-4 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
-              >
-                Към Тестове
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{filtered.length}</strong> материала
-            </p>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filtered.map((material) => (
-                <div key={material.id} className={cn(
-                  'card-hover p-5 flex flex-col gap-3',
-                  material.access === 'premium' && 'border-amber/20'
-                )}>
-                  <div className="flex items-start gap-3">
-                    <div className={cn(
-                      'w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0',
-                      typeColors[material.type]
-                    )}>
-                      {typeIcons[material.type]}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                        <span className={cn('badge text-[10px]', typeColors[material.type])}>
-                          {materialTypeLabels[material.type]}
-                        </span>
-                        {material.access === 'premium' && (
-                          <span className="badge badge-amber text-[10px]">Премиум</span>
-                        )}
-                      </div>
-                      <h3 className="font-semibold text-text text-sm leading-snug">{material.title}</h3>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-text-muted leading-relaxed line-clamp-2">{material.description}</p>
-
-                  <div className="flex items-center justify-between text-xs text-text-muted pt-1">
-                    <span>{material.subjectName}</span>
-                    <div className="flex items-center gap-2">
-                      {material.pages && <span>{material.pages} стр.</span>}
-                      <span>{material.downloadCount.toLocaleString()} изтегляния</span>
-                    </div>
-                  </div>
-
-                  <button
-                    className={cn(
-                      'w-full text-xs font-semibold py-2 rounded-lg transition-colors',
-                      material.access === 'premium'
-                        ? 'bg-amber-light text-amber border border-amber/20 hover:bg-amber/20'
-                        : 'bg-primary text-white hover:bg-primary-dark'
-                    )}
-                  >
-                    {material.access === 'premium' ? 'Отключи с Премиум' : 'Отвори материала'}
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {filtered.length === 0 && (
-              <div className="text-center py-16 text-text-muted">
-                <p className="font-medium mb-1">Няма намерени материали</p>
-                <p className="text-sm">Този раздел е празен в момента.</p>
-              </div>
-            )}
-          </>
-        )}
+        ) : null}
       </div>
 
       {activeWork && (

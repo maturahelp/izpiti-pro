@@ -7,44 +7,35 @@ import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import { getDifficultyColor } from '@/lib/utils'
 import { useGrade } from '@/lib/grade-context'
-import {
-  generatedEnglishReadingQuestionCount,
-  generatedEnglishWritingQuestionCount,
-} from '@/lib/english-generated-materials'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-type TestSection12 = 'bel' | 'math' | 'english'
-type TestSection7 = 'bel' | 'math'
-type TestMode = 'sample_dzi' | 'past_dzi' | 'practice'
+type TestSection12 = 'bel' | 'english'
+type TestSection7 = 'bel'
+type TestMode = 'sample_dzi' | 'past_dzi'
 
 const sectionLabels12: Record<TestSection12, string> = {
   bel: 'БЕЛ',
-  math: 'Математика',
   english: 'Английски',
 }
 
 const sectionLabels7: Record<TestSection7, string> = {
   bel: 'БЕЛ',
-  math: 'Математика',
 }
 
 const modeLabels: Record<TestMode, string> = {
   sample_dzi: 'Примерен ДЗИ',
   past_dzi: 'ДЗИ от минали години',
-  practice: 'Упражнения',
 }
 
 function getTestSection(test: (typeof tests)[number]): string {
-  if (test.subjectId.startsWith('math-')) return 'math'
   if (test.subjectId.startsWith('eng-') || test.subjectName.toLowerCase().includes('англий')) return 'english'
   return 'bel'
 }
 
 function getTestMode(test: (typeof tests)[number]): TestMode {
   if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
-  if (test.id.startsWith('dzi-bel-')) return 'past_dzi'
-  return 'practice'
+  return 'past_dzi'
 }
 
 export default function TestsPage() {
@@ -131,64 +122,9 @@ export default function TestsPage() {
         </div>
 
         {/* Results count */}
-        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice') && (
-          <p className="text-sm text-text-muted mb-4">
-            Намерени: <strong className="text-text">{filtered.length}</strong> теста
-          </p>
-        )}
-
-        {/* English practice: link to generated materials bank */}
-        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice' && (
-          <div className="mb-4 grid sm:grid-cols-2 gap-4">
-            <div className="card-hover p-5 flex flex-col gap-4">
-              <div>
-                <span className="badge text-xs bg-emerald-100 text-emerald-700 mb-2 inline-block">
-                  {generatedEnglishReadingQuestionCount} въпроса
-                </span>
-                <h3 className="font-semibold text-text text-sm leading-snug">Reading Comprehension Bank</h3>
-                <p className="text-xs text-text-muted mt-1">45 пълни reading теста с текст и по 10 ABCD въпроса</p>
-              </div>
-              <div className="flex items-center gap-3 text-xs text-text-muted">
-                <span>45 текста за четене</span>
-                <span>·</span>
-                <span>ABCD формат</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="badge text-xs bg-blue-100 text-blue-700">Reading</span>
-                <Link
-                  href="/english-generated#reading"
-                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark"
-                >
-                  Отвори
-                </Link>
-              </div>
-            </div>
-
-            <div className="card-hover p-5 flex flex-col gap-4">
-              <div>
-                <span className="badge text-xs bg-amber-light text-amber mb-2 inline-block">
-                  {generatedEnglishWritingQuestionCount} задачи
-                </span>
-                <h3 className="font-semibold text-text text-sm leading-snug">Writing Prompts Bank</h3>
-                <p className="text-xs text-text-muted mt-1">Formal letters, opinion essays, stories и descriptions</p>
-              </div>
-              <div className="flex items-center gap-3 text-xs text-text-muted">
-                <span>Word limits</span>
-                <span>·</span>
-                <span>Checklists</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="badge text-xs bg-amber-light text-amber">Writing</span>
-                <Link
-                  href="/english-generated#writing"
-                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-amber text-white hover:bg-amber/90"
-                >
-                  Отвори
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
+        <p className="text-sm text-text-muted mb-4">
+          Намерени: <strong className="text-text">{filtered.length}</strong> теста
+        </p>
 
         <div className="grid sm:grid-cols-2 gap-4">
           {filtered.map((test) => (
@@ -268,7 +204,7 @@ export default function TestsPage() {
           ))}
         </div>
 
-        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice') && (
+        {filtered.length === 0 && (
           <div className="text-center py-16 text-text-muted">
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
