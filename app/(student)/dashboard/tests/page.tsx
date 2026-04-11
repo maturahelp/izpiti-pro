@@ -16,7 +16,8 @@ import { cn } from '@/lib/utils'
 
 type TestSection12 = 'bel' | 'english'
 type TestSection7 = 'bel' | 'math'
-type TestMode = 'sample_dzi' | 'past_dzi' | 'practice'
+type VisibleTestMode = 'sample_dzi' | 'past_dzi'
+type TestMode = VisibleTestMode | 'practice'
 
 const sectionLabels12: Record<TestSection12, string> = {
   bel: 'БЕЛ',
@@ -28,10 +29,9 @@ const sectionLabels7: Record<TestSection7, string> = {
   math: 'Математика',
 }
 
-const modeLabels: Record<TestMode, string> = {
+const modeLabels: Record<VisibleTestMode, string> = {
   sample_dzi: 'Примерен ДЗИ',
   past_dzi: 'ДЗИ от минали години',
-  practice: 'Упражнения',
 }
 
 function getTestSection(test: (typeof tests)[number]): string {
@@ -50,7 +50,7 @@ export default function TestsPage() {
   const { grade } = useGrade()
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
-  const [selectedMode, setSelectedMode] = useState<TestMode>('sample_dzi')
+  const [selectedMode, setSelectedMode] = useState<VisibleTestMode>('sample_dzi')
 
   const filtered = tests.filter((t) => {
     if (grade === '7') {
@@ -109,7 +109,7 @@ export default function TestsPage() {
           {grade === '12' && (
             <div className="flex justify-center">
               <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-                {(Object.keys(modeLabels) as TestMode[]).map((mode) => (
+                {(Object.keys(modeLabels) as VisibleTestMode[]).map((mode) => (
                   <button
                     key={mode}
                     type="button"
@@ -130,14 +130,14 @@ export default function TestsPage() {
         </div>
 
         {/* Results count */}
-        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice') && (
+        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi') && (
           <p className="text-sm text-text-muted mb-4">
             Намерени: <strong className="text-text">{filtered.length}</strong> теста
           </p>
         )}
 
-        {/* English practice: link to generated materials bank */}
-        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice' && (
+        {/* English generated materials live under Примерен ДЗИ for 12th grade. */}
+        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi' && (
           <div className="mb-4 grid sm:grid-cols-2 gap-4">
             <div className="card-hover p-5 flex flex-col gap-4">
               <div>
@@ -267,7 +267,7 @@ export default function TestsPage() {
           ))}
         </div>
 
-        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'practice') && (
+        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi') && (
           <div className="text-center py-16 text-text-muted">
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
