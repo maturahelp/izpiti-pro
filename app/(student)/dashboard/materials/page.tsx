@@ -9,7 +9,32 @@ import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratur
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
+import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import { cn } from '@/lib/utils'
+
+type Math7Topic = {
+  id: string
+  title: string
+  subtopics: Array<{
+    id: string
+    title: string
+    problems: Array<{ type: string }>
+  }>
+}
+
+const math7Topics = (math7ProblemBank as { topics: Math7Topic[] }).topics
+const math7ProblemCount = math7Topics.reduce(
+  (total, topic) => total + topic.subtopics.reduce((sum, subtopic) => sum + subtopic.problems.length, 0),
+  0
+)
+const math7ShortAnswerCount = math7Topics.reduce(
+  (total, topic) =>
+    total + topic.subtopics.reduce(
+      (sum, subtopic) => sum + subtopic.problems.filter((problem) => problem.type === 'short_answer').length,
+      0
+    ),
+  0
+)
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
 // Matches the flat order in bel_topics_question_bank.json
@@ -399,14 +424,70 @@ export default function MaterialsPage() {
         ) : selectedSection === 'math' && selectedGrade === '7' ? (
           <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
             <section>
-              <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-1">
-                Материали 7 клас
-              </h3>
-              <p className="text-xs text-text-muted text-center mb-4">Математика</p>
+              <div className="grid md:grid-cols-[1fr_auto] gap-4 items-start">
+                <div>
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
+                    Математика — 7. клас
+                  </p>
+                  <h3 className="text-lg md:text-xl font-bold text-text mb-2">
+                    Материали по теми
+                  </h3>
+                  <p className="text-sm text-text-muted leading-relaxed max-w-2xl">
+                    Оригинални тренировъчни задачи по всички теми и подтеми от учебния обхват:
+                    числа и алгебра, геометрия, вероятности, статистика и моделиране.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => router.push('/dashboard/materials/math-7-topics')}
+                  className="rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+                >
+                  Отвори задачите
+                </button>
+              </div>
 
-              <div className="text-center py-10 text-text-muted">
-                <p className="font-medium mb-1">Материалите по математика са активни</p>
-                <p className="text-sm">Използвай секция „Тестове“ за НВО по математика и примерни изпити.</p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
+                {[
+                  [String(math7Topics.length), 'теми'],
+                  [String(math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)), 'подтеми'],
+                  [String(math7ProblemCount), 'задачи'],
+                  [String(math7ShortAnswerCount), 'кратки отговори'],
+                ].map(([value, label]) => (
+                  <div key={label} className="rounded-xl border border-[#D7E7F7] bg-white p-4">
+                    <p className="text-2xl font-bold text-text">{value}</p>
+                    <p className="text-xs font-semibold text-text-muted">{label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-7 mt-6">
+                {math7Topics.map((topic, topicIndex) => (
+                  <section key={topic.id}>
+                    <h4 className="text-sm md:text-base font-bold text-[#1E4D7B] mb-3">
+                      {topicIndex + 1}. {topic.title}
+                    </h4>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {topic.subtopics.map((subtopic, subtopicIndex) => (
+                        <button
+                          key={subtopic.id}
+                          type="button"
+                          onClick={() => router.push(`/dashboard/materials/math-7-topics?subtopic=${subtopic.id}`)}
+                          className="min-h-[132px] rounded-lg border border-[#D7E7F7] bg-white p-4 text-left transition-colors hover:border-primary/50 hover:bg-primary/5"
+                        >
+                          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">
+                            Подтема #{subtopicIndex + 1}
+                          </p>
+                          <h5 className="text-sm font-bold text-text leading-snug">
+                            {subtopic.title}
+                          </h5>
+                          <p className="mt-4 text-xs font-semibold text-primary">
+                            {subtopic.problems.length} задачи
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                ))}
               </div>
             </section>
           </div>
