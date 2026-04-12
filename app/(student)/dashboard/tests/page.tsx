@@ -11,8 +11,8 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type TestSection12 = 'bel' | 'english'
-type TestSection7 = 'bel'
-type TestMode = 'sample_dzi' | 'past_dzi'
+type TestSection7 = 'bel' | 'math'
+type TestMode = 'sample' | 'past'
 
 const sectionLabels12: Record<TestSection12, string> = {
   bel: 'БЕЛ',
@@ -21,33 +21,42 @@ const sectionLabels12: Record<TestSection12, string> = {
 
 const sectionLabels7: Record<TestSection7, string> = {
   bel: 'БЕЛ',
+  math: 'Математика',
 }
 
-const modeLabels: Record<TestMode, string> = {
-  sample_dzi: 'Примерен ДЗИ',
-  past_dzi: 'ДЗИ от минали години',
+const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
+  '7': {
+    sample: 'Примерен НВО',
+    past: 'НВО от минали години',
+  },
+  '12': {
+    sample: 'Примерен ДЗИ',
+    past: 'ДЗИ от минали години',
+  },
 }
 
 function getTestSection(test: (typeof tests)[number]): string {
   if (test.subjectId.startsWith('eng-') || test.subjectName.toLowerCase().includes('англий')) return 'english'
+  if (test.subjectId.startsWith('math-') || test.subjectName.toLowerCase().includes('матем')) return 'math'
   return 'bel'
 }
 
 function getTestMode(test: (typeof tests)[number]): TestMode {
-  if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
-  return 'past_dzi'
+  if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample'
+  return 'past'
 }
 
 export default function TestsPage() {
   const { grade } = useGrade()
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
-  const [selectedMode, setSelectedMode] = useState<TestMode>('sample_dzi')
+  const [selectedMode, setSelectedMode] = useState<TestMode>('sample')
 
   const filtered = tests.filter((t) => {
     if (grade === '7') {
       if (t.examType !== 'nvo7') return false
       if (getTestSection(t) !== selectedSection7) return false
+      if (getTestMode(t) !== selectedMode) return false
     } else {
       if (t.examType !== 'dzi12') return false
       if (getTestSection(t) !== selectedSection12) return false
@@ -98,27 +107,25 @@ export default function TestsPage() {
             }
           </div>
 
-          {grade === '12' && (
-            <div className="flex justify-center">
-              <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-                {(Object.keys(modeLabels) as TestMode[]).map((mode) => (
-                  <button
-                    key={mode}
-                    type="button"
-                    onClick={() => setSelectedMode(mode)}
-                    className={cn(
-                      'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
-                      selectedMode === mode
-                        ? 'bg-white text-primary shadow-sm'
-                        : 'text-text-muted hover:text-text'
-                    )}
-                  >
-                    {modeLabels[mode]}
-                  </button>
-                ))}
-              </div>
+          <div className="flex justify-center">
+            <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
+              {(Object.keys(modeLabelsByGrade[grade]) as TestMode[]).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setSelectedMode(mode)}
+                  className={cn(
+                    'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
+                    selectedMode === mode
+                      ? 'bg-white text-primary shadow-sm'
+                      : 'text-text-muted hover:text-text'
+                  )}
+                >
+                  {modeLabelsByGrade[grade][mode]}
+                </button>
+              ))}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Results count */}
