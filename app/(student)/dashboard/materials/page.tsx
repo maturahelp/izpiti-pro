@@ -1,13 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-
+import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
+import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
+import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
+import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
-import topicsData from '@/data/bel_curriculum_topics_content.json'
+import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
+import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
@@ -21,51 +26,123 @@ for (const section of bulgarianRuleSections) {
   }
 }
 
-
-type MaterialSection = 'bulgarian' | 'literature'
-type GradeLevel = '7' | '12'
-
-interface CurriculumTopic {
-  number: number
-  title: string
-  definition: string
-  key_points: string[]
-  exercises: unknown[]
+const typeIcons: Record<MaterialType, JSX.Element> = {
+  notes: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+  ),
+  pdf: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <path d="M9 15v-4M12 15v-6M15 15v-2"/>
+    </svg>
+  ),
+  summary: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M4 6h16M4 10h16M4 14h10"/>
+    </svg>
+  ),
+  scheme: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="3" width="7" height="7"/>
+      <rect x="14" y="3" width="7" height="7"/>
+      <rect x="3" y="14" width="7" height="7"/>
+      <path d="M17.5 17.5h.01M17.5 14H20M17.5 21H20M17.5 17.5H14"/>
+    </svg>
+  ),
 }
 
-const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
+type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
   literature: 'Литература',
+  math: 'Математика',
+  english: 'Английски',
 }
+
+const grade12Sections: MaterialSection[] = ['bulgarian', 'literature', 'english']
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
 }
 
+const literatureKeywords = [
+  'литература',
+  'художествен',
+  'анализ',
+  'роман',
+  'поема',
+  'стих',
+  'цитат',
+  'интерпретативно',
+  'под игото',
+]
+
+function getMaterialSection(material: (typeof materials)[number]): MaterialSection {
+  if (material.subjectId.startsWith('math-')) return 'math'
+  if (material.subjectId.startsWith('eng-') || material.subjectName.toLowerCase().includes('англий')) return 'english'
+
+  const searchableText = `${material.title} ${material.topicName} ${material.description}`.toLowerCase()
+  const isLiterature = literatureKeywords.some((keyword) => searchableText.includes(keyword))
+
+  if (isLiterature) return 'literature'
+  return 'bulgarian'
+}
+
+const grade7Sections = ['bulgarian', 'literature', 'math'] as const
+type Grade7Section = typeof grade7Sections[number]
+type WorkPanel = 'text' | 'audio' | 'video' | 'exercise'
+
+const grade7SectionLabels: Record<Grade7Section, string> = {
+  bulgarian: 'Български език',
+  literature: 'Литература',
+  math: 'Математика',
+}
 
 export default function MaterialsPage() {
+  const { grade } = useGrade()
   const router = useRouter()
-  const [selectedGrade, setSelectedGrade] = useState<GradeLevel>('12')
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
+  const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
-  const [activeTextWorkId, setActiveTextWorkId] = useState<string | null>(null)
-  const [activeTextContent, setActiveTextContent] = useState('')
-  const [textLoading, setTextLoading] = useState(false)
-  const [textError, setTextError] = useState<string | null>(null)
+  const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
+  const [activeWorkText, setActiveWorkText] = useState<string>('')
+  const [activeWorkTextLoading, setActiveWorkTextLoading] = useState(false)
+  const [activeWorkTextError, setActiveWorkTextError] = useState<string | null>(null)
+  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('audio')
+  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('audio')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
+  const filtered = materials.filter((m) => {
+    if (getMaterialSection(m) !== selectedSection) return false
+    if (!normalizedQuery) return true
+
+    const searchableText = `${m.title} ${m.topicName} ${m.description} ${m.subjectName}`.toLowerCase()
+    if (!searchableText.includes(normalizedQuery)) return false
+
+    return true
+  })
+
+  const typeColors: Record<MaterialType, string> = {
+    notes: 'text-primary bg-primary-light',
+    pdf: 'text-danger bg-danger-light',
+    summary: 'text-success bg-success-light',
+    scheme: 'text-amber bg-amber-light',
+  }
+
   const literatureGroups = literatureThemeOrder
     .map((theme) => ({
       theme,
       works: literatureWorks.filter((work) => {
         if (work.theme !== theme) return false
-        if (selectedGrade !== '12') return false
         if (!normalizedQuery) return true
         const searchableText = `${work.title} ${work.author} ${work.theme}`.toLowerCase()
         return searchableText.includes(normalizedQuery)
@@ -89,43 +166,243 @@ export default function MaterialsPage() {
     })
     .filter((section) => section.items.length > 0)
 
-  const bulgarianRulesCount = selectedGrade === '12'
-    ? bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
-    : 0
-
-  const filteredBelCurriculumTopics = belCurriculumTopics
-    .map((topic, topicIndex) => ({ topic, topicIndex }))
-    .filter(({ topic }) => {
-      if (selectedGrade !== '7') return false
-      if (!normalizedQuery) return true
-
-      const searchableText = [
-        topic.title,
-        topic.definition,
-        ...topic.key_points,
-      ].join(' ').toLowerCase()
-
-      return searchableText.includes(normalizedQuery)
-    })
+  const bulgarianRulesCount = bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
-  const activeTextWork = activeTextWorkId ? literatureWorks.find((w) => w.id === activeTextWorkId) : null
+  const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
+  const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
 
-  const openTextForWork = async (workId: string) => {
-    setActiveTextWorkId(workId)
-    setTextLoading(true)
-    setTextError(null)
-    setActiveTextContent('')
-    try {
-      const response = await fetch(`/dzi-texts/${workId}.txt`)
-      if (!response.ok) throw new Error('Неуспешно зареждане')
-      const text = await response.text()
-      setActiveTextContent(text.trim())
-    } catch {
-      setTextError('Текстът не може да бъде зареден в момента.')
-    } finally {
-      setTextLoading(false)
+  const nvoLiteratureGroups = nvoLiteratureThemeOrder
+    .map((theme) => ({
+      theme,
+      works: nvoLiteratureWorks.filter((w) => w.theme === theme),
+    }))
+    .filter((group) => group.works.length > 0)
+
+  useEffect(() => {
+    if (!activeWorkId) {
+      setActiveWorkText('')
+      setActiveWorkTextError(null)
+      setActiveWorkTextLoading(false)
+      return
     }
+
+    const textPath = literatureWorkTextPaths[activeWorkId]
+    if (!textPath) {
+      setActiveWorkText('')
+      setActiveWorkTextError('Текстът на произведението не е наличен.')
+      setActiveWorkTextLoading(false)
+      return
+    }
+
+    let isCancelled = false
+    setActiveWorkTextLoading(true)
+    setActiveWorkTextError(null)
+    setActiveWorkText('')
+
+    fetch(encodeURI(textPath))
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Неуспешно зареждане на текста.')
+        }
+        return response.text()
+      })
+      .then((text) => {
+        if (isCancelled) return
+        const normalizedText = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n')
+        setActiveWorkText(normalizedText)
+      })
+      .catch(() => {
+        if (isCancelled) return
+        setActiveWorkTextError('Не успяхме да заредим текста. Опитай отново.')
+      })
+      .finally(() => {
+        if (isCancelled) return
+        setActiveWorkTextLoading(false)
+      })
+
+    return () => {
+      isCancelled = true
+    }
+  }, [activeWorkId])
+
+  useEffect(() => {
+    if (activeWorkId) setActiveWorkPanel('audio')
+  }, [activeWorkId])
+
+  useEffect(() => {
+    if (activeNvoWorkId) setActiveNvoWorkPanel('audio')
+  }, [activeNvoWorkId])
+
+  useEffect(() => {
+    const allowedSections = grade === '7'
+      ? (grade7Sections as readonly MaterialSection[])
+      : grade12Sections
+
+    if (!allowedSections.includes(selectedSection)) {
+      setSelectedSection('bulgarian')
+    }
+  }, [grade, selectedSection])
+
+  if (grade === '7') {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Материали" />
+        <div className="p-4 md:p-6 max-w-5xl mx-auto">
+          <div className="mb-4 flex flex-wrap justify-center gap-2">
+            {grade7Sections.map((section) => (
+              <button
+                key={section}
+                type="button"
+                onClick={() => setGrade7Section(section)}
+                className={cn(
+                  'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                  grade7Section === section
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-white text-text border-border hover:bg-primary-light'
+                )}
+              >
+                {grade7SectionLabels[section]}
+              </button>
+            ))}
+          </div>
+
+          {grade7Section === 'literature' ? (
+            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+              <p className="text-sm text-text-muted mb-4">
+                Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
+              </p>
+              <div className="space-y-6">
+                {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
+                  <section key={theme}>
+                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                      {themeIndex + 1}. {theme}
+                    </h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {works.map((work) => (
+                        <button
+                          key={work.id}
+                          type="button"
+                          onClick={() => setActiveNvoWorkId(work.id)}
+                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                        >
+                          <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
+                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
+                          <img
+                            src={encodeURI(work.image)}
+                            alt={work.title}
+                            className="w-full h-auto object-contain rounded-lg border border-border"
+                          />
+                          <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 text-center text-text-muted">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mb-4 opacity-30">
+                <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+              </svg>
+              <p className="font-semibold text-base mb-1">
+                Материалите за {grade7SectionLabels[grade7Section]} (7. клас)
+              </p>
+              <p className="text-sm">скоро ще бъдат добавени</p>
+            </div>
+          )}
+        </div>
+
+        {activeNvoWork && (
+          <div
+            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+            onClick={() => setActiveNvoWorkId(null)}
+          >
+            <div
+              className="w-full max-w-5xl rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+                <div>
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide">Литература — 7. клас</p>
+                  <h3 className="text-lg md:text-xl font-bold text-text">{activeNvoWork.title}</h3>
+                  <p className="text-sm text-text-muted mt-1">{activeNvoWork.author}</p>
+                  <p className="text-xs text-text-muted mt-1">{activeNvoWork.theme}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveNvoWorkId(null)}
+                  className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center"
+                  aria-label="Затвори"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+              <div className="p-4 md:p-6">
+                {activeNvoWorkPanel === 'text' ? (
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('audio')} className="rounded-xl bg-[#74A5D4] text-white text-xs font-semibold py-2.5 px-4">Аудио</button>
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="rounded-xl bg-[#1E4D7B] text-white text-xs font-semibold py-2.5 px-4">Видео урок</button>
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
+                    </div>
+                    <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
+                      <p className="text-sm text-text-muted">Текстът за 7. клас ще бъде добавен тук.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
+                    <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+                      {activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
+                        <video
+                          controls
+                          preload="metadata"
+                          className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
+                        >
+                          <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
+                          Браузърът не поддържа видео.
+                        </video>
+                      ) : (
+                        <img
+                          src={encodeURI(activeNvoWork.image)}
+                          alt={activeNvoWork.title}
+                          className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                        />
+                      )}
+                    </div>
+                    <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('audio')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Аудио</button>
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                      <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                      {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
+                        <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
+                      )}
+                      {activeNvoWorkPanel === 'exercise' && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveNvoWorkId(null)
+                            router.push('/dashboard/tests')
+                          }}
+                          className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
+                        >
+                          Към секция Тестове
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    )
   }
 
   return (
@@ -133,34 +410,11 @@ export default function MaterialsPage() {
       <TopBar title="Материали" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
 
-        <div className="mb-3 flex justify-center">
-          <div className="inline-flex rounded-xl border border-border bg-white p-1">
-            {([
-              { value: '7', label: '7. клас' },
-              { value: '12', label: '12. клас' },
-            ] as const).map((grade) => (
-              <button
-                key={grade.value}
-                type="button"
-                onClick={() => setSelectedGrade(grade.value)}
-                className={cn(
-                  'px-4 py-1.5 text-xs font-semibold rounded-lg transition-colors',
-                  selectedGrade === grade.value
-                    ? 'bg-primary text-white'
-                    : 'text-text-muted hover:text-text'
-                )}
-              >
-                {grade.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div className="mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
           <div className="hidden md:block" />
 
           <div className="flex flex-wrap justify-center gap-2">
-            {(Object.keys(sectionLabels) as MaterialSection[]).map((section) => {
+            {grade12Sections.map((section) => {
               const isActive = selectedSection === section
 
               return (
@@ -227,20 +481,14 @@ export default function MaterialsPage() {
                           alt={work.title}
                           className="w-full h-auto object-contain rounded-lg border border-border"
                         />
+                        <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
                       </button>
                     ))}
                   </div>
                 </section>
               ))}
 
-              {selectedGrade === '7' && (
-                <div className="text-center py-10 text-text-muted">
-                  <p className="font-medium mb-1">Текстовете са активни за 12. клас</p>
-                  <p className="text-sm">Избери „12. клас“, за да отвориш произведенията и оригиналните текстове.</p>
-                </div>
-              )}
-
-              {selectedGrade === '12' && filteredLiteratureCount === 0 && (
+              {filteredLiteratureCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
                   <p className="font-medium mb-1">Няма намерени произведения</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
@@ -251,55 +499,11 @@ export default function MaterialsPage() {
         ) : selectedSection === 'bulgarian' ? (
           <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
             <p className="text-sm text-text-muted mb-4">
-              Намерени:{' '}
-              <strong className="text-text">
-                {selectedGrade === '7' ? filteredBelCurriculumTopics.length : bulgarianRulesCount}
-              </strong>{' '}
-              {selectedGrade === '7' ? 'учебни теми' : 'правила и термини'}
+              Намерени: <strong className="text-text">{bulgarianRulesCount}</strong> правила и термини
             </p>
 
             <div className="space-y-6">
-              {selectedGrade === '7' && (
-                <>
-                  {filteredBelCurriculumTopics.length > 0 ? (
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {filteredBelCurriculumTopics.map(({ topic, topicIndex }) => (
-                        <button
-                          key={topic.number}
-                          type="button"
-                          onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}`)}
-                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                        >
-                          <p className="text-xs font-semibold text-primary mb-1">
-                            Учебна тема #{topic.number}
-                          </p>
-                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">
-                            {topic.title}
-                          </h3>
-                          <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
-                            {topic.definition}
-                          </p>
-                          <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#1E4D7B]">
-                            <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
-                              {topic.key_points.length} ключови точки
-                            </span>
-                            <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
-                              {topic.exercises.length} въпроса
-                            </span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-center py-10 text-text-muted">
-                      <p className="font-medium mb-1">Няма намерени учебни теми</p>
-                      <p className="text-sm">Опитай с друга ключова дума.</p>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {selectedGrade === '12' && bulgarianRuleGroups.map((section, sectionIndex) => (
+              {bulgarianRuleGroups.map((section, sectionIndex) => (
                 <section key={section.title}>
                   <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
                     {sectionIndex + 1}. {section.title}
@@ -357,7 +561,7 @@ export default function MaterialsPage() {
                 </section>
               ))}
 
-              {selectedGrade === '12' && bulgarianRulesCount === 0 && (
+              {bulgarianRulesCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
                   <p className="font-medium mb-1">Няма намерени правила</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
@@ -365,7 +569,147 @@ export default function MaterialsPage() {
               )}
             </div>
           </div>
-        ) : null}
+        ) : selectedSection === 'english' ? (() => {
+          const filteredEnglish = officialEnglishMockExams.filter((exam) => {
+            if (!normalizedQuery) return true
+            const searchable = `${exam.year} ${exam.level ?? ''} ${exam.session ?? ''} ${exam.source_title ?? ''}`.toLowerCase()
+            return searchable.includes(normalizedQuery)
+          })
+
+          // Group by year descending
+          const byYear = new Map<number, typeof filteredEnglish>()
+          for (const exam of filteredEnglish) {
+            const list = byYear.get(exam.year) ?? []
+            list.push(exam)
+            byYear.set(exam.year, list)
+          }
+          const years = Array.from(byYear.keys()).sort((a, b) => b - a)
+
+          const sessionLabel = (s: string | null | undefined) => {
+            const map: Record<string, string> = {
+              май: 'Май', юни: 'Юни', август: 'Август', септември: 'Септември',
+              примерна: 'Примерна', пробна: 'Пробна',
+            }
+            return s ? (map[s] ?? s) : 'Сесия'
+          }
+
+          return (
+            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+              <p className="text-sm text-text-muted mb-4">
+                Намерени: <strong className="text-text">{filteredEnglish.length}</strong> изпита
+              </p>
+
+              <div className="space-y-6">
+                {years.map((year) => (
+                  <section key={year}>
+                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                      {year} г.
+                    </h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {(byYear.get(year) ?? []).map((exam) => (
+                        <div key={exam.id} className="card p-4 flex flex-col gap-3">
+                          <div>
+                            <p className="text-xs font-semibold text-text-muted mb-1">
+                              {sessionLabel(exam.session)} {exam.year}{exam.level ? ` · ${exam.level}` : ''}
+                            </p>
+                            <h3 className="font-semibold text-text text-sm leading-snug">
+                              {exam.level ? `Английски език ${exam.level}` : 'Английски език'}
+                            </h3>
+                            {exam.source_title && (
+                              <p className="text-xs text-text-muted mt-1 line-clamp-2 leading-relaxed">
+                                {exam.source_title}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-3 text-xs text-text-muted">
+                            <span>{exam.questions.length} задачи</span>
+                            <span>{exam.questions.filter((q) => q.section === 'writing').length} писмена</span>
+                          </div>
+                          <Link
+                            href={`/english-mock/${encodeURIComponent(exam.id)}`}
+                            className="w-full text-center text-xs font-semibold py-2 rounded-lg bg-primary text-white hover:bg-primary-dark transition-colors"
+                          >
+                            Отвори изпита
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+
+                {filteredEnglish.length === 0 && (
+                  <div className="text-center py-10 text-text-muted">
+                    <p className="font-medium mb-1">Няма намерени изпити</p>
+                    <p className="text-sm">Опитай с друга ключова дума.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })() : (
+          <>
+            <p className="text-sm text-text-muted mb-4">
+              Намерени: <strong className="text-text">{filtered.length}</strong> материала
+            </p>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filtered.map((material) => (
+                <div key={material.id} className={cn(
+                  'card-hover p-5 flex flex-col gap-3',
+                  material.access === 'premium' && 'border-amber/20'
+                )}>
+                  <div className="flex items-start gap-3">
+                    <div className={cn(
+                      'w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0',
+                      typeColors[material.type]
+                    )}>
+                      {typeIcons[material.type]}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                        <span className={cn('badge text-[10px]', typeColors[material.type])}>
+                          {materialTypeLabels[material.type]}
+                        </span>
+                        {material.access === 'premium' && (
+                          <span className="badge badge-amber text-[10px]">Премиум</span>
+                        )}
+                      </div>
+                      <h3 className="font-semibold text-text text-sm leading-snug">{material.title}</h3>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-text-muted leading-relaxed line-clamp-2">{material.description}</p>
+
+                  <div className="flex items-center justify-between text-xs text-text-muted pt-1">
+                    <span>{material.subjectName}</span>
+                    <div className="flex items-center gap-2">
+                      {material.pages && <span>{material.pages} стр.</span>}
+                      <span>{material.downloadCount.toLocaleString()} изтегляния</span>
+                    </div>
+                  </div>
+
+                  <button
+                    className={cn(
+                      'w-full text-xs font-semibold py-2 rounded-lg transition-colors',
+                      material.access === 'premium'
+                        ? 'bg-amber-light text-amber border border-amber/20 hover:bg-amber/20'
+                        : 'bg-primary text-white hover:bg-primary-dark'
+                    )}
+                  >
+                    {material.access === 'premium' ? 'Отключи с Премиум' : 'Отвори материала'}
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {filtered.length === 0 && (
+              <div className="text-center py-16 text-text-muted">
+                <p className="font-medium mb-1">Няма намерени материали</p>
+                <p className="text-sm">Този раздел е празен в момента.</p>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       {activeWork && (
@@ -396,105 +740,55 @@ export default function MaterialsPage() {
               </button>
             </div>
 
-            <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
-              <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                <img
-                  src={encodeURI(activeWork.image)}
-                  alt={activeWork.title}
-                  className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                />
-              </div>
-
-              <div className="p-4 md:p-6 flex flex-col justify-center gap-3">
-                <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors inline-flex items-center justify-center gap-2">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                    <path d="M15.5 8.5a5 5 0 010 7" />
-                    <path d="M18.5 5.5a9 9 0 010 13" />
-                  </svg>
-                  <span>Слушай аудио урока</span>
-                </button>
-                <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-[#1E4D7B] text-white hover:bg-[#163b5f] transition-colors inline-flex items-center justify-center gap-2">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="9" />
-                    <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
-                  </svg>
-                  <span>Гледай видео урока</span>
-                </button>
-                <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-amber text-white hover:bg-amber/90 transition-colors inline-flex items-center justify-center gap-2">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="4" y="3" width="16" height="18" rx="2" />
-                    <path d="M8 8h8" />
-                    <path d="M8 12h5" />
-                    <path d="M8 16l2 2 4-4" />
-                  </svg>
-                  <span>Направи упражнението</span>
-                </button>
-                {selectedGrade === '12' && (
-                  <button
-                    type="button"
-                    onClick={() => openTextForWork(activeWork.id)}
-                    className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-white text-primary border border-primary/30 hover:bg-primary/5 transition-colors inline-flex items-center justify-center gap-2"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                    <span>Прочети текста</span>
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeTextWorkId && activeTextWork && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
-          onClick={() => {
-            setActiveTextWorkId(null)
-            setActiveTextContent('')
-            setTextError(null)
-          }}
-        >
-          <div
-            className="w-full max-w-6xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
-              <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">12. клас · Текст</p>
-                <h3 className="text-base md:text-lg font-bold text-text">{activeTextWork.title}</h3>
-                <p className="text-xs text-text-muted mt-1">{activeTextWork.author}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveTextWorkId(null)
-                  setActiveTextContent('')
-                  setTextError(null)
-                }}
-                className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
-                aria-label="Затвори"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="h-[calc(86vh-73px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
-              {textLoading && (
-                <p className="text-sm text-text-muted">Зареждане на текста...</p>
-              )}
-              {!textLoading && textError && (
-                <p className="text-sm text-danger">{textError}</p>
-              )}
-              {!textLoading && !textError && activeTextContent && (
-                <pre className="whitespace-pre-wrap break-words text-[15px] leading-7 text-text font-sans">
-                  {activeTextContent}
-                </pre>
+            <div className="p-4 md:p-6">
+              {activeWorkPanel === 'text' ? (
+                <div className="space-y-3">
+                  <div className="flex flex-wrap gap-2">
+                    <button type="button" onClick={() => setActiveWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('audio')} className="rounded-xl bg-[#74A5D4] text-white text-xs font-semibold py-2.5 px-4">Аудио</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('video')} className="rounded-xl bg-[#1E4D7B] text-white text-xs font-semibold py-2.5 px-4">Видео урок</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
+                  </div>
+                  <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
+                    {activeWorkTextLoading ? (
+                      <p className="text-sm text-text-muted">Зареждане...</p>
+                    ) : activeWorkTextError ? (
+                      <p className="text-sm text-danger">{activeWorkTextError}</p>
+                    ) : (
+                      <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
+                        {activeWorkText}
+                      </pre>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
+                  <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+                    <img
+                      src={encodeURI(activeWork.image)}
+                      alt={activeWork.title}
+                      className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                    />
+                  </div>
+                  <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                    <button type="button" onClick={() => setActiveWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('audio')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Аудио</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                    {activeWorkPanel === 'exercise' && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveWorkId(null)
+                          router.push('/dashboard/tests')
+                        }}
+                        className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
+                      >
+                        Към секция Тестове
+                      </button>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
           </div>
