@@ -22,7 +22,7 @@ for (const section of bulgarianRuleSections) {
 }
 
 
-type MaterialSection = 'bulgarian' | 'literature'
+type MaterialSection = 'bulgarian' | 'literature' | 'english'
 type GradeLevel = '7' | '12'
 
 interface CurriculumTopic {
@@ -38,7 +38,10 @@ const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
   literature: 'Литература',
+  english: 'Английски',
 }
+
+const grade12OnlySections: MaterialSection[] = ['english']
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
@@ -142,7 +145,12 @@ export default function MaterialsPage() {
               <button
                 key={grade.value}
                 type="button"
-                onClick={() => setSelectedGrade(grade.value)}
+                onClick={() => {
+                  setSelectedGrade(grade.value)
+                  if (grade.value === '7' && grade12OnlySections.includes(selectedSection)) {
+                    setSelectedSection('bulgarian')
+                  }
+                }}
                 className={cn(
                   'px-4 py-1.5 text-xs font-semibold rounded-lg transition-colors',
                   selectedGrade === grade.value
@@ -160,7 +168,9 @@ export default function MaterialsPage() {
           <div className="hidden md:block" />
 
           <div className="flex flex-wrap justify-center gap-2">
-            {(Object.keys(sectionLabels) as MaterialSection[]).map((section) => {
+            {(Object.keys(sectionLabels) as MaterialSection[])
+              .filter((section) => !grade12OnlySections.includes(section) || selectedGrade === '12')
+              .map((section) => {
               const isActive = selectedSection === section
 
               return (
@@ -364,6 +374,20 @@ export default function MaterialsPage() {
                 </div>
               )}
             </div>
+          </div>
+        ) : selectedSection === 'english' && selectedGrade === '12' ? (
+          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <section>
+              <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-1">
+                Материали 12 клас
+              </h3>
+              <p className="text-xs text-text-muted text-center mb-4">Английски език</p>
+
+              <div className="text-center py-10 text-text-muted">
+                <p className="font-medium mb-1">Няма добавени материали</p>
+                <p className="text-sm">ДЗИ тестовете по английски са преместени в секция „Тестове“.</p>
+              </div>
+            </section>
           </div>
         ) : null}
       </div>
