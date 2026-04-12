@@ -14,6 +14,7 @@ import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
+import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
@@ -83,6 +84,16 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
 }
 
 type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
+
+interface CurriculumTopic {
+  number: number
+  title: string
+  definition: string
+  key_points: string[]
+  exercises: unknown[]
+}
+
+const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
@@ -398,8 +409,59 @@ export default function MaterialsPage() {
               </button>
             ))}
           </div>
+          <div className="flex justify-center md:justify-end mb-4">
+            <label className="relative w-full max-w-[180px]">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Търси"
+                className="w-full rounded-xl border border-border bg-white py-1.5 pl-8 pr-2 text-xs text-text placeholder:text-text-muted/70 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+              />
+            </label>
+          </div>
 
-          {grade7Section === 'literature' ? (
+          {grade7Section === 'bulgarian' ? (
+            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+              <p className="text-sm text-text-muted mb-4">
+                Намерени: <strong className="text-text">{belCurriculumTopics.length}</strong> учебни теми
+              </p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {belCurriculumTopics.map((topic, topicIndex) => (
+                  <button
+                    key={topic.number}
+                    type="button"
+                    onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}`)}
+                    className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                  >
+                    <p className="text-xs font-semibold text-primary mb-1">
+                      Учебна тема #{topic.number}
+                    </p>
+                    <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                      {topic.title}
+                    </h3>
+                    <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
+                      {topic.definition}
+                    </p>
+                    <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#1E4D7B]">
+                      <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
+                        {topic.key_points.length} ключови точки
+                      </span>
+                      <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
+                        {topic.exercises.length} въпроса
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : grade7Section === 'literature' ? (
             <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
               <p className="text-sm text-text-muted mb-4">
                 Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
