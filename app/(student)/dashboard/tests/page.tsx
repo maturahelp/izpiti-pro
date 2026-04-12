@@ -99,7 +99,10 @@ export default function TestsPage() {
                   <button
                     key={section}
                     type="button"
-                    onClick={() => setSelectedSection12(section)}
+                    onClick={() => {
+                        setSelectedSection12(section)
+                        if (section === 'english') setSelectedMode('past_dzi')
+                      }}
                     className={cn(
                       'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
                       selectedSection12 === section
