@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Manrope, Montserrat } from 'next/font/google'
 import './globals.css'
+import Preloader from '@/components/shared/Preloader'
 
 const manrope = Manrope({
   subsets: ['latin', 'cyrillic'],
@@ -28,7 +29,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="bg" className={`${manrope.variable} ${montserrat.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Preloader />
+        {children}
+      </body>
     </html>
   )
 }
