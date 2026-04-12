@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
+import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
@@ -22,7 +23,7 @@ for (const section of bulgarianRuleSections) {
 }
 
 
-type MaterialSection = 'bulgarian' | 'literature' | 'english'
+type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
 type GradeLevel = '7' | '12'
 
 interface CurriculumTopic {
@@ -38,10 +39,12 @@ const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
   literature: 'Литература',
+  math: 'Математика',
   english: 'Английски',
 }
 
 const grade12OnlySections: MaterialSection[] = ['english']
+const grade7OnlySections: MaterialSection[] = ['math']
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
@@ -53,6 +56,8 @@ export default function MaterialsPage() {
   const [selectedGrade, setSelectedGrade] = useState<GradeLevel>('12')
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
+  const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
+  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null)
   const [activeTextWorkId, setActiveTextWorkId] = useState<string | null>(null)
   const [activeTextContent, setActiveTextContent] = useState('')
   const [textLoading, setTextLoading] = useState(false)
@@ -77,6 +82,20 @@ export default function MaterialsPage() {
     .filter((group) => group.works.length > 0)
 
   const filteredLiteratureCount = literatureGroups.reduce((acc, group) => acc + group.works.length, 0)
+
+  const nvoLiteratureGroups = nvoLiteratureThemeOrder
+    .map((theme) => ({
+      theme,
+      works: nvoLiteratureWorks.filter((work) => {
+        if (work.theme !== theme) return false
+        if (!normalizedQuery) return true
+        const searchableText = `${work.title} ${work.author} ${work.theme}`.toLowerCase()
+        return searchableText.includes(normalizedQuery)
+      }),
+    }))
+    .filter((group) => group.works.length > 0)
+
+  const filteredNvoLiteratureCount = nvoLiteratureGroups.reduce((acc, group) => acc + group.works.length, 0)
 
   const bulgarianRuleGroups = bulgarianRuleSections
     .map((section) => {
@@ -112,6 +131,7 @@ export default function MaterialsPage() {
     })
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
+  const activeNvoWork = nvoLiteratureWorks.find((work) => work.id === activeNvoWorkId)
   const activeTextWork = activeTextWorkId ? literatureWorks.find((w) => w.id === activeTextWorkId) : null
 
   const openTextForWork = async (workId: string) => {
@@ -150,6 +170,9 @@ export default function MaterialsPage() {
                   if (grade.value === '7' && grade12OnlySections.includes(selectedSection)) {
                     setSelectedSection('bulgarian')
                   }
+                  if (grade.value === '12' && grade7OnlySections.includes(selectedSection)) {
+                    setSelectedSection('bulgarian')
+                  }
                 }}
                 className={cn(
                   'px-4 py-1.5 text-xs font-semibold rounded-lg transition-colors',
@@ -170,6 +193,7 @@ export default function MaterialsPage() {
           <div className="flex flex-wrap justify-center gap-2">
             {(Object.keys(sectionLabels) as MaterialSection[])
               .filter((section) => !grade12OnlySections.includes(section) || selectedGrade === '12')
+              .filter((section) => !grade7OnlySections.includes(section) || selectedGrade === '7')
               .map((section) => {
               const isActive = selectedSection === section
 
@@ -213,11 +237,42 @@ export default function MaterialsPage() {
         {selectedSection === 'literature' ? (
           <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
             <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{filteredLiteratureCount}</strong> творби
+              Намерени:{' '}
+              <strong className="text-text">
+                {selectedGrade === '7' ? filteredNvoLiteratureCount : filteredLiteratureCount}
+              </strong>{' '}
+              творби
             </p>
 
             <div className="space-y-6">
-              {literatureGroups.map(({ theme, works }, themeIndex) => (
+              {selectedGrade === '7' && nvoLiteratureGroups.map(({ theme, works }) => (
+                <section key={theme}>
+                  <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                    {theme}
+                  </h3>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {works.map((work) => (
+                      <button
+                        key={work.id}
+                        type="button"
+                        onClick={() => setActiveNvoWorkId(work.id)}
+                        className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                      >
+                        <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
+                        <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
+                        <img
+                          src={work.image}
+                          alt={work.title}
+                          className="w-full h-auto object-contain rounded-lg border border-border"
+                        />
+                        <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+
+              {selectedGrade === '12' && literatureGroups.map(({ theme, works }, themeIndex) => (
                 <section key={theme}>
                   <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
                     {themeIndex + 1}. {theme}
@@ -243,10 +298,10 @@ export default function MaterialsPage() {
                 </section>
               ))}
 
-              {selectedGrade === '7' && (
+              {selectedGrade === '7' && filteredNvoLiteratureCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
-                  <p className="font-medium mb-1">Текстовете са активни за 12. клас</p>
-                  <p className="text-sm">Избери „12. клас“, за да отвориш произведенията и оригиналните текстове.</p>
+                  <p className="font-medium mb-1">Няма намерени произведения</p>
+                  <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
               )}
 
@@ -257,6 +312,20 @@ export default function MaterialsPage() {
                 </div>
               )}
             </div>
+          </div>
+        ) : selectedSection === 'math' && selectedGrade === '7' ? (
+          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <section>
+              <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-1">
+                Материали 7 клас
+              </h3>
+              <p className="text-xs text-text-muted text-center mb-4">Математика</p>
+
+              <div className="text-center py-10 text-text-muted">
+                <p className="font-medium mb-1">Материалите по математика са активни</p>
+                <p className="text-sm">Използвай секция „Тестове“ за НВО по математика и примерни изпити.</p>
+              </div>
+            </section>
           </div>
         ) : selectedSection === 'bulgarian' ? (
           <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
@@ -391,6 +460,123 @@ export default function MaterialsPage() {
           </div>
         ) : null}
       </div>
+
+      {activeNvoWork && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+          onClick={() => setActiveNvoWorkId(null)}
+        >
+          <div
+            className="w-full max-w-5xl rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide">Литература — 7. клас</p>
+                <h3 className="text-lg md:text-xl font-bold text-text">{activeNvoWork.title}</h3>
+                <p className="text-sm text-text-muted mt-1">{activeNvoWork.author}</p>
+                <p className="text-xs text-text-muted mt-1">{activeNvoWork.theme}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveNvoWorkId(null)}
+                className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center"
+                aria-label="Затвори"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-0">
+              <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+                <img
+                  src={activeNvoWork.image}
+                  alt={activeNvoWork.title}
+                  className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                />
+              </div>
+
+              <div className="p-4 md:p-6 flex flex-col justify-center gap-3">
+                <button className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors inline-flex items-center justify-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.5 8.5a5 5 0 010 7" />
+                    <path d="M18.5 5.5a9 9 0 010 13" />
+                  </svg>
+                  <span>Слушай аудио урока</span>
+                </button>
+
+                {activeNvoWork.videoUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveVideoUrl(activeNvoWork.videoUrl!)}
+                    className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-[#1E4D7B] text-white hover:bg-[#163b5f] transition-colors inline-flex items-center justify-center gap-2"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="9" />
+                      <polygon points="10 8 17 12 10 16 10 8" fill="currentColor" stroke="none" />
+                    </svg>
+                    <span>Гледай видео урока</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveNvoWorkId(null)
+                    router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)
+                  }}
+                  className="w-full rounded-xl py-3 px-4 text-sm font-semibold bg-amber text-white hover:bg-amber/90 transition-colors inline-flex items-center justify-center gap-2"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="4" y="3" width="16" height="18" rx="2" />
+                    <path d="M8 8h8" />
+                    <path d="M8 12h5" />
+                    <path d="M8 16l2 2 4-4" />
+                  </svg>
+                  <span>Направи упражнението</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeVideoUrl && (
+        <div
+          className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setActiveVideoUrl(null)}
+        >
+          <div
+            className="w-full max-w-3xl rounded-2xl bg-black overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-3 bg-[#1E4D7B]">
+              <span className="text-sm font-semibold text-white">Видео урок</span>
+              <button
+                type="button"
+                onClick={() => setActiveVideoUrl(null)}
+                className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
+                aria-label="Затвори"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            <video
+              key={activeVideoUrl}
+              src={activeVideoUrl}
+              controls
+              autoPlay
+              className="w-full aspect-video bg-black"
+            />
+          </div>
+        </div>
+      )}
 
       {activeWork && (
         <div
