@@ -26,6 +26,13 @@ for (const section of bulgarianRuleSections) {
 type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
 type GradeLevel = '7' | '12'
 
+interface EnglishMaterial {
+  title: string
+  description: string
+  textHref?: string
+  pdfHref?: string
+}
+
 interface CurriculumTopic {
   number: number
   title: string
@@ -52,6 +59,41 @@ const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
 }
 
+const englishMaterialGroups = [
+  {
+    title: 'Essay',
+    description: 'Структура, аргументиране и полезни фрази за писане на есе.',
+    items: [
+      {
+        title: 'Essay Structure Format',
+        description: 'Кратко ръководство за подредба на теза, аргументи, примери и заключение.',
+        pdfHref: '/english-materials/essay-structure-guide.pdf',
+      },
+    ],
+  },
+  {
+    title: 'Formal letter',
+    description: 'Готови изрази, примерни писма и формати за официална кореспонденция.',
+    items: [
+      {
+        title: 'Formal Letter Writing / Email / Useful phrases',
+        description: 'Полезни фрази за начало, развитие и финал на formal letter или email.',
+        textHref: '/english-materials/formal-letter-email-useful-phrases.txt',
+      },
+      {
+        title: 'Letter Writing Useful Words and Expressions',
+        description: 'Лексика и изрази за по-точно и естествено оформяне на писмен отговор.',
+        textHref: '/english-materials/letter-writing-useful-words-and-expressions.txt',
+      },
+      {
+        title: 'Sample Letters - Block Format',
+        description: 'Примерни писма в block format за бърза ориентация преди писане.',
+        pdfHref: '/english-materials/sample-letters-block-format.pdf',
+      },
+    ],
+  },
+]
+
 
 export default function MaterialsPage() {
   const router = useRouter()
@@ -67,6 +109,10 @@ export default function MaterialsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
+  const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
+  const [englishMaterialText, setEnglishMaterialText] = useState('')
+  const [englishMaterialLoading, setEnglishMaterialLoading] = useState(false)
+  const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
@@ -132,6 +178,21 @@ export default function MaterialsPage() {
       return searchableText.includes(normalizedQuery)
     })
 
+  const filteredEnglishMaterialGroups = englishMaterialGroups
+    .map((group) => {
+      const groupMatches = `${group.title} ${group.description}`.toLowerCase().includes(normalizedQuery)
+      const items = group.items.filter((item) => {
+        if (!normalizedQuery) return true
+        if (groupMatches) return true
+        return `${item.title} ${item.description}`.toLowerCase().includes(normalizedQuery)
+      })
+
+      return { ...group, items }
+    })
+    .filter((group) => group.items.length > 0)
+
+  const englishMaterialsCount = filteredEnglishMaterialGroups.reduce((acc, group) => acc + group.items.length, 0)
+
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
   const activeNvoWork = nvoLiteratureWorks.find((work) => work.id === activeNvoWorkId)
   const activeTextWork = activeTextWorkId ? literatureWorks.find((w) => w.id === activeTextWorkId) : null
@@ -150,6 +211,26 @@ export default function MaterialsPage() {
       setTextError('Текстът не може да бъде зареден в момента.')
     } finally {
       setTextLoading(false)
+    }
+  }
+
+  const openEnglishMaterial = async (material: EnglishMaterial) => {
+    if (!material.textHref) return
+
+    setActiveEnglishMaterial(material)
+    setEnglishMaterialLoading(true)
+    setEnglishMaterialError(null)
+    setEnglishMaterialText('')
+
+    try {
+      const response = await fetch(material.textHref)
+      if (!response.ok) throw new Error('Неуспешно зареждане')
+      const text = await response.text()
+      setEnglishMaterialText(text.trim())
+    } catch {
+      setEnglishMaterialError('Материалът не може да бъде зареден в момента.')
+    } finally {
+      setEnglishMaterialLoading(false)
     }
   }
 
@@ -448,14 +529,128 @@ export default function MaterialsPage() {
               </h3>
               <p className="text-xs text-text-muted text-center mb-4">Английски език</p>
 
-              <div className="text-center py-10 text-text-muted">
-                <p className="font-medium mb-1">Няма добавени материали</p>
-                <p className="text-sm">ДЗИ тестовете по английски са преместени в секция „Тестове“.</p>
-              </div>
+              <p className="text-sm text-text-muted mb-4">
+                Намерени:{' '}
+                <strong className="text-text">
+                  {englishMaterialsCount}
+                </strong>{' '}
+                материала
+              </p>
+
+              {filteredEnglishMaterialGroups.length > 0 ? (
+                <div className="space-y-6">
+                  {filteredEnglishMaterialGroups.map((group, groupIndex) => (
+                    <section key={group.title}>
+                      <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-2">
+                        {groupIndex + 1}. {group.title}
+                      </h3>
+                      <p className="text-xs text-text-muted text-center mb-3">
+                        {group.description}
+                      </p>
+
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {group.items.map((item) => (
+                          item.pdfHref ? (
+                            <a
+                              key={item.pdfHref}
+                              href={item.pdfHref}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="min-h-[170px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
+                            >
+                              <p className="font-sans text-[13px] font-semibold uppercase text-[#4B5B70] tracking-normal mb-2">
+                                {group.title}
+                              </p>
+                              <h4 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-3">
+                                {item.title}
+                              </h4>
+                              <p className="text-xs leading-5 text-text-muted mb-5">
+                                {item.description}
+                              </p>
+                              <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal">
+                                Отвори PDF
+                              </p>
+                            </a>
+                          ) : (
+                            <button
+                              key={item.textHref}
+                              type="button"
+                              onClick={() => openEnglishMaterial(item)}
+                              className="min-h-[170px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
+                            >
+                              <p className="font-sans text-[13px] font-semibold uppercase text-[#4B5B70] tracking-normal mb-2">
+                                {group.title}
+                              </p>
+                              <h4 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-3">
+                                {item.title}
+                              </h4>
+                              <p className="text-xs leading-5 text-text-muted mb-5">
+                                {item.description}
+                              </p>
+                              <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal">
+                                Отвори
+                              </p>
+                            </button>
+                          )
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10 text-text-muted">
+                  <p className="font-medium mb-1">Няма намерени материали</p>
+                  <p className="text-sm">Опитай с друга ключова дума.</p>
+                </div>
+              )}
             </section>
           </div>
         ) : null}
       </div>
+
+      {activeEnglishMaterial && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+          onClick={() => setActiveEnglishMaterial(null)}
+        >
+          <div
+            className="w-full max-w-3xl max-h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide">Английски език — 12. клас</p>
+                <h3 className="text-lg md:text-xl font-bold text-text">{activeEnglishMaterial.title}</h3>
+                <p className="text-sm text-text-muted mt-1">{activeEnglishMaterial.description}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveEnglishMaterial(null)}
+                className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center"
+                aria-label="Затвори"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <div className="overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
+              {englishMaterialLoading ? (
+                <p className="text-sm text-text-muted">Зареждане...</p>
+              ) : englishMaterialError ? (
+                <p className="text-sm text-danger">{englishMaterialError}</p>
+              ) : (
+                <div className="rounded-xl border border-border bg-white p-5">
+                  <pre className="whitespace-pre-wrap font-sans text-sm leading-7 text-text">
+                    {englishMaterialText}
+                  </pre>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {activeNvoWork && (
         <div
