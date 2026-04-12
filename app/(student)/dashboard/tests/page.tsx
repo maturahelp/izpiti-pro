@@ -34,8 +34,25 @@ function getTestSection(test: (typeof tests)[number]): string {
 }
 
 function getTestMode(test: (typeof tests)[number]): TestMode {
-  if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
+  if (
+    test.id.startsWith('mock_') ||
+    test.id.startsWith('selected_mock_') ||
+    test.id.startsWith('english-generated-') ||
+    /^q\d+$/i.test(test.id)
+  ) return 'sample_dzi'
   return 'past_dzi'
+}
+
+function getTestHref(test: (typeof tests)[number]): string {
+  if (test.subjectId === 'eng-12') {
+    if (test.id.startsWith('english-generated-')) {
+      return `/english-generated#${test.id.replace('english-generated-', '')}`
+    }
+
+    return `/english-mock/${test.id}`
+  }
+
+  return `/dashboard/tests/${test.id}`
 }
 
 export default function TestsPage() {
@@ -130,7 +147,10 @@ export default function TestsPage() {
           {filtered.map((test) => (
             <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', test.isPremium && 'premium-lock')}>
               {(() => {
-                const isMock = test.id.startsWith('mock_') || test.id.startsWith('selected_mock_')
+                const isMock =
+                  test.id.startsWith('mock_') ||
+                  test.id.startsWith('selected_mock_') ||
+                  test.id.startsWith('english-generated-')
                 const isBeron = test.id.startsWith('beron_')
 
                 if (isBeron) {
@@ -189,7 +209,7 @@ export default function TestsPage() {
                   {test.difficulty}
                 </span>
                 <Link
-                  href={`/dashboard/tests/${test.id}`}
+                  href={getTestHref(test)}
                   className={cn(
                     'text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors',
                     test.isPremium

@@ -177,7 +177,7 @@ function MaterialSection({
   setRevealed: React.Dispatch<React.SetStateAction<Record<number, boolean>>>
 }) {
   return (
-    <section className={className}>
+    <section id={section.id} className={`${className} scroll-mt-6`}>
       <div className="border border-stone-300 bg-[#fcf7ee] px-4 py-4 md:px-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
           {section.mode === 'writing' ? 'Writing' : 'Reading Comprehension'}
