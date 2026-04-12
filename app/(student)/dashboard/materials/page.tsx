@@ -11,6 +11,7 @@ import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratur
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
+import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
@@ -56,6 +57,16 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
 }
 
 type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
+
+interface CurriculumTopic {
+  number: number
+  title: string
+  definition: string
+  key_points: string[]
+  exercises: unknown[]
+}
+
+const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
@@ -267,7 +278,41 @@ export default function MaterialsPage() {
             ))}
           </div>
 
-          {grade7Section === 'literature' ? (
+          {grade7Section === 'bulgarian' ? (
+            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+              <p className="text-sm text-text-muted mb-4">
+                Намерени: <strong className="text-text">{belCurriculumTopics.length}</strong> учебни теми
+              </p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {belCurriculumTopics.map((topic, topicIndex) => (
+                  <button
+                    key={topic.number}
+                    type="button"
+                    onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}`)}
+                    className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                  >
+                    <p className="text-xs font-semibold text-primary mb-1">
+                      Учебна тема #{topic.number}
+                    </p>
+                    <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                      {topic.title}
+                    </h3>
+                    <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
+                      {topic.definition}
+                    </p>
+                    <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#1E4D7B]">
+                      <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
+                        {topic.key_points.length} ключови точки
+                      </span>
+                      <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
+                        {topic.exercises.length} въпроса
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : grade7Section === 'literature' ? (
             <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
               <p className="text-sm text-text-muted mb-4">
                 Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
