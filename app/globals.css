@@ -202,6 +202,71 @@
   background-color: rgba(255,255,255,0.15) !important;
 }
 
+/* ─── Preloader ─────────────────────────────────────────────────── */
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.6s ease;
+}
+
+.preloader-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-svg {
+  width: min(80vw, 520px);
+  height: auto;
+}
+
+.preloader-svg text {
+  font-family: var(--font-alt), 'Montserrat', system-ui, sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.preloader-text-glow {
+  fill: none;
+  stroke: #00f3ff;
+  stroke-width: 2;
+  opacity: 0.5;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: preloaderDraw 1.6s ease forwards;
+}
+
+.preloader-text-stroke {
+  fill: none;
+  stroke: #00f3ff;
+  stroke-width: 1.5;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: preloaderDraw 1.6s ease forwards;
+}
+
+.preloader-text-fill {
+  fill: #ffffff;
+  opacity: 0;
+  stroke: none;
+  animation: preloaderFillIn 0.5s ease forwards 1.4s;
+}
+
+@keyframes preloaderDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes preloaderFillIn {
+  to { opacity: 1; }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
