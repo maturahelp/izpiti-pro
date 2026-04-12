@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type TestSection12 = 'bel' | 'english'
-type TestSection7 = 'bel'
+type TestSection7 = 'bel' | 'math'
 type TestMode = 'sample_dzi' | 'past_dzi'
 
 const sectionLabels12: Record<TestSection12, string> = {
@@ -21,15 +21,22 @@ const sectionLabels12: Record<TestSection12, string> = {
 
 const sectionLabels7: Record<TestSection7, string> = {
   bel: 'БЕЛ',
+  math: 'Математика',
 }
 
-const modeLabels: Record<TestMode, string> = {
+const modeLabels12: Record<TestMode, string> = {
   sample_dzi: 'Примерен ДЗИ',
   past_dzi: 'ДЗИ от минали години',
 }
 
+const modeLabels7: Record<TestMode, string> = {
+  sample_dzi: 'Примерен НВО',
+  past_dzi: 'НВО от минали години',
+}
+
 function getTestSection(test: (typeof tests)[number]): string {
   if (test.subjectId.startsWith('eng-') || test.subjectName.toLowerCase().includes('англий')) return 'english'
+  if (test.subjectId.startsWith('math-')) return 'math'
   return 'bel'
 }
 
@@ -48,6 +55,7 @@ export default function TestsPage() {
     if (grade === '7') {
       if (t.examType !== 'nvo7') return false
       if (getTestSection(t) !== selectedSection7) return false
+      if (getTestMode(t) !== selectedMode) return false
     } else {
       if (t.examType !== 'dzi12') return false
       if (getTestSection(t) !== selectedSection12) return false
@@ -98,27 +106,25 @@ export default function TestsPage() {
             }
           </div>
 
-          {grade === '12' && (
-            <div className="flex justify-center">
-              <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-                {(Object.keys(modeLabels) as TestMode[]).map((mode) => (
-                  <button
-                    key={mode}
-                    type="button"
-                    onClick={() => setSelectedMode(mode)}
-                    className={cn(
-                      'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
-                      selectedMode === mode
-                        ? 'bg-white text-primary shadow-sm'
-                        : 'text-text-muted hover:text-text'
-                    )}
-                  >
-                    {modeLabels[mode]}
-                  </button>
-                ))}
-              </div>
+          <div className="flex justify-center">
+            <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
+              {(Object.keys(grade === '7' ? modeLabels7 : modeLabels12) as TestMode[]).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setSelectedMode(mode)}
+                  className={cn(
+                    'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
+                    selectedMode === mode
+                      ? 'bg-white text-primary shadow-sm'
+                      : 'text-text-muted hover:text-text'
+                  )}
+                >
+                  {grade === '7' ? modeLabels7[mode] : modeLabels12[mode]}
+                </button>
+              ))}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Results count */}
