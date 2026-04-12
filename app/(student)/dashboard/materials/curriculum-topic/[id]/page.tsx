@@ -21,6 +21,8 @@ interface Exercise {
 interface CurriculumTopic {
   number: number
   title: string
+  short_title?: string
+  subtitle?: string
   definition: string
   key_points: string[]
   common_mistakes: string[]
@@ -41,10 +43,12 @@ export default function CurriculumTopicPage() {
 
   const [selected, setSelected] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [activeView, setActiveView] = useState<'theory' | 'test'>('theory')
 
   useEffect(() => {
     setSelected({})
     setSubmitted(false)
+    setActiveView('theory')
   }, [id])
 
   if (!topic) {
@@ -59,6 +63,7 @@ export default function CurriculumTopicPage() {
   }
 
   const exercises = topic.exercises
+  const displayTitle = topic.short_title ?? topic.title
 
   const score = submitted
     ? exercises.filter((ex, idx) => selected[idx] === ex.correct_index).length
@@ -85,7 +90,7 @@ export default function CurriculumTopicPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <TopBar title={topic.title} />
+      <TopBar title={displayTitle} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
         {/* Breadcrumb */}
@@ -100,21 +105,56 @@ export default function CurriculumTopicPage() {
           <span>/</span>
           <span className="text-text-muted">Учебни теми — 7. клас</span>
           <span>/</span>
-          <span className="text-text font-medium">{topic.title}</span>
+          <span className="text-text font-medium">{displayTitle}</span>
         </div>
 
         {/* Theory card */}
-        <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5 mb-6">
-          <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
-            Учебни теми — 7. клас
-          </p>
-          <h1 className="text-lg md:text-xl font-bold text-text mb-3">{topic.title}</h1>
-
-          {/* Definition */}
-          <div className="mb-4">
-            <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-1">Определение</p>
-            <p className="text-sm text-text leading-relaxed">{topic.definition}</p>
+        <div className="mb-6">
+          <div className="rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 md:p-7 shadow-[8px_8px_0_rgba(30,77,123,0.06)]">
+            <h1 className="font-sans text-2xl md:text-3xl font-semibold text-text tracking-normal mb-3 leading-tight">
+              {displayTitle}
+            </h1>
+            {topic.subtitle && (
+              <p className="font-sans text-base md:text-lg font-semibold text-text leading-snug tracking-normal">
+                {topic.subtitle}
+              </p>
+            )}
           </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <button
+              type="button"
+              onClick={() => setActiveView('theory')}
+              className={cn(
+                'rounded-lg border py-3 text-center text-sm font-bold transition-colors',
+                activeView === 'theory'
+                  ? 'border-[#AFC4DA] bg-transparent text-[#1E4D7B]'
+                  : 'border-[#D7E7F7] bg-white text-text-muted hover:bg-[#1E4D7B]/10'
+              )}
+            >
+              Теория
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveView('test')}
+              className={cn(
+                'rounded-lg border py-3 text-center text-sm font-bold transition-colors',
+                activeView === 'test'
+                  ? 'border-primary bg-primary text-white hover:bg-primary-dark'
+                  : 'border-[#D7E7F7] bg-white text-text-muted hover:bg-[#1E4D7B]/10'
+              )}
+            >
+              Тест
+            </button>
+          </div>
+        </div>
+
+        {activeView === 'theory' && (
+        <div className="rounded-2xl border border-[#D7E7F7] bg-white p-4 md:p-5 mb-6">
+          <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">
+            Накратко
+          </p>
+          <p className="text-sm text-text leading-relaxed mb-5">{topic.definition}</p>
 
           {/* Key points */}
           <div className="mb-4">
@@ -149,37 +189,40 @@ export default function CurriculumTopicPage() {
             </ul>
           </div>
 
-          {/* Score after submit */}
-          {submitted && (
-            <div className={cn(
-              'mt-5 rounded-xl p-4 text-center',
-              score >= exercises.length * 0.8
-                ? 'bg-success/10 border border-success/30'
-                : score >= exercises.length * 0.5
-                  ? 'bg-amber/10 border border-amber/30'
-                  : 'bg-danger/10 border border-danger/30'
-            )}>
-              <p className="text-2xl font-bold text-text mb-1">{score}/{exercises.length}</p>
-              <p className={cn(
-                'text-sm font-semibold',
-                score >= exercises.length * 0.8 ? 'text-success' :
-                score >= exercises.length * 0.5 ? 'text-amber' : 'text-danger'
-              )}>
-                {score >= exercises.length * 0.8 ? 'Отлично!' :
-                 score >= exercises.length * 0.5 ? 'Добре!' : 'Трябва повече практика'}
-              </p>
-              <button
-                type="button"
-                onClick={handleReset}
-                className="mt-3 rounded-xl px-5 py-2 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
-              >
-                Опитай отново
-              </button>
-            </div>
-          )}
         </div>
+        )}
 
         {/* Exercises header */}
+        {activeView === 'test' && (
+        <>
+        {submitted && (
+          <div className={cn(
+            'mb-6 rounded-xl p-4 text-center',
+            score >= exercises.length * 0.8
+              ? 'bg-success/10 border border-success/30'
+              : score >= exercises.length * 0.5
+                ? 'bg-amber/10 border border-amber/30'
+                : 'bg-danger/10 border border-danger/30'
+          )}>
+            <p className="text-2xl font-bold text-text mb-1">{score}/{exercises.length}</p>
+            <p className={cn(
+              'text-sm font-semibold',
+              score >= exercises.length * 0.8 ? 'text-success' :
+              score >= exercises.length * 0.5 ? 'text-amber' : 'text-danger'
+            )}>
+              {score >= exercises.length * 0.8 ? 'Отлично!' :
+               score >= exercises.length * 0.5 ? 'Добре!' : 'Трябва повече практика'}
+            </p>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="mt-3 rounded-xl px-5 py-2 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+            >
+              Опитай отново
+            </button>
+          </div>
+        )}
+
         <div className="mb-3">
           <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wide">
             Упражнения ({exercises.length} въпроса)
@@ -281,6 +324,8 @@ export default function CurriculumTopicPage() {
                 : `Отговори на всички въпроси (${Object.keys(selected).length}/${exercises.length})`}
             </button>
           </div>
+        )}
+        </>
         )}
       </div>
     </div>

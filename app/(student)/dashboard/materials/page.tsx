@@ -29,6 +29,8 @@ type GradeLevel = '7' | '12'
 interface CurriculumTopic {
   number: number
   title: string
+  short_title?: string
+  subtitle?: string
   definition: string
   key_points: string[]
   exercises: unknown[]
@@ -347,25 +349,19 @@ export default function MaterialsPage() {
                           key={topic.number}
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}`)}
-                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                          className="min-h-[190px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
                         >
-                          <p className="text-xs font-semibold text-primary mb-1">
-                            Учебна тема #{topic.number}
-                          </p>
-                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">
-                            {topic.title}
+                          <h3 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-2">
+                            {topic.short_title ?? topic.title}
                           </h3>
-                          <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
-                            {topic.definition}
+                          {topic.subtitle && (
+                            <p className="font-sans text-[15px] font-semibold text-text leading-snug tracking-normal mb-4">
+                              {topic.subtitle}
+                            </p>
+                          )}
+                          <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal">
+                            Тема #{topic.number}
                           </p>
-                          <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#1E4D7B]">
-                            <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
-                              {topic.key_points.length} ключови точки
-                            </span>
-                            <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
-                              {topic.exercises.length} въпроса
-                            </span>
-                          </div>
                         </button>
                       ))}
                     </div>
@@ -396,17 +392,17 @@ export default function MaterialsPage() {
                             type="button"
                             onClick={() => setExpandedRuleKey(isExpanded ? null : key)}
                             className={cn(
-                              'card p-4 text-left transition-all duration-200 hover:-translate-y-0.5 w-full',
-                              isExpanded && 'border-primary/40 bg-primary/5'
+                              'min-h-[160px] w-full rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-all duration-200 hover:-translate-y-0.5',
+                              isExpanded && 'border-primary/50 bg-[#EAF4FF]'
                             )}
                           >
-                            <p className="text-xs font-semibold text-text-muted mb-1">
+                            <p className="font-sans text-[13px] font-semibold uppercase text-[#4B5B70] tracking-normal mb-2">
                               {section.title}
                             </p>
-                            <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                            <h3 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-5">
                               {item}
                             </h3>
-                            <p className="text-xs font-semibold text-primary">
+                            <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal">
                               Правило #{itemIndex + 1}
                             </p>
                           </button>
@@ -416,14 +412,14 @@ export default function MaterialsPage() {
                               <button
                                 type="button"
                                 onClick={() => setTheoryIndex(globalIdx)}
-                                className="flex-1 rounded-xl border border-[#1E4D7B]/30 bg-[#F2F8FF] text-[#1E4D7B] text-xs font-semibold py-2 hover:bg-[#1E4D7B]/10 transition-colors"
+                                className="flex-1 rounded-lg border border-[#AFC4DA] bg-transparent text-[#1E4D7B] text-sm font-bold py-3 hover:bg-[#1E4D7B]/10 transition-colors"
                               >
                                 Теория
                               </button>
                               <button
                                 type="button"
                                 onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
-                                className="flex-1 rounded-xl bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
+                                className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
                               >
                                 Тест
                               </button>
