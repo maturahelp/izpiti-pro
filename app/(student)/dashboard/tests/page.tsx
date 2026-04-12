@@ -40,6 +40,13 @@ function getTestSection(test: (typeof tests)[number]): string {
   return 'bel'
 }
 
+function getTestHref(test: (typeof tests)[number]): string {
+  if (test.subjectId === 'eng-12') {
+    return `/english-mock/${encodeURIComponent(test.id)}`
+  }
+  return `/dashboard/tests/${test.id}`
+}
+
 function getTestMode(test: (typeof tests)[number]): TestMode {
   if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
   return 'past_dzi'
@@ -195,7 +202,7 @@ export default function TestsPage() {
                   {test.difficulty}
                 </span>
                 <Link
-                  href={`/dashboard/tests/${test.id}`}
+                  href={getTestHref(test)}
                   className={cn(
                     'text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors',
                     test.isPremium

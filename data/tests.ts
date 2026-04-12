@@ -1,4 +1,5 @@
 import { mockTests } from './mock-tests'
+import { englishTests } from './english-tests'
 
 export type Difficulty = 'лесен' | 'среден' | 'труден'
 export type TestStatus = 'not_started' | 'in_progress' | 'completed'
@@ -584,6 +585,7 @@ const allTests: Test[] = [
     status: 'not_started',
   },
   ...mockTests,
+  ...englishTests,
 ]
 
 export const tests: Test[] = allTests.filter((test) => !test.id.startsWith('test-'))
