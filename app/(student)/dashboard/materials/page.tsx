@@ -86,6 +86,8 @@ type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
 interface CurriculumTopic {
   number: number
   title: string
+  short_title?: string
+  subtitle?: string
   definition: string
   key_points: string[]
   exercises: unknown[]
@@ -95,7 +97,7 @@ interface EnglishMaterial {
   title: string
   description: string
   textHref?: string
-  pdfHref?: string
+  imageSrcs?: string[]
 }
 
 interface EnglishMaterialGroup {
@@ -114,7 +116,10 @@ const englishMaterialGroups: EnglishMaterialGroup[] = [
       {
         title: 'Essay Structure Format',
         description: 'Кратко ръководство за подредба на теза, аргументи, примери и заключение.',
-        pdfHref: '/english-materials/essay-structure-guide.pdf',
+        imageSrcs: [
+          '/english-materials/essay-structure-guide-1.png',
+          '/english-materials/essay-structure-guide-2.png',
+        ],
       },
     ],
   },
@@ -135,11 +140,31 @@ const englishMaterialGroups: EnglishMaterialGroup[] = [
       {
         title: 'Sample Letters - Block Format',
         description: 'Примерни писма в block format за бърза ориентация преди писане.',
-        pdfHref: '/english-materials/sample-letters-block-format.pdf',
+        imageSrcs: ['/english-materials/sample-letters-block-format.png'],
       },
     ],
   },
 ]
+
+function splitTopicTitle(title: string) {
+  const dashMatch = title.match(/\s[–-]\s/)
+  if (dashMatch && dashMatch.index && dashMatch.index > 8) {
+    return {
+      short: title.slice(0, dashMatch.index).trim(),
+      subtitle: title.slice(dashMatch.index + dashMatch[0].length).trim(),
+    }
+  }
+
+  const dotIndex = title.indexOf('. ')
+  if (dotIndex > 8) {
+    return {
+      short: title.slice(0, dotIndex).trim(),
+      subtitle: title.slice(dotIndex + 2).trim(),
+    }
+  }
+
+  return { short: title, subtitle: '' }
+}
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
@@ -277,6 +302,18 @@ export default function MaterialsPage() {
     }))
     .filter((group) => group.works.length > 0)
 
+  const filteredBelCurriculumTopics = belCurriculumTopics
+    .map((topic, topicIndex) => ({ topic, topicIndex }))
+    .filter(({ topic }) => {
+      if (!normalizedQuery) return true
+      const searchableText = [
+        topic.title,
+        topic.definition,
+        ...(topic.key_points ?? []),
+      ].join(' ').toLowerCase()
+      return searchableText.includes(normalizedQuery)
+    })
+
   const filteredEnglishMaterialGroups = englishMaterialGroups
     .map((group) => {
       const groupMatches = `${group.title} ${group.description}`.toLowerCase().includes(normalizedQuery)
@@ -306,12 +343,16 @@ export default function MaterialsPage() {
   }
 
   const openEnglishMaterial = async (material: EnglishMaterial) => {
-    if (!material.textHref) return
-
     setActiveEnglishMaterial(material)
-    setEnglishMaterialLoading(true)
-    setEnglishMaterialError(null)
     setEnglishMaterialText('')
+    setEnglishMaterialError(null)
+
+    if (!material.textHref) {
+      setEnglishMaterialLoading(false)
+      return
+    }
+
+    setEnglishMaterialLoading(true)
 
     try {
       const response = await fetch(material.textHref)
@@ -514,36 +555,52 @@ export default function MaterialsPage() {
           {grade7Section === 'bulgarian' ? (
             <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
               <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{belCurriculumTopics.length}</strong> учебни теми
+                Намерени: <strong className="text-text">{filteredBelCurriculumTopics.length}</strong> учебни теми
               </p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {belCurriculumTopics.map((topic, topicIndex) => (
-                  <button
-                    key={topic.number}
-                    type="button"
-                    onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}`)}
-                    className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
-                  >
-                    <p className="text-xs font-semibold text-primary mb-1">
-                      Учебна тема #{topic.number}
-                    </p>
-                    <h3 className="font-semibold text-text text-sm leading-snug mb-3">
-                      {topic.title}
-                    </h3>
-                    <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
-                      {topic.definition}
-                    </p>
-                    <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#1E4D7B]">
-                      <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
-                        {topic.key_points.length} ключови точки
-                      </span>
-                      <span className="rounded-full bg-[#D7E7F7] px-2.5 py-1">
-                        {topic.exercises.length} въпроса
-                      </span>
+                {filteredBelCurriculumTopics.map(({ topic, topicIndex }) => {
+                  const heading = topic.short_title ?? splitTopicTitle(topic.title).short
+                  const subtitle = topic.subtitle ?? splitTopicTitle(topic.title).subtitle
+
+                  return (
+                    <div key={topic.number} className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5">
+                      <h3 className="font-semibold text-text text-sm leading-snug mb-2">
+                        {heading}
+                      </h3>
+                      {subtitle && (
+                        <p className="text-sm font-medium text-text leading-snug mb-3">
+                          {subtitle}
+                        </p>
+                      )}
+                      <p className="text-xs font-semibold text-primary mb-4">
+                        Тема #{topic.number}
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
+                          className="flex-1 rounded-xl border border-[#1E4D7B]/30 bg-[#F2F8FF] text-[#1E4D7B] text-xs font-semibold py-2 hover:bg-[#1E4D7B]/10 transition-colors"
+                        >
+                          Теория
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)}
+                          className="flex-1 rounded-xl bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
+                        >
+                          Упражнение
+                        </button>
+                      </div>
                     </div>
-                  </button>
-                ))}
+                  )
+                })}
               </div>
+              {filteredBelCurriculumTopics.length === 0 && (
+                <div className="text-center py-10 text-text-muted">
+                  <p className="font-medium mb-1">Няма намерени теми</p>
+                  <p className="text-sm">Опитай с друга ключова дума.</p>
+                </div>
+              )}
             </div>
           ) : grade7Section === 'literature' ? (
             <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
@@ -1008,15 +1065,14 @@ export default function MaterialsPage() {
                                   Отвори
                                 </button>
                               )}
-                              {item.pdfHref && (
-                                <a
-                                  href={item.pdfHref}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="block w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                              {item.imageSrcs && item.imageSrcs.length > 0 && (
+                                <button
+                                  type="button"
+                                  onClick={() => openEnglishMaterial(item)}
+                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
                                 >
-                                  Отвори PDF
-                                </a>
+                                  Отвори пример
+                                </button>
                               )}
                             </div>
                           </div>
@@ -1137,6 +1193,18 @@ export default function MaterialsPage() {
                 <pre className="whitespace-pre-wrap break-words text-[15px] leading-7 text-text font-sans">
                   {englishMaterialText}
                 </pre>
+              )}
+              {!englishMaterialLoading && !englishMaterialError && !englishMaterialText && activeEnglishMaterial.imageSrcs && (
+                <div className="space-y-4">
+                  {activeEnglishMaterial.imageSrcs.map((src, index) => (
+                    <img
+                      key={`${activeEnglishMaterial.title}-${index}`}
+                      src={src}
+                      alt={`${activeEnglishMaterial.title} - ${index + 1}`}
+                      className="w-full h-auto rounded-xl border border-border bg-white"
+                    />
+                  ))}
+                </div>
               )}
             </div>
           </div>
