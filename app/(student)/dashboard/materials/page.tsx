@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
@@ -10,6 +10,7 @@ import { literatureSummaries } from '@/data/literatureSummaries'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
+import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
@@ -122,6 +123,7 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 type Grade7Section = typeof grade7Sections[number]
 type WorkPanel = 'text' | 'summary' | 'video' | 'exercise'
+const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
   bulgarian: 'Български език',
@@ -139,11 +141,17 @@ export default function MaterialsPage() {
   const [activeWorkText, setActiveWorkText] = useState<string>('')
   const [activeWorkTextLoading, setActiveWorkTextLoading] = useState(false)
   const [activeWorkTextError, setActiveWorkTextError] = useState<string | null>(null)
+  const [activeNvoWorkText, setActiveNvoWorkText] = useState<string>('')
+  const [activeNvoWorkTextLoading, setActiveNvoWorkTextLoading] = useState(false)
+  const [activeNvoWorkTextError, setActiveNvoWorkTextError] = useState<string | null>(null)
+  const [isNvoReadingMarkerEnabled, setIsNvoReadingMarkerEnabled] = useState(false)
+  const [nvoReadingProgressByWork, setNvoReadingProgressByWork] = useState<Record<string, number>>({})
   const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('video')
   const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('video')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
+  const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
@@ -198,6 +206,8 @@ export default function MaterialsPage() {
   const activeWorkSummary = activeWork ? literatureSummaries[activeWork.id] ?? [] : []
   const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
+  const activeNvoMarkedWordIndex = activeNvoWorkId ? nvoReadingProgressByWork[activeNvoWorkId] : undefined
+  const activeNvoTextTokens = useMemo(() => activeNvoWorkText.split(/(\s+)/), [activeNvoWorkText])
 
   const nvoLiteratureGroups = nvoLiteratureThemeOrder
     .map((theme) => ({
@@ -205,6 +215,20 @@ export default function MaterialsPage() {
       works: nvoLiteratureWorks.filter((w) => w.theme === theme),
     }))
     .filter((group) => group.works.length > 0)
+
+  const handleNvoWordMark = (wordIndex: number) => {
+    if (!activeNvoWorkId || !isNvoReadingMarkerEnabled) return
+
+    setNvoReadingProgressByWork((prev) => {
+      const current = prev[activeNvoWorkId]
+      if (current === wordIndex) {
+        const next = { ...prev }
+        delete next[activeNvoWorkId]
+        return next
+      }
+      return { ...prev, [activeNvoWorkId]: wordIndex }
+    })
+  }
 
   useEffect(() => {
     if (!activeWorkId) {
@@ -254,11 +278,92 @@ export default function MaterialsPage() {
   }, [activeWorkId])
 
   useEffect(() => {
+    if (!activeNvoWorkId) {
+      setActiveNvoWorkText('')
+      setActiveNvoWorkTextError(null)
+      setActiveNvoWorkTextLoading(false)
+      return
+    }
+
+    const textPath = nvoLiteratureWorkTextPaths[activeNvoWorkId]
+    if (!textPath) {
+      setActiveNvoWorkText('')
+      setActiveNvoWorkTextError('Текстът за това произведение все още не е добавен.')
+      setActiveNvoWorkTextLoading(false)
+      return
+    }
+
+    let isCancelled = false
+    setActiveNvoWorkTextLoading(true)
+    setActiveNvoWorkTextError(null)
+    setActiveNvoWorkText('')
+    nvoWordRefs.current = {}
+
+    fetch(encodeURI(textPath))
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Неуспешно зареждане на текста.')
+        }
+        return response.text()
+      })
+      .then((text) => {
+        if (isCancelled) return
+        const normalizedText = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n')
+        setActiveNvoWorkText(normalizedText)
+      })
+      .catch(() => {
+        if (isCancelled) return
+        setActiveNvoWorkTextError('Не успяхме да заредим текста. Опитай отново.')
+      })
+      .finally(() => {
+        if (isCancelled) return
+        setActiveNvoWorkTextLoading(false)
+      })
+
+    return () => {
+      isCancelled = true
+    }
+  }, [activeNvoWorkId])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const raw = window.localStorage.getItem(NVO_READING_PROGRESS_STORAGE_KEY)
+      if (!raw) return
+      const parsed = JSON.parse(raw) as Record<string, number>
+      if (parsed && typeof parsed === 'object') {
+        setNvoReadingProgressByWork(parsed)
+      }
+    } catch {
+      // Ignore malformed localStorage payloads and continue safely.
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(NVO_READING_PROGRESS_STORAGE_KEY, JSON.stringify(nvoReadingProgressByWork))
+  }, [nvoReadingProgressByWork])
+
+  useEffect(() => {
+    if (activeNvoWorkPanel !== 'text') return
+    if (typeof activeNvoMarkedWordIndex !== 'number') return
+    const target = nvoWordRefs.current[activeNvoMarkedWordIndex]
+    if (!target) return
+
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  }, [activeNvoWorkPanel, activeNvoMarkedWordIndex, activeNvoWorkText])
+
+  useEffect(() => {
     if (activeWorkId) setActiveWorkPanel('video')
   }, [activeWorkId])
 
   useEffect(() => {
-    if (activeNvoWorkId) setActiveNvoWorkPanel('video')
+    if (activeNvoWorkId) {
+      setActiveNvoWorkPanel('video')
+      setIsNvoReadingMarkerEnabled(false)
+    }
   }, [activeNvoWorkId])
 
   useEffect(() => {
@@ -445,7 +550,64 @@ export default function MaterialsPage() {
                       <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
                     </div>
                     <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
-                      <p className="text-sm text-text-muted">Текстът за 7. клас ще бъде добавен тук.</p>
+                      <div className="mb-3 flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setIsNvoReadingMarkerEnabled((prev) => !prev)}
+                          className={cn(
+                            'w-7 h-7 rounded-full border flex items-center justify-center transition-colors',
+                            isNvoReadingMarkerEnabled
+                              ? 'bg-primary text-white border-primary'
+                              : 'bg-white text-text-muted border-border hover:text-text hover:bg-gray-50'
+                          )}
+                          aria-label={isNvoReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
+                          title={isNvoReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 20h9" />
+                            <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
+                          </svg>
+                        </button>
+                        <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
+                      </div>
+
+                      {activeNvoWorkTextLoading ? (
+                        <p className="text-sm text-text-muted">Зареждане...</p>
+                      ) : activeNvoWorkTextError ? (
+                        <p className="text-sm text-danger">{activeNvoWorkTextError}</p>
+                      ) : (
+                        <p className="whitespace-pre-wrap break-words text-sm leading-7 text-text">
+                          {(() => {
+                            let wordIndex = -1
+                            return activeNvoTextTokens.map((token, idx) => {
+                              if (/^\s+$/.test(token)) {
+                                return <span key={`space-${idx}`}>{token}</span>
+                              }
+
+                              wordIndex += 1
+                              const currentWordIndex = wordIndex
+                              const isMarked = activeNvoMarkedWordIndex === currentWordIndex
+
+                              return (
+                                <span
+                                  key={`word-${idx}-${currentWordIndex}`}
+                                  ref={(el) => {
+                                    nvoWordRefs.current[currentWordIndex] = el
+                                  }}
+                                  onClick={() => handleNvoWordMark(currentWordIndex)}
+                                  className={cn(
+                                    'rounded-sm',
+                                    isMarked && 'bg-amber-200 px-0.5',
+                                    isNvoReadingMarkerEnabled && 'cursor-pointer hover:bg-amber-100'
+                                  )}
+                                >
+                                  {token}
+                                </span>
+                              )
+                            })
+                          })()}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ) : (
