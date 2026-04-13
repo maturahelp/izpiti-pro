@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
@@ -15,7 +14,6 @@ import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
-import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
 
@@ -93,7 +91,55 @@ interface CurriculumTopic {
   exercises: unknown[]
 }
 
+interface EnglishMaterial {
+  title: string
+  description: string
+  textHref?: string
+  pdfHref?: string
+}
+
+interface EnglishMaterialGroup {
+  title: string
+  description: string
+  items: EnglishMaterial[]
+}
+
 const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
+
+const englishMaterialGroups: EnglishMaterialGroup[] = [
+  {
+    title: 'Essay',
+    description: 'Структура, аргументиране и полезни фрази за писане на есе.',
+    items: [
+      {
+        title: 'Essay Structure Format',
+        description: 'Кратко ръководство за подредба на теза, аргументи, примери и заключение.',
+        pdfHref: '/english-materials/essay-structure-guide.pdf',
+      },
+    ],
+  },
+  {
+    title: 'Formal letter',
+    description: 'Готови изрази, примерни писма и формати за официална кореспонденция.',
+    items: [
+      {
+        title: 'Formal Letter Writing / Email / Useful phrases',
+        description: 'Полезни фрази за начало, развитие и финал на formal letter или email.',
+        textHref: '/english-materials/formal-letter-email-useful-phrases.txt',
+      },
+      {
+        title: 'Letter Writing Useful Words and Expressions',
+        description: 'Лексика и изрази за по-точно и естествено оформяне на писмен отговор.',
+        textHref: '/english-materials/letter-writing-useful-words-and-expressions.txt',
+      },
+      {
+        title: 'Sample Letters - Block Format',
+        description: 'Примерни писма в block format за бърза ориентация преди писане.',
+        pdfHref: '/english-materials/sample-letters-block-format.pdf',
+      },
+    ],
+  },
+]
 
 const sectionLabels: Record<MaterialSection, string> = {
   bulgarian: 'Български език',
@@ -162,6 +208,10 @@ export default function MaterialsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
+  const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
+  const [englishMaterialText, setEnglishMaterialText] = useState('')
+  const [englishMaterialLoading, setEnglishMaterialLoading] = useState(false)
+  const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
@@ -227,6 +277,20 @@ export default function MaterialsPage() {
     }))
     .filter((group) => group.works.length > 0)
 
+  const filteredEnglishMaterialGroups = englishMaterialGroups
+    .map((group) => {
+      const groupMatches = `${group.title} ${group.description}`.toLowerCase().includes(normalizedQuery)
+      const items = group.items.filter((item) => {
+        if (!normalizedQuery) return true
+        if (groupMatches) return true
+        return `${item.title} ${item.description}`.toLowerCase().includes(normalizedQuery)
+      })
+      return { ...group, items }
+    })
+    .filter((group) => group.items.length > 0)
+
+  const englishMaterialsCount = filteredEnglishMaterialGroups.reduce((acc, group) => acc + group.items.length, 0)
+
   const handleNvoWordMark = (wordIndex: number) => {
     if (!activeNvoWorkId || !isNvoReadingMarkerEnabled) return
 
@@ -239,6 +303,26 @@ export default function MaterialsPage() {
       }
       return { ...prev, [activeNvoWorkId]: wordIndex }
     })
+  }
+
+  const openEnglishMaterial = async (material: EnglishMaterial) => {
+    if (!material.textHref) return
+
+    setActiveEnglishMaterial(material)
+    setEnglishMaterialLoading(true)
+    setEnglishMaterialError(null)
+    setEnglishMaterialText('')
+
+    try {
+      const response = await fetch(material.textHref)
+      if (!response.ok) throw new Error('Неуспешно зареждане')
+      const text = await response.text()
+      setEnglishMaterialText(text.trim())
+    } catch {
+      setEnglishMaterialError('Материалът не може да бъде зареден в момента.')
+    } finally {
+      setEnglishMaterialLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -886,84 +970,70 @@ export default function MaterialsPage() {
               )}
             </div>
           </div>
-        ) : selectedSection === 'english' ? (() => {
-          const filteredEnglish = officialEnglishMockExams.filter((exam) => {
-            if (!normalizedQuery) return true
-            const searchable = `${exam.year} ${exam.level ?? ''} ${exam.session ?? ''} ${exam.source_title ?? ''}`.toLowerCase()
-            return searchable.includes(normalizedQuery)
-          })
-
-          // Group by year descending
-          const byYear = new Map<number, typeof filteredEnglish>()
-          for (const exam of filteredEnglish) {
-            const list = byYear.get(exam.year) ?? []
-            list.push(exam)
-            byYear.set(exam.year, list)
-          }
-          const years = Array.from(byYear.keys()).sort((a, b) => b - a)
-
-          const sessionLabel = (s: string | null | undefined) => {
-            const map: Record<string, string> = {
-              май: 'Май', юни: 'Юни', август: 'Август', септември: 'Септември',
-              примерна: 'Примерна', пробна: 'Пробна',
-            }
-            return s ? (map[s] ?? s) : 'Сесия'
-          }
-
-          return (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{filteredEnglish.length}</strong> изпита
-              </p>
-
-              <div className="space-y-6">
-                {years.map((year) => (
-                  <section key={year}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                      {year} г.
-                    </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {(byYear.get(year) ?? []).map((exam) => (
-                        <div key={exam.id} className="card p-4 flex flex-col gap-3">
-                          <div>
-                            <p className="text-xs font-semibold text-text-muted mb-1">
-                              {sessionLabel(exam.session)} {exam.year}{exam.level ? ` · ${exam.level}` : ''}
-                            </p>
-                            <h3 className="font-semibold text-text text-sm leading-snug">
-                              {exam.level ? `Английски език ${exam.level}` : 'Английски език'}
-                            </h3>
-                            {exam.source_title && (
-                              <p className="text-xs text-text-muted mt-1 line-clamp-2 leading-relaxed">
-                                {exam.source_title}
-                              </p>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-3 text-xs text-text-muted">
-                            <span>{exam.questions.length} задачи</span>
-                            <span>{exam.questions.filter((q) => q.section === 'writing').length} писмена</span>
-                          </div>
-                          <Link
-                            href={`/english-mock/${encodeURIComponent(exam.id)}`}
-                            className="w-full text-center text-xs font-semibold py-2 rounded-lg bg-primary text-white hover:bg-primary-dark transition-colors"
-                          >
-                            Отвори изпита
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-
-                {filteredEnglish.length === 0 && (
-                  <div className="text-center py-10 text-text-muted">
-                    <p className="font-medium mb-1">Няма намерени изпити</p>
-                    <p className="text-sm">Опитай с друга ключова дума.</p>
-                  </div>
-                )}
-              </div>
+        ) : selectedSection === 'english' ? (
+          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <div className="text-center mb-5">
+              <h2 className="text-3xl font-extrabold text-[#1E4D7B] leading-none tracking-tight">Материали 12 клас</h2>
+              <p className="text-sm text-text-muted mt-1">Английски език</p>
             </div>
-          )
-        })() : (
+            <p className="text-sm text-text-muted mb-4">
+              Намерени: <strong className="text-text">{englishMaterialsCount}</strong> материала
+            </p>
+            <div className="space-y-6">
+              {filteredEnglishMaterialGroups.length > 0 ? (
+                <>
+                  {filteredEnglishMaterialGroups.map((group, groupIndex) => (
+                    <section key={group.title}>
+                      <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-2">
+                        {groupIndex + 1}. {group.title}
+                      </h3>
+                      <p className="text-xs text-text-muted text-center mb-3">{group.description}</p>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {group.items.map((item) => (
+                          <div key={item.title} className="card p-4 flex flex-col gap-3">
+                            <div>
+                              <p className="text-xs font-semibold text-text-muted mb-1 uppercase tracking-wide">
+                                {group.title}
+                              </p>
+                              <h3 className="font-semibold text-text text-sm leading-snug">{item.title}</h3>
+                            </div>
+                            <p className="text-xs text-text-muted leading-relaxed">{item.description}</p>
+                            <div className="mt-auto space-y-2">
+                              {item.textHref && (
+                                <button
+                                  type="button"
+                                  onClick={() => openEnglishMaterial(item)}
+                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                                >
+                                  Отвори
+                                </button>
+                              )}
+                              {item.pdfHref && (
+                                <a
+                                  href={item.pdfHref}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="block w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                                >
+                                  Отвори PDF
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </>
+              ) : (
+                <div className="text-center py-10 text-text-muted">
+                  <p className="font-medium mb-1">Няма намерени материали</p>
+                  <p className="text-sm">Опитай с друга ключова дума.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
           <>
             <p className="text-sm text-text-muted mb-4">
               Намерени: <strong className="text-text">{filtered.length}</strong> материала
@@ -1028,6 +1098,50 @@ export default function MaterialsPage() {
           </>
         )}
       </div>
+
+      {activeEnglishMaterial && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+          onClick={() => setActiveEnglishMaterial(null)}
+        >
+          <div
+            className="w-full max-w-6xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">12. клас · Английски</p>
+                <h3 className="text-lg md:text-xl font-bold text-text">{activeEnglishMaterial.title}</h3>
+                <p className="text-sm text-text-muted mt-1">{activeEnglishMaterial.description}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveEnglishMaterial(null)}
+                className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
+                aria-label="Затвори"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="h-[calc(86vh-100px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
+              {englishMaterialLoading && (
+                <p className="text-sm text-text-muted">Зареждане на материала...</p>
+              )}
+              {!englishMaterialLoading && englishMaterialError && (
+                <p className="text-sm text-danger">{englishMaterialError}</p>
+              )}
+              {!englishMaterialLoading && !englishMaterialError && englishMaterialText && (
+                <pre className="whitespace-pre-wrap break-words text-[15px] leading-7 text-text font-sans">
+                  {englishMaterialText}
+                </pre>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {activeWork && (
         <div

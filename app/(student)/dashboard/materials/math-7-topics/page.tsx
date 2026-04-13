@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
@@ -77,6 +77,7 @@ export default function Math7TopicsPage() {
   const [query, setQuery] = useState('')
   const [showAnswers, setShowAnswers] = useState(false)
   const [openAnswers, setOpenAnswers] = useState<Record<string, boolean>>({})
+  const [mathJaxReady, setMathJaxReady] = useState(false)
 
   const visibleSubtopics = useMemo(() => (
     mathTopics
@@ -123,6 +124,23 @@ export default function Math7TopicsPage() {
     return counts
   }, [])
 
+  const selectedSubtopic = useMemo(() => {
+    if (!subtopicId) return null
+
+    for (const topic of mathTopics) {
+      const subtopic = topic.subtopics.find((item) => item.id === subtopicId)
+      if (subtopic) {
+        return {
+          ...subtopic,
+          topicId: topic.id,
+          topicTitle: topic.title,
+        }
+      }
+    }
+
+    return null
+  }, [subtopicId])
+
   useEffect(() => {
     const selectedSubtopicId = new URLSearchParams(window.location.search).get('subtopic')
     if (!selectedSubtopicId) return
@@ -137,15 +155,30 @@ export default function Math7TopicsPage() {
   }, [])
 
   function chooseSubtopic(nextTopicId: string, nextSubtopicId: string) {
-    const isActive = subtopicId === nextSubtopicId
-    setTopicId(isActive ? '' : nextTopicId)
-    setSubtopicId(isActive ? '' : nextSubtopicId)
-    const nextUrl = isActive
-      ? '/dashboard/materials/math-7-topics'
-      : `/dashboard/materials/math-7-topics?subtopic=${nextSubtopicId}`
-    window.history.replaceState(null, '', nextUrl)
+    setTopicId(nextTopicId)
+    setSubtopicId(nextSubtopicId)
+    setDifficulty('')
+    setProblemType('')
+    setQuery('')
+    setShowAnswers(false)
+    setOpenAnswers({})
+    window.history.replaceState(null, '', `/dashboard/materials/math-7-topics?subtopic=${nextSubtopicId}`)
     requestAnimationFrame(() => {
-      document.getElementById('math-problem-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      document.getElementById('math-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  function returnToSubtopics() {
+    setTopicId('')
+    setSubtopicId('')
+    setDifficulty('')
+    setProblemType('')
+    setQuery('')
+    setShowAnswers(false)
+    setOpenAnswers({})
+    window.history.replaceState(null, '', '/dashboard/materials/math-7-topics')
+    requestAnimationFrame(() => {
+      document.getElementById('math-subtopic-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     })
   }
 
@@ -155,7 +188,7 @@ export default function Math7TopicsPage() {
     if (!root) return
     window.MathJax.typesetClear?.([root])
     window.MathJax.typesetPromise([root]).catch(() => {})
-  }, [filteredProblems, openAnswers, showAnswers])
+  }, [filteredProblems, openAnswers, showAnswers, mathJaxReady])
 
   function toggleAnswer(problemId: string) {
     setOpenAnswers((prev) => ({ ...prev, [problemId]: !prev[problemId] }))
@@ -165,12 +198,17 @@ export default function Math7TopicsPage() {
     <div className="min-h-screen pb-20 md:pb-0">
       <Script
         id="mathjax-config"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.MathJax = {
-              tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
-              startup: { typeset: false }
+              tex: {
+                inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+                displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+                processEscapes: true
+              },
+              startup: { typeset: false },
+              options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
             };
           `,
         }}
@@ -179,6 +217,7 @@ export default function Math7TopicsPage() {
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
         strategy="afterInteractive"
         onLoad={() => {
+          setMathJaxReady(true)
           const root = document.getElementById('math-problem-list')
           if (root) window.MathJax?.typesetPromise?.([root])
         }}
@@ -219,7 +258,8 @@ export default function Math7TopicsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-border bg-white p-4 md:p-5 mb-5">
+        {!selectedSubtopic && (
+        <section id="math-subtopic-grid" className="rounded-2xl border border-border bg-white p-4 md:p-5 mb-5">
           <div className="mb-5">
             <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
               Теми и подтеми
@@ -233,7 +273,7 @@ export default function Math7TopicsPage() {
             {mathTopics.map((topic, topicIndex) => (
               <section key={topic.id}>
                 <h3 className="text-sm md:text-base font-bold text-[#1E4D7B] mb-3">
-                  {topicIndex + 1}. {topic.title}
+                  {formatTitleText(`${topicIndex + 1}. ${topic.title}`)}
                 </h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {topic.subtopics.map((subtopic, subtopicIndex) => {
@@ -254,7 +294,7 @@ export default function Math7TopicsPage() {
                           Подтема #{subtopicIndex + 1}
                         </p>
                         <h4 className="text-sm font-bold text-text leading-snug">
-                          {subtopic.title}
+                          {formatTitleText(subtopic.title)}
                         </h4>
                         <p className="mt-4 text-xs font-semibold text-primary">
                           {allSubtopicCounts.get(subtopic.id) ?? 0} задачи
@@ -267,38 +307,36 @@ export default function Math7TopicsPage() {
             ))}
           </div>
         </section>
+        )}
 
-        <section className="rounded-2xl border border-border bg-white p-4 mb-5">
-          <div className="grid md:grid-cols-5 gap-3">
-            <FilterLabel label="Тема">
-              <select
-                value={topicId}
-                onChange={(event) => {
-                  setTopicId(event.target.value)
-                  setSubtopicId('')
-                }}
-                className="input-field"
+        {selectedSubtopic && (
+        <section id="math-workspace" className="rounded-2xl border border-border bg-white p-4 md:p-5">
+          <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <button
+                type="button"
+                onClick={returnToSubtopics}
+                className="mb-3 rounded-lg border border-border bg-white px-3 py-2 text-xs font-semibold text-text-muted hover:border-primary/50 hover:text-primary transition-colors"
               >
-                <option value="">Всички теми</option>
-                {mathTopics.map((topic) => (
-                  <option key={topic.id} value={topic.id}>{topic.title}</option>
-                ))}
-              </select>
-            </FilterLabel>
+                Назад към подтемите
+              </button>
+              <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
+                {selectedSubtopic.topicTitle}
+              </p>
+              <h2 className="text-lg md:text-xl font-bold text-text leading-snug">
+                {formatTitleText(selectedSubtopic.title)}
+              </h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowAnswers((value) => !value)}
+              className="rounded-lg border border-primary bg-white px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-light transition-colors"
+            >
+              {showAnswers ? 'Скрий всички отговори' : 'Покажи всички отговори'}
+            </button>
+          </div>
 
-            <FilterLabel label="Подтема">
-              <select
-                value={subtopicId}
-                onChange={(event) => setSubtopicId(event.target.value)}
-                className="input-field"
-              >
-                <option value="">Всички подтеми</option>
-                {visibleSubtopics.map((subtopic) => (
-                  <option key={subtopic.id} value={subtopic.id}>{subtopic.title}</option>
-                ))}
-              </select>
-            </FilterLabel>
-
+          <div className="mb-5 grid md:grid-cols-3 gap-3">
             <FilterLabel label="Трудност">
               <select value={difficulty} onChange={(event) => setDifficulty(event.target.value)} className="input-field">
                 <option value="">Всички</option>
@@ -325,20 +363,11 @@ export default function Math7TopicsPage() {
               />
             </FilterLabel>
           </div>
-        </section>
 
-        <section>
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+          <div className="mb-3">
             <p className="text-sm text-text-muted">
               Намерени: <strong className="text-text">{filteredProblems.length}</strong> задачи
             </p>
-            <button
-              type="button"
-              onClick={() => setShowAnswers((value) => !value)}
-              className="rounded-xl border border-primary bg-white px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-light transition-colors"
-            >
-              {showAnswers ? 'Скрий всички отговори' : 'Покажи всички отговори'}
-            </button>
           </div>
 
           <div id="math-problem-list" className="space-y-4">
@@ -357,7 +386,7 @@ export default function Math7TopicsPage() {
                     </div>
 
                     <p className="text-sm md:text-base font-semibold text-text leading-relaxed mb-4">
-                      {problem.question}
+                      <MathText text={problem.question} mathJaxReady={mathJaxReady} />
                     </p>
 
                     {problem.type === 'multiple_choice' && problem.options && (
@@ -375,7 +404,7 @@ export default function Math7TopicsPage() {
                               )}
                             >
                               <span className="font-bold mr-2">{label}.</span>
-                              <span>{value}</span>
+                              <MathText text={value} mathJaxReady={mathJaxReady} />
                             </div>
                           )
                         })}
@@ -392,8 +421,8 @@ export default function Math7TopicsPage() {
 
                     {isOpen && (
                       <div className="mt-4 rounded-xl border border-[#D7E7F7] bg-[#F8FBFF] p-4 text-sm text-text">
-                        <p className="mb-2"><strong>Отговор:</strong> {problem.correctAnswer}</p>
-                        <p className="mb-2 leading-relaxed"><strong>Решение:</strong> {problem.explanation}</p>
+                        <p className="mb-2"><strong>Отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
+                        <p className="mb-2 leading-relaxed"><strong>Решение:</strong> <MathText text={problem.explanation} mathJaxReady={mathJaxReady} /></p>
                         <p className="text-xs text-text-muted">
                           <strong>Умения:</strong> {problem.skills.join(', ')}
                         </p>
@@ -410,9 +439,34 @@ export default function Math7TopicsPage() {
               )}
             </div>
           </section>
+        )}
       </div>
     </div>
   )
+}
+
+function MathText({ text, mathJaxReady }: { text: string; mathJaxReady: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!mathJaxReady || !window.MathJax?.typesetPromise || !ref.current) return
+    window.MathJax.typesetClear?.([ref.current])
+    window.MathJax.typesetPromise([ref.current]).catch(() => {})
+  }, [text, mathJaxReady])
+
+  return <span ref={ref}>{text}</span>
+}
+
+function formatTitleText(text: string) {
+  return text
+    .replace(/\$([^$]+)\$/g, '$1')
+    .replace(/\^\\circ/g, '°')
+    .replace(/\\circ/g, '°')
+    .replace(/\\cdot/g, '·')
+    .replace(/\\times/g, '×')
+    .replace(/\\le/g, '≤')
+    .replace(/\\ge/g, '≥')
+    .replace(/\\neq/g, '≠')
 }
 
 function Stat({ value, label }: { value: number; label: string }) {
