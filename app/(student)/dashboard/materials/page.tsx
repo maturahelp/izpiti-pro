@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
+import { literatureSummaries } from '@/data/literatureSummaries'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
@@ -120,7 +121,7 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 
 const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 type Grade7Section = typeof grade7Sections[number]
-type WorkPanel = 'text' | 'audio' | 'video' | 'exercise'
+type WorkPanel = 'text' | 'summary' | 'video' | 'exercise'
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
   bulgarian: 'Български език',
@@ -138,8 +139,8 @@ export default function MaterialsPage() {
   const [activeWorkText, setActiveWorkText] = useState<string>('')
   const [activeWorkTextLoading, setActiveWorkTextLoading] = useState(false)
   const [activeWorkTextError, setActiveWorkTextError] = useState<string | null>(null)
-  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('audio')
-  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('audio')
+  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('text')
+  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('text')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -194,6 +195,7 @@ export default function MaterialsPage() {
   const bulgarianRulesCount = bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
+  const activeWorkSummary = activeWork ? literatureSummaries[activeWork.id] ?? [] : []
   const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
 
@@ -252,11 +254,11 @@ export default function MaterialsPage() {
   }, [activeWorkId])
 
   useEffect(() => {
-    if (activeWorkId) setActiveWorkPanel('audio')
+    if (activeWorkId) setActiveWorkPanel('text')
   }, [activeWorkId])
 
   useEffect(() => {
-    if (activeNvoWorkId) setActiveNvoWorkPanel('audio')
+    if (activeNvoWorkId) setActiveNvoWorkPanel('text')
   }, [activeNvoWorkId])
 
   useEffect(() => {
@@ -439,7 +441,6 @@ export default function MaterialsPage() {
                   <div className="space-y-3">
                     <div className="flex flex-wrap gap-2">
                       <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('audio')} className="rounded-xl bg-[#74A5D4] text-white text-xs font-semibold py-2.5 px-4">Аудио</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="rounded-xl bg-[#1E4D7B] text-white text-xs font-semibold py-2.5 px-4">Видео урок</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
                     </div>
@@ -469,7 +470,6 @@ export default function MaterialsPage() {
                     </div>
                     <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                       <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('audio')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Аудио</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
                       <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
                       {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
@@ -834,23 +834,38 @@ export default function MaterialsPage() {
             </div>
 
             <div className="p-4 md:p-6">
-              {activeWorkPanel === 'text' ? (
+              {activeWorkPanel === 'text' || activeWorkPanel === 'summary' ? (
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
                     <button type="button" onClick={() => setActiveWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('audio')} className="rounded-xl bg-[#74A5D4] text-white text-xs font-semibold py-2.5 px-4">Аудио</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('summary')} className="rounded-xl bg-[#74A5D4] text-white text-xs font-semibold py-2.5 px-4">Резюме</button>
                     <button type="button" onClick={() => setActiveWorkPanel('video')} className="rounded-xl bg-[#1E4D7B] text-white text-xs font-semibold py-2.5 px-4">Видео урок</button>
                     <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
                   </div>
                   <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
-                    {activeWorkTextLoading ? (
-                      <p className="text-sm text-text-muted">Зареждане...</p>
-                    ) : activeWorkTextError ? (
-                      <p className="text-sm text-danger">{activeWorkTextError}</p>
+                    {activeWorkPanel === 'text' ? (
+                      activeWorkTextLoading ? (
+                        <p className="text-sm text-text-muted">Зареждане...</p>
+                      ) : activeWorkTextError ? (
+                        <p className="text-sm text-danger">{activeWorkTextError}</p>
+                      ) : (
+                        <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
+                          {activeWorkText}
+                        </pre>
+                      )
                     ) : (
-                      <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
-                        {activeWorkText}
-                      </pre>
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-semibold text-[#1E4D7B]">{activeWork.title} — резюме</h4>
+                        {activeWorkSummary.length > 0 ? (
+                          <ol className="list-decimal pl-5 space-y-1.5 text-sm leading-7 text-text">
+                            {activeWorkSummary.map((sentence, index) => (
+                              <li key={`${activeWork.id}-summary-${index}`}>{sentence}</li>
+                            ))}
+                          </ol>
+                        ) : (
+                          <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -865,7 +880,7 @@ export default function MaterialsPage() {
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                     <button type="button" onClick={() => setActiveWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('audio')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Аудио</button>
+                    <button type="button" onClick={() => setActiveWorkPanel('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
                     <button type="button" onClick={() => setActiveWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
                     <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
                     {activeWorkPanel === 'exercise' && (
