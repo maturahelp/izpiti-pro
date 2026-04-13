@@ -273,7 +273,7 @@ export default function Math7TopicsPage() {
             {mathTopics.map((topic, topicIndex) => (
               <section key={topic.id}>
                 <h3 className="text-sm md:text-base font-bold text-[#1E4D7B] mb-3">
-                  <MathText text={`${topicIndex + 1}. ${topic.title}`} mathJaxReady={mathJaxReady} />
+                  {formatTitleText(`${topicIndex + 1}. ${topic.title}`)}
                 </h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {topic.subtopics.map((subtopic, subtopicIndex) => {
@@ -294,7 +294,7 @@ export default function Math7TopicsPage() {
                           Подтема #{subtopicIndex + 1}
                         </p>
                         <h4 className="text-sm font-bold text-text leading-snug">
-                          <MathText text={subtopic.title} mathJaxReady={mathJaxReady} />
+                          {formatTitleText(subtopic.title)}
                         </h4>
                         <p className="mt-4 text-xs font-semibold text-primary">
                           {allSubtopicCounts.get(subtopic.id) ?? 0} задачи
@@ -324,7 +324,7 @@ export default function Math7TopicsPage() {
                 {selectedSubtopic.topicTitle}
               </p>
               <h2 className="text-lg md:text-xl font-bold text-text leading-snug">
-                <MathText text={selectedSubtopic.title} mathJaxReady={mathJaxReady} />
+                {formatTitleText(selectedSubtopic.title)}
               </h2>
             </div>
             <button
@@ -455,6 +455,18 @@ function MathText({ text, mathJaxReady }: { text: string; mathJaxReady: boolean 
   }, [text, mathJaxReady])
 
   return <span ref={ref}>{text}</span>
+}
+
+function formatTitleText(text: string) {
+  return text
+    .replace(/\$([^$]+)\$/g, '$1')
+    .replace(/\^\\circ/g, '°')
+    .replace(/\\circ/g, '°')
+    .replace(/\\cdot/g, '·')
+    .replace(/\\times/g, '×')
+    .replace(/\\le/g, '≤')
+    .replace(/\\ge/g, '≥')
+    .replace(/\\neq/g, '≠')
 }
 
 function Stat({ value, label }: { value: number; label: string }) {
