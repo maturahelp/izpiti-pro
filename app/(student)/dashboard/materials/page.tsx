@@ -834,7 +834,7 @@ export default function MaterialsPage() {
             </div>
 
             <div className="p-4 md:p-6">
-              {activeWorkPanel === 'text' || activeWorkPanel === 'summary' ? (
+              {activeWorkPanel === 'text' ? (
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
                     <button type="button" onClick={() => setActiveWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
@@ -843,40 +843,40 @@ export default function MaterialsPage() {
                     <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
                   </div>
                   <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
-                    {activeWorkPanel === 'text' ? (
-                      activeWorkTextLoading ? (
-                        <p className="text-sm text-text-muted">Зареждане...</p>
-                      ) : activeWorkTextError ? (
-                        <p className="text-sm text-danger">{activeWorkTextError}</p>
-                      ) : (
-                        <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
-                          {activeWorkText}
-                        </pre>
-                      )
+                    {activeWorkTextLoading ? (
+                      <p className="text-sm text-text-muted">Зареждане...</p>
+                    ) : activeWorkTextError ? (
+                      <p className="text-sm text-danger">{activeWorkTextError}</p>
                     ) : (
-                      <div className="space-y-2">
-                        <h4 className="text-sm font-semibold text-[#1E4D7B]">{activeWork.title} — резюме</h4>
-                        {activeWorkSummary.length > 0 ? (
-                          <ol className="list-decimal pl-5 space-y-1.5 text-sm leading-7 text-text">
-                            {activeWorkSummary.map((sentence, index) => (
-                              <li key={`${activeWork.id}-summary-${index}`}>{sentence}</li>
-                            ))}
-                          </ol>
-                        ) : (
-                          <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
-                        )}
-                      </div>
+                      <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
+                        {activeWorkText}
+                      </pre>
                     )}
                   </div>
                 </div>
               ) : (
                 <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
                   <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                    <img
-                      src={encodeURI(activeWork.image)}
-                      alt={activeWork.title}
-                      className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                    />
+                    {activeWorkPanel === 'summary' ? (
+                      <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
+                        <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
+                        {activeWorkSummary.length > 0 ? (
+                          <div className="space-y-2 text-sm leading-7 text-text">
+                            {activeWorkSummary.map((sentence, index) => (
+                              <p key={`${activeWork.id}-summary-${index}`}>{sentence}</p>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
+                        )}
+                      </div>
+                    ) : (
+                      <img
+                        src={encodeURI(activeWork.image)}
+                        alt={activeWork.title}
+                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                      />
+                    )}
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                     <button type="button" onClick={() => setActiveWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
