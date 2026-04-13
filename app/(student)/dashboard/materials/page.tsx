@@ -139,8 +139,8 @@ export default function MaterialsPage() {
   const [activeWorkText, setActiveWorkText] = useState<string>('')
   const [activeWorkTextLoading, setActiveWorkTextLoading] = useState(false)
   const [activeWorkTextError, setActiveWorkTextError] = useState<string | null>(null)
-  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('text')
-  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('text')
+  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('video')
+  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('video')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -254,11 +254,11 @@ export default function MaterialsPage() {
   }, [activeWorkId])
 
   useEffect(() => {
-    if (activeWorkId) setActiveWorkPanel('text')
+    if (activeWorkId) setActiveWorkPanel('video')
   }, [activeWorkId])
 
   useEffect(() => {
-    if (activeNvoWorkId) setActiveNvoWorkPanel('text')
+    if (activeNvoWorkId) setActiveNvoWorkPanel('video')
   }, [activeNvoWorkId])
 
   useEffect(() => {
