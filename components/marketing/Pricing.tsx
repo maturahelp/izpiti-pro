@@ -7,7 +7,7 @@ const freePlan = {
   period: '',
   description: 'За да разгледаш платформата и да пробваш как учиш с нея.',
   cta: 'Започни безплатно',
-  ctaHref: '/dashboard',
+  ctaHref: '/register',
   features: [
     { included: true, text: '5 безплатни теста на месец' },
     { included: true, text: '3 безплатни аудио урока' },
@@ -29,7 +29,7 @@ const premiumPlan = {
   yearlyNote: 'или 119.99 лв./год. (спестяваш 38%)',
   description: 'За пълна и системна подготовка за изпита.',
   cta: 'Вземи Премиум',
-  ctaHref: '/subscription',
+  ctaHref: '/register',
   highlight: true,
   features: [
     { included: true, text: 'Неограничен достъп до всички тестове' },

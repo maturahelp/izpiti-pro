@@ -1,5 +1,11 @@
 import Link from 'next/link'
 
+type FooterLink = {
+  label: string
+  href?: string
+}
+
+
 const footerLinks = {
   Платформа: [
     { label: 'Как работи', href: '#kak-raboti' },
@@ -8,10 +14,10 @@ const footerLinks = {
     { label: 'Честа задавани въпроси', href: '#chesto-zadavani-vaprosi' },
   ],
   Предмети: [
-    { label: 'НВО Български език', href: '/dashboard/tests' },
-    { label: 'НВО Математика', href: '/dashboard/tests' },
-    { label: 'ДЗИ БЕЛ', href: '/dashboard/tests' },
-    { label: 'ДЗИ Математика', href: '/dashboard/tests' },
+    { label: 'НВО Български език' },
+    { label: 'НВО Математика' },
+    { label: 'ДЗИ БЕЛ' },
+    { label: 'ДЗИ Математика' },
   ],
   Компания: [
     { label: 'За нас', href: '#' },
@@ -65,14 +71,20 @@ export function Footer() {
             <div key={title}>
               <h4 className="text-[11px] font-black text-white/50 uppercase tracking-[0.1em] mb-5">{title}</h4>
               <ul className="space-y-3">
-                {links.map((link) => (
+                {(links as FooterLink[]).map((link) => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 hover:translate-x-0.5 inline-block"
-                    >
-                      {link.label}
-                    </Link>
+                    {link.href ? (
+                      <Link
+                        href={link.href}
+                        className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 hover:translate-x-0.5 inline-block"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <span className="text-[13px] text-white/30">
+                        {link.label}
+                      </span>
+                    )}
                   </li>
                 ))}
               </ul>

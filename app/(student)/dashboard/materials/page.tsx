@@ -1097,10 +1097,7 @@ export default function MaterialsPage() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filtered.map((material) => (
-                <div key={material.id} className={cn(
-                  'card-hover p-5 flex flex-col gap-3',
-                  material.access === 'premium' && 'border-amber/20'
-                )}>
+                <div key={material.id} className="card-hover p-5 flex flex-col gap-3">
                   <div className="flex items-start gap-3">
                     <div className={cn(
                       'w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0',
@@ -1113,9 +1110,6 @@ export default function MaterialsPage() {
                         <span className={cn('badge text-[10px]', typeColors[material.type])}>
                           {materialTypeLabels[material.type]}
                         </span>
-                        {material.access === 'premium' && (
-                          <span className="badge badge-amber text-[10px]">Премиум</span>
-                        )}
                       </div>
                       <h3 className="font-semibold text-text text-sm leading-snug">{material.title}</h3>
                     </div>
@@ -1131,15 +1125,8 @@ export default function MaterialsPage() {
                     </div>
                   </div>
 
-                  <button
-                    className={cn(
-                      'w-full text-xs font-semibold py-2 rounded-lg transition-colors',
-                      material.access === 'premium'
-                        ? 'bg-amber-light text-amber border border-amber/20 hover:bg-amber/20'
-                        : 'bg-primary text-white hover:bg-primary-dark'
-                    )}
-                  >
-                    {material.access === 'premium' ? 'Отключи с Премиум' : 'Отвори материала'}
+                  <button className="w-full text-xs font-semibold py-2 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark">
+                    Отвори материала
                   </button>
                 </div>
               ))}

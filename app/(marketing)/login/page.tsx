@@ -16,12 +16,6 @@ export default function LoginPage() {
     setError(null)
     if (!email || !password) { setError('Попълни всички полета.'); return }
     setLoading(true)
-    // Dev bypass
-    if (email === 'test@maturahelp.bg' && password === '12345678') {
-      localStorage.setItem('dev_auth', '1')
-      window.location.href = '/dashboard'
-      return
-    }
     const { user, error } = await signIn(email, password)
     setLoading(false)
     if (error || !user) {

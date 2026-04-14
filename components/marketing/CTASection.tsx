@@ -30,7 +30,7 @@ export function CTASection() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             <Link
-              href="/dashboard"
+              href="/register"
               className="inline-flex items-center gap-2 justify-center px-8 py-3.5 bg-white text-primary font-black text-[14.5px] rounded-xl hover:bg-white/95 transition-all duration-200 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:scale-[1.02] active:scale-[0.99] tracking-[-0.01em]"
             >
               Започни безплатно

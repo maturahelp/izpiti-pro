@@ -187,7 +187,7 @@ export function ExamsSection() {
                   )}
 
                   <a
-                    href="/dashboard"
+                    href="/register"
                     className="mt-auto inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors"
                   >
                     Виж подготовката
@@ -202,7 +202,7 @@ export function ExamsSection() {
         </AnimatePresence>
 
         <FadeIn delay={0.2} className="text-center mt-10">
-          <a href="/dashboard" className="btn-primary px-6 py-2.5">
+          <a href="/register" className="btn-primary px-6 py-2.5">
             Виж всички предмети
           </a>
         </FadeIn>

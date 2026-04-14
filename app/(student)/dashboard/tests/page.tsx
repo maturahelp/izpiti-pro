@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
-import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import { getDifficultyColor } from '@/lib/utils'
 import { useGrade } from '@/lib/grade-context'
@@ -144,78 +143,84 @@ export default function TestsPage() {
 
         <div className="grid sm:grid-cols-2 gap-4">
           {filtered.map((test) => (
-            <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', test.isPremium && 'premium-lock')}>
+            <div key={test.id} className="card-hover p-5 flex flex-col gap-4 relative">
               {(() => {
-                const isMock = test.id.startsWith('mock_') || test.id.startsWith('selected_mock_')
-                const isBeron = test.id.startsWith('beron_')
+                const ctaHref = getTestHref(test)
+                const ctaLabel = test.status === 'completed'
+                  ? 'Повтори'
+                  : test.status === 'in_progress'
+                    ? 'Продължи'
+                    : 'Започни'
 
-                if (isBeron) {
-                  return (
-                    <div className="absolute top-3 right-3">
-                      <Badge variant="primary">BERON</Badge>
+                return (
+                  <>
+                    {(() => {
+                      const isMock = test.id.startsWith('mock_') || test.id.startsWith('selected_mock_')
+                      const isBeron = test.id.startsWith('beron_')
+
+                      if (isBeron) {
+                        return (
+                          <div className="absolute top-3 right-3">
+                            <Badge variant="primary">BERON</Badge>
+                          </div>
+                        )
+                      }
+
+                      return isMock ? (
+                        <div className="absolute top-3 right-3">
+                          <Badge variant="neutral">Примерен</Badge>
+                        </div>
+                      ) : null
+                    })()}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                          <Badge variant={test.examType === 'nvo7' ? 'primary' : 'amber'}>
+                            {test.examType === 'nvo7' ? '7. клас НВО' : '12. клас ДЗИ'}
+                          </Badge>
+                          {test.status === 'completed' && (
+                            <Badge variant="success">Завършен</Badge>
+                          )}
+                          {test.status === 'in_progress' && (
+                            <Badge variant="neutral">В процес</Badge>
+                          )}
+                        </div>
+                        <h3 className="font-semibold text-text text-sm leading-snug">{test.title}</h3>
+                        <p className="text-xs text-text-muted mt-1">{test.subjectName} · {test.topicName}</p>
+                      </div>
                     </div>
-                  )
-                }
 
-                return isMock ? (
-                  <div className="absolute top-3 right-3">
-                    <Badge variant="neutral">Примерен</Badge>
-                  </div>
-                ) : null
+                    <div className="flex items-center gap-3 text-xs text-text-muted">
+                      <span className="flex items-center gap-1">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        {test.timeMinutes} мин.
+                      </span>
+                      <span>{test.questionsCount} въпроса</span>
+                      <span>{test.completedCount.toLocaleString()} реш.</span>
+                      {test.status === 'completed' && test.lastScore && (
+                        <span className={`ml-auto font-bold text-sm font-serif ${
+                          test.lastScore >= 80 ? 'text-success' :
+                          test.lastScore >= 60 ? 'text-amber' : 'text-danger'
+                        }`}>
+                          {test.lastScore}%
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className={`badge text-xs ${getDifficultyColor(test.difficulty)}`}>
+                        {test.difficulty}
+                      </span>
+                      <Link
+                        href={ctaHref}
+                        className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark"
+                      >
+                        {ctaLabel}
+                      </Link>
+                    </div>
+                  </>
+                )
               })()}
-              {test.isPremium && <PremiumLock compact />}
-
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <Badge variant={test.examType === 'nvo7' ? 'primary' : 'amber'}>
-                      {test.examType === 'nvo7' ? '7. клас НВО' : '12. клас ДЗИ'}
-                    </Badge>
-                    {test.status === 'completed' && (
-                      <Badge variant="success">Завършен</Badge>
-                    )}
-                    {test.status === 'in_progress' && (
-                      <Badge variant="neutral">В процес</Badge>
-                    )}
-                  </div>
-                  <h3 className="font-semibold text-text text-sm leading-snug">{test.title}</h3>
-                  <p className="text-xs text-text-muted mt-1">{test.subjectName} · {test.topicName}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 text-xs text-text-muted">
-                <span className="flex items-center gap-1">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                  {test.timeMinutes} мин.
-                </span>
-                <span>{test.questionsCount} въпроса</span>
-                <span>{test.completedCount.toLocaleString()} реш.</span>
-                {test.status === 'completed' && test.lastScore && (
-                  <span className={`ml-auto font-bold text-sm font-serif ${
-                    test.lastScore >= 80 ? 'text-success' :
-                    test.lastScore >= 60 ? 'text-amber' : 'text-danger'
-                  }`}>
-                    {test.lastScore}%
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className={`badge text-xs ${getDifficultyColor(test.difficulty)}`}>
-                  {test.difficulty}
-                </span>
-                <Link
-                  href={getTestHref(test)}
-                  className={cn(
-                    'text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors',
-                    test.isPremium
-                      ? 'bg-gray-100 text-text-muted cursor-not-allowed'
-                      : 'bg-primary text-white hover:bg-primary-dark'
-                  )}
-                >
-                  {test.status === 'completed' ? 'Повтори' : test.status === 'in_progress' ? 'Продължи' : 'Започни'}
-                </Link>
-              </div>
             </div>
           ))}
         </div>
