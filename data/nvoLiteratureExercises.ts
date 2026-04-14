@@ -1,4 +1,4 @@
-import bankRaw from './nvoLiteratureQuestionBank.json'
+import bankRaw from './notebooklm_video_prompts_bg_quiz_questions.json'
 
 export interface LiteratureQuestion {
   question: string
@@ -11,8 +11,8 @@ export interface LiteratureExerciseSet {
   author: string
   title: string
   genre: string
-  summary: string
-  themes: string[]
+  summary?: string
+  themes?: string[]
   questions: LiteratureQuestion[]
 }
 
@@ -21,8 +21,8 @@ const bank = bankRaw as Array<{
   author: string
   title: string
   genre: string
-  summary: string
-  themes: string[]
+  summary?: string
+  themes?: string[]
   questions: LiteratureQuestion[]
 }>
 

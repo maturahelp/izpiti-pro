@@ -848,13 +848,10 @@ export default function MaterialsPage() {
                       {activeNvoWorkPanel === 'exercise' && (
                         <button
                           type="button"
-                          onClick={() => {
-                            setActiveNvoWorkId(null)
-                            router.push('/dashboard/tests')
-                          }}
+                          onClick={() => router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)}
                           className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                         >
-                          Към секция Тестове
+                          Отвори упражнението
                         </button>
                       )}
                     </div>
