@@ -476,16 +476,14 @@ export default function MaterialsPage() {
                         <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                       )}
                       {activeNvoWorkPanel === 'exercise' && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveNvoWorkId(null)
-                            router.push('/dashboard/tests')
-                          }}
-                          className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
+                        <Link
+                          href={`/dashboard/literature-exercise/${activeNvoWork.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex w-full items-center justify-center rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                         >
-                          Към секция Тестове
-                        </button>
+                          Отвори упражнението в нов таб
+                        </Link>
                       )}
                     </div>
                   </div>
