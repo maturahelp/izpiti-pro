@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import { isAdminProfile, USER_PROFILE_COLUMNS, type UserProfile } from '@/lib/profile'
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@/lib/supabase/config'
 
 function buildLoginRedirect(request: NextRequest) {
   const url = request.nextUrl.clone()
@@ -15,8 +16,8 @@ async function getAccessContext(request: NextRequest) {
   })
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {
