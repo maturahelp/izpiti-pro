@@ -50,7 +50,6 @@ export default function RuleQuizPage() {
   const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [confettiKey, setConfettiKey] = useState(0)
-  const [confettiOrigin, setConfettiOrigin] = useState<{ x: number; y: number } | null>(null)
   const [celebrated, setCelebrated] = useState<Record<number, boolean>>({})
 
   useEffect(() => {
@@ -88,15 +87,10 @@ export default function RuleQuizPage() {
   const currentIsWrong = currentAnswered && currentSelected !== currentQuestion.correct_index
   const progressPercent = questions.length ? ((currentIndex + 1) / questions.length) * 100 : 0
 
-  function handleSelect(qIdx: number, optIdx: number, button: HTMLElement) {
+  function handleSelect(qIdx: number, optIdx: number) {
     if (submitted) return
     setSelected((prev) => ({ ...prev, [qIdx]: optIdx }))
     if (optIdx === questions[qIdx]?.correct_index && !celebrated[qIdx]) {
-      const rect = button.getBoundingClientRect()
-      setConfettiOrigin({
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-      })
       setConfettiKey((value) => value + 1)
       setCelebrated((prev) => ({ ...prev, [qIdx]: true }))
     }
@@ -136,7 +130,7 @@ export default function RuleQuizPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} origin={confettiOrigin} />
+      <ConfettiBurst burstKey={confettiKey} />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -255,7 +249,7 @@ export default function RuleQuizPage() {
                       <button
                         key={optIdx}
                         type="button"
-                        onClick={(event) => handleSelect(qIdx, optIdx, event.currentTarget)}
+                        onClick={() => handleSelect(qIdx, optIdx)}
                         className={cn(
                           'w-full text-left rounded-xl border px-3 py-2.5 text-sm transition-colors flex items-start gap-2.5',
                           optStyle,
