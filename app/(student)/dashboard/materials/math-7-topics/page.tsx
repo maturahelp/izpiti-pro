@@ -81,6 +81,7 @@ export default function Math7TopicsPage() {
   const [problemAnswers, setProblemAnswers] = useState<Record<string, string>>({})
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0)
   const [confettiKey, setConfettiKey] = useState(0)
+  const [confettiOrigin, setConfettiOrigin] = useState<{ x: number; y: number } | null>(null)
   const [celebrated, setCelebrated] = useState<Record<string, boolean>>({})
   const [mathJaxReady, setMathJaxReady] = useState(false)
 
@@ -222,9 +223,14 @@ export default function Math7TopicsPage() {
     setOpenAnswers((prev) => ({ ...prev, [problemId]: !prev[problemId] }))
   }
 
-  function selectProblemAnswer(problem: MathProblem, label: string) {
+  function selectProblemAnswer(problem: MathProblem, label: string, button: HTMLElement) {
     setProblemAnswers((prev) => ({ ...prev, [problem.id]: label }))
     if (problem.options?.[label] === problem.correctAnswer && !celebrated[problem.id]) {
+      const rect = button.getBoundingClientRect()
+      setConfettiOrigin({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      })
       setConfettiKey((value) => value + 1)
       setCelebrated((prev) => ({ ...prev, [problem.id]: true }))
     }
@@ -249,7 +255,7 @@ export default function Math7TopicsPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} />
+      <ConfettiBurst burstKey={confettiKey} origin={confettiOrigin} />
       <Script
         id="mathjax-config"
         strategy="afterInteractive"
@@ -467,7 +473,7 @@ export default function Math7TopicsPage() {
                             <button
                               type="button"
                               key={label}
-                              onClick={() => selectProblemAnswer(problem, label)}
+                              onClick={(event) => selectProblemAnswer(problem, label, event.currentTarget)}
                               className={cn(
                                 'w-full rounded-xl border px-3 py-2.5 text-left text-sm transition-colors',
                                 showCorrect
