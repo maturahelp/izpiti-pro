@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
+import Confetti from '@/components/ui/confetti'
 import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
@@ -11,6 +12,7 @@ import { cn } from '@/lib/utils'
 import { saveDziAttempt } from '@/lib/progress'
 import { logActivity } from '@/lib/activity-log'
 import { allTests } from '@/data/tests'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
@@ -480,6 +482,7 @@ export default function TestPage() {
   const [revealAnswers, setRevealAnswers] = useState(false)
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
+  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   // Inject MathJax on mount, retrigger after state changes
   useEffect(() => {
@@ -546,13 +549,21 @@ export default function TestPage() {
     setSubmitted(true)
     if (typeof window === 'undefined' || !exam) return
 
+    const choiceQuestions = exam.questions.filter((q) => q.type === 'single_choice')
+    const correctCount = choiceQuestions.filter((q) => answers[q.number] === q.correct_option).length
+    const percent = choiceQuestions.length ? Math.round((correctCount / choiceQuestions.length) * 100) : 0
+
+    if (percent >= 80) {
+      fireCelebrationConfetti()
+    } else if (percent >= 70) {
+      setShowLottieConfetti(false)
+      requestAnimationFrame(() => setShowLottieConfetti(true))
+    }
+
     // Save DZI attempt to Supabase so it appears in the progress chart
     try {
       const catalogEntry = allTests.find((t) => t.id === testId)
       if (catalogEntry?.examType === 'dzi12') {
-        const selectable = exam.questions.filter((q) => q.type === 'single_choice')
-        const correct = selectable.filter((q) => answers[q.number] === q.correct_option).length
-        const percent = selectable.length ? Math.round((correct / selectable.length) * 100) : 0
         void saveDziAttempt({
           testId,
           testName: catalogEntry.title,
@@ -567,15 +578,13 @@ export default function TestPage() {
     // Log this test submission to the local activity feed (Progress page).
     try {
       const catalogEntry = allTests.find((t) => t.id === testId)
-      const selectable = exam.questions.filter((q) => q.type === 'single_choice')
-      const correct = selectable.filter((q) => answers[q.number] === q.correct_option).length
       logActivity({
         type: 'test',
         refId: testId,
         title: catalogEntry?.title || exam.source_title || `Тест ${testId}`,
         meta: catalogEntry?.subjectName,
-        score: correct,
-        maxScore: selectable.length,
+        score: correctCount,
+        maxScore: choiceQuestions.length,
         href: `/dashboard/tests/${testId}`,
       })
     } catch (err) {
@@ -624,6 +633,7 @@ export default function TestPage() {
     setRevealAnswers(false)
     setContextCollapsed(false)
     setContextMediaCollapsed(false)
+    setShowLottieConfetti(false)
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(storageKey)
     }
@@ -663,6 +673,7 @@ export default function TestPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
         {/* Score + actions bar */}
