@@ -103,6 +103,7 @@ interface BeronDifficultyTest {
 
 type SingleChoiceAnswers = Record<number, string>  // questionNumber → chosen label
 type OpenResponses = Record<number, Record<string, string>>  // questionNumber → { label → text }
+type ConfettiSize = 'small' | 'medium' | 'large'
 
 // ---------------------------------------------------------------------------
 // Figure helpers (math geometry questions only)
@@ -476,9 +477,8 @@ export default function TestPage() {
   const [revealAnswers, setRevealAnswers] = useState(false)
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [confettiKey, setConfettiKey] = useState(0)
-  const [celebratedQuestions, setCelebratedQuestions] = useState<Record<number, boolean>>({})
+  const [confettiSize, setConfettiSize] = useState<ConfettiSize>('medium')
 
   // Inject MathJax on mount, retrigger after state changes
   useEffect(() => {
@@ -509,8 +509,6 @@ export default function TestPage() {
         setOpenResponses({})
         setSubmitted(false)
         setRevealAnswers(false)
-        setCurrentQuestionIndex(0)
-        setCelebratedQuestions({})
         return
       }
 
@@ -530,8 +528,6 @@ export default function TestPage() {
       setOpenResponses({})
       setSubmitted(false)
       setRevealAnswers(false)
-      setCurrentQuestionIndex(0)
-      setCelebratedQuestions({})
     }
   }, [storageKey])
 
@@ -546,8 +542,24 @@ export default function TestPage() {
   }, [answers, openResponses, submitted, revealAnswers, storageKey])
 
   const handleSubmit = useCallback(() => {
+    if (submitted) return
     setSubmitted(true)
     if (typeof window === 'undefined' || !exam) return
+    const choiceQuestions = exam.questions.filter((q) => q.type === 'single_choice')
+    const correctCount = choiceQuestions.filter((q) => answers[q.number] === q.correct_option).length
+    const mistakes = choiceQuestions.length - correctCount
+
+    if (mistakes < 3) {
+      setConfettiSize('large')
+      setConfettiKey((value) => value + 1)
+    } else if (mistakes <= 10) {
+      setConfettiSize('medium')
+      setConfettiKey((value) => value + 1)
+    } else if (mistakes <= 15) {
+      setConfettiSize('small')
+      setConfettiKey((value) => value + 1)
+    }
+
     const MISTAKES_KEY = 'nvo_mistakes'
     let existing: Array<{
       id: string; examId: string; examYear: number | string; examSubject: string
@@ -581,7 +593,7 @@ export default function TestPage() {
       }
     })
     window.localStorage.setItem(MISTAKES_KEY, JSON.stringify(existing))
-  }, [exam, answers])
+  }, [exam, answers, submitted])
 
   const handleReset = useCallback(() => {
     setAnswers({})
@@ -590,8 +602,8 @@ export default function TestPage() {
     setRevealAnswers(false)
     setContextCollapsed(false)
     setContextMediaCollapsed(false)
-    setCurrentQuestionIndex(0)
-    setCelebratedQuestions({})
+    setConfettiKey(0)
+    setConfettiSize('medium')
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(storageKey)
     }
@@ -628,77 +640,10 @@ export default function TestPage() {
   const hasMedia = Boolean(exam.context_images?.length)
   const hasChart = Boolean(exam.chart?.labels?.length)
   const totalQuestions = exam.questions.length
-  const currentQuestion = exam.questions[currentQuestionIndex] ?? exam.questions[0]
-  const currentQuestionNumber = currentQuestion?.number
-  const currentSingleChoiceAnswer = currentQuestionNumber ? answers[currentQuestionNumber] : undefined
-  const currentOpenResponse = currentQuestionNumber ? openResponses[currentQuestionNumber] : undefined
-  const currentQuestionAnswered = currentQuestion
-    ? currentQuestion.type === 'single_choice'
-      ? Boolean(currentSingleChoiceAnswer)
-      : Object.values(currentOpenResponse || {}).some((value) => value.trim())
-    : false
-  const questionProgressPercent = totalQuestions ? ((currentQuestionIndex + 1) / totalQuestions) * 100 : 0
-
-  function celebrateQuestion(questionNumber: number) {
-    if (celebratedQuestions[questionNumber]) return
-    setConfettiKey((value) => value + 1)
-    setCelebratedQuestions((prev) => ({ ...prev, [questionNumber]: true }))
-  }
-
-  function handleChoiceAnswer(question: NvoQuestion, value: string) {
-    setAnswers((prev) => ({ ...prev, [question.number]: value }))
-    if (value === question.correct_option) {
-      celebrateQuestion(question.number)
-    }
-  }
-
-  function handleOpenResponseChange(question: NvoQuestion, label: string, value: string) {
-    setOpenResponses((prev) => ({
-      ...prev,
-      [question.number]: { ...(prev[question.number] || {}), [label]: value },
-    }))
-
-    const cleaned = cleanOfficialAnswer(question.official_answer, question.type)
-    if (question.type !== 'open_response' || isManualCheck(cleaned)) return
-    const labels = getOpenResponseConfig(exam!, question).labels
-    if (labels.length > 1) return
-    const variants = extractAlternatives(cleaned)
-    const userNorm = normalizeOpenAnswer(value)
-    if (variants.some((variant) => variant && userNorm === variant)) {
-      celebrateQuestion(question.number)
-    }
-  }
-
-  function retryQuestion(question: NvoQuestion) {
-    if (question.type === 'single_choice') {
-      setAnswers((prev) => {
-        const next = { ...prev }
-        delete next[question.number]
-        return next
-      })
-      return
-    }
-
-    setOpenResponses((prev) => {
-      const next = { ...prev }
-      delete next[question.number]
-      return next
-    })
-  }
-
-  function goToNextQuestion() {
-    if (!currentQuestionAnswered) return
-    if (currentQuestionIndex < totalQuestions - 1) {
-      setCurrentQuestionIndex((value) => value + 1)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-    handleSubmit()
-  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} />
+      <ConfettiBurst burstKey={confettiKey} size={confettiSize} />
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
         {/* Score + actions bar */}
@@ -719,7 +664,7 @@ export default function TestPage() {
             <div>
               <p className="text-xs text-text-muted font-semibold uppercase tracking-wide">Напредък</p>
               <p className="text-sm font-semibold text-text">{answeredCount} / {totalSelectable} тестови отговорени</p>
-              <p className="text-xs text-text-muted">Въпрос {currentQuestionIndex + 1} от {totalQuestions}</p>
+              <p className="text-xs text-text-muted">{totalQuestions} въпроса общо</p>
               {(submitted || revealAnswers) && (
                 <p className="text-xs text-text-muted">{score.correct} верни от {score.total}</p>
               )}
@@ -749,7 +694,7 @@ export default function TestPage() {
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full bg-primary transition-all duration-200"
-              style={{ width: `${questionProgressPercent}%` }}
+              style={{ width: totalSelectable ? `${Math.round((answeredCount / totalSelectable) * 100)}%` : '0%' }}
             />
           </div>
         </div>
@@ -827,49 +772,24 @@ export default function TestPage() {
           </div>
         )}
         <div className="space-y-5">
-          {currentQuestion && (
+          {exam.questions.map((q) => (
             <QuestionCard
-              key={currentQuestion.number}
+              key={q.number}
               exam={exam}
-              question={currentQuestion}
+              question={q}
               answers={answers}
               openResponses={openResponses}
               submitted={submitted}
               revealAnswers={revealAnswers}
-              onAnswer={(question, val) => handleChoiceAnswer(question, val)}
-              onOpenResponse={(question, label, val) => handleOpenResponseChange(question, label, val)}
-              onRetry={() => retryQuestion(currentQuestion)}
+              onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
+              onOpenResponse={(num, label, val) =>
+                setOpenResponses((prev) => ({
+                  ...prev,
+                  [num]: { ...(prev[num] || {}), [label]: val },
+                }))
+              }
             />
-          )}
-        </div>
-
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <button
-            type="button"
-            onClick={() => setCurrentQuestionIndex((value) => Math.max(0, value - 1))}
-            disabled={currentQuestionIndex === 0}
-            className={cn(
-              'rounded-xl border px-5 py-3 text-sm font-semibold transition-colors',
-              currentQuestionIndex === 0
-                ? 'border-border bg-gray-50 text-text-muted cursor-not-allowed'
-                : 'border-primary text-primary hover:bg-primary/5'
-            )}
-          >
-            Предишен
-          </button>
-          <button
-            type="button"
-            onClick={goToNextQuestion}
-            disabled={!currentQuestionAnswered}
-            className={cn(
-              'rounded-xl px-6 py-3 text-sm font-semibold transition-colors',
-              currentQuestionAnswered
-                ? 'bg-primary text-white hover:bg-primary-dark'
-                : 'bg-gray-100 text-text-muted cursor-not-allowed'
-            )}
-          >
-            {currentQuestionIndex === totalQuestions - 1 ? 'Провери отговорите' : 'Следващ въпрос'}
-          </button>
+          ))}
         </div>
 
         <div className="flex flex-wrap gap-3 pt-2">
@@ -897,7 +817,6 @@ function QuestionCard({
   revealAnswers,
   onAnswer,
   onOpenResponse,
-  onRetry,
 }: {
   exam: NvoExam
   question: NvoQuestion
@@ -905,18 +824,16 @@ function QuestionCard({
   openResponses: OpenResponses
   submitted: boolean
   revealAnswers: boolean
-  onAnswer: (question: NvoQuestion, val: string) => void
-  onOpenResponse: (question: NvoQuestion, label: string, val: string) => void
-  onRetry: () => void
+  onAnswer: (num: number, val: string) => void
+  onOpenResponse: (num: number, label: string, val: string) => void
 }) {
   const isMath = exam.subject === 'Математика'
   const override = MATH_TEXT_OVERRIDES[exam.id]?.[question.number]
   const figureHref = FIGURE_HELPERS[exam.id]?.[question.number]
   const questionImageSrc = QUESTION_IMAGES[exam.id]?.[question.number]
 
+  const showFeedback = submitted || revealAnswers
   const chosen = answers[question.number]
-  const hasInstantChoiceFeedback = question.type === 'single_choice' && Boolean(chosen)
-  const showFeedback = submitted || revealAnswers || hasInstantChoiceFeedback
   const isChoiceCorrect = chosen === question.correct_option
 
   const cardBorder =
@@ -1064,7 +981,7 @@ function QuestionCard({
                   name={`q-${exam.id}-${question.number}`}
                   value={label}
                   checked={isSelected}
-                  onChange={() => onAnswer(question, label)}
+                  onChange={() => onAnswer(question.number, label)}
                   className="mt-0.5 flex-shrink-0"
                 />
                 <span className={cn(
@@ -1112,7 +1029,7 @@ function QuestionCard({
                       type="text"
                       placeholder={openConfig.placeholder}
                       value={val}
-                      onChange={(e) => onOpenResponse(question, label, e.target.value)}
+                      onChange={(e) => onOpenResponse(question.number, label, e.target.value)}
                       className={cn(
                         'w-full border rounded-xl px-3 py-2 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
                         isCorrect
@@ -1127,7 +1044,7 @@ function QuestionCard({
                       rows={openConfig.rows ?? 2}
                       placeholder={openConfig.placeholder}
                       value={val}
-                      onChange={(e) => onOpenResponse(question, label, e.target.value)}
+                      onChange={(e) => onOpenResponse(question.number, label, e.target.value)}
                       className={cn(
                         'w-full resize-y border rounded-xl px-3 py-2 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
                         isCorrect
@@ -1146,7 +1063,7 @@ function QuestionCard({
       )}
 
       {/* Feedback */}
-      {showFeedback && <FeedbackBox question={question} answers={answers} openEval={openEval} onRetry={onRetry} />}
+      {showFeedback && <FeedbackBox question={question} answers={answers} openEval={openEval} />}
     </div>
   )
 }
@@ -1202,12 +1119,10 @@ function FeedbackBox({
   question,
   answers,
   openEval,
-  onRetry,
 }: {
   question: NvoQuestion
   answers: SingleChoiceAnswers
   openEval: { mode: 'empty' | 'correct' | 'incorrect' | 'manual'; cleaned: string } | null
-  onRetry: () => void
 }) {
   if (question.type === 'single_choice') {
     const chosen = answers[question.number]
@@ -1221,15 +1136,6 @@ function FeedbackBox({
         {correct
           ? `Отлично. Верен отговор: ${question.correct_option}.`
           : `Верен отговор: ${question.correct_option}.`}
-        {!correct && chosen && (
-          <button
-            type="button"
-            onClick={onRetry}
-            className="mt-2 block rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 transition-colors"
-          >
-            Повтори въпроса
-          </button>
-        )}
       </div>
     )
   }
@@ -1260,13 +1166,6 @@ function FeedbackBox({
       <div className="mt-3 px-3 py-2 rounded-lg text-xs font-medium bg-red-50 text-red-700">
         <strong>Отговорът не съвпада с официалния.</strong> Официален отговор:<br />
         <span className="whitespace-pre-wrap">{formatStructuredAnswer(cleaned)}</span>
-        <button
-          type="button"
-          onClick={onRetry}
-          className="mt-2 block rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 transition-colors"
-        >
-          Повтори въпроса
-        </button>
       </div>
     )
   }
