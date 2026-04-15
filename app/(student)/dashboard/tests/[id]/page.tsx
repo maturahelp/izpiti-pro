@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, type MouseEvent } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
@@ -474,6 +474,7 @@ export default function TestPage() {
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
   const [submitted, setSubmitted] = useState(false)
   const [revealAnswers, setRevealAnswers] = useState(false)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
 
@@ -506,6 +507,7 @@ export default function TestPage() {
         setOpenResponses({})
         setSubmitted(false)
         setRevealAnswers(false)
+        setCurrentQuestionIndex(0)
         return
       }
 
@@ -514,17 +516,20 @@ export default function TestPage() {
         openResponses?: OpenResponses
         submitted?: boolean
         revealAnswers?: boolean
+        currentQuestionIndex?: number
       }
 
       setAnswers(saved.answers || {})
       setOpenResponses(saved.openResponses || {})
       setSubmitted(Boolean(saved.submitted))
       setRevealAnswers(Boolean(saved.revealAnswers))
+      setCurrentQuestionIndex(typeof saved.currentQuestionIndex === 'number' ? saved.currentQuestionIndex : 0)
     } catch {
       setAnswers({})
       setOpenResponses({})
       setSubmitted(false)
       setRevealAnswers(false)
+      setCurrentQuestionIndex(0)
     }
   }, [storageKey])
 
@@ -535,8 +540,9 @@ export default function TestPage() {
       openResponses,
       submitted,
       revealAnswers,
+      currentQuestionIndex,
     }))
-  }, [answers, openResponses, submitted, revealAnswers, storageKey])
+  }, [answers, currentQuestionIndex, openResponses, submitted, revealAnswers, storageKey])
 
   const handleSubmit = useCallback(() => {
     setSubmitted(true)
@@ -581,6 +587,7 @@ export default function TestPage() {
     setOpenResponses({})
     setSubmitted(false)
     setRevealAnswers(false)
+    setCurrentQuestionIndex(0)
     setContextCollapsed(false)
     setContextMediaCollapsed(false)
     if (typeof window !== 'undefined') {
@@ -619,6 +626,31 @@ export default function TestPage() {
   const hasMedia = Boolean(exam.context_images?.length)
   const hasChart = Boolean(exam.chart?.labels?.length)
   const totalQuestions = exam.questions.length
+  const currentQuestion = exam.questions[Math.min(currentQuestionIndex, Math.max(totalQuestions - 1, 0))]
+  const currentQuestionAnswered = currentQuestion
+    ? currentQuestion.type === 'single_choice'
+      ? Boolean(answers[currentQuestion.number])
+      : Boolean(Object.values(openResponses[currentQuestion.number] || {}).some((value) => value.trim()))
+    : false
+  const questionsToRender = submitted || revealAnswers || !currentQuestion ? exam.questions : [currentQuestion]
+
+  function celebrateCurrentQuestion(target: EventTarget & HTMLElement) {
+    if (currentQuestion?.type !== 'single_choice') return
+    if (answers[currentQuestion.number] === currentQuestion.correct_option) {
+      rainbowMinimalConfettiFromElement(target)
+    }
+  }
+
+  function handleNextQuestion(event: MouseEvent<HTMLButtonElement>) {
+    celebrateCurrentQuestion(event.currentTarget)
+    setCurrentQuestionIndex((index) => Math.min(index + 1, totalQuestions - 1))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function handleSubmitFromQuestion(event: MouseEvent<HTMLButtonElement>) {
+    celebrateCurrentQuestion(event.currentTarget)
+    handleSubmit()
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -666,9 +698,14 @@ export default function TestPage() {
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full bg-primary transition-all duration-200"
-              style={{ width: totalSelectable ? `${Math.round((answeredCount / totalSelectable) * 100)}%` : '0%' }}
+              style={{ width: totalQuestions ? `${Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100)}%` : '0%' }}
             />
           </div>
+          {!submitted && !revealAnswers && (
+            <p className="mt-2 text-center text-xs font-semibold text-text-muted">
+              Въпрос {currentQuestionIndex + 1} / {totalQuestions}
+            </p>
+          )}
         </div>
 
         {/* Context panel */}
@@ -744,7 +781,7 @@ export default function TestPage() {
           </div>
         )}
         <div className="space-y-5">
-          {exam.questions.map((q) => (
+          {questionsToRender.map((q) => (
             <QuestionCard
               key={q.number}
               exam={exam}
@@ -764,7 +801,46 @@ export default function TestPage() {
           ))}
         </div>
 
-        {!submitted && (
+        {!submitted && !revealAnswers && (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-white p-3">
+            <button
+              type="button"
+              onClick={() => setCurrentQuestionIndex((index) => Math.max(index - 1, 0))}
+              disabled={currentQuestionIndex === 0}
+              className={cn(
+                'rounded-lg border px-4 py-2 text-sm font-semibold transition-colors',
+                currentQuestionIndex === 0
+                  ? 'border-border text-text-muted opacity-40 cursor-not-allowed'
+                  : 'border-border text-text hover:border-primary hover:text-primary'
+              )}
+            >
+              Предишен
+            </button>
+            {currentQuestionIndex === totalQuestions - 1 ? (
+              <button
+                type="button"
+                onClick={handleSubmitFromQuestion}
+                className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+              >
+                Провери отговорите
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleNextQuestion}
+                disabled={!currentQuestionAnswered}
+                className={cn(
+                  'rounded-lg px-5 py-3 text-sm font-semibold transition-colors',
+                  currentQuestionAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                )}
+              >
+                Следващ въпрос
+              </button>
+            )}
+          </div>
+        )}
+
+        {!submitted && revealAnswers && (
           <div className="rounded-xl border border-border bg-white p-3">
             <button
               onClick={handleSubmit}
@@ -970,12 +1046,7 @@ function QuestionCard({
                   name={`q-${exam.id}-${question.number}`}
                   value={label}
                   checked={isSelected}
-                  onChange={(event) => {
-                    onAnswer(question.number, label)
-                    if (label === question.correct_option) {
-                      rainbowMinimalConfettiFromElement(event.currentTarget.closest('label'))
-                    }
-                  }}
+                  onChange={() => onAnswer(question.number, label)}
                   className="mt-0.5 flex-shrink-0"
                 />
                 <span className={cn(
