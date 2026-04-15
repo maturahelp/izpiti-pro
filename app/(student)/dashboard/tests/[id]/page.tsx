@@ -4,12 +4,11 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
-import Confetti from '@/components/ui/confetti'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
-import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
@@ -104,6 +103,7 @@ interface BeronDifficultyTest {
 
 type SingleChoiceAnswers = Record<number, string>  // questionNumber → chosen label
 type OpenResponses = Record<number, Record<string, string>>  // questionNumber → { label → text }
+type ConfettiSize = 'small' | 'medium' | 'large'
 
 // ---------------------------------------------------------------------------
 // Figure helpers (math geometry questions only)
@@ -477,7 +477,8 @@ export default function TestPage() {
   const [revealAnswers, setRevealAnswers] = useState(false)
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
-  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
+  const [confettiKey, setConfettiKey] = useState(0)
+  const [confettiSize, setConfettiSize] = useState<ConfettiSize>('medium')
 
   // Inject MathJax on mount, retrigger after state changes
   useEffect(() => {
@@ -546,13 +547,17 @@ export default function TestPage() {
     if (typeof window === 'undefined' || !exam) return
     const choiceQuestions = exam.questions.filter((q) => q.type === 'single_choice')
     const correctCount = choiceQuestions.filter((q) => answers[q.number] === q.correct_option).length
-    const percent = choiceQuestions.length ? Math.round((correctCount / choiceQuestions.length) * 100) : 0
+    const mistakes = choiceQuestions.length - correctCount
 
-    if (percent >= 80) {
-      fireCelebrationConfetti()
-    } else if (percent >= 70) {
-      setShowLottieConfetti(false)
-      requestAnimationFrame(() => setShowLottieConfetti(true))
+    if (mistakes < 3) {
+      setConfettiSize('large')
+      setConfettiKey((value) => value + 1)
+    } else if (mistakes <= 10) {
+      setConfettiSize('medium')
+      setConfettiKey((value) => value + 1)
+    } else if (mistakes <= 15) {
+      setConfettiSize('small')
+      setConfettiKey((value) => value + 1)
     }
 
     const MISTAKES_KEY = 'nvo_mistakes'
@@ -597,7 +602,8 @@ export default function TestPage() {
     setRevealAnswers(false)
     setContextCollapsed(false)
     setContextMediaCollapsed(false)
-    setShowLottieConfetti(false)
+    setConfettiKey(0)
+    setConfettiSize('medium')
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(storageKey)
     }
@@ -637,7 +643,7 @@ export default function TestPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
+      <ConfettiBurst burstKey={confettiKey} size={confettiSize} />
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
         {/* Score + actions bar */}
