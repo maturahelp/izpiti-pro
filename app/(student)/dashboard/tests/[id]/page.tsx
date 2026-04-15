@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import { rainbowMinimalConfettiFromElement } from '@/components/shared/ConfettiBurst'
 import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
@@ -473,7 +473,6 @@ export default function TestPage() {
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
   const [submitted, setSubmitted] = useState(false)
-  const [confettiTrigger, setConfettiTrigger] = useState(0)
   const [revealAnswers, setRevealAnswers] = useState(false)
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
@@ -541,7 +540,6 @@ export default function TestPage() {
 
   const handleSubmit = useCallback(() => {
     setSubmitted(true)
-    setConfettiTrigger((value) => value + 1)
     if (typeof window === 'undefined' || !exam) return
     const MISTAKES_KEY = 'nvo_mistakes'
     let existing: Array<{
@@ -624,7 +622,6 @@ export default function TestPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
         {/* Score + actions bar */}
@@ -973,7 +970,12 @@ function QuestionCard({
                   name={`q-${exam.id}-${question.number}`}
                   value={label}
                   checked={isSelected}
-                  onChange={() => onAnswer(question.number, label)}
+                  onChange={(event) => {
+                    onAnswer(question.number, label)
+                    if (label === question.correct_option) {
+                      rainbowMinimalConfettiFromElement(event.currentTarget.closest('label'))
+                    }
+                  }}
                   className="mt-0.5 flex-shrink-0"
                 />
                 <span className={cn(

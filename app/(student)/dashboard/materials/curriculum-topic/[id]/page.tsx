@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type MouseEvent } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import { rainbowMinimalConfettiFromElement } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 
@@ -47,7 +47,6 @@ export default function CurriculumTopicPage() {
   const [selected, setSelected] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   useEffect(() => {
     setSelected({})
@@ -81,10 +80,21 @@ export default function CurriculumTopicPage() {
     setSelected((prev) => ({ ...prev, [qIdx]: optIdx }))
   }
 
-  function handleSubmit() {
+  function celebrateCorrectAnswer(qIdx: number, target: EventTarget & HTMLElement) {
+    if (exercises[qIdx] && selected[qIdx] === exercises[qIdx].correct_index) {
+      rainbowMinimalConfettiFromElement(target)
+    }
+  }
+
+  function handleNext(event: MouseEvent<HTMLButtonElement>) {
+    celebrateCorrectAnswer(currentIndex, event.currentTarget)
+    setCurrentIndex((index) => Math.min(index + 1, exercises.length - 1))
+  }
+
+  function handleSubmit(event: MouseEvent<HTMLButtonElement>) {
     if (!allAnswered) return
+    celebrateCorrectAnswer(currentIndex, event.currentTarget)
     setSubmitted(true)
-    setConfettiTrigger((value) => value + 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -97,7 +107,6 @@ export default function CurriculumTopicPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -257,7 +266,7 @@ export default function CurriculumTopicPage() {
                     <button
                       type="button"
                       disabled={!currentAnswered}
-                      onClick={() => setCurrentIndex((index) => Math.min(index + 1, exercises.length - 1))}
+                      onClick={handleNext}
                       className={cn(
                         'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
                         currentAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'

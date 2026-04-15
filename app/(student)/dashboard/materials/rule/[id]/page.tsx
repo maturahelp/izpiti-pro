@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type MouseEvent } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import { rainbowMinimalConfettiFromElement } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
 
@@ -49,7 +49,6 @@ export default function RuleQuizPage() {
   const [submitted, setSubmitted] = useState(false)
   const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   useEffect(() => {
     if (entry) {
@@ -87,10 +86,21 @@ export default function RuleQuizPage() {
     setSelected((prev) => ({ ...prev, [qIdx]: optIdx }))
   }
 
-  function handleSubmit() {
+  function celebrateCorrectAnswer(qIdx: number, target: EventTarget & HTMLElement) {
+    if (questions[qIdx] && selected[qIdx] === questions[qIdx].correct_index) {
+      rainbowMinimalConfettiFromElement(target)
+    }
+  }
+
+  function handleNext(event: MouseEvent<HTMLButtonElement>) {
+    celebrateCorrectAnswer(currentIndex, event.currentTarget)
+    setCurrentIndex((index) => Math.min(index + 1, questions.length - 1))
+  }
+
+  function handleSubmit(event: MouseEvent<HTMLButtonElement>) {
     if (!allAnswered) return
+    celebrateCorrectAnswer(currentIndex, event.currentTarget)
     setSubmitted(true)
-    setConfettiTrigger((value) => value + 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -103,7 +113,6 @@ export default function RuleQuizPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -242,7 +251,7 @@ export default function RuleQuizPage() {
               ) : (
                 <button
                   type="button"
-                  onClick={() => setCurrentIndex((index) => Math.min(index + 1, questions.length - 1))}
+                  onClick={handleNext}
                   disabled={!currentAnswered}
                   className={cn(
                     'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import { rainbowMinimalConfettiFromElement } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
@@ -80,7 +80,6 @@ export default function Math7TopicsPage() {
   const [mathResponses, setMathResponses] = useState<Record<string, string>>({})
   const [mathSubmitted, setMathSubmitted] = useState(false)
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0)
-  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   const visibleSubtopics = useMemo(() => (
     mathTopics
@@ -208,10 +207,22 @@ export default function Math7TopicsPage() {
     window.MathJax.typesetPromise([root]).catch(() => {})
   }, [filteredProblems, mathSubmitted, currentProblemIndex, mathJaxReady])
 
-  function submitMathRun() {
+  function celebrateCurrentMathAnswer(target: EventTarget & HTMLElement) {
+    if (!currentProblem) return
+    if (isMathResponseCorrect(currentProblem, mathResponses[currentProblem.id] || '')) {
+      rainbowMinimalConfettiFromElement(target)
+    }
+  }
+
+  function goToNextMathProblem(event: MouseEvent<HTMLButtonElement>) {
+    celebrateCurrentMathAnswer(event.currentTarget)
+    setCurrentProblemIndex((index) => Math.min(index + 1, filteredProblems.length - 1))
+  }
+
+  function submitMathRun(event: MouseEvent<HTMLButtonElement>) {
     if (!allMathAnswered) return
+    celebrateCurrentMathAnswer(event.currentTarget)
     setMathSubmitted(true)
-    setConfettiTrigger((value) => value + 1)
     requestAnimationFrame(() => {
       document.getElementById('math-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     })
@@ -219,7 +230,6 @@ export default function Math7TopicsPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <Script
         id="mathjax-config"
         strategy="afterInteractive"
@@ -485,7 +495,7 @@ export default function Math7TopicsPage() {
                   ) : (
                     <button
                       type="button"
-                      onClick={() => setCurrentProblemIndex((index) => Math.min(index + 1, filteredProblems.length - 1))}
+                      onClick={goToNextMathProblem}
                       disabled={!currentProblemAnswered}
                       className={cn(
                         'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
