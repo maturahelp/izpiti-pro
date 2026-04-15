@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 
@@ -45,10 +46,13 @@ export default function CurriculumTopicPage() {
 
   const [selected, setSelected] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   useEffect(() => {
     setSelected({})
     setSubmitted(false)
+    setCurrentIndex(0)
   }, [id, viewMode])
 
   if (!topic) {
@@ -63,12 +67,14 @@ export default function CurriculumTopicPage() {
   }
 
   const exercises = topic.exercises
+  const currentExercise = exercises[Math.min(currentIndex, Math.max(exercises.length - 1, 0))]
 
   const score = submitted
     ? exercises.filter((ex, idx) => selected[idx] === ex.correct_index).length
     : 0
 
   const allAnswered = exercises.every((_, idx) => selected[idx] !== undefined)
+  const currentAnswered = selected[currentIndex] !== undefined
 
   function handleSelect(qIdx: number, optIdx: number) {
     if (submitted) return
@@ -78,17 +84,20 @@ export default function CurriculumTopicPage() {
   function handleSubmit() {
     if (!allAnswered) return
     setSubmitted(true)
+    setConfettiTrigger((value) => value + 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function handleReset() {
     setSelected({})
     setSubmitted(false)
+    setCurrentIndex(0)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -159,28 +168,22 @@ export default function CurriculumTopicPage() {
               </h2>
             </div>
 
-            <div className="space-y-4">
-              {exercises.map((ex, qIdx) => {
+            {!submitted && currentExercise && (
+              <div className="space-y-4">
+                {(() => {
+                const ex = currentExercise
+                const qIdx = currentIndex
                 const selectedOpt = selected[qIdx]
-                const isCorrect = submitted && selectedOpt === ex.correct_index
-                const isWrong = submitted && selectedOpt !== undefined && selectedOpt !== ex.correct_index
 
                 return (
                   <div
                     key={qIdx}
-                    className={cn(
-                      'rounded-2xl border p-4 md:p-5',
-                      submitted
-                        ? isCorrect
-                          ? 'border-success/40 bg-success/5'
-                          : isWrong
-                            ? 'border-danger/40 bg-danger/5'
-                            : 'border-border bg-white'
-                        : 'border-border bg-white'
-                    )}
+                    className="rounded-2xl border border-border bg-white p-4 md:p-5"
                   >
                     <div className="mb-3">
-                      <p className="text-xs font-semibold text-primary uppercase tracking-wide">Упражнение #{qIdx + 1}</p>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wide">
+                        Упражнение {qIdx + 1} от {exercises.length}
+                      </p>
                     </div>
 
                     <div className="flex gap-3 mb-4">
@@ -193,18 +196,8 @@ export default function CurriculumTopicPage() {
                     <div className="space-y-2 pl-9">
                       {ex.options.map((opt, optIdx) => {
                         const isSelected = selectedOpt === optIdx
-                        const isCorrectOpt = optIdx === ex.correct_index
-
                         let optStyle = 'border-border bg-gray-50 text-text hover:border-primary/40 hover:bg-primary/5'
-                        if (submitted) {
-                          if (isCorrectOpt) {
-                            optStyle = 'border-success bg-success/10 text-success font-semibold'
-                          } else if (isSelected && !isCorrectOpt) {
-                            optStyle = 'border-danger bg-danger/10 text-danger'
-                          } else {
-                            optStyle = 'border-border bg-gray-50 text-text-muted'
-                          }
-                        } else if (isSelected) {
+                        if (isSelected) {
                           optStyle = 'border-primary bg-primary/10 text-primary font-semibold'
                         }
 
@@ -216,7 +209,6 @@ export default function CurriculumTopicPage() {
                             className={cn(
                               'w-full text-left rounded-xl border px-3 py-2.5 text-sm transition-colors flex items-start gap-2.5',
                               optStyle,
-                              submitted && 'cursor-default'
                             )}
                           >
                             <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-[10px] font-bold flex items-center justify-center mt-0.5">
@@ -228,32 +220,79 @@ export default function CurriculumTopicPage() {
                       })}
                     </div>
 
-                    {submitted && isWrong && (
-                      <p className="mt-3 ml-9 text-xs text-text-muted italic leading-relaxed">
-                        {ex.explanation}
-                      </p>
-                    )}
                   </div>
                 )
-              })}
-            </div>
+                })()}
 
-            <div className="sticky bottom-0 py-4 bg-white/90 backdrop-blur-sm">
-              {!submitted ? (
-                <button
-                  type="button"
-                  disabled={!allAnswered}
-                  onClick={handleSubmit}
-                  className={cn(
-                    'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
-                    allAnswered
-                      ? 'bg-primary text-white hover:bg-primary-dark'
-                      : 'bg-border text-text-muted cursor-not-allowed'
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-white p-3">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentIndex((index) => Math.max(index - 1, 0))}
+                    disabled={currentIndex === 0}
+                    className={cn(
+                      'rounded-lg border px-4 py-2 text-sm font-semibold transition-colors',
+                      currentIndex === 0
+                        ? 'border-border text-text-muted opacity-40 cursor-not-allowed'
+                        : 'border-border text-text hover:border-primary hover:text-primary'
+                    )}
+                  >
+                    Предишен
+                  </button>
+                  <span className="text-xs font-semibold text-text-muted">
+                    {currentIndex + 1} / {exercises.length}
+                  </span>
+                  {currentIndex === exercises.length - 1 ? (
+                    <button
+                      type="button"
+                      disabled={!allAnswered}
+                      onClick={handleSubmit}
+                      className={cn(
+                        'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
+                        allAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                      )}
+                    >
+                      Провери отговорите
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={!currentAnswered}
+                      onClick={() => setCurrentIndex((index) => Math.min(index + 1, exercises.length - 1))}
+                      className={cn(
+                        'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
+                        currentAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                      )}
+                    >
+                      Следващ въпрос
+                    </button>
                   )}
-                >
-                  Провери отговорите
-                </button>
-              ) : (
+                </div>
+              </div>
+            )}
+
+            {submitted && (
+              <div className="space-y-4">
+                <div className={cn(
+                  'rounded-2xl border p-4 text-center',
+                  score >= exercises.length * 0.8 ? 'border-success/30 bg-success/10' : 'border-amber/30 bg-amber/10'
+                )}>
+                  <p className="text-2xl font-bold text-text">{score}/{exercises.length}</p>
+                  <p className="text-sm font-semibold text-text-muted mt-1">верни отговори</p>
+                </div>
+                {exercises.map((ex, qIdx) => {
+                  const selectedOpt = selected[qIdx]
+                  const isCorrect = selectedOpt === ex.correct_index
+                  return (
+                    <div key={qIdx} className={cn('rounded-2xl border p-4 md:p-5', isCorrect ? 'border-success/40 bg-success/5' : 'border-danger/40 bg-danger/5')}>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Упражнение #{qIdx + 1}</p>
+                      <p className="text-sm font-medium text-text leading-relaxed mb-3">{ex.question}</p>
+                      <p className={cn('rounded-lg px-3 py-2 text-sm font-semibold', isCorrect ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger')}>
+                        {isCorrect ? 'Верен отговор' : `Верен отговор: ${OPTION_LABELS[ex.correct_index]}`}
+                      </p>
+                      {!isCorrect && <p className="mt-3 text-xs text-text-muted italic leading-relaxed">{ex.explanation}</p>}
+                    </div>
+                  )
+                })}
                 <button
                   type="button"
                   onClick={handleReset}
@@ -261,8 +300,8 @@ export default function CurriculumTopicPage() {
                 >
                   Опитай отново
                 </button>
-              )}
-            </div>
+              </div>
+            )}
           </>
         )}
       </div>

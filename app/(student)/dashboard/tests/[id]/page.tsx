@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
@@ -472,6 +473,7 @@ export default function TestPage() {
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
   const [submitted, setSubmitted] = useState(false)
+  const [confettiTrigger, setConfettiTrigger] = useState(0)
   const [revealAnswers, setRevealAnswers] = useState(false)
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
@@ -539,6 +541,7 @@ export default function TestPage() {
 
   const handleSubmit = useCallback(() => {
     setSubmitted(true)
+    setConfettiTrigger((value) => value + 1)
     if (typeof window === 'undefined' || !exam) return
     const MISTAKES_KEY = 'nvo_mistakes'
     let existing: Array<{
@@ -621,6 +624,7 @@ export default function TestPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
         {/* Score + actions bar */}
@@ -648,12 +652,6 @@ export default function TestPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={handleSubmit}
-              className="btn-primary text-sm px-4 py-2"
-            >
-              Провери отговорите
-            </button>
             <button
               onClick={() => setRevealAnswers((v) => !v)}
               className="btn-secondary text-sm px-4 py-2"
@@ -769,6 +767,17 @@ export default function TestPage() {
           ))}
         </div>
 
+        {!submitted && (
+          <div className="rounded-xl border border-border bg-white p-3">
+            <button
+              onClick={handleSubmit}
+              className="w-full rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+            >
+              Провери отговорите
+            </button>
+          </div>
+        )}
+
         <div className="flex flex-wrap gap-3 pt-2">
           <Link href="/dashboard/tests" className="btn-secondary">
             Обратно към тестовете
@@ -812,6 +821,7 @@ function QuestionCard({
   const showFeedback = submitted || revealAnswers
   const chosen = answers[question.number]
   const isChoiceCorrect = chosen === question.correct_option
+  const embeddedInstruction = getEmbeddedInstructionForQuestion(exam, question.number)
 
   const cardBorder =
     showFeedback && question.type === 'single_choice'
@@ -892,6 +902,11 @@ function QuestionCard({
 
       {/* Question text */}
       <div className="text-sm font-medium text-text leading-relaxed mb-4">
+        {embeddedInstruction && (
+          <p className="mb-3 rounded-lg border border-primary/20 bg-primary-light px-3 py-2 text-xs font-semibold text-primary">
+            {embeddedInstruction}
+          </p>
+        )}
         {questionContent}
       </div>
 
@@ -934,7 +949,7 @@ function QuestionCard({
             const showCorrect = showFeedback && isCorrect
             const showWrong = showFeedback && isSelected && !isCorrect
 
-            let optText: React.ReactNode = normalizeMathText(text || 'Избор по изображение')
+            let optText: React.ReactNode = normalizeMathText(stripEmbeddedInstruction(text || 'Избор по изображение'))
             if (override?.optionsHtml?.[label]) {
               optText = <span dangerouslySetInnerHTML={{ __html: override.optionsHtml[label] }} />
             }
@@ -988,7 +1003,7 @@ function QuestionCard({
           {question.options && Object.entries(question.options).map(([label, text]) => (
             <div key={label} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-gray-50 text-sm text-text-muted">
               <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold flex-shrink-0">{label}</span>
-              <span>{normalizeMathText(text)}</span>
+              <span>{normalizeMathText(stripEmbeddedInstruction(text))}</span>
             </div>
           ))}
           <div className="space-y-3">
@@ -1162,4 +1177,47 @@ function formatStructuredAnswer(text: string): string {
   return text
     .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n$2)')
     .replace(/^([АБВГД])\)/gm, '$1)')
+}
+
+function stripEmbeddedInstruction(text: string): string {
+  return (text || '').replace(/\s*Прочетете[\s\S]*$/u, '').trim()
+}
+
+function getEmbeddedInstructionForQuestion(exam: NvoExam, questionNumber: number): string {
+  for (const question of exam.questions) {
+    if (question.number >= questionNumber || !question.options) continue
+    for (const optionText of Object.values(question.options)) {
+      const start = optionText.indexOf('Прочетете')
+      if (start < 0) continue
+      const instruction = optionText.slice(start).replace(/\s+/g, ' ').trim()
+      if (instructionAppliesToQuestion(instruction, questionNumber)) {
+        return instruction
+      }
+    }
+  }
+  return ''
+}
+
+function instructionAppliesToQuestion(instruction: string, questionNumber: number): boolean {
+  const rangeMatch = instruction.match(/от\s+(\d+)\.\s*до\s*(\d+)\./i)
+  if (rangeMatch) {
+    const start = Number(rangeMatch[1])
+    const end = Number(rangeMatch[2])
+    return questionNumber >= start && questionNumber <= end
+  }
+
+  const pairMatch = instruction.match(/(\d+)\.\s*(?:и|,)\s*(\d+)\.\s*(?:задач|въпрос)/i)
+    || instruction.match(/задач[иите\s]*\s+(\d+)\.\s*и\s*(\d+)\./i)
+  if (pairMatch) {
+    const first = Number(pairMatch[1])
+    const second = Number(pairMatch[2])
+    return questionNumber === first || questionNumber === second
+  }
+
+  const singleMatch = instruction.match(/задач[аи]?\s+(\d+)\./i)
+  if (singleMatch) {
+    return questionNumber === Number(singleMatch[1])
+  }
+
+  return false
 }

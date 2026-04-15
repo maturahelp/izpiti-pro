@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
@@ -75,9 +76,11 @@ export default function Math7TopicsPage() {
   const [difficulty, setDifficulty] = useState('')
   const [problemType, setProblemType] = useState('')
   const [query, setQuery] = useState('')
-  const [showAnswers, setShowAnswers] = useState(false)
-  const [openAnswers, setOpenAnswers] = useState<Record<string, boolean>>({})
   const [mathJaxReady, setMathJaxReady] = useState(false)
+  const [mathResponses, setMathResponses] = useState<Record<string, string>>({})
+  const [mathSubmitted, setMathSubmitted] = useState(false)
+  const [currentProblemIndex, setCurrentProblemIndex] = useState(0)
+  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   const visibleSubtopics = useMemo(() => (
     mathTopics
@@ -141,6 +144,19 @@ export default function Math7TopicsPage() {
     return null
   }, [subtopicId])
 
+  const currentProblem = filteredProblems[Math.min(currentProblemIndex, Math.max(filteredProblems.length - 1, 0))]
+  const currentProblemAnswered = currentProblem ? Boolean((mathResponses[currentProblem.id] || '').trim()) : false
+  const allMathAnswered = filteredProblems.length > 0 && filteredProblems.every((problem) => (mathResponses[problem.id] || '').trim())
+  const mathScore = mathSubmitted
+    ? filteredProblems.filter((problem) => isMathResponseCorrect(problem, mathResponses[problem.id] || '')).length
+    : 0
+
+  useEffect(() => {
+    setMathResponses({})
+    setMathSubmitted(false)
+    setCurrentProblemIndex(0)
+  }, [difficulty, problemType, query, subtopicId])
+
   useEffect(() => {
     const selectedSubtopicId = new URLSearchParams(window.location.search).get('subtopic')
     if (!selectedSubtopicId) return
@@ -160,8 +176,9 @@ export default function Math7TopicsPage() {
     setDifficulty('')
     setProblemType('')
     setQuery('')
-    setShowAnswers(false)
-    setOpenAnswers({})
+    setMathResponses({})
+    setMathSubmitted(false)
+    setCurrentProblemIndex(0)
     window.history.replaceState(null, '', `/dashboard/materials/math-7-topics?subtopic=${nextSubtopicId}`)
     requestAnimationFrame(() => {
       document.getElementById('math-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -174,8 +191,9 @@ export default function Math7TopicsPage() {
     setDifficulty('')
     setProblemType('')
     setQuery('')
-    setShowAnswers(false)
-    setOpenAnswers({})
+    setMathResponses({})
+    setMathSubmitted(false)
+    setCurrentProblemIndex(0)
     window.history.replaceState(null, '', '/dashboard/materials/math-7-topics')
     requestAnimationFrame(() => {
       document.getElementById('math-subtopic-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -188,14 +206,20 @@ export default function Math7TopicsPage() {
     if (!root) return
     window.MathJax.typesetClear?.([root])
     window.MathJax.typesetPromise([root]).catch(() => {})
-  }, [filteredProblems, openAnswers, showAnswers, mathJaxReady])
+  }, [filteredProblems, mathSubmitted, currentProblemIndex, mathJaxReady])
 
-  function toggleAnswer(problemId: string) {
-    setOpenAnswers((prev) => ({ ...prev, [problemId]: !prev[problemId] }))
+  function submitMathRun() {
+    if (!allMathAnswered) return
+    setMathSubmitted(true)
+    setConfettiTrigger((value) => value + 1)
+    requestAnimationFrame(() => {
+      document.getElementById('math-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
   }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <Script
         id="mathjax-config"
         strategy="afterInteractive"
@@ -327,13 +351,19 @@ export default function Math7TopicsPage() {
                 {formatTitleText(selectedSubtopic.title)}
               </h2>
             </div>
-            <button
-              type="button"
-              onClick={() => setShowAnswers((value) => !value)}
-              className="rounded-lg border border-primary bg-white px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-light transition-colors"
-            >
-              {showAnswers ? 'Скрий всички отговори' : 'Покажи всички отговори'}
-            </button>
+            {mathSubmitted && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMathResponses({})
+                  setMathSubmitted(false)
+                  setCurrentProblemIndex(0)
+                }}
+                className="rounded-lg border border-primary bg-white px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-light transition-colors"
+              >
+                Опитай отново
+              </button>
+            )}
           </div>
 
           <div className="mb-5 grid md:grid-cols-3 gap-3">
@@ -371,73 +401,133 @@ export default function Math7TopicsPage() {
           </div>
 
           <div id="math-problem-list" className="space-y-4">
-            {filteredProblems.map((problem, index) => {
-              const isOpen = showAnswers || openAnswers[problem.id]
-              return (
-                <article key={problem.id} className="rounded-2xl border border-border bg-white p-4 md:p-5">
-                    <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
-                      <div className="flex flex-wrap gap-2">
-                        <Badge>{problem.topicTitle}</Badge>
-                        <Badge>{problem.subtopicTitle}</Badge>
-                        <Badge tone={problem.difficulty}>{difficultyLabels[problem.difficulty]}</Badge>
-                        <Badge>{typeLabels[problem.type]}</Badge>
-                      </div>
-                      <span className="text-xs text-text-muted">{problem.id} · #{index + 1}</span>
-                    </div>
+            {filteredProblems.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-border bg-white p-8 text-center text-text-muted">
+                Няма задачи за избраните филтри.
+              </div>
+            )}
 
-                    <p className="text-sm md:text-base font-semibold text-text leading-relaxed mb-4">
-                      <MathText text={problem.question} mathJaxReady={mathJaxReady} />
-                    </p>
+            {!mathSubmitted && currentProblem && (
+              <article className="rounded-2xl border border-border bg-white p-4 md:p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge>{currentProblem.topicTitle}</Badge>
+                    <Badge>{currentProblem.subtopicTitle}</Badge>
+                    <Badge tone={currentProblem.difficulty}>{difficultyLabels[currentProblem.difficulty]}</Badge>
+                    <Badge>{typeLabels[currentProblem.type]}</Badge>
+                  </div>
+                  <span className="text-xs text-text-muted">
+                    {currentProblem.id} · {currentProblemIndex + 1}/{filteredProblems.length}
+                  </span>
+                </div>
 
-                    {problem.type === 'multiple_choice' && problem.options && (
-                      <div className="space-y-2 mb-4">
-                        {Object.entries(problem.options).map(([label, value]) => {
-                          const isCorrect = isOpen && value === problem.correctAnswer
-                          return (
-                            <div
-                              key={label}
-                              className={cn(
-                                'rounded-xl border px-3 py-2.5 text-sm',
-                                isCorrect
-                                  ? 'border-success bg-success/10 text-success font-semibold'
-                                  : 'border-border bg-gray-50 text-text'
-                              )}
-                            >
-                              <span className="font-bold mr-2">{label}.</span>
-                              <MathText text={value} mathJaxReady={mathJaxReady} />
-                            </div>
-                          )
-                        })}
-                      </div>
+                <p className="text-sm md:text-base font-semibold text-text leading-relaxed mb-4">
+                  <MathText text={currentProblem.question} mathJaxReady={mathJaxReady} />
+                </p>
+
+                {currentProblem.type === 'multiple_choice' && currentProblem.options ? (
+                  <div className="space-y-2 mb-4">
+                    {Object.entries(currentProblem.options).map(([label, value]) => {
+                      const isSelected = mathResponses[currentProblem.id] === value
+                      return (
+                        <button
+                          key={label}
+                          type="button"
+                          onClick={() => setMathResponses((prev) => ({ ...prev, [currentProblem.id]: value }))}
+                          className={cn(
+                            'w-full rounded-xl border px-3 py-2.5 text-left text-sm transition-colors',
+                            isSelected
+                              ? 'border-primary bg-primary/10 text-primary font-semibold'
+                              : 'border-border bg-gray-50 text-text hover:border-primary/40 hover:bg-primary/5'
+                          )}
+                        >
+                          <span className="font-bold mr-2">{label}.</span>
+                          <MathText text={value} mathJaxReady={mathJaxReady} />
+                        </button>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <input
+                    value={mathResponses[currentProblem.id] || ''}
+                    onChange={(event) => setMathResponses((prev) => ({ ...prev, [currentProblem.id]: event.target.value }))}
+                    placeholder="Запиши своя отговор"
+                    className="input-field mb-4"
+                  />
+                )}
+
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentProblemIndex((index) => Math.max(index - 1, 0))}
+                    disabled={currentProblemIndex === 0}
+                    className={cn(
+                      'rounded-lg border px-4 py-2 text-sm font-semibold transition-colors',
+                      currentProblemIndex === 0
+                        ? 'border-border text-text-muted opacity-40 cursor-not-allowed'
+                        : 'border-border text-text hover:border-primary hover:text-primary'
                     )}
-
+                  >
+                    Предишен
+                  </button>
+                  {currentProblemIndex === filteredProblems.length - 1 ? (
                     <button
                       type="button"
-                      onClick={() => toggleAnswer(problem.id)}
-                      className="rounded-xl border border-primary/40 bg-primary-light px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/15 transition-colors"
+                      onClick={submitMathRun}
+                      disabled={!allMathAnswered}
+                      className={cn(
+                        'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
+                        allMathAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                      )}
                     >
-                      {isOpen ? 'Скрий отговора' : 'Покажи отговора'}
+                      Провери отговорите
                     </button>
-
-                    {isOpen && (
-                      <div className="mt-4 rounded-xl border border-[#D7E7F7] bg-[#F8FBFF] p-4 text-sm text-text">
-                        <p className="mb-2"><strong>Отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
-                        <p className="mb-2 leading-relaxed"><strong>Решение:</strong> <MathText text={problem.explanation} mathJaxReady={mathJaxReady} /></p>
-                        <p className="text-xs text-text-muted">
-                          <strong>Умения:</strong> {problem.skills.join(', ')}
-                        </p>
-                      </div>
-                    )}
-                  </article>
-                )
-              })}
-
-              {filteredProblems.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-border bg-white p-8 text-center text-text-muted">
-                  Няма задачи за избраните филтри.
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setCurrentProblemIndex((index) => Math.min(index + 1, filteredProblems.length - 1))}
+                      disabled={!currentProblemAnswered}
+                      className={cn(
+                        'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
+                        currentProblemAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                      )}
+                    >
+                      Следваща задача
+                    </button>
+                  )}
                 </div>
-              )}
-            </div>
+              </article>
+            )}
+
+            {mathSubmitted && (
+              <>
+                <div className="rounded-2xl border border-success/30 bg-success/10 p-4 text-center">
+                  <p className="text-2xl font-bold text-text">{mathScore}/{filteredProblems.length}</p>
+                  <p className="text-sm font-semibold text-text-muted mt-1">верни отговори</p>
+                </div>
+                {filteredProblems.map((problem, index) => {
+                  const response = mathResponses[problem.id] || ''
+                  const isCorrect = isMathResponseCorrect(problem, response)
+                  return (
+                    <article key={problem.id} className={cn('rounded-2xl border p-4 md:p-5', isCorrect ? 'border-success/40 bg-success/5' : 'border-danger/40 bg-danger/5')}>
+                      <p className="mb-2 text-xs font-semibold text-primary uppercase tracking-wide">Задача #{index + 1}</p>
+                      <p className="text-sm md:text-base font-semibold text-text leading-relaxed mb-3">
+                        <MathText text={problem.question} mathJaxReady={mathJaxReady} />
+                      </p>
+                      <div className={cn('rounded-lg px-3 py-2 text-sm font-semibold', isCorrect ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger')}>
+                        {isCorrect ? 'Верен отговор' : 'Невярно'}
+                      </div>
+                      <div className="mt-3 rounded-xl border border-[#D7E7F7] bg-white/80 p-4 text-sm text-text">
+                        <p className="mb-2"><strong>Твоят отговор:</strong> <MathText text={response || '-'} mathJaxReady={mathJaxReady} /></p>
+                        <p className="mb-2"><strong>Верен отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
+                        <p className="leading-relaxed"><strong>Решение:</strong> <MathText text={problem.explanation} mathJaxReady={mathJaxReady} /></p>
+                      </div>
+                    </article>
+                  )
+                })}
+              </>
+            )}
+          </div>
           </section>
         )}
       </div>
@@ -455,6 +545,20 @@ function MathText({ text, mathJaxReady }: { text: string; mathJaxReady: boolean 
   }, [text, mathJaxReady])
 
   return <span ref={ref}>{text}</span>
+}
+
+function normalizeMathAnswer(text: string): string {
+  return (text || '')
+    .replace(/\$/g, '')
+    .replace(/[{}\\]/g, '')
+    .replace(/\s+/g, '')
+    .replace(',', '.')
+    .toLowerCase()
+}
+
+function isMathResponseCorrect(problem: MathProblem, response: string): boolean {
+  if (!response) return false
+  return normalizeMathAnswer(response) === normalizeMathAnswer(problem.correctAnswer)
 }
 
 function formatTitleText(text: string) {

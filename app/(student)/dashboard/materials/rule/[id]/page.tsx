@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
 
@@ -47,12 +48,15 @@ export default function RuleQuizPage() {
   const [selected, setSelected] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState(false)
   const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   useEffect(() => {
     if (entry) {
       setShuffledQuestions([...entry.topic.questions])
       setSelected({})
       setSubmitted(false)
+      setCurrentIndex(0)
     }
   }, [id])
 
@@ -75,6 +79,8 @@ export default function RuleQuizPage() {
     : 0
 
   const allAnswered = questions.every((_, idx) => selected[idx] !== undefined)
+  const currentQuestion = questions[Math.min(currentIndex, Math.max(questions.length - 1, 0))]
+  const currentAnswered = selected[currentIndex] !== undefined
 
   function handleSelect(qIdx: number, optIdx: number) {
     if (submitted) return
@@ -84,17 +90,20 @@ export default function RuleQuizPage() {
   function handleSubmit() {
     if (!allAnswered) return
     setSubmitted(true)
+    setConfettiTrigger((value) => value + 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function handleReset() {
     setSelected({})
     setSubmitted(false)
+    setCurrentIndex(0)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst trigger={confettiTrigger} message="Тестът е проверен!" />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -148,27 +157,21 @@ export default function RuleQuizPage() {
           )}
         </div>
 
-        {/* Questions */}
-        <div className="space-y-4">
-          {questions.map((q, qIdx) => {
+        {!submitted && currentQuestion && (
+          <div className="space-y-4">
+            {(() => {
+            const q = currentQuestion
+            const qIdx = currentIndex
             const selectedOpt = selected[qIdx]
-            const isCorrect = submitted && selectedOpt === q.correct_index
-            const isWrong = submitted && selectedOpt !== undefined && selectedOpt !== q.correct_index
 
             return (
               <div
                 key={qIdx}
-                className={cn(
-                  'rounded-2xl border p-4 md:p-5',
-                  submitted
-                    ? isCorrect
-                      ? 'border-success/40 bg-success/5'
-                      : isWrong
-                        ? 'border-danger/40 bg-danger/5'
-                        : 'border-border bg-white'
-                    : 'border-border bg-white'
-                )}
+                className="rounded-2xl border border-border bg-white p-4 md:p-5"
               >
+                <p className="mb-3 text-xs font-semibold text-primary uppercase tracking-wide">
+                  Въпрос {qIdx + 1} от {questions.length}
+                </p>
                 <div className="flex gap-3 mb-4">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
                     {qIdx + 1}
@@ -179,18 +182,8 @@ export default function RuleQuizPage() {
                 <div className="space-y-2 pl-9">
                   {q.options.map((opt, optIdx) => {
                     const isSelected = selectedOpt === optIdx
-                    const isCorrectOpt = optIdx === q.correct_index
-
                     let optStyle = 'border-border bg-gray-50 text-text hover:border-primary/40 hover:bg-primary/5'
-                    if (submitted) {
-                      if (isCorrectOpt) {
-                        optStyle = 'border-success bg-success/10 text-success font-semibold'
-                      } else if (isSelected && !isCorrectOpt) {
-                        optStyle = 'border-danger bg-danger/10 text-danger'
-                      } else {
-                        optStyle = 'border-border bg-gray-50 text-text-muted'
-                      }
-                    } else if (isSelected) {
+                    if (isSelected) {
                       optStyle = 'border-primary bg-primary/10 text-primary font-semibold'
                     }
 
@@ -202,7 +195,6 @@ export default function RuleQuizPage() {
                         className={cn(
                           'w-full text-left rounded-xl border px-3 py-2.5 text-sm transition-colors flex items-start gap-2.5',
                           optStyle,
-                          submitted && 'cursor-default'
                         )}
                       >
                         <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-[10px] font-bold flex items-center justify-center mt-0.5">
@@ -214,31 +206,78 @@ export default function RuleQuizPage() {
                   })}
                 </div>
 
-                {submitted && isWrong && (
-                  <p className="mt-3 ml-9 text-xs text-text-muted italic leading-relaxed">
-                    {q.explanation}
-                  </p>
-                )}
               </div>
             )
-          })}
-        </div>
+            })()}
 
-        {/* Submit button */}
-        {!submitted && (
-          <div className="mt-6 flex flex-col items-center gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-white p-3">
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((index) => Math.max(index - 1, 0))}
+                disabled={currentIndex === 0}
+                className={cn(
+                  'rounded-lg border px-4 py-2 text-sm font-semibold transition-colors',
+                  currentIndex === 0
+                    ? 'border-border text-text-muted opacity-40 cursor-not-allowed'
+                    : 'border-border text-text hover:border-primary hover:text-primary'
+                )}
+              >
+                Предишен
+              </button>
+              <span className="text-xs font-semibold text-text-muted">
+                {currentIndex + 1} / {questions.length}
+              </span>
+              {currentIndex === questions.length - 1 ? (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!allAnswered}
+                  className={cn(
+                    'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
+                    allAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                  )}
+                >
+                  Провери отговорите
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex((index) => Math.min(index + 1, questions.length - 1))}
+                  disabled={!currentAnswered}
+                  className={cn(
+                    'rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors',
+                    currentAnswered ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-gray-100 text-text-muted cursor-not-allowed'
+                  )}
+                >
+                  Следващ въпрос
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {submitted && (
+          <div className="space-y-4">
+            {questions.map((q, qIdx) => {
+              const selectedOpt = selected[qIdx]
+              const isCorrect = selectedOpt === q.correct_index
+              return (
+                <div key={qIdx} className={cn('rounded-2xl border p-4 md:p-5', isCorrect ? 'border-success/40 bg-success/5' : 'border-danger/40 bg-danger/5')}>
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Въпрос #{qIdx + 1}</p>
+                  <p className="text-sm font-medium text-text leading-relaxed mb-3">{q.text}</p>
+                  <p className={cn('rounded-lg px-3 py-2 text-sm font-semibold', isCorrect ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger')}>
+                    {isCorrect ? 'Верен отговор' : `Верен отговор: ${OPTION_LABELS[q.correct_index]}`}
+                  </p>
+                  {!isCorrect && <p className="mt-3 text-xs text-text-muted italic leading-relaxed">{q.explanation}</p>}
+                </div>
+              )
+            })}
             <button
               type="button"
-              onClick={handleSubmit}
-              disabled={!allAnswered}
-              className={cn(
-                'w-full max-w-sm rounded-xl py-3 text-sm font-semibold transition-colors',
-                allAnswered
-                  ? 'bg-primary text-white hover:bg-primary-dark'
-                  : 'bg-gray-100 text-text-muted cursor-not-allowed'
-              )}
+              onClick={handleReset}
+              className="w-full rounded-xl py-3 text-sm font-semibold bg-white border border-primary text-primary hover:bg-primary/5 transition-colors"
             >
-              {allAnswered ? 'Провери отговорите' : `Отговори на всички въпроси (${Object.keys(selected).length}/${questions.length})`}
+              Опитай отново
             </button>
           </div>
         )}
