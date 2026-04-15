@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 
@@ -45,10 +46,15 @@ export default function CurriculumTopicPage() {
 
   const [selected, setSelected] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [confettiKey, setConfettiKey] = useState(0)
+  const [celebrated, setCelebrated] = useState<Record<number, boolean>>({})
 
   useEffect(() => {
     setSelected({})
     setSubmitted(false)
+    setCurrentIndex(0)
+    setCelebrated({})
   }, [id, viewMode])
 
   if (!topic) {
@@ -69,14 +75,22 @@ export default function CurriculumTopicPage() {
     : 0
 
   const allAnswered = exercises.every((_, idx) => selected[idx] !== undefined)
+  const currentExercise = exercises[currentIndex] ?? exercises[0]
+  const currentSelected = selected[currentIndex]
+  const currentAnswered = currentSelected !== undefined
+  const progressPercent = exercises.length ? ((currentIndex + 1) / exercises.length) * 100 : 0
 
   function handleSelect(qIdx: number, optIdx: number) {
     if (submitted) return
     setSelected((prev) => ({ ...prev, [qIdx]: optIdx }))
+    if (optIdx === exercises[qIdx]?.correct_index && !celebrated[qIdx]) {
+      setConfettiKey((value) => value + 1)
+      setCelebrated((prev) => ({ ...prev, [qIdx]: true }))
+    }
   }
 
   function handleSubmit() {
-    if (!allAnswered) return
+    if (!allAnswered || currentIndex < exercises.length - 1) return
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -84,11 +98,32 @@ export default function CurriculumTopicPage() {
   function handleReset() {
     setSelected({})
     setSubmitted(false)
+    setCurrentIndex(0)
+    setCelebrated({})
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function retryCurrentQuestion() {
+    setSelected((prev) => {
+      const next = { ...prev }
+      delete next[currentIndex]
+      return next
+    })
+  }
+
+  function handleNextQuestion() {
+    if (!currentAnswered) return
+    if (currentIndex < exercises.length - 1) {
+      setCurrentIndex((value) => value + 1)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    handleSubmit()
   }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst burstKey={confettiKey} />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -157,20 +192,31 @@ export default function CurriculumTopicPage() {
               <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wide">
                 Упражнения ({exercises.length} въпроса)
               </h2>
+              <div className="mt-3">
+                <div className="mb-2 flex items-center justify-between text-xs font-semibold text-text-muted">
+                  <span>Въпрос {currentIndex + 1} от {exercises.length}</span>
+                  <span>{Math.round(progressPercent)}%</span>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+                  <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progressPercent}%` }} />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-4">
-              {exercises.map((ex, qIdx) => {
-                const selectedOpt = selected[qIdx]
-                const isCorrect = submitted && selectedOpt === ex.correct_index
-                const isWrong = submitted && selectedOpt !== undefined && selectedOpt !== ex.correct_index
+              {currentExercise && (() => {
+                const ex = currentExercise
+                const qIdx = currentIndex
+                const selectedOpt = currentSelected
+                const isCorrect = selectedOpt === ex.correct_index
+                const isWrong = selectedOpt !== undefined && selectedOpt !== ex.correct_index
 
                 return (
                   <div
                     key={qIdx}
                     className={cn(
                       'rounded-2xl border p-4 md:p-5',
-                      submitted
+                      submitted || selectedOpt !== undefined
                         ? isCorrect
                           ? 'border-success/40 bg-success/5'
                           : isWrong
@@ -204,6 +250,10 @@ export default function CurriculumTopicPage() {
                           } else {
                             optStyle = 'border-border bg-gray-50 text-text-muted'
                           }
+                        } else if (isSelected && isCorrectOpt) {
+                          optStyle = 'border-success bg-success/10 text-success font-semibold'
+                        } else if (isSelected && !isCorrectOpt) {
+                          optStyle = 'border-danger bg-danger/10 text-danger'
                         } else if (isSelected) {
                           optStyle = 'border-primary bg-primary/10 text-primary font-semibold'
                         }
@@ -228,31 +278,53 @@ export default function CurriculumTopicPage() {
                       })}
                     </div>
 
-                    {submitted && isWrong && (
-                      <p className="mt-3 ml-9 text-xs text-text-muted italic leading-relaxed">
-                        {ex.explanation}
-                      </p>
+                    {isWrong && (
+                      <div className="mt-3 ml-9 rounded-xl border border-danger/20 bg-danger/5 p-3">
+                        <p className="text-xs text-danger font-semibold">Не е вярно. Можеш да повториш този въпрос.</p>
+                        <button
+                          type="button"
+                          onClick={retryCurrentQuestion}
+                          className="mt-2 rounded-lg border border-danger/30 bg-white px-3 py-1.5 text-xs font-semibold text-danger hover:bg-danger/5 transition-colors"
+                        >
+                          Повтори въпроса
+                        </button>
+                      </div>
                     )}
                   </div>
                 )
-              })}
+              })()}
             </div>
 
             <div className="sticky bottom-0 py-4 bg-white/90 backdrop-blur-sm">
               {!submitted ? (
-                <button
-                  type="button"
-                  disabled={!allAnswered}
-                  onClick={handleSubmit}
-                  className={cn(
-                    'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
-                    allAnswered
-                      ? 'bg-primary text-white hover:bg-primary-dark'
-                      : 'bg-border text-text-muted cursor-not-allowed'
-                  )}
-                >
-                  Провери отговорите
-                </button>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentIndex((value) => Math.max(0, value - 1))}
+                    disabled={currentIndex === 0}
+                    className={cn(
+                      'rounded-xl border px-5 py-3 text-sm font-semibold transition-colors',
+                      currentIndex === 0
+                        ? 'border-border bg-gray-50 text-text-muted cursor-not-allowed'
+                        : 'border-primary text-primary hover:bg-primary/5'
+                    )}
+                  >
+                    Предишен
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!currentAnswered}
+                    onClick={handleNextQuestion}
+                    className={cn(
+                      'rounded-xl px-6 py-3 text-sm font-semibold transition-colors',
+                      currentAnswered
+                        ? 'bg-primary text-white hover:bg-primary-dark'
+                        : 'bg-border text-text-muted cursor-not-allowed'
+                    )}
+                  >
+                    {currentIndex === exercises.length - 1 ? 'Провери отговорите' : 'Следващ въпрос'}
+                  </button>
+                </div>
               ) : (
                 <button
                   type="button"
