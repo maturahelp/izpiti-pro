@@ -849,22 +849,24 @@ export default function TestPage() {
         )}
         <div className="space-y-5">
           {exam.questions.map((q) => (
-            <QuestionCard
-              key={q.number}
-              exam={exam}
-              question={q}
-              answers={answers}
-              openResponses={openResponses}
-              submitted={submitted}
-              revealAnswers={revealAnswers}
-              onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
-              onOpenResponse={(num, label, val) =>
-                setOpenResponses((prev) => ({
-                  ...prev,
-                  [num]: { ...(prev[num] || {}), [label]: val },
-                }))
-              }
-            />
+            <div key={q.number} className="space-y-5">
+              {q.shared_instruction && <SharedInstructionCard instruction={q.shared_instruction} />}
+              <QuestionCard
+                exam={exam}
+                question={q}
+                answers={answers}
+                openResponses={openResponses}
+                submitted={submitted}
+                revealAnswers={revealAnswers}
+                onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
+                onOpenResponse={(num, label, val) =>
+                  setOpenResponses((prev) => ({
+                    ...prev,
+                    [num]: { ...(prev[num] || {}), [label]: val },
+                  }))
+                }
+              />
+            </div>
           ))}
         </div>
 
@@ -884,6 +886,23 @@ export default function TestPage() {
 // ---------------------------------------------------------------------------
 // QuestionCard
 // ---------------------------------------------------------------------------
+function SharedInstructionCard({
+  instruction,
+}: {
+  instruction: string
+}) {
+  return (
+    <div className="rounded-2xl border border-sky-200 bg-sky-50/80 px-5 py-4 shadow-sm">
+      <p className="text-[11px] font-bold uppercase tracking-wide text-sky-700 mb-1.5">
+        Общо условие
+      </p>
+      <p className="text-sm font-medium leading-relaxed text-sky-950 whitespace-pre-wrap">
+        {instruction}
+      </p>
+    </div>
+  )
+}
+
 function QuestionCard({
   exam,
   question,
@@ -970,17 +989,6 @@ function QuestionCard({
 
   return (
     <div className={cn('card p-5 border-2', cardBorder)}>
-      {question.shared_instruction && (
-        <div className="mb-4 rounded-xl border border-sky-200 bg-sky-50/80 px-4 py-3">
-          <p className="text-[11px] font-bold uppercase tracking-wide text-sky-700 mb-1">
-            Общо условие
-          </p>
-          <p className="text-sm font-medium leading-relaxed text-sky-950 whitespace-pre-wrap">
-            {question.shared_instruction}
-          </p>
-        </div>
-      )}
-
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <span className="font-mono text-xs font-bold text-primary-dark">Въпрос {question.number}</span>
