@@ -173,6 +173,14 @@ const sectionLabels: Record<MaterialSection, string> = {
   english: 'Английски',
 }
 
+function isLiteratureSummaryHeading(line: string) {
+  const trimmed = line.trim()
+
+  if (!trimmed) return false
+
+  return trimmed === trimmed.toUpperCase() && /[A-ZА-Я]/.test(trimmed)
+}
+
 const grade12Sections: MaterialSection[] = ['bulgarian', 'literature', 'english']
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
@@ -1254,10 +1262,24 @@ export default function MaterialsPage() {
                       <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
                         <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
                         {activeWorkSummary.length > 0 ? (
-                          <div className="space-y-2 text-sm leading-7 text-text">
-                            {activeWorkSummary.map((sentence, index) => (
-                              <p key={`${activeWork.id}-summary-${index}`}>{sentence}</p>
-                            ))}
+                          <div className="space-y-2">
+                            {activeWorkSummary.map((sentence, index) =>
+                              isLiteratureSummaryHeading(sentence) ? (
+                                <h5
+                                  key={`${activeWork.id}-summary-${index}`}
+                                  className={cn(
+                                    'text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#1E4D7B]',
+                                    index > 0 && 'pt-3'
+                                  )}
+                                >
+                                  {sentence}
+                                </h5>
+                              ) : (
+                                <p key={`${activeWork.id}-summary-${index}`} className="text-sm leading-7 text-text">
+                                  {sentence}
+                                </p>
+                              )
+                            )}
                           </div>
                         ) : (
                           <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
