@@ -752,115 +752,106 @@ export default function MaterialsPage() {
                 </button>
               </div>
               <div className="p-4 md:p-6">
-                {activeNvoWorkPanel === 'text' ? (
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap gap-2">
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="rounded-xl bg-[#1E4D7B] text-white text-xs font-semibold py-2.5 px-4">Видео урок</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
-                    </div>
-                    <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
-                      <div className="mb-3 flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setIsNvoReadingMarkerEnabled((prev) => !prev)}
-                          className={cn(
-                            'w-7 h-7 rounded-full border flex items-center justify-center transition-colors',
-                            isNvoReadingMarkerEnabled
-                              ? 'bg-primary text-white border-primary'
-                              : 'bg-white text-text-muted border-border hover:text-text hover:bg-gray-50'
-                          )}
-                          aria-label={isNvoReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
-                          title={isNvoReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
-                        >
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M12 20h9" />
-                            <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
-                          </svg>
-                        </button>
-                        <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
+                <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
+                  <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+                    {activeNvoWorkPanel === 'text' ? (
+                      <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
+                        <div className="mb-3 flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setIsNvoReadingMarkerEnabled((prev) => !prev)}
+                            className={cn(
+                              'w-7 h-7 rounded-full border flex items-center justify-center transition-colors',
+                              isNvoReadingMarkerEnabled
+                                ? 'bg-primary text-white border-primary'
+                                : 'bg-white text-text-muted border-border hover:text-text hover:bg-gray-50'
+                            )}
+                            aria-label={isNvoReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
+                            title={isNvoReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
+                          >
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M12 20h9" />
+                              <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
+                            </svg>
+                          </button>
+                          <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
+                        </div>
+
+                        {activeNvoWorkTextLoading ? (
+                          <p className="text-sm text-text-muted">Зареждане...</p>
+                        ) : activeNvoWorkTextError ? (
+                          <p className="text-sm text-danger">{activeNvoWorkTextError}</p>
+                        ) : (
+                          <p className="whitespace-pre-wrap break-words text-sm leading-7 text-text">
+                            {(() => {
+                              let wordIndex = -1
+                              return activeNvoTextTokens.map((token, idx) => {
+                                if (/^\s+$/.test(token)) {
+                                  return <span key={`space-${idx}`}>{token}</span>
+                                }
+
+                                wordIndex += 1
+                                const currentWordIndex = wordIndex
+                                const isMarked = activeNvoMarkedWordIndex === currentWordIndex
+
+                                return (
+                                  <span
+                                    key={`word-${idx}-${currentWordIndex}`}
+                                    ref={(el) => {
+                                      nvoWordRefs.current[currentWordIndex] = el
+                                    }}
+                                    onClick={() => handleNvoWordMark(currentWordIndex)}
+                                    className={cn(
+                                      'rounded-sm',
+                                      isMarked && 'bg-amber-200 px-0.5',
+                                      isNvoReadingMarkerEnabled && 'cursor-pointer hover:bg-amber-100'
+                                    )}
+                                  >
+                                    {token}
+                                  </span>
+                                )
+                              })
+                            })()}
+                          </p>
+                        )}
                       </div>
-
-                      {activeNvoWorkTextLoading ? (
-                        <p className="text-sm text-text-muted">Зареждане...</p>
-                      ) : activeNvoWorkTextError ? (
-                        <p className="text-sm text-danger">{activeNvoWorkTextError}</p>
-                      ) : (
-                        <p className="whitespace-pre-wrap break-words text-sm leading-7 text-text">
-                          {(() => {
-                            let wordIndex = -1
-                            return activeNvoTextTokens.map((token, idx) => {
-                              if (/^\s+$/.test(token)) {
-                                return <span key={`space-${idx}`}>{token}</span>
-                              }
-
-                              wordIndex += 1
-                              const currentWordIndex = wordIndex
-                              const isMarked = activeNvoMarkedWordIndex === currentWordIndex
-
-                              return (
-                                <span
-                                  key={`word-${idx}-${currentWordIndex}`}
-                                  ref={(el) => {
-                                    nvoWordRefs.current[currentWordIndex] = el
-                                  }}
-                                  onClick={() => handleNvoWordMark(currentWordIndex)}
-                                  className={cn(
-                                    'rounded-sm',
-                                    isMarked && 'bg-amber-200 px-0.5',
-                                    isNvoReadingMarkerEnabled && 'cursor-pointer hover:bg-amber-100'
-                                  )}
-                                >
-                                  {token}
-                                </span>
-                              )
-                            })
-                          })()}
-                        </p>
-                      )}
-                    </div>
+                    ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
+                      <video
+                        key={activeNvoVideoPath}
+                        controls
+                        preload="none"
+                        poster={encodeURI(activeNvoWork.image)}
+                        className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
+                      >
+                        <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
+                        Браузърът не поддържа видео.
+                      </video>
+                    ) : (
+                      <img
+                        src={encodeURI(activeNvoWork.image)}
+                        alt={activeNvoWork.title}
+                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                      />
+                    )}
                   </div>
-                ) : (
-                  <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                    <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                      {activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
-                        <video
-                          key={activeNvoVideoPath}
-                          controls
-                          preload="none"
-                          poster={encodeURI(activeNvoWork.image)}
-                          className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
-                        >
-                          <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
-                          Браузърът не поддържа видео.
-                        </video>
-                      ) : (
-                        <img
-                          src={encodeURI(activeNvoWork.image)}
-                          alt={activeNvoWork.title}
-                          className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                        />
-                      )}
-                    </div>
-                    <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
-                      {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
-                        <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
-                      )}
-                      {activeNvoWorkPanel === 'exercise' && (
-                        <button
-                          type="button"
-                          onClick={() => router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)}
-                          className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
-                        >
-                          Отвори упражнението
-                        </button>
-                      )}
-                    </div>
+                  <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                    <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                    <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                    <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                    {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
+                      <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
+                    )}
+                    {activeNvoWorkPanel === 'exercise' && (
+                      <button
+                        type="button"
+                        onClick={() => router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)}
+                        className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
+                      >
+                        Отвори упражнението
+                      </button>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
@@ -1246,84 +1237,74 @@ export default function MaterialsPage() {
             </div>
 
             <div className="p-4 md:p-6">
-              {activeWorkPanel === 'text' ? (
-                <div className="space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    <button type="button" onClick={() => setActiveWorkPanel('text')} className="rounded-xl bg-primary text-white text-xs font-semibold py-2.5 px-4">Текст</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('summary')} className="rounded-xl bg-[#74A5D4] text-white text-xs font-semibold py-2.5 px-4">Резюме</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('video')} className="rounded-xl bg-[#1E4D7B] text-white text-xs font-semibold py-2.5 px-4">Видео урок</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="rounded-xl bg-[#C46A28] text-white text-xs font-semibold py-2.5 px-4">Упражнение</button>
-                  </div>
-                  <div className="rounded-xl border border-border bg-[#F8FBFF] p-4 max-h-[70vh] overflow-y-auto">
-                    {activeWorkTextLoading ? (
-                      <p className="text-sm text-text-muted">Зареждане...</p>
-                    ) : activeWorkTextError ? (
-                      <p className="text-sm text-danger">{activeWorkTextError}</p>
-                    ) : (
-                      <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
-                        {activeWorkText}
-                      </pre>
-                    )}
-                  </div>
+              <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
+                <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+                  {activeWorkPanel === 'text' ? (
+                    <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
+                      {activeWorkTextLoading ? (
+                        <p className="text-sm text-text-muted">Зареждане...</p>
+                      ) : activeWorkTextError ? (
+                        <p className="text-sm text-danger">{activeWorkTextError}</p>
+                      ) : (
+                        <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
+                          {activeWorkText}
+                        </pre>
+                      )}
+                    </div>
+                  ) : activeWorkPanel === 'summary' ? (
+                    <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
+                      <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
+                      {activeWorkSummary.length > 0 ? (
+                        <div className="space-y-2 text-sm leading-7 text-text">
+                          {activeWorkSummary.map((sentence, index) => (
+                            <p key={`${activeWork.id}-summary-${index}`}>{sentence}</p>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
+                      )}
+                    </div>
+                  ) : activeWorkPanel === 'video' && activeWorkVideoPath ? (
+                    <video
+                      key={activeWorkVideoPath}
+                      controls
+                      preload="none"
+                      poster={encodeURI(activeWork.image)}
+                      className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
+                    >
+                      <source src={encodeURI(activeWorkVideoPath)} type="video/mp4" />
+                      Браузърът не поддържа видео.
+                    </video>
+                  ) : (
+                    <img
+                      src={encodeURI(activeWork.image)}
+                      alt={activeWork.title}
+                      className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                    />
+                  )}
                 </div>
-              ) : (
-                <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                  <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                    {activeWorkPanel === 'summary' ? (
-                      <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                        <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
-                        {activeWorkSummary.length > 0 ? (
-                          <div className="space-y-2 text-sm leading-7 text-text">
-                            {activeWorkSummary.map((sentence, index) => (
-                              <p key={`${activeWork.id}-summary-${index}`}>{sentence}</p>
-                            ))}
-                          </div>
-                        ) : (
-                          <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
-                        )}
-                      </div>
-                    ) : activeWorkPanel === 'video' && activeWorkVideoPath ? (
-                      <video
-                        key={activeWorkVideoPath}
-                        controls
-                        preload="none"
-                        poster={encodeURI(activeWork.image)}
-                        className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
-                      >
-                        <source src={encodeURI(activeWorkVideoPath)} type="video/mp4" />
-                        Браузърът не поддържа видео.
-                      </video>
-                    ) : (
-                      <img
-                        src={encodeURI(activeWork.image)}
-                        alt={activeWork.title}
-                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                      />
-                    )}
-                  </div>
-                  <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                    <button type="button" onClick={() => setActiveWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                    <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
-                    {activeWorkPanel === 'video' && !activeWorkVideoPath && (
-                      <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
-                    )}
-                    {activeWorkPanel === 'exercise' && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setActiveWorkId(null)
-                          router.push('/dashboard/tests')
-                        }}
-                        className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
-                      >
-                        Към секция Тестове
-                      </button>
-                    )}
-                  </div>
+                <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                  <button type="button" onClick={() => setActiveWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                  <button type="button" onClick={() => setActiveWorkPanel('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
+                  <button type="button" onClick={() => setActiveWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                  <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                  {activeWorkPanel === 'video' && !activeWorkVideoPath && (
+                    <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
+                  )}
+                  {activeWorkPanel === 'exercise' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveWorkId(null)
+                        router.push('/dashboard/tests')
+                      }}
+                      className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
+                    >
+                      Към секция Тестове
+                    </button>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
