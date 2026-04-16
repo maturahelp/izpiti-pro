@@ -1051,8 +1051,15 @@ function QuestionCard({
             const isCorrect = label === question.correct_option
             const showCorrect = showFeedback && isCorrect
             const showWrong = showFeedback && isSelected && !isCorrect
+            const leakedInstruction = extractLeakedSharedInstruction(text)
+            const displayText =
+              leakedInstruction.sharedInstruction &&
+              leakedInstruction.targetQuestionNumber != null &&
+              leakedInstruction.targetQuestionNumber > question.number
+                ? leakedInstruction.cleanOptionText
+                : text
 
-            let optText: React.ReactNode = normalizeMathText(text || 'Избор по изображение')
+            let optText: React.ReactNode = normalizeMathText(displayText || 'Избор по изображение')
             if (override?.optionsHtml?.[label]) {
               optText = <span dangerouslySetInnerHTML={{ __html: override.optionsHtml[label] }} />
             }
