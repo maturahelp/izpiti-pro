@@ -27,6 +27,7 @@ interface NvoQuestion {
   answer_guide?: string
   points?: number
   section?: string
+  shared_instruction?: string
 }
 
 interface NvoExam {
@@ -332,6 +333,103 @@ function splitContextText(exam: NvoExam): { intro: string; body: string } {
   return { intro: introParts.join(' '), body: remaining }
 }
 
+function parseSharedInstructionStart(text: string): number | null {
+  const rangeMatch = text.match(/от\s+(\d+)\.\s*до\s*(\d+)\./i)
+  if (rangeMatch) {
+    return Number(rangeMatch[1])
+  }
+
+  const pairMatch = text.match(/(\d+)\.\s*и\s*(\d+)\./)
+  if (pairMatch) {
+    return Math.min(Number(pairMatch[1]), Number(pairMatch[2]))
+  }
+
+  const singleMatch = text.match(/(?:задач(?:а|и|ите)?|въпрос(?:а|и|ите)?)\s*(\d+)\./i)
+  if (singleMatch) {
+    return Number(singleMatch[1])
+  }
+
+  return null
+}
+
+function extractLeakedSharedInstruction(optionText: string): {
+  cleanOptionText: string
+  sharedInstruction: string | null
+  targetQuestionNumber: number | null
+} {
+  const normalized = normalizeMathText(optionText || '').trim()
+  const instructionMatch = normalized.match(/\b(Прочетете|Запознайте се)\b/i)
+
+  if (!instructionMatch || instructionMatch.index == null || instructionMatch.index <= 0) {
+    return {
+      cleanOptionText: normalized,
+      sharedInstruction: null,
+      targetQuestionNumber: null,
+    }
+  }
+
+  const cleanOptionText = normalized.slice(0, instructionMatch.index).trim()
+  const sharedInstruction = normalized.slice(instructionMatch.index).trim()
+  const targetQuestionNumber = parseSharedInstructionStart(sharedInstruction)
+
+  return {
+    cleanOptionText: cleanOptionText || normalized,
+    sharedInstruction: sharedInstruction || null,
+    targetQuestionNumber,
+  }
+}
+
+function normalizeQuestionGroupInstructions(exam: NvoExam): NvoExam {
+  const instructionsByQuestionNumber = new Map<number, string[]>()
+
+  const questions = exam.questions.map((question) => {
+    if (!question.options || question.type !== 'single_choice') return question
+
+    let changed = false
+    const normalizedOptions = Object.fromEntries(
+      Object.entries(question.options).map(([label, optionText]) => {
+        const { cleanOptionText, sharedInstruction, targetQuestionNumber } = extractLeakedSharedInstruction(optionText)
+        const shouldPromoteInstruction =
+          Boolean(sharedInstruction) &&
+          targetQuestionNumber != null &&
+          targetQuestionNumber > question.number
+
+        if (shouldPromoteInstruction && sharedInstruction) {
+          const existing = instructionsByQuestionNumber.get(targetQuestionNumber) ?? []
+          if (!existing.includes(sharedInstruction)) {
+            instructionsByQuestionNumber.set(targetQuestionNumber, [...existing, sharedInstruction])
+          }
+          changed = true
+        }
+
+        if (shouldPromoteInstruction && cleanOptionText !== optionText) {
+          changed = true
+        }
+
+        return [label, shouldPromoteInstruction ? cleanOptionText : optionText]
+      })
+    )
+
+    return changed ? { ...question, options: normalizedOptions } : question
+  })
+
+  if (!instructionsByQuestionNumber.size) {
+    return exam
+  }
+
+  return {
+    ...exam,
+    questions: questions.map((question) => {
+      const instructions = instructionsByQuestionNumber.get(question.number)
+      if (!instructions?.length) return question
+      return {
+        ...question,
+        shared_instruction: instructions.join('\n\n'),
+      }
+    }),
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Map izpiti-pro test ID → dataset exam ID
 // ---------------------------------------------------------------------------
@@ -466,7 +564,8 @@ export default function TestPage() {
   }
 
   const datasetId = mapTestId(test.id)
-  const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
+  const rawExam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
+  const exam = rawExam ? normalizeQuestionGroupInstructions(rawExam) : null
   const storageKey = `izpiti-pro:test:${test.id}:state:v1`
 
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
@@ -871,6 +970,17 @@ function QuestionCard({
 
   return (
     <div className={cn('card p-5 border-2', cardBorder)}>
+      {question.shared_instruction && (
+        <div className="mb-4 rounded-xl border border-sky-200 bg-sky-50/80 px-4 py-3">
+          <p className="text-[11px] font-bold uppercase tracking-wide text-sky-700 mb-1">
+            Общо условие
+          </p>
+          <p className="text-sm font-medium leading-relaxed text-sky-950 whitespace-pre-wrap">
+            {question.shared_instruction}
+          </p>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <span className="font-mono text-xs font-bold text-primary-dark">Въпрос {question.number}</span>
