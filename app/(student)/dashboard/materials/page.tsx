@@ -308,9 +308,11 @@ export default function MaterialsPage() {
       if (!normalizedQuery) return true
       const searchableText = [
         topic.title,
+        topic.short_title,
+        topic.subtitle,
         topic.definition,
         ...(topic.key_points ?? []),
-      ].join(' ').toLowerCase()
+      ].filter(Boolean).join(' ').toLowerCase()
       return searchableText.includes(normalizedQuery)
     })
 
@@ -563,32 +565,35 @@ export default function MaterialsPage() {
                   const subtitle = topic.subtitle ?? splitTopicTitle(topic.title).subtitle
 
                   return (
-                    <div key={topic.number} className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5">
-                      <h3 className="font-semibold text-text text-sm leading-snug mb-2">
+                    <div
+                      key={topic.number}
+                      className="min-h-[190px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
+                    >
+                      <h3 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-2">
                         {heading}
                       </h3>
                       {subtitle && (
-                        <p className="text-sm font-medium text-text leading-snug mb-3">
+                        <p className="font-sans text-[15px] font-semibold text-text leading-snug tracking-normal mb-4">
                           {subtitle}
                         </p>
                       )}
-                      <p className="text-xs font-semibold text-primary mb-4">
+                      <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal mb-4">
                         Тема #{topic.number}
                       </p>
                       <div className="flex gap-2">
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
-                          className="flex-1 rounded-xl border border-[#1E4D7B]/30 bg-[#F2F8FF] text-[#1E4D7B] text-xs font-semibold py-2 hover:bg-[#1E4D7B]/10 transition-colors"
+                          className="flex-1 rounded-lg border border-[#AFC4DA] bg-transparent text-[#1E4D7B] text-sm font-bold py-3 hover:bg-[#1E4D7B]/10 transition-colors"
                         >
                           Теория
                         </button>
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)}
-                          className="flex-1 rounded-xl bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
+                          className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
                         >
-                          Упражнение
+                          Тест
                         </button>
                       </div>
                     </div>

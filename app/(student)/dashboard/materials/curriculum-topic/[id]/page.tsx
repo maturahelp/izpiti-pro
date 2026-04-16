@@ -21,6 +21,8 @@ interface Exercise {
 interface CurriculumTopic {
   number: number
   title: string
+  short_title?: string
+  subtitle?: string
   definition: string
   key_points: string[]
   common_mistakes: string[]
@@ -39,7 +41,7 @@ export default function CurriculumTopicPage() {
   const id = Number(params.id)
   const viewMode = searchParams.get('view')
   const showTheory = viewMode !== 'exercise'
-  const showExercises = viewMode !== 'theory'
+  const showExercises = viewMode === 'exercise'
 
   const topic = allTopics[id]
 
@@ -63,6 +65,7 @@ export default function CurriculumTopicPage() {
   }
 
   const exercises = topic.exercises
+  const displayTitle = topic.short_title ?? topic.title
 
   const score = submitted
     ? exercises.filter((ex, idx) => selected[idx] === ex.correct_index).length
@@ -89,7 +92,7 @@ export default function CurriculumTopicPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <TopBar title={topic.title} />
+      <TopBar title={displayTitle} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
         <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted mb-4">
@@ -103,20 +106,55 @@ export default function CurriculumTopicPage() {
           <span>/</span>
           <span className="text-text-muted">Учебни теми — 7. клас</span>
           <span>/</span>
-          <span className="text-text font-medium">{topic.title}</span>
+          <span className="text-text font-medium">{displayTitle}</span>
+        </div>
+
+        <div className="mb-6">
+          <div className="rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 md:p-7 shadow-[8px_8px_0_rgba(30,77,123,0.06)]">
+            <h1 className="font-sans text-2xl md:text-3xl font-semibold text-text tracking-normal mb-3 leading-tight">
+              {displayTitle}
+            </h1>
+            {topic.subtitle && (
+              <p className="font-sans text-base md:text-lg font-semibold text-text leading-snug tracking-normal">
+                {topic.subtitle}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <button
+              type="button"
+              onClick={() => router.replace(`/dashboard/materials/curriculum-topic/${id}?view=theory`)}
+              className={cn(
+                'rounded-lg border py-3 text-center text-sm font-bold transition-colors',
+                showTheory
+                  ? 'border-[#AFC4DA] bg-transparent text-[#1E4D7B]'
+                  : 'border-[#D7E7F7] bg-white text-text-muted hover:bg-[#1E4D7B]/10'
+              )}
+            >
+              Теория
+            </button>
+            <button
+              type="button"
+              onClick={() => router.replace(`/dashboard/materials/curriculum-topic/${id}?view=exercise`)}
+              className={cn(
+                'rounded-lg border py-3 text-center text-sm font-bold transition-colors',
+                showExercises
+                  ? 'border-primary bg-primary text-white hover:bg-primary-dark'
+                  : 'border-[#D7E7F7] bg-white text-text-muted hover:bg-[#1E4D7B]/10'
+              )}
+            >
+              Тест
+            </button>
+          </div>
         </div>
 
         {showTheory && (
-          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5 mb-6">
-            <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
-              Учебни теми — 7. клас
+          <div className="rounded-2xl border border-[#D7E7F7] bg-white p-4 md:p-5 mb-6">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">
+              Накратко
             </p>
-            <h1 className="text-lg md:text-xl font-bold text-text mb-3">{topic.title}</h1>
-
-            <div className="mb-4">
-              <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-1">Определение</p>
-              <p className="text-sm text-text leading-relaxed">{topic.definition}</p>
-            </div>
+            <p className="text-sm text-text leading-relaxed mb-5">{topic.definition}</p>
 
             <div className="mb-4">
               <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Ключови точки</p>
