@@ -228,6 +228,8 @@ export default function MaterialsPage() {
   const [activeNvoWorkText, setActiveNvoWorkText] = useState<string>('')
   const [activeNvoWorkTextLoading, setActiveNvoWorkTextLoading] = useState(false)
   const [activeNvoWorkTextError, setActiveNvoWorkTextError] = useState<string | null>(null)
+  const [isActiveWorkVideoPlaying, setIsActiveWorkVideoPlaying] = useState(false)
+  const [isActiveNvoVideoPlaying, setIsActiveNvoVideoPlaying] = useState(false)
   const [isNvoReadingMarkerEnabled, setIsNvoReadingMarkerEnabled] = useState(false)
   const [nvoReadingProgressByWork, setNvoReadingProgressByWork] = useState<Record<string, number>>({})
   const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('cover')
@@ -497,12 +499,16 @@ export default function MaterialsPage() {
   }, [activeNvoWorkPanel, activeNvoMarkedWordIndex, activeNvoWorkText])
 
   useEffect(() => {
-    if (activeWorkId) setActiveWorkPanel('cover')
+    if (activeWorkId) {
+      setActiveWorkPanel('cover')
+      setIsActiveWorkVideoPlaying(false)
+    }
   }, [activeWorkId])
 
   useEffect(() => {
     if (activeNvoWorkId) {
       setActiveNvoWorkPanel('cover')
+      setIsActiveNvoVideoPlaying(false)
       setIsNvoReadingMarkerEnabled(false)
     }
   }, [activeNvoWorkId])
@@ -816,43 +822,49 @@ export default function MaterialsPage() {
                           </p>
                         )}
                       </div>
-                    ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
+                    ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath && isActiveNvoVideoPlaying ? (
                       <video
                         key={activeNvoVideoPath}
                         controls
-                        preload="none"
+                        autoPlay
+                        playsInline
+                        preload="auto"
                         poster={encodeURI(activeNvoWork.image)}
                         className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
                       >
                         <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
                         Браузърът не поддържа видео.
                       </video>
-                    ) : (
-                      <div className="relative">
+                    ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
+                      <button
+                        type="button"
+                        onClick={() => setIsActiveNvoVideoPlaying(true)}
+                        className="relative w-full overflow-hidden rounded-xl border border-border bg-white text-left group"
+                        aria-label="Пусни видео урок"
+                      >
                         <img
                           src={encodeURI(activeNvoWork.image)}
                           alt={activeNvoWork.title}
-                          className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                          className="w-full max-h-[70vh] object-contain bg-white"
                         />
-                        {activeNvoVideoPath && (
-                          <button
-                            type="button"
-                            onClick={() => setActiveNvoWorkPanel('video')}
-                            className="absolute inset-0 flex items-center justify-center rounded-xl group"
-                            aria-label="Пусни видео урок"
-                          >
-                            <span className="absolute inset-0 rounded-xl bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
-                            <span className="relative inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
-                              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                  <path d="M8 5v14l11-7z" />
-                                </svg>
-                              </span>
-                              Пусни видео урок
+                        <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
+                        <span className="absolute inset-0 flex items-center justify-center">
+                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
                             </span>
-                          </button>
-                        )}
-                      </div>
+                            Пусни видео урок
+                          </span>
+                        </span>
+                      </button>
+                    ) : (
+                      <img
+                        src={encodeURI(activeNvoWork.image)}
+                        alt={activeNvoWork.title}
+                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                      />
                     )}
                   </div>
                 ) : (
@@ -878,9 +890,9 @@ export default function MaterialsPage() {
                       )}
                     </div>
                     <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                      <button type="button" onClick={() => setActiveNvoWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                      <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                      <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                      <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
                       {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
                         <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                       )}
@@ -1309,50 +1321,56 @@ export default function MaterialsPage() {
                         <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
                       )}
                     </div>
-                  ) : activeWorkPanel === 'video' && activeWorkVideoPath ? (
+                  ) : activeWorkPanel === 'video' && activeWorkVideoPath && isActiveWorkVideoPlaying ? (
                     <video
                       key={activeWorkVideoPath}
                       controls
-                      preload="none"
+                      autoPlay
+                      playsInline
+                      preload="auto"
                       poster={encodeURI(activeWork.image)}
                       className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
                     >
                       <source src={encodeURI(activeWorkVideoPath)} type="video/mp4" />
                       Браузърът не поддържа видео.
                     </video>
-                  ) : (
-                    <div className="relative">
+                  ) : activeWorkPanel === 'video' && activeWorkVideoPath ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsActiveWorkVideoPlaying(true)}
+                      className="relative w-full overflow-hidden rounded-xl border border-border bg-white text-left group"
+                      aria-label="Пусни видео урок"
+                    >
                       <img
                         src={encodeURI(activeWork.image)}
                         alt={activeWork.title}
-                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                        className="w-full max-h-[70vh] object-contain bg-white"
                       />
-                      {activeWorkVideoPath && (
-                        <button
-                          type="button"
-                          onClick={() => setActiveWorkPanel('video')}
-                          className="absolute inset-0 flex items-center justify-center rounded-xl group"
-                          aria-label="Пусни видео урок"
-                        >
-                          <span className="absolute inset-0 rounded-xl bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
-                          <span className="relative inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            </span>
-                            Пусни видео урок
+                      <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
                           </span>
-                        </button>
-                      )}
-                    </div>
+                          Пусни видео урок
+                        </span>
+                      </span>
+                    </button>
+                  ) : (
+                    <img
+                      src={encodeURI(activeWork.image)}
+                      alt={activeWork.title}
+                      className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                    />
                   )}
                 </div>
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                  <button type="button" onClick={() => setActiveWorkPanel('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                  <button type="button" onClick={() => setActiveWorkPanel('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
-                  <button type="button" onClick={() => setActiveWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                  <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('summary'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
                   {activeWorkPanel === 'video' && !activeWorkVideoPath && (
                     <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                   )}
