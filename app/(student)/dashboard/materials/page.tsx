@@ -828,11 +828,31 @@ export default function MaterialsPage() {
                         Браузърът не поддържа видео.
                       </video>
                     ) : (
-                      <img
-                        src={encodeURI(activeNvoWork.image)}
-                        alt={activeNvoWork.title}
-                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                      />
+                      <div className="relative">
+                        <img
+                          src={encodeURI(activeNvoWork.image)}
+                          alt={activeNvoWork.title}
+                          className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                        />
+                        {activeNvoVideoPath && (
+                          <button
+                            type="button"
+                            onClick={() => setActiveNvoWorkPanel('video')}
+                            className="absolute inset-0 flex items-center justify-center rounded-xl group"
+                            aria-label="Пусни видео урок"
+                          >
+                            <span className="absolute inset-0 rounded-xl bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
+                            <span className="relative inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
+                              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              </span>
+                              Пусни видео урок
+                            </span>
+                          </button>
+                        )}
+                      </div>
                     )}
                   </div>
                 ) : (
@@ -1301,11 +1321,31 @@ export default function MaterialsPage() {
                       Браузърът не поддържа видео.
                     </video>
                   ) : (
-                    <img
-                      src={encodeURI(activeWork.image)}
-                      alt={activeWork.title}
-                      className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                    />
+                    <div className="relative">
+                      <img
+                        src={encodeURI(activeWork.image)}
+                        alt={activeWork.title}
+                        className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
+                      />
+                      {activeWorkVideoPath && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveWorkPanel('video')}
+                          className="absolute inset-0 flex items-center justify-center rounded-xl group"
+                          aria-label="Пусни видео урок"
+                        >
+                          <span className="absolute inset-0 rounded-xl bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
+                          <span className="relative inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </span>
+                            Пусни видео урок
+                          </span>
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
