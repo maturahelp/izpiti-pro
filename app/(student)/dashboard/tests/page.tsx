@@ -14,55 +14,62 @@ import {
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-type TestSection12 = 'bel' | 'english'
 type TestSection7 = 'bel' | 'math'
-type VisibleTestMode = 'sample_dzi' | 'past_dzi'
-type TestMode = VisibleTestMode | 'practice'
-
-const sectionLabels12: Record<TestSection12, string> = {
-  bel: 'БЕЛ',
-  english: 'Английски',
-}
+type TestSection12 = 'bel' | 'english'
+type TestMode = 'sample' | 'past'
 
 const sectionLabels7: Record<TestSection7, string> = {
   bel: 'БЕЛ',
   math: 'Математика',
 }
 
-const modeLabels: Record<VisibleTestMode, string> = {
-  sample_dzi: 'Примерен ДЗИ',
-  past_dzi: 'ДЗИ от минали години',
+const sectionLabels12: Record<TestSection12, string> = {
+  bel: 'БЕЛ',
+  english: 'Английски',
 }
 
-const modeLabels7: Record<VisibleTestMode, string> = {
-  sample_dzi: 'Примерен НВО',
-  past_dzi: 'НВО от минали години',
+const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
+  '7': {
+    sample: 'Примерен НВО',
+    past: 'НВО от минали години',
+  },
+  '12': {
+    sample: 'Примерен ДЗИ',
+    past: 'ДЗИ от минали години',
+  },
 }
 
 function getTestSection(test: (typeof tests)[number]): string {
   if (test.subjectId.startsWith('eng-') || test.subjectName.toLowerCase().includes('англий')) return 'english'
-  if (test.subjectId.startsWith('math-')) return 'math'
+  if (test.subjectId.startsWith('math-') || test.subjectName.toLowerCase().includes('матем')) return 'math'
   return 'bel'
+}
+
+function getTestMode(test: (typeof tests)[number]): TestMode {
+  if (
+    test.id.startsWith('mock_') ||
+    test.id.startsWith('selected_mock_') ||
+    test.id.startsWith('english-generated-') ||
+    /^q\d+$/i.test(test.id)
+  ) return 'sample'
+  return 'past'
 }
 
 function getTestHref(test: (typeof tests)[number]): string {
   if (test.subjectId === 'eng-12') {
-    return `/english-mock/${encodeURIComponent(test.id)}`
+    if (test.id.startsWith('english-generated-')) {
+      return `/english-generated#${test.id.replace('english-generated-', '')}`
+    }
+    return `/english-mock/${test.id}`
   }
   return `/dashboard/tests/${test.id}`
 }
 
-function getTestMode(test: (typeof tests)[number]): TestMode {
-  if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
-  if (test.id.startsWith('dzi-bel-') || test.id.startsWith('dzi_english_') || test.id.startsWith('nvo-')) return 'past_dzi'
-  return 'practice'
-}
-
 export default function TestsPage() {
   const { grade } = useGrade()
-  const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
-  const [selectedMode, setSelectedMode] = useState<VisibleTestMode>('sample_dzi')
+  const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
+  const [selectedMode, setSelectedMode] = useState<TestMode>('sample')
 
   const filtered = tests.filter((t) => {
     if (grade === '7') {
@@ -84,47 +91,49 @@ export default function TestsPage() {
 
         {/* Filters */}
         <div className="mb-6 -mt-4 space-y-3">
-          <div className="flex flex-wrap justify-center gap-3">
-            {grade === '7'
-              ? (Object.keys(sectionLabels7) as TestSection7[]).map((section) => (
-                  <button
-                    key={section}
-                    type="button"
-                    onClick={() => setSelectedSection7(section)}
-                    className={cn(
-                      'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
-                      selectedSection7 === section
-                        ? 'bg-primary text-white'
-                        : 'bg-primary-light text-primary hover:bg-primary-light/70'
-                    )}
-                  >
-                    {sectionLabels7[section]}
-                  </button>
-                ))
-              : (Object.keys(sectionLabels12) as TestSection12[]).map((section) => (
-                  <button
-                    key={section}
-                    type="button"
-                    onClick={() => {
-                        setSelectedSection12(section)
-                        if (section === 'english') setSelectedMode('past_dzi')
-                      }}
-                    className={cn(
-                      'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
-                      selectedSection12 === section
-                        ? 'bg-primary text-white'
-                        : 'bg-primary-light text-primary hover:bg-primary-light/70'
-                    )}
-                  >
-                    {sectionLabels12[section]}
-                  </button>
-                ))
-            }
-          </div>
+          {grade === '7' && (
+            <div className="flex flex-wrap justify-center gap-3">
+              {(Object.keys(sectionLabels7) as TestSection7[]).map((section) => (
+                <button
+                  key={section}
+                  type="button"
+                  onClick={() => setSelectedSection7(section)}
+                  className={cn(
+                    'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
+                    selectedSection7 === section
+                      ? 'bg-primary text-white'
+                      : 'bg-primary-light text-primary hover:bg-primary-light/70'
+                  )}
+                >
+                  {sectionLabels7[section]}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {grade === '12' && (
+            <div className="flex flex-wrap justify-center gap-3">
+              {(Object.keys(sectionLabels12) as TestSection12[]).map((section) => (
+                <button
+                  key={section}
+                  type="button"
+                  onClick={() => setSelectedSection12(section)}
+                  className={cn(
+                    'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
+                    selectedSection12 === section
+                      ? 'bg-primary text-white'
+                      : 'bg-primary-light text-primary hover:bg-primary-light/70'
+                  )}
+                >
+                  {sectionLabels12[section]}
+                </button>
+              ))}
+            </div>
+          )}
 
           <div className="flex justify-center">
             <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-              {(Object.keys(grade === '7' ? modeLabels7 : modeLabels) as VisibleTestMode[]).map((mode) => (
+              {(Object.keys(modeLabelsByGrade[grade]) as TestMode[]).map((mode) => (
                 <button
                   key={mode}
                   type="button"
@@ -136,7 +145,7 @@ export default function TestsPage() {
                       : 'text-text-muted hover:text-text'
                   )}
                 >
-                  {grade === '7' ? modeLabels7[mode] : modeLabels[mode]}
+                  {modeLabelsByGrade[grade][mode]}
                 </button>
               ))}
             </div>
@@ -144,14 +153,14 @@ export default function TestsPage() {
         </div>
 
         {/* Results count */}
-        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi') && (
+        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
           <p className="text-sm text-text-muted mb-4">
             Намерени: <strong className="text-text">{filtered.length}</strong> теста
           </p>
         )}
 
-        {/* English generated materials live under Примерен ДЗИ for 12th grade. */}
-        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi' && (
+        {/* English generated materials live under Примерен ДЗИ for 12th grade */}
+        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample' && (
           <div className="mb-4 grid sm:grid-cols-2 gap-4">
             <div className="card-hover p-5 flex flex-col gap-4">
               <div>
@@ -207,7 +216,10 @@ export default function TestsPage() {
           {filtered.map((test) => (
             <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', test.isPremium && 'premium-lock')}>
               {(() => {
-                const isMock = test.id.startsWith('mock_') || test.id.startsWith('selected_mock_')
+                const isMock =
+                  test.id.startsWith('mock_') ||
+                  test.id.startsWith('selected_mock_') ||
+                  test.id.startsWith('english-generated-')
                 const isBeron = test.id.startsWith('beron_')
 
                 if (isBeron) {
@@ -281,7 +293,7 @@ export default function TestsPage() {
           ))}
         </div>
 
-        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi') && (
+        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
           <div className="text-center py-16 text-text-muted">
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
