@@ -206,7 +206,7 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 
 const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 type Grade7Section = typeof grade7Sections[number]
-type WorkPanel = 'text' | 'summary' | 'video' | 'exercise'
+type WorkPanel = 'cover' | 'text' | 'summary' | 'video' | 'exercise'
 const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
@@ -230,8 +230,8 @@ export default function MaterialsPage() {
   const [activeNvoWorkTextError, setActiveNvoWorkTextError] = useState<string | null>(null)
   const [isNvoReadingMarkerEnabled, setIsNvoReadingMarkerEnabled] = useState(false)
   const [nvoReadingProgressByWork, setNvoReadingProgressByWork] = useState<Record<string, number>>({})
-  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('summary')
-  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('text')
+  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('cover')
+  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('cover')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -497,12 +497,12 @@ export default function MaterialsPage() {
   }, [activeNvoWorkPanel, activeNvoMarkedWordIndex, activeNvoWorkText])
 
   useEffect(() => {
-    if (activeWorkId) setActiveWorkPanel('summary')
+    if (activeWorkId) setActiveWorkPanel('cover')
   }, [activeWorkId])
 
   useEffect(() => {
     if (activeNvoWorkId) {
-      setActiveNvoWorkPanel('text')
+      setActiveNvoWorkPanel('cover')
       setIsNvoReadingMarkerEnabled(false)
     }
   }, [activeNvoWorkId])
