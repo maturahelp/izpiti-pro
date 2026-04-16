@@ -7,12 +7,17 @@ import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import { getDifficultyColor } from '@/lib/utils'
 import { useGrade } from '@/lib/grade-context'
+import {
+  generatedEnglishReadingQuestionCount,
+  generatedEnglishWritingQuestionCount,
+} from '@/lib/english-generated-materials'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type TestSection12 = 'bel' | 'english'
 type TestSection7 = 'bel' | 'math'
-type TestMode = 'sample_dzi' | 'past_dzi'
+type VisibleTestMode = 'sample_dzi' | 'past_dzi'
+type TestMode = VisibleTestMode | 'practice'
 
 const sectionLabels12: Record<TestSection12, string> = {
   bel: 'БЕЛ',
@@ -24,12 +29,12 @@ const sectionLabels7: Record<TestSection7, string> = {
   math: 'Математика',
 }
 
-const modeLabels12: Record<TestMode, string> = {
+const modeLabels: Record<VisibleTestMode, string> = {
   sample_dzi: 'Примерен ДЗИ',
   past_dzi: 'ДЗИ от минали години',
 }
 
-const modeLabels7: Record<TestMode, string> = {
+const modeLabels7: Record<VisibleTestMode, string> = {
   sample_dzi: 'Примерен НВО',
   past_dzi: 'НВО от минали години',
 }
@@ -49,14 +54,15 @@ function getTestHref(test: (typeof tests)[number]): string {
 
 function getTestMode(test: (typeof tests)[number]): TestMode {
   if (test.id.startsWith('mock_') || test.id.startsWith('selected_mock_') || /^q\d+$/i.test(test.id)) return 'sample_dzi'
-  return 'past_dzi'
+  if (test.id.startsWith('dzi-bel-') || test.id.startsWith('dzi_english_') || test.id.startsWith('nvo-')) return 'past_dzi'
+  return 'practice'
 }
 
 export default function TestsPage() {
   const { grade } = useGrade()
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
-  const [selectedMode, setSelectedMode] = useState<TestMode>('sample_dzi')
+  const [selectedMode, setSelectedMode] = useState<VisibleTestMode>('sample_dzi')
 
   const filtered = tests.filter((t) => {
     if (grade === '7') {
@@ -118,7 +124,7 @@ export default function TestsPage() {
 
           <div className="flex justify-center">
             <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-              {(Object.keys(grade === '7' ? modeLabels7 : modeLabels12) as TestMode[]).map((mode) => (
+              {(Object.keys(grade === '7' ? modeLabels7 : modeLabels) as VisibleTestMode[]).map((mode) => (
                 <button
                   key={mode}
                   type="button"
@@ -130,7 +136,7 @@ export default function TestsPage() {
                       : 'text-text-muted hover:text-text'
                   )}
                 >
-                  {grade === '7' ? modeLabels7[mode] : modeLabels12[mode]}
+                  {grade === '7' ? modeLabels7[mode] : modeLabels[mode]}
                 </button>
               ))}
             </div>
@@ -138,9 +144,64 @@ export default function TestsPage() {
         </div>
 
         {/* Results count */}
-        <p className="text-sm text-text-muted mb-4">
-          Намерени: <strong className="text-text">{filtered.length}</strong> теста
-        </p>
+        {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi') && (
+          <p className="text-sm text-text-muted mb-4">
+            Намерени: <strong className="text-text">{filtered.length}</strong> теста
+          </p>
+        )}
+
+        {/* English generated materials live under Примерен ДЗИ for 12th grade. */}
+        {grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi' && (
+          <div className="mb-4 grid sm:grid-cols-2 gap-4">
+            <div className="card-hover p-5 flex flex-col gap-4">
+              <div>
+                <span className="badge text-xs bg-emerald-100 text-emerald-700 mb-2 inline-block">
+                  {generatedEnglishReadingQuestionCount} въпроса
+                </span>
+                <h3 className="font-semibold text-text text-sm leading-snug">Reading Comprehension Bank</h3>
+                <p className="text-xs text-text-muted mt-1">45 пълни reading теста с текст и по 10 ABCD въпроса</p>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-text-muted">
+                <span>45 текста за четене</span>
+                <span>·</span>
+                <span>ABCD формат</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="badge text-xs bg-blue-100 text-blue-700">Reading</span>
+                <Link
+                  href="/english-generated#reading"
+                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark"
+                >
+                  Отвори
+                </Link>
+              </div>
+            </div>
+
+            <div className="card-hover p-5 flex flex-col gap-4">
+              <div>
+                <span className="badge text-xs bg-amber-light text-amber mb-2 inline-block">
+                  {generatedEnglishWritingQuestionCount} задачи
+                </span>
+                <h3 className="font-semibold text-text text-sm leading-snug">Writing Prompts Bank</h3>
+                <p className="text-xs text-text-muted mt-1">Formal letters, opinion essays, stories и descriptions</p>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-text-muted">
+                <span>Word limits</span>
+                <span>·</span>
+                <span>Checklists</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="badge text-xs bg-amber-light text-amber">Writing</span>
+                <Link
+                  href="/english-generated#writing"
+                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-amber text-white hover:bg-amber/90"
+                >
+                  Отвори
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid sm:grid-cols-2 gap-4">
           {filtered.map((test) => (
@@ -220,7 +281,7 @@ export default function TestsPage() {
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample_dzi') && (
           <div className="text-center py-16 text-text-muted">
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
