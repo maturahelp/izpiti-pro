@@ -6,6 +6,7 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
 import { literatureSummaries } from '@/data/literatureSummaries'
+import { literatureVideoPaths } from '@/data/literatureVideoPaths'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
@@ -228,8 +229,8 @@ export default function MaterialsPage() {
   const [activeNvoWorkTextError, setActiveNvoWorkTextError] = useState<string | null>(null)
   const [isNvoReadingMarkerEnabled, setIsNvoReadingMarkerEnabled] = useState(false)
   const [nvoReadingProgressByWork, setNvoReadingProgressByWork] = useState<Record<string, number>>({})
-  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('video')
-  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('video')
+  const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('summary')
+  const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('text')
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
@@ -290,6 +291,7 @@ export default function MaterialsPage() {
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
   const activeWorkSummary = activeWork ? literatureSummaries[activeWork.id] ?? [] : []
+  const activeWorkVideoPath = activeWorkId ? literatureVideoPaths[activeWorkId] : undefined
   const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
   const activeNvoMarkedWordIndex = activeNvoWorkId ? nvoReadingProgressByWork[activeNvoWorkId] : undefined
@@ -494,12 +496,12 @@ export default function MaterialsPage() {
   }, [activeNvoWorkPanel, activeNvoMarkedWordIndex, activeNvoWorkText])
 
   useEffect(() => {
-    if (activeWorkId) setActiveWorkPanel('video')
+    if (activeWorkId) setActiveWorkPanel('summary')
   }, [activeWorkId])
 
   useEffect(() => {
     if (activeNvoWorkId) {
-      setActiveNvoWorkPanel('video')
+      setActiveNvoWorkPanel('text')
       setIsNvoReadingMarkerEnabled(false)
     }
   }, [activeNvoWorkId])
@@ -823,8 +825,10 @@ export default function MaterialsPage() {
                     <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
                       {activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
                         <video
+                          key={activeNvoVideoPath}
                           controls
-                          preload="metadata"
+                          preload="none"
+                          poster={encodeURI(activeNvoWork.image)}
                           className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
                         >
                           <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
@@ -1278,6 +1282,17 @@ export default function MaterialsPage() {
                           <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
                         )}
                       </div>
+                    ) : activeWorkPanel === 'video' && activeWorkVideoPath ? (
+                      <video
+                        key={activeWorkVideoPath}
+                        controls
+                        preload="none"
+                        poster={encodeURI(activeWork.image)}
+                        className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
+                      >
+                        <source src={encodeURI(activeWorkVideoPath)} type="video/mp4" />
+                        Браузърът не поддържа видео.
+                      </video>
                     ) : (
                       <img
                         src={encodeURI(activeWork.image)}
@@ -1291,6 +1306,9 @@ export default function MaterialsPage() {
                     <button type="button" onClick={() => setActiveWorkPanel('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
                     <button type="button" onClick={() => setActiveWorkPanel('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
                     <button type="button" onClick={() => setActiveWorkPanel('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                    {activeWorkPanel === 'video' && !activeWorkVideoPath && (
+                      <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
+                    )}
                     {activeWorkPanel === 'exercise' && (
                       <button
                         type="button"
