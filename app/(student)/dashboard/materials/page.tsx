@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
