@@ -358,7 +358,7 @@ function extractLeakedSharedInstruction(optionText: string): {
   targetQuestionNumber: number | null
 } {
   const normalized = normalizeMathText(optionText || '').trim()
-  const instructionMatch = normalized.match(/\b(Прочетете|Запознайте се)\b/i)
+  const instructionMatch = normalized.match(/(Прочетете|Запознайте се)/i)
 
   if (!instructionMatch || instructionMatch.index == null || instructionMatch.index <= 0) {
     return {
