@@ -109,10 +109,10 @@ export default function Preloader() {
           ))}
         </g>
 
-        {/* Fill layer — white, fades in after reveal completes */}
+        {/* Fill layer — solid white, fades in after reveal completes */}
         <g className="preloader-fill-group">
           {LOGO_PATHS.map((d, i) => (
-            <path key={`f-${i}`} d={d} fill="none" stroke="white" strokeWidth="0.8" />
+            <path key={`f-${i}`} d={d} fill="white" stroke="none" />
           ))}
         </g>
       </svg>
