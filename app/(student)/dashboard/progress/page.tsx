@@ -1,79 +1,131 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { StatCard } from '@/components/shared/StatCard'
-import { ProgressBar } from '@/components/shared/ProgressBar'
-import { fetchProgressData, type ProgressData, type ExamCategory, type ExamResult } from '@/lib/progress'
-import { getScoreColor } from '@/lib/utils'
-import { studentTests } from '@/data/student-content'
+import { fetchProgressData, type ExamCategory } from '@/lib/progress'
 
-const EXAM_CATEGORIES: { key: ExamCategory; label: string; color: string }[] = [
-  { key: 'nvo-primer',  label: 'НВО Примерен',  color: '#4f63d2' },
-  { key: 'nvo-oficial', label: 'НВО Официален', color: '#1e2d5a' },
-  { key: 'dzi-primer',  label: 'ДЗИ Примерен',  color: '#10b981' },
-  { key: 'dzi-oficial', label: 'ДЗИ Официален', color: '#f59e0b' },
-]
+const CATEGORY_META: Record<string, { label: string; color: string }> = {
+  'nvo-primer':  { label: 'НВО Примерен',  color: '#4f63d2' },
+  'nvo-oficial': { label: 'НВО Официален', color: '#1e2d5a' },
+  'dzi-primer':  { label: 'ДЗИ Примерен',  color: '#10b981' },
+  'dzi-oficial': { label: 'ДЗИ Официален', color: '#f59e0b' },
+}
 
-function ExamScoreChart({ examResults }: { examResults: ExamResult[] }) {
-  if (!examResults.length) return null
+interface LocalResult {
+  id: string
+  type: string
+  subject: string
+  score: number
+  maxScore: number
+  date: string
+}
 
-  const W = 600, H = 200, PAD = { top: 16, right: 16, bottom: 32, left: 36 }
-  const innerW = W - PAD.left - PAD.right
-  const innerH = H - PAD.top - PAD.bottom
+function getLocalResults(): LocalResult[] {
+  if (typeof window === 'undefined') return []
+  return JSON.parse(localStorage.getItem('matura_results') || '[]')
+}
 
-  const allDates = [...new Set(examResults.map(r => r.date))].sort()
+function saveLocalResults(results: LocalResult[]) {
+  localStorage.setItem('matura_results', JSON.stringify(results))
+}
+
+function getLogins(): string[] {
+  if (typeof window === 'undefined') return []
+  return JSON.parse(localStorage.getItem('matura_logins') || '[]')
+}
+
+function recordTodayLogin() {
+  const today = new Date().toISOString().slice(0, 10)
+  const logins = getLogins()
+  if (!logins.includes(today)) {
+    logins.push(today)
+    localStorage.setItem('matura_logins', JSON.stringify(logins))
+  }
+}
+
+function computeStreak(logins: string[]) {
+  if (!logins.length) return 0
+  const sorted = [...logins].sort().reverse()
+  let streak = 0
+  let cursor = new Date()
+  cursor.setHours(0, 0, 0, 0)
+  for (const dateStr of sorted) {
+    const d = new Date(dateStr)
+    const diff = Math.round((cursor.getTime() - d.getTime()) / 86400000)
+    if (diff === 0 || diff === 1) { streak++; cursor = d } else break
+  }
+  return streak
+}
+
+// SVG multi-line chart — replicates mock's Chart.js layout
+function ScoreChart({ results }: { results: LocalResult[] }) {
+  const W = 560, H = 200
+  const PAD = { top: 16, right: 16, bottom: 32, left: 40 }
+  const iW = W - PAD.left - PAD.right
+  const iH = H - PAD.top - PAD.bottom
+
+  const allDates = [...new Set(results.map(r => r.date))].sort()
+  if (!allDates.length) return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center text-sm text-gray-400 py-12">
+      Все още няма въведени резултати. Добави първия си тест, за да видиш графиката.
+    </div>
+  )
+
   const xScale = (date: string) => {
     const i = allDates.indexOf(date)
-    return PAD.left + (allDates.length === 1 ? innerW / 2 : (i / (allDates.length - 1)) * innerW)
+    return PAD.left + (allDates.length === 1 ? iW / 2 : (i / (allDates.length - 1)) * iW)
   }
-  const yScale = (score: number) => PAD.top + innerH - (score / 100) * innerH
+  const yScale = (pct: number) => PAD.top + iH - (pct / 100) * iH
 
   const yTicks = [0, 25, 50, 75, 100]
+  const categories = Object.keys(CATEGORY_META)
 
   return (
-    <div className="card p-5">
-      <h2 className="font-semibold text-text mb-1">Резултати по изпити</h2>
-      <p className="text-xs text-text-muted mb-4">Прогрес по вид тест във времето</p>
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <h3 className="text-base font-bold text-[#1e2d5a] mb-5">Резултати във времето</h3>
       <div className="overflow-x-auto">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ minWidth: 320 }}>
-          {/* Y grid lines */}
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ minWidth: 300 }}>
           {yTicks.map(t => (
             <g key={t}>
               <line x1={PAD.left} x2={W - PAD.right} y1={yScale(t)} y2={yScale(t)} stroke="#e5e7eb" strokeWidth={1} />
               <text x={PAD.left - 6} y={yScale(t) + 4} textAnchor="end" fontSize={9} fill="#9ca3af">{t}%</text>
             </g>
           ))}
-          {/* X labels */}
           {allDates.map((d, i) => (
             (allDates.length <= 8 || i % Math.ceil(allDates.length / 8) === 0) && (
-              <text key={d} x={xScale(d)} y={H - 4} textAnchor="middle" fontSize={9} fill="#9ca3af">
-                {d.slice(5)}
-              </text>
+              <text key={d} x={xScale(d)} y={H - 6} textAnchor="middle" fontSize={9} fill="#9ca3af">{d.slice(5)}</text>
             )
           ))}
-          {/* Lines per category */}
-          {EXAM_CATEGORIES.map(({ key, color }) => {
-            const pts = examResults.filter(r => r.category === key).sort((a, b) => a.date.localeCompare(b.date))
+          {categories.map(cat => {
+            const pts = results.filter(r => r.type === cat).sort((a, b) => a.date.localeCompare(b.date))
             if (!pts.length) return null
-            const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xScale(p.date)} ${yScale(p.score)}`).join(' ')
+            const pathD = pts.map((p, i) => {
+              const x = xScale(p.date)
+              const y = yScale(Math.round((p.score / p.maxScore) * 100))
+              return `${i === 0 ? 'M' : 'L'} ${x} ${y}`
+            }).join(' ')
             return (
-              <g key={key}>
-                <path d={d} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" />
+              <g key={cat}>
+                <path d={pathD} fill="none" stroke={CATEGORY_META[cat].color} strokeWidth={2} strokeLinejoin="round" />
                 {pts.map(p => (
-                  <circle key={p.date + p.score} cx={xScale(p.date)} cy={yScale(p.score)} r={4} fill={color} />
+                  <circle
+                    key={p.id}
+                    cx={xScale(p.date)}
+                    cy={yScale(Math.round((p.score / p.maxScore) * 100))}
+                    r={4}
+                    fill={CATEGORY_META[cat].color}
+                  />
                 ))}
               </g>
             )
           })}
         </svg>
       </div>
-      {/* Legend */}
       <div className="flex flex-wrap gap-4 mt-3">
-        {EXAM_CATEGORIES.filter(c => examResults.some(r => r.category === c.key)).map(({ key, label, color }) => (
-          <div key={key} className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full inline-block" style={{ background: color }} />
-            <span className="text-xs text-text-muted">{label}</span>
+        {categories.filter(cat => results.some(r => r.type === cat)).map(cat => (
+          <div key={cat} className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-full inline-block" style={{ background: CATEGORY_META[cat].color }} />
+            <span className="text-xs text-gray-500">{CATEGORY_META[cat].label}</span>
           </div>
         ))}
       </div>
@@ -82,235 +134,210 @@ function ExamScoreChart({ examResults }: { examResults: ExamResult[] }) {
 }
 
 export default function ProgressPage() {
-  const [data, setData] = useState<ProgressData | null>(null)
+  const [results, setResults] = useState<LocalResult[]>([])
+  const [logins, setLogins] = useState<string[]>([])
+  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
-    fetchProgressData().then(setData)
+    recordTodayLogin()
+    setResults(getLocalResults())
+    setLogins(getLogins())
   }, [])
 
-  const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
-
-  if (!data) {
-    return (
-      <div className="min-h-screen pb-20 md:pb-0">
-        <TopBar title="Напредък" />
-        <div className="p-4 md:p-6 max-w-5xl mx-auto">
-          <div className="flex items-center justify-center h-64 text-text-muted text-sm">Зареждане...</div>
-        </div>
-      </div>
-    )
+  function refresh() {
+    setResults(getLocalResults())
+    setLogins(getLogins())
   }
 
-  const maxActivity = Math.max(...data.weeklyActivity, 1)
+  function deleteResult(id: string) {
+    saveLocalResults(getLocalResults().filter(r => r.id !== id))
+    refresh()
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const fd = new FormData(e.currentTarget)
+    const entry: LocalResult = {
+      id: Date.now().toString(),
+      type: fd.get('type') as string,
+      subject: fd.get('subject') as string,
+      score: Number(fd.get('score')),
+      maxScore: Number(fd.get('maxScore')),
+      date: fd.get('date') as string,
+    }
+    const all = getLocalResults()
+    all.push(entry)
+    saveLocalResults(all)
+    setModalOpen(false)
+    refresh()
+  }
+
+  const avg = results.length
+    ? Math.round(results.reduce((a, r) => a + (r.score / r.maxScore) * 100, 0) / results.length)
+    : null
+  const best = results.length
+    ? Math.max(...results.map(r => Math.round((r.score / r.maxScore) * 100)))
+    : null
+  const streak = computeStreak(logins)
+
+  const today = new Date()
+  const monday = new Date(today)
+  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
+  const weekDates = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(monday)
+    d.setDate(monday.getDate() + i)
+    return d.toISOString().slice(0, 10)
+  })
+  const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
+
+  const sorted = [...results].sort((a, b) => b.date.localeCompare(a.date))
+
+  const stats = [
+    { label: 'ЗАВЪРШЕНИ ТЕСТОВЕ',  value: results.length,               sub: 'теста въведени' },
+    { label: 'СРЕДНА ОЦЕНКА',      value: avg !== null ? `${avg}%` : '—', sub: 'средно от всички' },
+    { label: 'ПОРЕДНИ ДНИ',        value: streak,                         sub: 'дни активност' },
+    { label: 'НАЙ-ВИСОК РЕЗУЛТАТ', value: best !== null ? `${best}%` : '—', sub: 'от един тест' },
+  ]
 
   return (
-    <div className="min-h-screen pb-20 md:pb-0">
+    <div className="min-h-screen pb-20 md:pb-0 bg-gray-50">
       <TopBar title="Напредък" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto space-y-6">
 
-        {/* Exam score line chart */}
-        {data.examResults.length > 0 && <ExamScoreChart examResults={data.examResults} />}
-
-        {/* Overview stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <StatCard label="Mastery точки" value={data.masteryPoints} subtext="знания по теми" accent />
-          <StatCard label="Energy точки" value={data.energyPoints} subtext="усилие и практика" />
-          <StatCard label="Завършени тестове" value={data.testsCompleted} subtext={`от ${studentTests.length} налични`} />
-          <StatCard label="Средна оценка" value={data.avgScore > 0 ? `${data.avgScore}%` : '—'} accent />
-          <StatCard label="Овладени теми" value={data.masteredSkills} subtext={`${data.proficientSkills} стабилни`} />
-          <StatCard label="Поредни дни" value={data.streakDays} subtext="дни активност" />
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-extrabold text-[#1e2d5a]">Моят напредък</h1>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="bg-[#4f63d2] text-white font-semibold px-6 py-2.5 rounded-full text-sm hover:bg-indigo-700 transition"
+          >
+            + Добави резултат
+          </button>
         </div>
 
-        <div className="card p-5">
-          <div className="grid gap-4 md:grid-cols-[1.2fr_1fr] md:items-center">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">Как работи напредъкът</p>
-              <h2 className="text-lg font-bold text-text mb-2">Mastery показва колко стабилно знаеш темите. Energy показва колко работа си вложил.</h2>
-              <p className="text-sm text-text-muted leading-relaxed">
-                Mastery точките се променят според последния резултат по тема и могат да спаднат при по-слаб опит. Energy точките се трупат от решени и верни въпроси и не намаляват.
-              </p>
+        {/* Stats cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {stats.map(c => (
+            <div key={c.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{c.label}</p>
+              <p className="text-3xl font-extrabold text-[#1e2d5a] mb-1">{c.value}</p>
+              <p className="text-xs text-gray-400">{c.sub}</p>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-center">
-              <div className="rounded-xl border border-border bg-gray-50 p-3">
-                <p className="text-2xl font-bold text-success">{data.masteredSkills}</p>
-                <p className="text-xs font-semibold text-text-muted">Овладени</p>
-              </div>
-              <div className="rounded-xl border border-border bg-gray-50 p-3">
-                <p className="text-2xl font-bold text-primary">{data.proficientSkills}</p>
-                <p className="text-xs font-semibold text-text-muted">Стабилни</p>
-              </div>
-              <div className="rounded-xl border border-border bg-gray-50 p-3">
-                <p className="text-2xl font-bold text-amber">{data.familiarSkills}</p>
-                <p className="text-xs font-semibold text-text-muted">Познати</p>
-              </div>
-              <div className="rounded-xl border border-border bg-gray-50 p-3">
-                <p className="text-2xl font-bold text-text-muted">{data.attemptedSkills}</p>
-                <p className="text-xs font-semibold text-text-muted">Опитани</p>
-              </div>
-            </div>
+          ))}
+        </div>
+
+        {/* Weekly activity */}
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+          <h3 className="text-base font-bold text-[#1e2d5a] mb-5">Активност тази седмица</h3>
+          <div className="flex gap-2 items-end">
+            {weekDates.map((date, i) => {
+              const active = logins.includes(date)
+              return (
+                <div key={date} className="flex-1 flex flex-col items-center gap-2">
+                  <div className={`w-full h-14 rounded-xl ${active ? 'bg-[#4f63d2]' : 'bg-gray-100'}`} />
+                  <span className="text-[11px] text-gray-400">{weekDays[i]}</span>
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-5">
-          <div className="lg:col-span-2 space-y-5">
+        {/* Score chart */}
+        <ScoreChart results={results} />
 
-            {/* Weekly activity */}
-            <div className="card p-5">
-              <h2 className="font-semibold text-text mb-4">Активност тази седмица</h2>
-              <div className="flex items-end gap-2 h-24">
-                {data.weeklyActivity.map((count, i) => (
-                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                    <span className="text-xs text-text-muted">{count > 0 ? count : ''}</span>
-                    <div className="w-full bg-gray-100 rounded-md overflow-hidden" style={{ height: '72px' }}>
-                      <div
-                        className="w-full bg-primary rounded-md transition-all"
-                        style={{ height: `${(count / maxActivity) * 100}%` }}
-                      />
+        {/* Results history */}
+        {sorted.length > 0 ? (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-100">
+              <h3 className="text-base font-bold text-[#1e2d5a]">История на резултатите</h3>
+            </div>
+            <ul className="divide-y divide-gray-50">
+              {sorted.map(r => (
+                <li key={r.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition">
+                  <div className="flex items-center gap-4">
+                    <span className="text-2xl font-extrabold text-[#1e2d5a]">
+                      {Math.round((r.score / r.maxScore) * 100)}%
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-700">
+                        {CATEGORY_META[r.type]?.label ?? r.type} · {r.subject}
+                      </p>
+                      <p className="text-xs text-gray-400">{r.date}</p>
                     </div>
-                    <span className="text-[10px] text-text-muted">{days[i]}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Score history */}
-            {data.scoreHistory.length > 0 && (
-              <div className="card p-5">
-                <h2 className="font-semibold text-text mb-4">История на резултатите</h2>
-                <div className="space-y-3">
-                  {data.scoreHistory.map((item, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <span className="text-xs text-text-muted w-12 flex-shrink-0">{item.date}</span>
-                      <div className="flex-1">
-                        <p className="text-xs font-medium text-text mb-1 truncate">{item.testName}</p>
-                        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                          <div
-                            className={`h-1.5 rounded-full ${item.score >= 80 ? 'bg-success' : item.score >= 60 ? 'bg-amber' : 'bg-danger'}`}
-                            style={{ width: `${item.score}%` }}
-                          />
-                        </div>
-                      </div>
-                      <span className={`text-sm font-bold font-serif flex-shrink-0 w-10 text-right ${getScoreColor(item.score)}`}>
-                        {item.score}%
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Recent activity */}
-            {data.recentActivity.length > 0 && (
-              <div className="card p-5">
-                <h2 className="font-semibold text-text mb-4">Последна активност</h2>
-                <div className="space-y-3">
-                  {data.recentActivity.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                        item.type === 'test' ? 'bg-primary-light' :
-                        item.type === 'lesson' ? 'bg-success-light' : 'bg-amber-light'
-                      }`}>
-                        {item.type === 'test' ? (
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>
-                        ) : item.type === 'lesson' ? (
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="#16A34A"><path d="M5 3l14 9-14 9V3z"/></svg>
-                        ) : (
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-text truncate">{item.title}</p>
-                        <p className="text-xs text-text-muted">{item.date}</p>
-                      </div>
-                      {item.score !== undefined && (
-                        <span className={`text-sm font-bold font-serif flex-shrink-0 ${getScoreColor(item.score)}`}>
-                          {item.score}%
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {data.recentActivity.length === 0 && data.scoreHistory.length === 0 && (
-              <div className="card p-8 text-center text-text-muted text-sm">
-                Все още няма активност. Реши тест или урок за да видиш прогреса си тук.
-              </div>
-            )}
+                  <button
+                    onClick={() => deleteResult(r.id)}
+                    className="text-gray-300 hover:text-red-400 transition text-lg leading-none"
+                  >✕</button>
+                </li>
+              ))}
+            </ul>
           </div>
+        ) : (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center text-sm text-gray-400 py-10">
+            Все още няма активност. Добави първия си резултат, за да видиш прогреса си тук.
+          </div>
+        )}
+      </div>
 
-          {/* Right column */}
-          <div className="space-y-4">
-            <div className="card p-5">
-              <h2 className="font-semibold text-text mb-4 text-sm">Общ напредък</h2>
-              <div className="space-y-3">
-                <ProgressBar value={data.masteryPoints} max={Math.max(data.totalTests * 100, 100)} label="Mastery точки" showLabel />
-                <ProgressBar value={data.testsCompleted} max={data.totalTests} label="Тестове" showLabel />
-                <ProgressBar value={data.lessonsCompleted} max={data.totalLessons} label="Уроци" showLabel />
+      {/* Modal */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
+          onClick={e => { if (e.target === e.currentTarget) setModalOpen(false) }}
+        >
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm mx-4">
+            <h2 className="text-lg font-bold text-[#1e2d5a] mb-6">Добави резултат</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-gray-500 block mb-1">Вид тест</label>
+                <select name="type" className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                  <option value="nvo-primer">НВО — Примерен</option>
+                  <option value="nvo-oficial">НВО — Официален</option>
+                  <option value="dzi-primer">ДЗИ — Примерен</option>
+                  <option value="dzi-oficial">ДЗИ — Официален</option>
+                </select>
               </div>
-            </div>
-
-            {data.recentEnergyEvents.length > 0 && (
-              <div className="card p-5">
-                <h2 className="font-semibold text-text mb-3 text-sm">Последни Energy точки</h2>
-                <div className="space-y-2">
-                  {data.recentEnergyEvents.map((event) => (
-                    <div key={event.id} className="flex items-center justify-between gap-3 rounded-lg bg-success-light px-3 py-2">
-                      <p className="text-xs font-medium text-text truncate">{event.reason}</p>
-                      <span className="text-xs font-bold text-success">+{event.points}</span>
-                    </div>
-                  ))}
+              <div>
+                <label className="text-xs font-semibold text-gray-500 block mb-1">Предмет</label>
+                <select name="subject" className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                  <option value="БЕЛ">БЕЛ</option>
+                  <option value="МАТ">МАТ</option>
+                  <option value="Друго">Друго</option>
+                </select>
+              </div>
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <label className="text-xs font-semibold text-gray-500 block mb-1">Точки</label>
+                  <input name="score" type="number" min="0" required placeholder="72"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+                </div>
+                <div className="flex-1">
+                  <label className="text-xs font-semibold text-gray-500 block mb-1">От максимум</label>
+                  <input name="maxScore" type="number" min="1" required placeholder="100"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
                 </div>
               </div>
-            )}
-
-            {data.weakTopics.length > 0 && (
-              <div className="card p-5">
-                <h2 className="font-semibold text-text mb-3 text-sm">Теми за подобрение</h2>
-                <div className="space-y-3">
-                  {data.weakTopics.map((topic) => (
-                    <div key={topic.name}>
-                      <div className="flex justify-between items-center mb-1">
-                        <div>
-                          <p className="text-xs font-medium text-text leading-snug">{topic.name}</p>
-                          <p className="text-[10px] text-text-muted">{topic.subjectName}</p>
-                        </div>
-                        <span className={`text-xs font-bold font-serif ${getScoreColor(topic.avgScore)}`}>{topic.avgScore}%</span>
-                      </div>
-                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-1.5 bg-danger rounded-full" style={{ width: `${topic.avgScore}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-500 block mb-1">Дата</label>
+                <input name="date" type="date" required
+                  defaultValue={new Date().toISOString().slice(0, 10)}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
               </div>
-            )}
-
-            {data.strongTopics.length > 0 && (
-              <div className="card p-5">
-                <h2 className="font-semibold text-text mb-3 text-sm">Силни теми</h2>
-                <div className="space-y-3">
-                  {data.strongTopics.map((topic) => (
-                    <div key={topic.name}>
-                      <div className="flex justify-between items-center mb-1">
-                        <div>
-                          <p className="text-xs font-medium text-text leading-snug">{topic.name}</p>
-                          <p className="text-[10px] text-text-muted">{topic.subjectName}</p>
-                        </div>
-                        <span className={`text-xs font-bold font-serif ${getScoreColor(topic.avgScore)}`}>{topic.avgScore}%</span>
-                      </div>
-                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-1.5 bg-success rounded-full" style={{ width: `${topic.avgScore}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex gap-3 pt-2">
+                <button type="button" onClick={() => setModalOpen(false)}
+                  className="flex-1 border border-gray-200 text-gray-600 font-semibold py-2.5 rounded-full text-sm hover:bg-gray-50 transition">
+                  Откажи
+                </button>
+                <button type="submit"
+                  className="flex-1 bg-[#4f63d2] text-white font-semibold py-2.5 rounded-full text-sm hover:bg-indigo-700 transition">
+                  Запази
+                </button>
               </div>
-            )}
+            </form>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
