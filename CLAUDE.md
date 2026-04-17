@@ -120,6 +120,45 @@ Optimize for clarity and maintainability over clever abstractions.
 For content-heavy exam features, summarize the data model first, then implement.
 
 
+Feature Preservation
+
+The features below are intentionally implemented and must not be removed, simplified, or overwritten by future changes — even during refactors, merges, or conflict resolution. Before committing any change that touches the listed files, verify each relevant item is still present.
+
+Critical files (handle with extra care):
+
+app/(student)/dashboard/materials/page.tsx
+  - Grade 12 DZI literature modal: two-column grid with LEFT column (text / summary / video / cover image ternary) and RIGHT column with four buttons: Текст, Резюме, Видео урок, Упражнение. Exercise button uses router.push('/dashboard/tests') — NOT a new tab.
+  - Grade 7 NVO literature modal: same two-column grid with LEFT column (text / video / cover image ternary) and RIGHT column with three buttons: Текст, Видео урок, Упражнение. Exercise button uses router.push('/dashboard/literature-exercise/<id>') — NOT a new tab, NOT a Link with target="_blank".
+  - Both modals use lazy video loading: isActiveWorkVideoPlaying / isActiveNvoVideoPlaying state. Video only plays after clicking the play overlay button; the poster image is shown until then.
+  - The reading marker feature (isNvoReadingMarkerEnabled, handleNvoWordMark, nvoWordRefs) must remain in the grade 7 text panel.
+
+data/literatureSummaries.ts
+  - Contains detailed multi-paragraph analyses with section headings (ТВОРЧЕСКА ИСТОРИЯ, ЗАГЛАВИЕ, СЮЖЕТНИ И КОМПОЗИЦИОННИ ОСОБЕНОСТИ, КОМПОЗИЦИЯ, ТЕМИ, КОНФЛИКТИ И ПОСЛАНИЯ). Do NOT replace with short bullet-point summaries.
+
+app/(student)/dashboard/tests/page.tsx
+  - Grade 7 filter: BEL / Математика subject buttons + Примерен НВО / НВО от минали години mode toggle.
+  - Grade 12 filter: БЕЛ / Английски subject buttons + Примерен ДЗИ / ДЗИ от минали години mode toggle.
+  - When grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample': shows Reading Comprehension Bank and Writing Prompts Bank cards (not a regular test list).
+  - getTestMode classifies tests as 'sample' or 'past' based on ID prefix. getTestHref handles english-generated- prefix separately.
+
+data/tests.ts
+  - Imports: mockTests from './mock-tests' and englishTests from './english-tests'. Both are spread exactly once into the allTests array. Do NOT add duplicate spreads.
+
+data/english-tests.ts
+  - Imports officialEnglishMockExams from '../lib/official-english-mock-data' and generated materials from '../lib/english-generated-materials'. Both are used. Do not remove either.
+
+Pre-commit feature check (run mentally or with grep before every push):
+  1. npm run build — must pass with zero errors.
+  2. Grep for 'target="_blank"' in materials/page.tsx — must not appear in the NVO or DZI exercise buttons.
+  3. Grep for 'isActiveWorkVideoPlaying\|isActiveNvoVideoPlaying' in materials/page.tsx — must still exist.
+  4. Grep for 'ТВОРЧЕСКА ИСТОРИЯ' in data/literatureSummaries.ts — must still exist.
+  5. Grep for 'englishTests' in data/tests.ts — must appear exactly once as a spread.
+
+Merge and conflict resolution rules:
+  - For data files (tests.ts, english-tests.ts, literatureSummaries.ts, literatureWorks.ts, materials.ts): always keep ALL entries from BOTH sides of the conflict. Never discard data to resolve a conflict.
+  - For the materials page and tests page: read both sides of a conflict carefully. The side with more features (more buttons, more panels, lazy-load logic) is almost always the correct one to keep. Never use git checkout --ours or --theirs blindly on these files.
+  - After any merge or cherry-pick, run the pre-commit feature check above before pushing.
+
 Git Safety Protocol
 
 These rules protect the repository history. Follow them without exception.
