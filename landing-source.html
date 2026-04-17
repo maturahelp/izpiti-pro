@@ -1323,6 +1323,43 @@
     }
   </script>
 
+  <!-- Auth state: swap login/register CTAs if user already has a Supabase session -->
+  <script>
+    (function () {
+      try {
+        var hasSupabaseCookie = document.cookie
+          .split(';')
+          .some(function (c) {
+            var n = c.trim();
+            return n.indexOf('sb-') === 0 && n.indexOf('-auth-token') !== -1;
+          });
+        var hasDevAuth = false;
+        try { hasDevAuth = localStorage.getItem('dev_auth') === '1'; } catch (e) {}
+
+        if (!(hasSupabaseCookie || hasDevAuth)) return;
+
+        var APP_HREF = '/dashboard/materials';
+
+        // Rewrite any /login anchor → "Продължи" → app
+        document.querySelectorAll('a[href="/login"]').forEach(function (el) {
+          el.setAttribute('href', APP_HREF);
+          if ((el.textContent || '').trim() === 'Вход') el.textContent = 'Продължи';
+        });
+
+        // Rewrite any /register anchor → link to app, keep CTA copy
+        document.querySelectorAll('a[href="/register"]').forEach(function (el) {
+          el.setAttribute('href', APP_HREF);
+          var t = (el.textContent || '').trim();
+          if (t === 'Регистрация' || t === 'Регистрирай се') {
+            el.textContent = 'Към приложението';
+          }
+        });
+      } catch (e) {
+        // fail silently — landing still works with default CTAs
+      }
+    })();
+  </script>
+
 </body>
 
 </html>

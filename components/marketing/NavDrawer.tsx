@@ -208,7 +208,7 @@ export function LoginGateModal() {
       return
     }
     closeLoginGate()
-    router.push(activeHref || '/dashboard')
+    router.push(activeHref || '/dashboard/materials')
     router.refresh()
   }
 
@@ -224,7 +224,7 @@ export function LoginGateModal() {
     if (error) { setError(error.message); return }
     if (session) {
       closeLoginGate()
-      router.push(activeHref || '/dashboard')
+      router.push(activeHref || '/dashboard/materials')
       router.refresh()
     } else {
       setInfo('Акаунтът е създаден! Провери имейла си и кликни линка за потвърждение, за да влезеш.')
