@@ -157,31 +157,33 @@ function QuestionCard({
       )}
 
       {/* Action buttons */}
-      <div className="mt-4 flex flex-col gap-2">
-        {!revealed ? (
-          <button
-            type="button"
-            disabled={!selected}
-            onClick={onCheck}
-            className={cn(
-              'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
-              selected
-                ? 'bg-primary text-white hover:bg-primary-dark'
-                : 'bg-border text-text-muted cursor-not-allowed'
-            )}
-          >
-            Провери отговора
-          </button>
-        ) : selected !== question.correct_answer ? (
-          <button
-            type="button"
-            onClick={onRetry}
-            className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
-          >
-            Опитай пак
-          </button>
-        ) : null}
-      </div>
+      {(!revealed || selected !== question.correct_answer) && (
+        <div className="mt-4 flex flex-col gap-2">
+          {!revealed ? (
+            <button
+              type="button"
+              disabled={!selected}
+              onClick={onCheck}
+              className={cn(
+                'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+                selected
+                  ? 'bg-primary text-white hover:bg-primary-dark'
+                  : 'bg-border text-text-muted cursor-not-allowed'
+              )}
+            >
+              Провери отговора
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onRetry}
+              className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+            >
+              Опитай пак
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -349,20 +351,30 @@ export default function LiteratureExercisePage({
                 {currentIndex + 1} / {total}
               </span>
 
-              {isRevealed ? (
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
-                >
-                  {currentIndex + 1 >= total ? 'Резултат' : 'Следващ'}
-                  {currentIndex + 1 < total && (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  )}
-                </button>
-              ) : (
+              {isRevealed ? (() => {
+                const isLast = currentIndex + 1 >= total
+                const isCorrect = selected === question.correct_answer
+                const label = isLast ? 'Резултат' : isCorrect ? 'Следващ' : 'Пропусни'
+                return (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className={cn(
+                      'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors',
+                      !isLast && !isCorrect
+                        ? 'border border-border text-text-muted hover:border-primary/40 bg-white'
+                        : 'bg-primary text-white hover:bg-primary-dark'
+                    )}
+                  >
+                    {label}
+                    {!isLast && (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    )}
+                  </button>
+                )
+              })() : (
                 <span className="text-xs text-text-light italic">Избери отговор</span>
               )}
             </div>
