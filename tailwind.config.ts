@@ -15,7 +15,7 @@ const config: Config = {
           light: '#EFF6FF',
           lighter: '#F0F7FF',
         },
-        navy: '#1e2a4a',
+        navy: { DEFAULT: '#1e2a4a' },
         amber: {
           DEFAULT: '#B45309',
           light: '#FEF3C7',
