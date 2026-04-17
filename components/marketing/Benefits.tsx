@@ -1,110 +1,114 @@
-'use client'
-
-import { useState } from 'react'
-import { FadeIn } from '@/components/ui/fade-in'
-
-const videos = [
+const pills = [
   {
-    id: 'plan',
-    title: 'Подредена подготовка',
-    description: 'Всичко е подредено по предмети, теми и класове, за да учиш ясно и последователно.',
+    label: 'Онлайн обучение',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </svg>
+    ),
   },
   {
-    id: 'tests',
-    title: 'Интерактивни тестове',
-    description: 'Решаваш задачи, получаваш обратна връзка веднага и виждаш къде да подобриш резултата си.',
+    label: 'Напредък',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+      </svg>
+    ),
   },
   {
-    id: 'audio',
-    title: 'Аудио и видео уроци',
-    description: 'Когато искаш бърз преговор, можеш да слушаш или гледаш кратки и практични уроци.',
-  },
-  {
-    id: 'ai',
-    title: 'AI помощ при затруднение',
-    description: 'При неясна тема получаваш обяснение на разбираем език и насоки за следващата стъпка.',
+    label: 'Учи от всяко място',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <path d="M12 18h.01" />
+      </svg>
+    ),
   },
 ]
 
-function ArrowIcon({ direction }: { direction: 'left' | 'right' }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-      {direction === 'left' ? <path d="M15 18 9 12l6-6" /> : <path d="m9 18 6-6-6-6" />}
-    </svg>
-  )
-}
+const featureCards = [
+  {
+    label: 'Видео обучение',
+    sub: 'Гледай уроци по всяко време',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="23 7 16 12 23 17 23 7" />
+        <rect x="1" y="5" width="15" height="14" rx="2" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Теория',
+    sub: 'Учебни материали',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'AI помощник',
+    sub: 'Следи своя прогрес',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a10 10 0 1 0 10 10" />
+        <path d="M12 8v4l3 3" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Тестов режим',
+    sub: 'Практикувай под реални условия',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+        <rect x="9" y="3" width="6" height="4" rx="1" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+  },
+]
 
 export function Benefits() {
-  const [active, setActive] = useState(0)
-  const current = videos[active]
-
-  function prev() {
-    setActive((v) => (v === 0 ? videos.length - 1 : v - 1))
-  }
-
-  function next() {
-    setActive((v) => (v === videos.length - 1 ? 0 : v + 1))
-  }
-
   return (
-    <section className="py-20 md:py-28 bg-[#F8FAFC]">
-      <div className="max-w-6xl mx-auto px-5 sm:px-7">
-        <FadeIn className="text-center mb-14">
-          <p className="section-label mb-3">Защо MaturaHelp</p>
-          <h2 className="text-[2rem] md:text-[2.5rem] font-serif font-bold text-text tracking-[-0.03em] mb-4">
-            Как MaturaHelp ще ти помогне с матурите
-          </h2>
-          <p className="text-[16px] text-text-muted max-w-2xl mx-auto leading-[1.7]">
-            Разгледай ключовите възможности на платформата през кратки демонстрационни видеа.
-          </p>
-        </FadeIn>
-
-        <div className="max-w-4xl mx-auto border border-[#E2E8F0] bg-white p-4 sm:p-6">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <button
-              type="button"
-              onClick={prev}
-              aria-label="Предишно видео"
-              className="w-10 h-10 border border-[#E2E8F0] bg-white text-text hover:bg-[#F8FAFC] transition-colors flex items-center justify-center"
+    <section className="py-12 md:py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Pills */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {pills.map((pill) => (
+            <div
+              key={pill.label}
+              className="flex items-center gap-2.5 bg-white rounded-full px-5 py-2.5"
+              style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
             >
-              <ArrowIcon direction="left" />
-            </button>
-
-            <div className="text-center flex-1 min-w-0">
-              <p className="text-[11px] uppercase tracking-[0.1em] text-text-muted mb-1">Функционалност</p>
-              <h3 className="text-[19px] font-bold text-text tracking-[-0.02em] truncate">{current.title}</h3>
+              <div className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-md bg-blue-50">
+                {pill.icon}
+              </div>
+              <span className="text-xs font-semibold" style={{ color: '#1e2a4a' }}>{pill.label}</span>
             </div>
+          ))}
+        </div>
 
-            <button
-              type="button"
-              onClick={next}
-              aria-label="Следващо видео"
-              className="w-10 h-10 border border-[#E2E8F0] bg-white text-text hover:bg-[#F8FAFC] transition-colors flex items-center justify-center"
+        {/* Feature cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {featureCards.map((card) => (
+            <div
+              key={card.label}
+              className="rounded-2xl p-6 text-center hover:shadow-md transition group"
+              style={{ background: 'linear-gradient(135deg, #eff6ff, #eef2ff)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
             >
-              <ArrowIcon direction="right" />
-            </button>
-          </div>
-
-          <div className="aspect-video w-full bg-[#E2E8F0] border border-[#CBD5E1] flex items-center justify-center">
-            <div className="text-center px-4">
-              <p className="text-[12px] text-text-muted mb-2">Placeholder видео</p>
-              <p className="text-[16px] font-semibold text-text">{current.title}</p>
+              <div
+                className="w-14 h-14 mx-auto mb-4 rounded-xl bg-white flex items-center justify-center group-hover:scale-110 transition"
+                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
+              >
+                {card.icon}
+              </div>
+              <h3 className="text-sm font-bold mb-1" style={{ color: '#1e2a4a' }}>{card.label}</h3>
+              <p className="text-xs text-gray-400">{card.sub}</p>
             </div>
-          </div>
-
-          <p className="text-[14px] text-text-muted leading-relaxed mt-4 text-center">{current.description}</p>
-
-          <div className="flex justify-center gap-2 mt-4">
-            {videos.map((item, idx) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setActive(idx)}
-                aria-label={`Видео ${idx + 1}`}
-                className={`h-2.5 w-8 border transition-colors ${idx === active ? 'bg-primary border-primary' : 'bg-white border-[#CBD5E1]'}`}
-              />
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>
