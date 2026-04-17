@@ -211,7 +211,7 @@
   align-items: center;
   justify-content: center;
   background: #eef3fb;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s ease;
 }
 
 .preloader-fade-out {
@@ -222,8 +222,7 @@
 .preloader-svg {
   width: min(72vw, 440px);
   height: auto;
-  opacity: 0;
-  animation: preloaderFadeIn 0.5s ease forwards 0.1s;
+  opacity: 1;
 }
 
 .preloader-svg text {
@@ -233,16 +232,34 @@
   letter-spacing: -0.03em;
 }
 
-.preloader-text-glow   { display: none; }
-.preloader-text-stroke { display: none; }
+.preloader-text-glow { display: none; }
 
-.preloader-text-fill {
-  fill: #4f81d6;
-  opacity: 1;
-  stroke: none;
+/* Stroke layer — revealed left-to-right via clip-path rect */
+.preloader-text-stroke {
+  fill: none;
+  stroke: #4f81d6;
+  stroke-width: 1.5;
+  paint-order: stroke fill;
 }
 
-@keyframes preloaderFadeIn {
+/* Clip rect that animates from width=0 to full */
+.preloader-reveal-rect {
+  width: 0;
+  animation: preloaderReveal 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.15s;
+}
+
+/* Fill layer — fades in after stroke finishes */
+.preloader-text-fill {
+  fill: #4f81d6;
+  opacity: 0;
+  animation: preloaderFillIn 0.4s ease forwards 0.9s;
+}
+
+@keyframes preloaderReveal {
+  to { width: 600px; }
+}
+
+@keyframes preloaderFillIn {
   to { opacity: 1; }
 }
 

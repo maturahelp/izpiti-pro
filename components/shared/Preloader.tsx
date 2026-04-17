@@ -83,19 +83,18 @@ export default function Preloader() {
     <div className={`preloader-overlay ${fading ? 'preloader-fade-out' : ''}`} aria-hidden="true">
       <svg className="preloader-svg" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="preloader-glow">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
+          <clipPath id="preloader-reveal">
+            <rect className="preloader-reveal-rect" x="0" y="0" height="80" />
+          </clipPath>
         </defs>
 
-        <text className="preloader-text-glow" x="300" y="58" textAnchor="middle" filter="url(#preloader-glow)">
-          MaturaHelp
-        </text>
-        <text className="preloader-text-stroke" x="300" y="58" textAnchor="middle">
+        <text
+          className="preloader-text-stroke"
+          x="300"
+          y="58"
+          textAnchor="middle"
+          clipPath="url(#preloader-reveal)"
+        >
           MaturaHelp
         </text>
         <text className="preloader-text-fill" x="300" y="58" textAnchor="middle">
