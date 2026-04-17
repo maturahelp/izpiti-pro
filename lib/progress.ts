@@ -1,6 +1,26 @@
 import { createClient } from '@/lib/supabase/client'
 import { studentLessons, studentTests } from '@/data/student-content'
 import { allTests } from '@/data/tests'
+import { fetchPointProgress, type EnergyEventRecord } from '@/lib/mastery'
+
+export type ExamCategory = 'nvo-primer' | 'nvo-oficial' | 'dzi-primer' | 'dzi-oficial'
+
+export interface ExamResult {
+  date: string
+  score: number
+  testName: string
+  category: ExamCategory
+}
+
+function classifyExam(testName: string): ExamCategory | null {
+  const name = testName.toLowerCase()
+  const isNvo = name.includes('нво') || name.includes('nvo')
+  const isDzi = name.includes('дзи') || name.includes('дзи') || name.includes('dzi') || name.includes('матура')
+  const isPrimer = name.includes('примерен') || name.includes('primer') || name.includes('mock')
+  if (!isNvo && !isDzi) return null
+  if (isNvo) return isPrimer ? 'nvo-primer' : 'nvo-oficial'
+  return isPrimer ? 'dzi-primer' : 'dzi-oficial'
+}
 
 export interface DziAttempt {
   id: string
@@ -122,15 +142,21 @@ export interface ProgressData {
   recentActivity: { type: 'test' | 'lesson' | 'material'; title: string; date: string; score?: number }[]
   weakTopics: { name: string; subjectName: string; avgScore: number }[]
   strongTopics: { name: string; subjectName: string; avgScore: number }[]
+  masteryPoints: number
+  energyPoints: number
+  attemptedSkills: number
+  familiarSkills: number
+  proficientSkills: number
+  masteredSkills: number
+  recentEnergyEvents: EnergyEventRecord[]
+  examResults: ExamResult[]
 }
 
 export async function fetchProgressData(): Promise<ProgressData> {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) {
-    return emptyProgress()
-  }
+  if (!user) return emptyProgress(await fetchPointProgress())
 
   const now = new Date()
   const weekAgo = new Date(now)
@@ -193,6 +219,21 @@ export async function fetchProgressData(): Promise<ProgressData> {
     score: r.score,
   }))
 
+  // Exam results by category (НВО/ДЗИ × примерен/официален)
+  const examResults: ExamResult[] = (testResults
+    .map((r: { completed_at: string; test_name: string; score: number }) => {
+      const category = classifyExam(r.test_name)
+      if (!category) return null
+      return {
+        date: new Date(r.completed_at).toISOString().slice(0, 10),
+        score: r.score,
+        testName: r.test_name,
+        category,
+      }
+    })
+    .filter((x): x is ExamResult => x !== null)
+    .sort((a, b) => a.date.localeCompare(b.date)))
+
   // Recent activity — последните 8 активности
   const allActivity = [
     ...testResults.map((r: { completed_at: string; test_name: string; score: number }) => ({
@@ -229,6 +270,8 @@ export async function fetchProgressData(): Promise<ProgressData> {
   const weakTopics = topicsWithAvg.filter(t => t.avgScore < 60).sort((a, b) => a.avgScore - b.avgScore).slice(0, 4)
   const strongTopics = topicsWithAvg.filter(t => t.avgScore >= 75).sort((a, b) => b.avgScore - a.avgScore).slice(0, 4)
 
+  const pointProgress = await fetchPointProgress()
+
   return {
     testsCompleted: testResults.length,
     avgScore,
@@ -241,14 +284,40 @@ export async function fetchProgressData(): Promise<ProgressData> {
     recentActivity,
     weakTopics,
     strongTopics,
+    masteryPoints: pointProgress.masteryPoints,
+    energyPoints: pointProgress.energyPoints,
+    attemptedSkills: pointProgress.attemptedCount,
+    familiarSkills: pointProgress.familiarCount,
+    proficientSkills: pointProgress.proficientCount,
+    masteredSkills: pointProgress.masteredCount,
+    recentEnergyEvents: pointProgress.recentEnergyEvents,
+    examResults,
   }
 }
 
-function emptyProgress(): ProgressData {
+function emptyProgress(pointProgress?: Awaited<ReturnType<typeof fetchPointProgress>>): ProgressData {
+  const points = pointProgress ?? {
+    masteryPoints: 0,
+    energyPoints: 0,
+    attemptedCount: 0,
+    familiarCount: 0,
+    proficientCount: 0,
+    masteredCount: 0,
+    recentEnergyEvents: [],
+  }
+
   return {
     testsCompleted: 0, avgScore: 0, lessonsCompleted: 0, streakDays: 0,
     totalTests: studentTests.length, totalLessons: studentLessons.length,
     weeklyActivity: [0, 0, 0, 0, 0, 0, 0],
     scoreHistory: [], recentActivity: [], weakTopics: [], strongTopics: [],
+    masteryPoints: points.masteryPoints,
+    energyPoints: points.energyPoints,
+    attemptedSkills: points.attemptedCount,
+    familiarSkills: points.familiarCount,
+    proficientSkills: points.proficientCount,
+    masteredSkills: points.masteredCount,
+    recentEnergyEvents: points.recentEnergyEvents,
+    examResults: [],
   }
 }
