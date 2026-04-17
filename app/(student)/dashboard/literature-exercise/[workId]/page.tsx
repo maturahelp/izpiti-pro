@@ -6,6 +6,7 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import { getExerciseForWork, type LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { cn } from '@/lib/utils'
+import { fireConfetti } from '@/lib/confetti'
 
 const OPTION_KEYS = ['A', 'B', 'C', 'D'] as const
 type OptionKey = typeof OPTION_KEYS[number]
@@ -77,6 +78,8 @@ function QuestionCard({
   selected,
   revealed,
   onSelect,
+  onCheck,
+  onRetry,
 }: {
   question: LiteratureQuestion
   index: number
@@ -84,6 +87,8 @@ function QuestionCard({
   selected: OptionKey | null
   revealed: boolean
   onSelect: (key: OptionKey) => void
+  onCheck: () => void
+  onRetry: () => void
 }) {
   return (
     <div className="card p-5 md:p-7 max-w-2xl mx-auto w-full">
@@ -150,6 +155,33 @@ function QuestionCard({
           {question.explanation}
         </div>
       )}
+
+      {/* Action buttons */}
+      <div className="mt-4 flex flex-col gap-2">
+        {!revealed ? (
+          <button
+            type="button"
+            disabled={!selected}
+            onClick={onCheck}
+            className={cn(
+              'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+              selected
+                ? 'bg-primary text-white hover:bg-primary-dark'
+                : 'bg-border text-text-muted cursor-not-allowed'
+            )}
+          >
+            Провери отговора
+          </button>
+        ) : selected !== question.correct_answer ? (
+          <button
+            type="button"
+            onClick={onRetry}
+            className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+          >
+            Опитай пак
+          </button>
+        ) : null}
+      </div>
     </div>
   )
 }
@@ -206,7 +238,27 @@ export default function LiteratureExercisePage({
   const handleSelect = (key: OptionKey) => {
     if (isRevealed) return
     setAnswers((prev) => ({ ...prev, [currentIndex]: key }))
+  }
+
+  const handleCheck = () => {
+    if (!selected) return
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
+    if (selected === question.correct_answer) {
+      fireConfetti()
+    }
+  }
+
+  const handleRetryQuestion = () => {
+    setAnswers((prev) => {
+      const next = { ...prev }
+      delete next[currentIndex]
+      return next
+    })
+    setRevealed((prev) => {
+      const next = { ...prev }
+      delete next[currentIndex]
+      return next
+    })
   }
 
   const handleNext = () => {
@@ -271,6 +323,8 @@ export default function LiteratureExercisePage({
               selected={selected}
               revealed={isRevealed}
               onSelect={handleSelect}
+              onCheck={handleCheck}
+              onRetry={handleRetryQuestion}
             />
 
             <div className="flex items-center justify-between gap-3 mt-5 max-w-2xl mx-auto">
