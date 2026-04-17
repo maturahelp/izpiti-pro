@@ -8,6 +8,8 @@ import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
+import { saveDziAttempt } from '@/lib/progress'
+import { allTests } from '@/data/tests'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
@@ -542,6 +544,25 @@ export default function TestPage() {
   const handleSubmit = useCallback(() => {
     setSubmitted(true)
     if (typeof window === 'undefined' || !exam) return
+
+    // Save DZI attempt to Supabase so it appears in the progress chart
+    try {
+      const catalogEntry = allTests.find((t) => t.id === testId)
+      if (catalogEntry?.examType === 'dzi12') {
+        const selectable = exam.questions.filter((q) => q.type === 'single_choice')
+        const correct = selectable.filter((q) => answers[q.number] === q.correct_option).length
+        const percent = selectable.length ? Math.round((correct / selectable.length) * 100) : 0
+        void saveDziAttempt({
+          testId,
+          testName: catalogEntry.title,
+          score: percent,
+          subject: catalogEntry.subjectName,
+        })
+      }
+    } catch (err) {
+      console.error('Failed to record DZI attempt', err)
+    }
+
     const MISTAKES_KEY = 'nvo_mistakes'
     let existing: Array<{
       id: string; examId: string; examYear: number | string; examSubject: string
@@ -575,7 +596,7 @@ export default function TestPage() {
       }
     })
     window.localStorage.setItem(MISTAKES_KEY, JSON.stringify(existing))
-  }, [exam, answers])
+  }, [exam, answers, testId])
 
   const handleReset = useCallback(() => {
     setAnswers({})

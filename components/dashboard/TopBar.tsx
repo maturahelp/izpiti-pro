@@ -26,7 +26,12 @@ export function TopBar({ title }: TopBarProps) {
 
   return (
     <header className="h-14 bg-white border-b border-border flex items-center justify-between px-6 sticky top-0 z-30">
-      <h1 className="font-semibold text-text text-base">{title}</h1>
+      <h1
+        className="font-semibold text-text text-base truncate max-w-[40%] sm:max-w-[28%] md:max-w-[22%] pr-2"
+        title={title}
+      >
+        {title}
+      </h1>
 
       {/* Grade toggle */}
       <div className="absolute left-1/2 -translate-x-1/2 flex items-center bg-gray-100 rounded-full p-0.5">

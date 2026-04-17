@@ -240,6 +240,8 @@ export default function MaterialsPage() {
   const [englishMaterialText, setEnglishMaterialText] = useState('')
   const [englishMaterialLoading, setEnglishMaterialLoading] = useState(false)
   const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
+  const [fullscreenImageSrc, setFullscreenImageSrc] = useState<string | null>(null)
+  const [fullscreenImageZoom, setFullscreenImageZoom] = useState(1)
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
@@ -567,7 +569,7 @@ export default function MaterialsPage() {
               <p className="text-sm text-text-muted mb-4">
                 Намерени: <strong className="text-text">{filteredBelCurriculumTopics.length}</strong> учебни теми
               </p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                 {filteredBelCurriculumTopics.map(({ topic, topicIndex }) => {
                   const heading = topic.short_title ?? splitTopicTitle(topic.title).short
                   const subtitle = topic.subtitle ?? splitTopicTitle(topic.title).subtitle
@@ -575,20 +577,26 @@ export default function MaterialsPage() {
                   return (
                     <div
                       key={topic.number}
-                      className="min-h-[190px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
+                      className="h-full min-h-[220px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
                     >
-                      <h3 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-2">
-                        {heading}
-                      </h3>
-                      {subtitle && (
-                        <p className="font-sans text-[15px] font-semibold text-text leading-snug tracking-normal mb-4">
-                          {subtitle}
+                      <div className="flex-1 min-w-0">
+                        <h3
+                          className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-2 break-words line-clamp-2"
+                          title={heading}
+                        >
+                          {heading}
+                        </h3>
+                        <p
+                          className="font-sans text-[15px] font-semibold text-text leading-snug tracking-normal mb-4 break-words line-clamp-2 min-h-[2.6em]"
+                          title={subtitle || undefined}
+                        >
+                          {subtitle || '\u00A0'}
                         </p>
-                      )}
-                      <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal mb-4">
-                        Тема #{topic.number}
-                      </p>
-                      <div className="flex gap-2">
+                        <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal mb-4">
+                          Тема #{topic.number}
+                        </p>
+                      </div>
+                      <div className="flex gap-2 mt-auto">
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
@@ -1229,12 +1237,29 @@ export default function MaterialsPage() {
               {!englishMaterialLoading && !englishMaterialError && !englishMaterialText && activeEnglishMaterial.imageSrcs && (
                 <div className="space-y-4">
                   {activeEnglishMaterial.imageSrcs.map((src, index) => (
-                    <img
+                    <button
                       key={`${activeEnglishMaterial.title}-${index}`}
-                      src={src}
-                      alt={`${activeEnglishMaterial.title} - ${index + 1}`}
-                      className="w-full h-auto rounded-xl border border-border bg-white"
-                    />
+                      type="button"
+                      onClick={() => {
+                        setFullscreenImageSrc(src)
+                        setFullscreenImageZoom(1)
+                      }}
+                      className="block w-full rounded-xl border border-border bg-white overflow-hidden group relative"
+                      aria-label="Отвори на цял екран"
+                    >
+                      <img
+                        src={src}
+                        alt={`${activeEnglishMaterial.title} - ${index + 1}`}
+                        className="w-full h-auto"
+                      />
+                      <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-lg bg-black/60 text-white text-xs font-semibold px-2 py-1 opacity-80 group-hover:opacity-100 transition-opacity">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="11" cy="11" r="7" />
+                          <path d="M21 21l-4.3-4.3M8 11h6M11 8v6" />
+                        </svg>
+                        Цял екран
+                      </span>
+                    </button>
                   ))}
                 </div>
               )}
@@ -1430,6 +1455,76 @@ export default function MaterialsPage() {
           </div>
         )
       })()}
+
+      {fullscreenImageSrc && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center"
+          onClick={() => setFullscreenImageSrc(null)}
+        >
+          <div
+            className="relative w-full h-full flex items-center justify-center overflow-auto p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={fullscreenImageSrc}
+              alt="Преглед на цял екран"
+              style={{ transform: `scale(${fullscreenImageZoom})`, transformOrigin: 'center center' }}
+              className="max-w-full max-h-full object-contain transition-transform duration-150 select-none"
+              draggable={false}
+            />
+          </div>
+
+          <div
+            className="absolute top-4 right-4 flex items-center gap-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setFullscreenImageZoom((z) => Math.max(0.5, +(z - 0.25).toFixed(2)))}
+              className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-text flex items-center justify-center shadow-lg transition-colors"
+              aria-label="Намали"
+              title="Намали"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3M8 11h6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => setFullscreenImageZoom(1)}
+              className="h-10 px-3 rounded-full bg-white/90 hover:bg-white text-text text-xs font-semibold shadow-lg transition-colors"
+              aria-label="Нулирай зум"
+              title="Нулирай зум"
+            >
+              {Math.round(fullscreenImageZoom * 100)}%
+            </button>
+            <button
+              type="button"
+              onClick={() => setFullscreenImageZoom((z) => Math.min(4, +(z + 0.25).toFixed(2)))}
+              className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-text flex items-center justify-center shadow-lg transition-colors"
+              aria-label="Увеличи"
+              title="Увеличи"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3M8 11h6M11 8v6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => setFullscreenImageSrc(null)}
+              className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-text flex items-center justify-center shadow-lg transition-colors"
+              aria-label="Затвори"
+              title="Затвори"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

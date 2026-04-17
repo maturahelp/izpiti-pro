@@ -72,9 +72,6 @@ export default function Math7TopicsPage() {
   const router = useRouter()
   const [topicId, setTopicId] = useState('')
   const [subtopicId, setSubtopicId] = useState('')
-  const [difficulty, setDifficulty] = useState('')
-  const [problemType, setProblemType] = useState('')
-  const [query, setQuery] = useState('')
   const [showAnswers, setShowAnswers] = useState(false)
   const [openAnswers, setOpenAnswers] = useState<Record<string, boolean>>({})
   const [mathJaxReady, setMathJaxReady] = useState(false)
@@ -95,26 +92,12 @@ export default function Math7TopicsPage() {
   }, [subtopicId, visibleSubtopics])
 
   const filteredProblems = useMemo(() => {
-    const normalized = query.trim().toLowerCase()
     return allProblems.filter((problem) => {
       if (topicId && problem.topicId !== topicId) return false
       if (subtopicId && problem.subtopicId !== subtopicId) return false
-      if (difficulty && problem.difficulty !== difficulty) return false
-      if (problemType && problem.type !== problemType) return false
-      if (!normalized) return true
-
-      const searchable = [
-        problem.question,
-        problem.correctAnswer,
-        problem.explanation,
-        problem.topicTitle,
-        problem.subtopicTitle,
-        ...problem.skills,
-      ].join(' ').toLowerCase()
-
-      return searchable.includes(normalized)
+      return true
     })
-  }, [difficulty, problemType, query, subtopicId, topicId])
+  }, [subtopicId, topicId])
 
   const allSubtopicCounts = useMemo(() => {
     const counts = new Map<string, number>()
@@ -157,9 +140,6 @@ export default function Math7TopicsPage() {
   function chooseSubtopic(nextTopicId: string, nextSubtopicId: string) {
     setTopicId(nextTopicId)
     setSubtopicId(nextSubtopicId)
-    setDifficulty('')
-    setProblemType('')
-    setQuery('')
     setShowAnswers(false)
     setOpenAnswers({})
     window.history.replaceState(null, '', `/dashboard/materials/math-7-topics?subtopic=${nextSubtopicId}`)
@@ -171,9 +151,6 @@ export default function Math7TopicsPage() {
   function returnToSubtopics() {
     setTopicId('')
     setSubtopicId('')
-    setDifficulty('')
-    setProblemType('')
-    setQuery('')
     setShowAnswers(false)
     setOpenAnswers({})
     window.history.replaceState(null, '', '/dashboard/materials/math-7-topics')
@@ -237,26 +214,6 @@ export default function Math7TopicsPage() {
           <span>/</span>
           <span className="text-text font-medium">Математика — 7. клас</span>
         </div>
-
-        <section className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5 mb-5">
-          <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
-            НВО 7. клас · математика
-          </p>
-          <h1 className="text-xl md:text-2xl font-bold text-text mb-2">
-            Задачи по теми и подтеми
-          </h1>
-          <p className="text-sm text-text-muted leading-relaxed max-w-3xl">
-            Оригинални тренировъчни задачи по всички теми от учебния обхват. Филтрирай по тема,
-            подтема, трудност или тип задача и преглеждай отговора с кратко решение.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
-            <Stat value={mathTopics.length} label="теми" />
-            <Stat value={mathTopics.reduce((sum, topic) => sum + topic.subtopics.length, 0)} label="подтеми" />
-            <Stat value={allProblems.length} label="задачи" />
-            <Stat value={allProblems.filter((problem) => problem.type === 'short_answer').length} label="кратки отговори" />
-          </div>
-        </section>
 
         {!selectedSubtopic && (
         <section id="math-subtopic-grid" className="rounded-2xl border border-border bg-white p-4 md:p-5 mb-5">
@@ -334,40 +291,6 @@ export default function Math7TopicsPage() {
             >
               {showAnswers ? 'Скрий всички отговори' : 'Покажи всички отговори'}
             </button>
-          </div>
-
-          <div className="mb-5 grid md:grid-cols-3 gap-3">
-            <FilterLabel label="Трудност">
-              <select value={difficulty} onChange={(event) => setDifficulty(event.target.value)} className="input-field">
-                <option value="">Всички</option>
-                <option value="easy">Основно</option>
-                <option value="medium">Средно</option>
-                <option value="exam_ready">Изпитно</option>
-              </select>
-            </FilterLabel>
-
-            <FilterLabel label="Тип">
-              <select value={problemType} onChange={(event) => setProblemType(event.target.value)} className="input-field">
-                <option value="">Всички</option>
-                <option value="multiple_choice">Избираем отговор</option>
-                <option value="short_answer">Кратък отговор</option>
-              </select>
-            </FilterLabel>
-
-            <FilterLabel label="Търсене">
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="напр. проценти, триъгълник"
-                className="input-field"
-              />
-            </FilterLabel>
-          </div>
-
-          <div className="mb-3">
-            <p className="text-sm text-text-muted">
-              Намерени: <strong className="text-text">{filteredProblems.length}</strong> задачи
-            </p>
           </div>
 
           <div id="math-problem-list" className="space-y-4">
@@ -467,24 +390,6 @@ function formatTitleText(text: string) {
     .replace(/\\le/g, '≤')
     .replace(/\\ge/g, '≥')
     .replace(/\\neq/g, '≠')
-}
-
-function Stat({ value, label }: { value: number; label: string }) {
-  return (
-    <div className="rounded-xl border border-[#D7E7F7] bg-white p-4">
-      <p className="text-2xl font-bold text-text">{value}</p>
-      <p className="text-xs font-semibold text-text-muted">{label}</p>
-    </div>
-  )
-}
-
-function FilterLabel({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <label className="grid gap-1.5 text-xs font-semibold text-text-muted">
-      {label}
-      {children}
-    </label>
-  )
 }
 
 function Badge({ children, tone }: { children: React.ReactNode; tone?: Difficulty }) {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
+import { DziProgressChart } from '@/components/progress/DziProgressChart'
 import { fetchProgressData, type ProgressData } from '@/lib/progress'
 import { getScoreColor } from '@/lib/utils'
 import { studentLessons, studentTests } from '@/data/student-content'
@@ -34,6 +35,9 @@ export default function ProgressPage() {
     <div className="min-h-screen pb-20 md:pb-0">
       <TopBar title="Напредък" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto space-y-6">
+
+        {/* DZI progress chart */}
+        <DziProgressChart />
 
         {/* Overview stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
