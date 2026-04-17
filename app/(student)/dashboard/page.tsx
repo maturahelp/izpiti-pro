@@ -18,6 +18,163 @@ const averageScore = completedTests.length
     )
   : 0
 
+// ── Exam score tracker (localStorage) ───────────────────────────────────────
+
+const EXAM_CATEGORY_META: Record<string, { label: string; color: string }> = {
+  'nvo-primer':  { label: 'НВО Примерен',  color: '#4f63d2' },
+  'nvo-oficial': { label: 'НВО Официален', color: '#1e2d5a' },
+  'dzi-primer':  { label: 'ДЗИ Примерен',  color: '#10b981' },
+  'dzi-oficial': { label: 'ДЗИ Официален', color: '#f59e0b' },
+}
+
+interface LocalResult {
+  id: string; type: string; subject: string; score: number; maxScore: number; date: string
+}
+
+function getPct(r: LocalResult): number {
+  return r.maxScore > 0 ? Math.round((r.score / r.maxScore) * 100) : 0
+}
+
+function getExamResults(): LocalResult[] {
+  if (typeof window === 'undefined') return []
+  try { const raw = JSON.parse(localStorage.getItem('matura_results') || '[]'); return Array.isArray(raw) ? raw : [] } catch { return [] }
+}
+
+function getExamLogins(): string[] {
+  if (typeof window === 'undefined') return []
+  try { const raw = JSON.parse(localStorage.getItem('matura_logins') || '[]'); return Array.isArray(raw) ? raw : [] } catch { return [] }
+}
+
+function computeExamStreak(logins: string[]): number {
+  if (!logins.length) return 0
+  const sorted = [...logins].sort().reverse()
+  let streak = 0; let cursor = new Date(); cursor.setHours(0, 0, 0, 0)
+  for (const dateStr of sorted) {
+    const d = new Date(dateStr)
+    const diff = Math.round((cursor.getTime() - d.getTime()) / 86400000)
+    if (diff === 0 || diff === 1) { streak++; cursor = d } else break
+  }
+  return streak
+}
+
+function ExamScoreChart({ results }: { results: LocalResult[] }) {
+  const W = 560, H = 200, PAD = { top: 16, right: 16, bottom: 32, left: 40 }
+  const iW = W - PAD.left - PAD.right, iH = H - PAD.top - PAD.bottom
+  const allDates = [...new Set(results.map(r => r.date))].sort()
+  const xScale = (date: string) => { const i = allDates.indexOf(date); return PAD.left + (allDates.length === 1 ? iW / 2 : (i / (allDates.length - 1)) * iW) }
+  const yScale = (pct: number) => PAD.top + iH - (pct / 100) * iH
+  const categories = Object.keys(EXAM_CATEGORY_META)
+  return (
+    <div className="card p-5">
+      <h2 className="font-semibold text-text mb-4">Резултати във времето</h2>
+      <div className="overflow-x-auto">
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ minWidth: 300 }}>
+          {[0,25,50,75,100].map(t => (
+            <g key={t}>
+              <line x1={PAD.left} x2={W-PAD.right} y1={yScale(t)} y2={yScale(t)} stroke="#e5e7eb" strokeWidth={1} />
+              <text x={PAD.left-6} y={yScale(t)+4} textAnchor="end" fontSize={9} fill="#9ca3af">{t}%</text>
+            </g>
+          ))}
+          {allDates.map((d, i) => (allDates.length <= 8 || i % Math.ceil(allDates.length/8) === 0) && (
+            <text key={d} x={xScale(d)} y={H-6} textAnchor="middle" fontSize={9} fill="#9ca3af">{d.slice(5)}</text>
+          ))}
+          {categories.map(cat => {
+            const pts = results.filter(r => r.type === cat).sort((a,b) => a.date.localeCompare(b.date))
+            if (!pts.length) return null
+            const pathD = pts.map((p,i) => `${i===0?'M':'L'} ${xScale(p.date)} ${yScale(getPct(p))}`).join(' ')
+            return (
+              <g key={cat}>
+                <path d={pathD} fill="none" stroke={EXAM_CATEGORY_META[cat].color} strokeWidth={2} strokeLinejoin="round" />
+                {pts.map(p => <circle key={p.id} cx={xScale(p.date)} cy={yScale(getPct(p))} r={4} fill={EXAM_CATEGORY_META[cat].color} />)}
+              </g>
+            )
+          })}
+        </svg>
+      </div>
+      <div className="flex flex-wrap gap-4 mt-3">
+        {categories.filter(cat => results.some(r => r.type === cat)).map(cat => (
+          <div key={cat} className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-full inline-block" style={{ background: EXAM_CATEGORY_META[cat].color }} />
+            <span className="text-xs text-text-muted">{EXAM_CATEGORY_META[cat].label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ExamProgress() {
+  const [results, setResults] = useState<LocalResult[]>([])
+  const [logins, setLogins] = useState<string[]>([])
+  useEffect(() => { setResults(getExamResults()); setLogins(getExamLogins()) }, [])
+
+  const avg = results.length ? Math.round(results.reduce((a,r) => a + getPct(r), 0) / results.length) : null
+  const best = results.length ? Math.max(...results.map(r => getPct(r))) : null
+  const streak = computeExamStreak(logins)
+
+  const today = new Date(); const monday = new Date(today)
+  monday.setDate(today.getDate() - ((today.getDay()+6)%7))
+  const weekDates = Array.from({length:7},(_,i) => { const d = new Date(monday); d.setDate(monday.getDate()+i); return d.toISOString().slice(0,10) })
+  const weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Нд']
+  const sorted = [...results].sort((a,b) => b.date.localeCompare(a.date)).slice(0,5)
+
+  const stats = [
+    { label: 'ЗАВЪРШЕНИ ТЕСТОВЕ',  value: results.length,                    sub: 'теста въведени' },
+    { label: 'СРЕДНА ОЦЕНКА',      value: avg !== null ? `${avg}%` : '—',    sub: 'средно от всички' },
+    { label: 'ПОРЕДНИ ДНИ',        value: streak,                             sub: 'дни активност' },
+    { label: 'НАЙ-ВИСОК РЕЗУЛТАТ', value: best !== null ? `${best}%` : '—',  sub: 'от един тест' },
+  ]
+
+  if (results.length === 0) return null
+
+  return (
+    <>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {stats.map(c => (
+          <div key={c.label} className="card p-5">
+            <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2">{c.label}</p>
+            <p className="text-3xl font-extrabold text-text mb-1">{c.value}</p>
+            <p className="text-xs text-text-muted">{c.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="card p-5">
+        <h2 className="font-semibold text-text mb-4">Активност тази седмица</h2>
+        <div className="flex gap-2 items-end">
+          {weekDates.map((date, i) => (
+            <div key={date} className="flex-1 flex flex-col items-center gap-2">
+              <div className={`w-full h-14 rounded-xl ${logins.includes(date) ? 'bg-primary' : 'bg-gray-100'}`} />
+              <span className="text-[11px] text-text-muted">{weekDays[i]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <ExamScoreChart results={results} />
+
+      <div className="card overflow-hidden">
+        <div className="px-5 py-4 border-b border-border">
+          <h2 className="font-semibold text-text">История на резултатите</h2>
+        </div>
+        <ul className="divide-y divide-border">
+          {sorted.map(r => (
+            <li key={r.id} className="flex items-center gap-4 px-5 py-4">
+              <span className="text-2xl font-extrabold font-serif text-text">{getPct(r)}%</span>
+              <div>
+                <p className="text-sm font-medium text-text">{EXAM_CATEGORY_META[r.type]?.label ?? r.type} · {r.subject}</p>
+                <p className="text-xs text-text-muted">{r.date}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
+
+// ── Dashboard page ───────────────────────────────────────────────────────────
+
 export default function DashboardPage() {
   const [data, setData] = useState<ProgressData | null>(null)
   const firstName = 'Ученик'
@@ -62,10 +219,20 @@ export default function DashboardPage() {
         {data ? (
           <>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <StatCard label="Mastery точки" value={data.masteryPoints} subtext="знания по теми" accent />
+              <StatCard label="Energy точки" value={data.energyPoints} subtext="усилие и практика" />
               <StatCard label="Завършени тестове" value={data.testsCompleted} subtext="от 48 налични" />
               <StatCard label="Средна оценка" value={data.avgScore > 0 ? `${data.avgScore}%` : '—'} accent />
-              <StatCard label="Завършени уроци" value={data.lessonsCompleted} subtext="от 32 налични" />
+              <StatCard label="Овладени теми" value={data.masteredSkills} subtext={`${data.proficientSkills} стабилни`} />
               <StatCard label="Поредни дни" value={data.streakDays} subtext="дни активност" />
+            </div>
+
+            <div className="card p-5">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">Точки за напредък</p>
+              <h2 className="text-lg font-bold text-text mb-2">Mastery е за знанията. Energy е за усилието.</h2>
+              <p className="text-sm text-text-muted leading-relaxed">
+                Mastery точките следват последния ти резултат по тема и могат да се променят. Energy точките се трупат от решени въпроси, верни отговори и завършени тестове.
+              </p>
             </div>
 
             <div className="grid lg:grid-cols-3 gap-5">
@@ -152,6 +319,7 @@ export default function DashboardPage() {
                 <div className="card p-5">
                   <h2 className="font-semibold text-text mb-4 text-sm">Общ напредък</h2>
                   <div className="space-y-3">
+                    <ProgressBar value={data.masteryPoints} max={Math.max(data.totalTests * 100, 100)} label="Mastery точки" showLabel />
                     <ProgressBar value={data.testsCompleted} max={data.totalTests} label="Тестове" showLabel />
                     <ProgressBar value={data.lessonsCompleted} max={data.totalLessons} label="Уроци" showLabel />
                   </div>
@@ -233,6 +401,8 @@ export default function DashboardPage() {
         ) : (
           <div className="card p-8 text-center text-text-muted text-sm">Зареждане на напредък...</div>
         )}
+
+        <ExamProgress />
       </div>
     </div>
   )

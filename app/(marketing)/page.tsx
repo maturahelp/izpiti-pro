@@ -2,7 +2,7 @@ import { Header } from '@/components/marketing/Header'
 import { Hero } from '@/components/marketing/Hero'
 import { Benefits } from '@/components/marketing/Benefits'
 import { HowItWorks } from '@/components/marketing/HowItWorks'
-import { ProgressShowcase } from '@/components/marketing/ProgressShowcase'
+import { Features } from '@/components/marketing/Features'
 import { ExamsSection } from '@/components/marketing/ExamsSection'
 import { ForWhom } from '@/components/marketing/ForWhom'
 import { Testimonials } from '@/components/marketing/Testimonials'
@@ -18,7 +18,7 @@ export default function HomePage() {
         <Hero />
         <Benefits />
         <HowItWorks />
-        <ProgressShowcase />
+        <Features />
         <ExamsSection />
         <ForWhom />
         <Testimonials />
