@@ -91,6 +91,11 @@ export default function CurriculumTopicPage() {
   }
 
   function handleRetryQuestion() {
+    setAnswers((prev) => {
+      const next = { ...prev }
+      delete next[currentIndex]
+      return next
+    })
     setSelectedOpt(null)
     setChecked(false)
   }

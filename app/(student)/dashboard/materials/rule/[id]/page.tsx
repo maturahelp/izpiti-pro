@@ -94,6 +94,11 @@ export default function RuleQuizPage() {
   }
 
   function handleRetryQuestion() {
+    setAnswers((prev) => {
+      const next = { ...prev }
+      delete next[currentIndex]
+      return next
+    })
     setSelectedOpt(null)
     setChecked(false)
   }
