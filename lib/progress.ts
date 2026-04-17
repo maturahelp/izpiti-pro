@@ -111,7 +111,7 @@ export async function fetchProgressData(): Promise<ProgressData> {
   }))
 
   // Exam results by category (НВО/ДЗИ × примерен/официален)
-  const examResults: ExamResult[] = testResults
+  const examResults: ExamResult[] = (testResults
     .map((r: { completed_at: string; test_name: string; score: number }) => {
       const category = classifyExam(r.test_name)
       if (!category) return null
@@ -122,8 +122,8 @@ export async function fetchProgressData(): Promise<ProgressData> {
         category,
       }
     })
-    .filter(Boolean)
-    .sort((a: ExamResult, b: ExamResult) => a.date.localeCompare(b.date))
+    .filter((x): x is ExamResult => x !== null)
+    .sort((a, b) => a.date.localeCompare(b.date)))
 
   // Recent activity — последните 8 активности
   const allActivity = [
