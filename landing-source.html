@@ -1170,27 +1170,27 @@
         chart.add(bar);
       }
 
-      // Trend line: thin tube + small arrowhead
+      // Arrow: curved tube rising over bars
       const curve = new THREE.CatmullRomCurve3([
         new THREE.Vector3(-2.8, -0.9, 0.55),
         new THREE.Vector3(-1.2, 0.5, 0.55),
         new THREE.Vector3(0.4, -0.3, 0.55),
-        new THREE.Vector3(2.0, 1.65, 0.55)
+        new THREE.Vector3(2.2, 1.8, 0.55)
       ]);
       const tube = new THREE.Mesh(
-        new THREE.TubeGeometry(curve, 60, 0.055, 12, false),
+        new THREE.TubeGeometry(curve, 60, 0.16, 16, false),
         glassMat
       );
       chart.add(tube);
 
-      // Small clean arrowhead at curve end
+      // Arrowhead cone at curve end, oriented along tangent
       const endPoint = curve.getPoint(1);
       const tangent = curve.getTangent(1).normalize();
       const cone = new THREE.Mesh(
-        new THREE.ConeGeometry(0.16, 0.42, 16),
+        new THREE.ConeGeometry(0.38, 0.9, 20),
         glassMat
       );
-      cone.position.copy(endPoint).add(tangent.clone().multiplyScalar(0.18));
+      cone.position.copy(endPoint).add(tangent.clone().multiplyScalar(0.4));
       const up = new THREE.Vector3(0, 1, 0);
       const quat = new THREE.Quaternion().setFromUnitVectors(up, tangent);
       cone.quaternion.copy(quat);
