@@ -2,12 +2,12 @@ import { Header } from '@/components/marketing/Header'
 import { Hero } from '@/components/marketing/Hero'
 import { Benefits } from '@/components/marketing/Benefits'
 import { HowItWorks } from '@/components/marketing/HowItWorks'
-import { ForWhom } from '@/components/marketing/ForWhom'
+import { Features } from '@/components/marketing/Features'
 import { ExamsSection } from '@/components/marketing/ExamsSection'
-import { Pricing } from '@/components/marketing/Pricing'
+import { ForWhom } from '@/components/marketing/ForWhom'
 import { Testimonials } from '@/components/marketing/Testimonials'
+import { Pricing } from '@/components/marketing/Pricing'
 import { FAQ } from '@/components/marketing/FAQ'
-import { CTASection } from '@/components/marketing/CTASection'
 import { Footer } from '@/components/marketing/Footer'
 
 export default function HomePage() {
@@ -18,12 +18,12 @@ export default function HomePage() {
         <Hero />
         <Benefits />
         <HowItWorks />
-        <ForWhom />
+        <Features />
         <ExamsSection />
-        <Pricing />
+        <ForWhom />
         <Testimonials />
+        <Pricing />
         <FAQ />
-        <CTASection />
       </main>
       <Footer />
     </>
