@@ -21,12 +21,26 @@ interface LocalResult {
 
 function getLocalResults(): LocalResult[] {
   if (typeof window === 'undefined') return []
-  return JSON.parse(localStorage.getItem('matura_results') || '[]')
+  try {
+    const raw = JSON.parse(localStorage.getItem('matura_results') || '[]')
+    return Array.isArray(raw) ? raw : []
+  } catch {
+    return []
+  }
 }
 
 function getLogins(): string[] {
   if (typeof window === 'undefined') return []
-  return JSON.parse(localStorage.getItem('matura_logins') || '[]')
+  try {
+    const raw = JSON.parse(localStorage.getItem('matura_logins') || '[]')
+    return Array.isArray(raw) ? raw : []
+  } catch {
+    return []
+  }
+}
+
+function pct(r: LocalResult): number {
+  return r.maxScore > 0 ? Math.round((r.score / r.maxScore) * 100) : 0
 }
 
 function computeStreak(logins: string[]): number {
@@ -81,7 +95,7 @@ function ScoreChart({ results }: { results: LocalResult[] }) {
             if (!pts.length) return null
             const pathD = pts.map((p, i) => {
               const x = xScale(p.date)
-              const y = yScale(Math.round((p.score / p.maxScore) * 100))
+              const y = yScale(pct(p))
               return `${i === 0 ? 'M' : 'L'} ${x} ${y}`
             }).join(' ')
             return (
@@ -91,7 +105,7 @@ function ScoreChart({ results }: { results: LocalResult[] }) {
                   <circle
                     key={p.id}
                     cx={xScale(p.date)}
-                    cy={yScale(Math.round((p.score / p.maxScore) * 100))}
+                    cy={yScale(pct(p))}
                     r={4}
                     fill={CATEGORY_META[cat].color}
                   />
@@ -123,10 +137,10 @@ export function ProgressShowcase() {
   }, [])
 
   const avg = results.length
-    ? Math.round(results.reduce((a, r) => a + (r.score / r.maxScore) * 100, 0) / results.length)
+    ? Math.round(results.reduce((a, r) => a + pct(r), 0) / results.length)
     : null
   const best = results.length
-    ? Math.max(...results.map(r => Math.round((r.score / r.maxScore) * 100)))
+    ? Math.max(...results.map(r => pct(r)))
     : null
   const streak = computeStreak(logins)
 
@@ -223,7 +237,7 @@ export function ProgressShowcase() {
                 {sorted.map(r => (
                   <li key={r.id} className="flex items-center gap-4 px-6 py-4">
                     <span className="text-2xl font-extrabold" style={{ color: '#1e2a4a' }}>
-                      {Math.round((r.score / r.maxScore) * 100)}%
+                      {pct(r)}%
                     </span>
                     <div>
                       <p className="text-sm font-semibold text-gray-700">
