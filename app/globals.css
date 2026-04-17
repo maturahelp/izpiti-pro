@@ -5,11 +5,6 @@
 @layer base {
   :root {
     --font-sans: var(--font-sans);
-    --navy: #2D3748;
-    --blue: #2F4E85;
-    --white: #FFFFFF;
-    --gray: #F8FAFC;
-    --border: #E2E8F0;
   }
 
   * {
@@ -24,8 +19,8 @@
   }
 
   body {
-    background-color: #F8FAFC;
-    color: #2D3748;
+    background-color: #F5F8FF;
+    color: #0F172A;
     font-family: var(--font-alt), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -37,7 +32,7 @@
     font-family: var(--font-alt), system-ui, sans-serif;
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1.1;
+    line-height: 1.15;
   }
 
   h4, h5, h6 {
@@ -49,46 +44,39 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 bg-primary text-white font-bold text-sm
+    @apply inline-flex items-center justify-center px-7 py-3 bg-primary text-white font-bold text-sm
     hover:bg-primary-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-2
-    tracking-[-0.01em];
-    border-radius: 9999px;
-    border: 1px solid transparent;
+    tracking-[-0.01em] rounded-full shadow-button-primary hover:shadow-button-primary-hover;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 bg-white text-text font-bold text-sm
-    border border-[#E2E8F0] hover:border-slate-400 hover:bg-slate-50 transition-all duration-200
+    @apply inline-flex items-center justify-center px-7 py-3 bg-white text-text font-bold text-sm
+    border border-[#E2E8F0] hover:border-slate-300 hover:bg-slate-50 transition-all duration-200
     focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2
-    tracking-[-0.01em];
-    border-radius: 9999px;
+    tracking-[-0.01em] rounded-2xl;
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center px-4 py-2 text-text-muted font-semibold text-sm
-    hover:bg-slate-100 hover:text-text transition-all duration-150 tracking-[-0.01em];
-    border-radius: 9999px;
+    hover:bg-slate-100 hover:text-text transition-all duration-150 tracking-[-0.01em] rounded-xl;
   }
 
   .card {
-    @apply bg-white border border-[#E2E8F0];
-    border-radius: 2px;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.06);
+    @apply bg-white border border-[#E2E8F0] rounded-2xl;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   }
 
   .card-hover {
-    @apply bg-white border border-[#E2E8F0] transition-all duration-200;
-    border-radius: 2px;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.06);
+    @apply bg-white border border-[#E2E8F0] rounded-2xl transition-all duration-300;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.06);
   }
   .card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(15,23,42,0.10), 0 2px 4px rgba(15,23,42,0.04);
   }
 
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-bold tracking-[0.01em];
-    border-radius: 2px;
+    @apply inline-flex items-center px-3 py-1 text-xs font-bold tracking-[0.01em] rounded-full;
   }
 
   .badge-primary {
@@ -108,7 +96,7 @@
   }
 
   .section-label {
-    @apply text-[0.6875rem] font-bold tracking-[0.12em] uppercase font-sans;
+    @apply text-[0.8125rem] font-bold tracking-[0.08em] uppercase text-primary;
   }
 
   .page-title {
@@ -121,19 +109,16 @@
 
   .input-field {
     @apply w-full px-4 py-2.5 border border-[#E2E8F0] bg-white text-text placeholder-text-light text-sm
-    focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/40 transition-all duration-150;
-    border-radius: 2px;
+    focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/40 transition-all duration-150 rounded-xl;
   }
 
   .sidebar-item {
     @apply flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-400
-    hover:text-white hover:bg-sidebar-hover transition-colors duration-150 cursor-pointer tracking-[-0.01em];
-    border-radius: 2px;
+    hover:text-white hover:bg-sidebar-hover transition-colors duration-150 cursor-pointer tracking-[-0.01em] rounded-xl;
   }
 
   .sidebar-item-active {
-    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-white bg-primary tracking-[-0.01em];
-    border-radius: 2px;
+    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-white bg-primary tracking-[-0.01em] rounded-xl;
   }
 
   .premium-lock {
@@ -141,55 +126,55 @@
   }
 
   .premium-overlay {
-    @apply absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center z-10;
-    border-radius: 2px;
+    @apply absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center z-10 rounded-2xl;
   }
 }
 
-/* Marketing hover cards — avoid onMouseEnter in Server Components */
+/* Marketing hover cards */
 .mkt-card-light {
-  border-radius: 2px;
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .mkt-card-light:hover {
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(15,23,42,0.10);
 }
 
 .mkt-card-dark {
-  border-radius: 2px;
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 .mkt-card-dark:hover {
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
   background-color: rgba(255,255,255,0.08) !important;
 }
 
 .mkt-card-blue {
-  border-radius: 2px;
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 .mkt-card-blue:hover {
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(37,99,235,0.2);
   background-color: rgba(255,255,255,0.1) !important;
 }
 
 .paper-card {
   position: relative;
-  box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
 }
 
 .hero-btn-primary {
-  box-shadow: none;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.35);
   transform: translateY(0);
 }
 .hero-btn-primary:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.45);
 }
 .hero-btn-primary:active {
   transform: translateY(0);
@@ -271,6 +256,15 @@
   }
 }
 
+/* Decorative blob for hero */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  z-index: 0;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -291,7 +285,7 @@
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background-color: #CBD5E1;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
   mjx-container[jax="SVG"] {
