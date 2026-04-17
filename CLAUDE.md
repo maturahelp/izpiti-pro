@@ -124,3 +124,15 @@ Before finishing:
 - Prefer updating existing components and data sources instead of creating parallel systems.
 - Optimize for clarity and maintainability over clever abstractions.
 - For content-heavy exam features, summarize the data model first, then implement.
+
+## Git Workflow
+- The only GitHub repository is
+ - https://github.com/maturahelp /izpiti-pro 
+ - A summary of every commit b
+ -eing pushed (commit hash, messa
+ -ge, files changed)             
+- The total number of files changed and a brief description of what changed 
+- Then wait for confirmation before executing the push 
+- Always push to the `main` branch
+
+      
