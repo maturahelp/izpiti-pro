@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
@@ -867,46 +866,25 @@ export default function MaterialsPage() {
                       />
                     )}
                   </div>
-                ) : (
-                  <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                    <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
-                      {activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
-                        <video
-                          key={activeNvoVideoPath}
-                          controls
-                          preload="none"
-                          poster={encodeURI(activeNvoWork.image)}
-                          className="w-full max-h-[70vh] rounded-xl border border-border bg-black"
-                        >
-                          <source src={encodeURI(activeNvoVideoPath)} type="video/mp4" />
-                          Браузърът не поддържа видео.
-                        </video>
-                      ) : (
-                        <img
-                          src={encodeURI(activeNvoWork.image)}
-                          alt={activeNvoWork.title}
-                          className="w-full max-h-[70vh] object-contain rounded-xl border border-border bg-white"
-                        />
-                      )}
-                    </div>
-                    <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                      <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                      <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                      <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
-                      {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
-                        <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
-                      )}
-                      {activeNvoWorkPanel === 'exercise' && (
-                        <Link
-                          href={`/dashboard/literature-exercise/${activeNvoWork.id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex w-full items-center justify-center rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
-                        >
-                          Отвори упражнението в нов таб
-                        </Link>
-                      )}
-                    </div>
+                  <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                    {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
+                      <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
+                    )}
+                    {activeNvoWorkPanel === 'exercise' && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveNvoWorkId(null)
+                          router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)
+                        }}
+                        className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
+                      >
+                        Отвори упражнението
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
