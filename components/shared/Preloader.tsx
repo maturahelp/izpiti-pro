@@ -16,12 +16,6 @@ const LOGO_PATHS = [
   "M265.71 10.676C268.185 10.676 270.413 11.2376 272.383 12.3703L272.754 12.5822C274.58 13.67 276.027 15.1698 277.089 17.0735C278.225 19.079 278.786 21.3907 278.786 23.9924C278.786 26.6246 278.226 28.9519 277.089 30.9582C275.956 32.957 274.387 34.5268 272.388 35.6594L272.387 35.6584C270.417 36.7931 268.187 37.3557 265.71 37.3557C263.455 37.3557 261.401 36.8413 259.56 35.8039L259.554 35.8C258.435 35.1487 257.454 34.3295 256.61 33.3479V46.428H252.202V10.9162H256.466V14.7971C257.323 13.7482 258.339 12.8904 259.512 12.2287C261.354 11.1907 263.424 10.676 265.71 10.676ZM265.469 14.6516C263.758 14.6516 262.23 15.0486 260.872 15.8332C259.544 16.6189 258.487 17.705 257.697 19.1018C256.946 20.4877 256.562 22.1132 256.562 23.9924C256.562 25.8694 256.945 27.5108 257.697 28.9299C258.485 30.3243 259.54 31.4092 260.865 32.1946L261.122 32.3322C262.416 32.9963 263.862 33.3322 265.469 33.3322C267.181 33.3322 268.692 32.9514 270.015 32.2014C271.344 31.4163 272.402 30.3303 273.192 28.9338C273.978 27.5136 274.378 25.8712 274.378 23.9924C274.378 22.1132 273.978 20.4878 273.195 19.1018C272.405 17.7033 271.345 16.6162 270.015 15.8303C268.692 15.0482 267.181 14.6516 265.469 14.6516Z",
 ]
 
-// Per-letter draw duration and stagger (seconds)
-const DRAW_DURATION = 0.35
-const STAGGER = 0.1
-const FILL_DELAY = LOGO_PATHS.length * STAGGER + DRAW_DURATION + 0.1
-// Total animation time ≈ FILL_DELAY + 0.45s fade-in
-// hide() delay should be > FILL_DELAY + 0.45 → use 2000ms
 
 export default function Preloader() {
   const [visible, setVisible] = useState(true)
@@ -52,7 +46,7 @@ export default function Preloader() {
   }
 
   useEffect(() => {
-    const handleLoad = () => hide(2000)
+    const handleLoad = () => hide(1600)
 
     if (document.readyState === 'complete') {
       handleLoad()
@@ -103,41 +97,22 @@ export default function Preloader() {
     <div className={`preloader-overlay ${fading ? 'preloader-fade-out' : ''}`} aria-hidden="true">
       <svg className="preloader-svg" viewBox="0 0 280 47" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="preloader-glow">
-            <feGaussianBlur stdDeviation="1.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
+          <clipPath id="preloader-reveal">
+            <rect className="preloader-reveal-rect" x="0" y="0" height="47" />
+          </clipPath>
         </defs>
 
-        {/* Laser stroke layer — drawn letter by letter */}
-        <g filter="url(#preloader-glow)">
+        {/* Stroke layer — revealed left-to-right via clip-path */}
+        <g clipPath="url(#preloader-reveal)">
           {LOGO_PATHS.map((d, i) => (
-            <path
-              key={`stroke-${i}`}
-              d={d}
-              fill="none"
-              stroke="#00f3ff"
-              strokeWidth="0.8"
-              className="preloader-laser-path"
-              style={{ animationDelay: `${i * STAGGER}s` }}
-            />
+            <path key={`s-${i}`} d={d} fill="none" stroke="#00f3ff" strokeWidth="0.8" />
           ))}
         </g>
 
-        {/* Fill layer — white, fades in after all strokes are drawn */}
-        <g className="preloader-fill-group" style={{ animationDelay: `${FILL_DELAY}s` }}>
+        {/* Fill layer — white, fades in after reveal completes */}
+        <g className="preloader-fill-group">
           {LOGO_PATHS.map((d, i) => (
-            <path
-              key={`fill-${i}`}
-              d={d}
-              fill="none"
-              stroke="white"
-              strokeWidth="0.8"
-            />
+            <path key={`f-${i}`} d={d} fill="none" stroke="white" strokeWidth="0.8" />
           ))}
         </g>
       </svg>

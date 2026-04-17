@@ -226,22 +226,20 @@
   height: auto;
 }
 
-/* Laser stroke — drawn with stroke-dashoffset, stagger via inline style */
-.preloader-laser-path {
-  stroke-dasharray: 1500;
-  stroke-dashoffset: 1500;
-  animation: preloaderDraw 0.35s ease-out forwards;
-  /* animationDelay is set per-path via inline style */
+/* Clip rect — animates width 0 → 280 for left-to-right reveal */
+.preloader-reveal-rect {
+  width: 0;
+  animation: preloaderReveal 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.15s;
 }
 
-/* Fill group — opacity 0 → 1, delay set via inline style */
+/* Fill group — white stroke, fades in after reveal */
 .preloader-fill-group {
   opacity: 0;
-  animation: preloaderFillIn 0.45s ease forwards;
+  animation: preloaderFillIn 0.4s ease forwards 0.95s;
 }
 
-@keyframes preloaderDraw {
-  to { stroke-dashoffset: 0; }
+@keyframes preloaderReveal {
+  to { width: 280px; }
 }
 
 @keyframes preloaderFillIn {
