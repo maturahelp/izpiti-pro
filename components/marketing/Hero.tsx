@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
 const bookCovers = [
-  { src: '/book-covers/pod-igoto.jpg',         alt: 'Под игото' },
-  { src: '/book-covers/vetrena-melnitsa.jpg',  alt: 'Ветрената мелница' },
-  { src: '/book-covers/balkanski-sindrom.jpg', alt: 'Балкански синдром' },
-  { src: '/book-covers/kniga.jpg',             alt: 'Неразделни' },
+  { src: '/nvo-literature/pod-igoto-predstavlenieto.jpg', alt: 'Под игото' },
+  { src: '/nvo-literature/nerazdelni.jpg',                alt: 'Неразделни' },
+  { src: '/nvo-literature/bai-ganio-patuva.jpg',          alt: 'Бай Ганьо' },
+  { src: '/nvo-literature/edna-bulgarka.jpg',             alt: 'Една Българка' },
 ]
 
 export function Hero() {

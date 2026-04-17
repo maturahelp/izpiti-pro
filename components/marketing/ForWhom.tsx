@@ -1,21 +1,30 @@
 const valueBullets = [
   {
-    src: '/landing-4th-icons/Gemini_Generated_Image_f3p7pbf3p7pbf3p7.png',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    ),
     title: 'Всичко на едно място',
     sub: 'Без лутане между сайтове, файлове и клипове',
   },
   {
-    src: '/landing-4th-icons/Gemini_Generated_Image_go9fm2go9fm2go9f.png',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    ),
     title: 'Реален напредък',
     sub: 'Виждаш какво си минал и какво ти остава',
   },
 ]
 
 const bookCovers = [
-  { src: '/book-covers/pod-igoto.jpg',         alt: 'Под игото представлението', offset: '' },
-  { src: '/book-covers/vetrena-melnitsa.jpg',  alt: 'Ветрената мелница',         offset: 'mt-8' },
-  { src: '/book-covers/balkanski-sindrom.jpg', alt: 'Балкански синдром',          offset: '-mt-4' },
-  { src: '/book-covers/kniga.jpg',             alt: 'Книга',                      offset: 'mt-4' },
+  { src: '/nvo-literature/pod-igoto-predstavlenieto.jpg', alt: 'Под игото представлението', offset: '' },
+  { src: '/nvo-literature/nerazdelni.jpg',                alt: 'Неразделни',               offset: 'mt-8' },
+  { src: '/nvo-literature/bai-ganio-patuva.jpg',          alt: 'Бай Ганьо пътува',         offset: '-mt-4' },
+  { src: '/nvo-literature/edna-bulgarka.jpg',             alt: 'Една Българка',            offset: 'mt-4' },
 ]
 
 export function ForWhom() {
@@ -49,7 +58,10 @@ export function ForWhom() {
             <div className="space-y-4 mb-8">
               {valueBullets.map((b) => (
                 <div key={b.title} className="flex items-center gap-3">
-                  <img src={b.src} alt="" className="w-20 h-20 flex-shrink-0 object-contain" />
+                  <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-gray-50 flex items-center justify-center"
+                    style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                    {b.icon}
+                  </div>
                   <div>
                     <h4 className="text-sm font-bold" style={{ color: '#1e2a4a' }}>{b.title}</h4>
                     <p className="text-xs text-gray-400">{b.sub}</p>
