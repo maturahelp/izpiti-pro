@@ -17,6 +17,7 @@ export function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -66,7 +67,7 @@ export function Header() {
         {/* Mobile hamburger */}
         <button
           className="md:hidden text-gray-600"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen((v) => !v)}
           aria-label="Меню"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
