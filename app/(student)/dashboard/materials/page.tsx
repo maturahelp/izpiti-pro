@@ -206,6 +206,7 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 type Grade7Section = typeof grade7Sections[number]
 type WorkPanel = 'cover' | 'text' | 'summary' | 'video' | 'exercise'
+const LITERATURE_READING_PROGRESS_STORAGE_KEY = 'literature-reading-progress-v1'
 const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
@@ -229,7 +230,9 @@ export default function MaterialsPage() {
   const [activeNvoWorkTextError, setActiveNvoWorkTextError] = useState<string | null>(null)
   const [isActiveWorkVideoPlaying, setIsActiveWorkVideoPlaying] = useState(false)
   const [isActiveNvoVideoPlaying, setIsActiveNvoVideoPlaying] = useState(false)
+  const [isWorkReadingMarkerEnabled, setIsWorkReadingMarkerEnabled] = useState(false)
   const [isNvoReadingMarkerEnabled, setIsNvoReadingMarkerEnabled] = useState(false)
+  const [workReadingProgressByWork, setWorkReadingProgressByWork] = useState<Record<string, number>>({})
   const [nvoReadingProgressByWork, setNvoReadingProgressByWork] = useState<Record<string, number>>({})
   const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('cover')
   const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('cover')
@@ -242,6 +245,7 @@ export default function MaterialsPage() {
   const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
   const [fullscreenImageSrc, setFullscreenImageSrc] = useState<string | null>(null)
   const [fullscreenImageZoom, setFullscreenImageZoom] = useState(1)
+  const workWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
@@ -296,6 +300,8 @@ export default function MaterialsPage() {
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
   const activeWorkSummary = activeWork ? literatureSummaries[activeWork.id] ?? [] : []
   const activeWorkVideoPath = activeWorkId ? literatureVideoPaths[activeWorkId] : undefined
+  const activeWorkMarkedWordIndex = activeWorkId ? workReadingProgressByWork[activeWorkId] : undefined
+  const activeWorkTextTokens = useMemo(() => activeWorkText.split(/(\s+)/), [activeWorkText])
   const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
   const activeNvoMarkedWordIndex = activeNvoWorkId ? nvoReadingProgressByWork[activeNvoWorkId] : undefined
@@ -335,6 +341,20 @@ export default function MaterialsPage() {
     .filter((group) => group.items.length > 0)
 
   const englishMaterialsCount = filteredEnglishMaterialGroups.reduce((acc, group) => acc + group.items.length, 0)
+
+  const handleWorkWordMark = (wordIndex: number) => {
+    if (!activeWorkId || !isWorkReadingMarkerEnabled) return
+
+    setWorkReadingProgressByWork((prev) => {
+      const current = prev[activeWorkId]
+      if (current === wordIndex) {
+        const next = { ...prev }
+        delete next[activeWorkId]
+        return next
+      }
+      return { ...prev, [activeWorkId]: wordIndex }
+    })
+  }
 
   const handleNvoWordMark = (wordIndex: number) => {
     if (!activeNvoWorkId || !isNvoReadingMarkerEnabled) return
@@ -394,6 +414,7 @@ export default function MaterialsPage() {
     setActiveWorkTextLoading(true)
     setActiveWorkTextError(null)
     setActiveWorkText('')
+    workWordRefs.current = {}
 
     fetch(encodeURI(textPath))
       .then((response) => {
@@ -472,6 +493,25 @@ export default function MaterialsPage() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     try {
+      const raw = window.localStorage.getItem(LITERATURE_READING_PROGRESS_STORAGE_KEY)
+      if (!raw) return
+      const parsed = JSON.parse(raw) as Record<string, number>
+      if (parsed && typeof parsed === 'object') {
+        setWorkReadingProgressByWork(parsed)
+      }
+    } catch {
+      // Ignore malformed localStorage payloads and continue safely.
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(LITERATURE_READING_PROGRESS_STORAGE_KEY, JSON.stringify(workReadingProgressByWork))
+  }, [workReadingProgressByWork])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
       const raw = window.localStorage.getItem(NVO_READING_PROGRESS_STORAGE_KEY)
       if (!raw) return
       const parsed = JSON.parse(raw) as Record<string, number>
@@ -489,6 +529,17 @@ export default function MaterialsPage() {
   }, [nvoReadingProgressByWork])
 
   useEffect(() => {
+    if (activeWorkPanel !== 'text') return
+    if (typeof activeWorkMarkedWordIndex !== 'number') return
+    const target = workWordRefs.current[activeWorkMarkedWordIndex]
+    if (!target) return
+
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  }, [activeWorkPanel, activeWorkMarkedWordIndex, activeWorkText])
+
+  useEffect(() => {
     if (activeNvoWorkPanel !== 'text') return
     if (typeof activeNvoMarkedWordIndex !== 'number') return
     const target = nvoWordRefs.current[activeNvoMarkedWordIndex]
@@ -503,6 +554,7 @@ export default function MaterialsPage() {
     if (activeWorkId) {
       setActiveWorkPanel('cover')
       setIsActiveWorkVideoPlaying(false)
+      setIsWorkReadingMarkerEnabled(false)
     }
   }, [activeWorkId])
 
@@ -769,8 +821,8 @@ export default function MaterialsPage() {
                 <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
                   <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
                     {activeNvoWorkPanel === 'text' ? (
-                      <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                        <div className="mb-3 flex items-center gap-2">
+                      <div className="flex h-[70vh] max-h-[70vh] flex-col gap-3">
+                        <div className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => setIsNvoReadingMarkerEnabled((prev) => !prev)}
@@ -791,43 +843,45 @@ export default function MaterialsPage() {
                           <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
                         </div>
 
-                        {activeNvoWorkTextLoading ? (
-                          <p className="text-sm text-text-muted">Зареждане...</p>
-                        ) : activeNvoWorkTextError ? (
-                          <p className="text-sm text-danger">{activeNvoWorkTextError}</p>
-                        ) : (
-                          <p className="whitespace-pre-wrap break-words text-sm leading-7 text-text">
-                            {(() => {
-                              let wordIndex = -1
-                              return activeNvoTextTokens.map((token, idx) => {
-                                if (/^\s+$/.test(token)) {
-                                  return <span key={`space-${idx}`}>{token}</span>
-                                }
+                        <div className="min-h-0 flex-1 overflow-y-auto rounded-xl border border-border bg-white p-4">
+                          {activeNvoWorkTextLoading ? (
+                            <p className="text-sm text-text-muted">Зареждане...</p>
+                          ) : activeNvoWorkTextError ? (
+                            <p className="text-sm text-danger">{activeNvoWorkTextError}</p>
+                          ) : (
+                            <p className="whitespace-pre-wrap break-words text-sm leading-7 text-text">
+                              {(() => {
+                                let wordIndex = -1
+                                return activeNvoTextTokens.map((token, idx) => {
+                                  if (/^\s+$/.test(token)) {
+                                    return <span key={`space-${idx}`}>{token}</span>
+                                  }
 
-                                wordIndex += 1
-                                const currentWordIndex = wordIndex
-                                const isMarked = activeNvoMarkedWordIndex === currentWordIndex
+                                  wordIndex += 1
+                                  const currentWordIndex = wordIndex
+                                  const isMarked = activeNvoMarkedWordIndex === currentWordIndex
 
-                                return (
-                                  <span
-                                    key={`word-${idx}-${currentWordIndex}`}
-                                    ref={(el) => {
-                                      nvoWordRefs.current[currentWordIndex] = el
-                                    }}
-                                    onClick={() => handleNvoWordMark(currentWordIndex)}
-                                    className={cn(
-                                      'rounded-sm',
-                                      isMarked && 'bg-amber-200 px-0.5',
-                                      isNvoReadingMarkerEnabled && 'cursor-pointer hover:bg-amber-100'
-                                    )}
-                                  >
-                                    {token}
-                                  </span>
-                                )
-                              })
-                            })()}
-                          </p>
-                        )}
+                                  return (
+                                    <span
+                                      key={`word-${idx}-${currentWordIndex}`}
+                                      ref={(el) => {
+                                        nvoWordRefs.current[currentWordIndex] = el
+                                      }}
+                                      onClick={() => handleNvoWordMark(currentWordIndex)}
+                                      className={cn(
+                                        'rounded-sm',
+                                        isMarked && 'bg-amber-200 px-0.5',
+                                        isNvoReadingMarkerEnabled && 'cursor-pointer hover:bg-amber-100'
+                                      )}
+                                    >
+                                      {token}
+                                    </span>
+                                  )
+                                })
+                              })()}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath && isActiveNvoVideoPlaying ? (
                       <video
@@ -1300,16 +1354,67 @@ export default function MaterialsPage() {
               <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
                 <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
                   {activeWorkPanel === 'text' ? (
-                    <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                      {activeWorkTextLoading ? (
-                        <p className="text-sm text-text-muted">Зареждане...</p>
-                      ) : activeWorkTextError ? (
-                        <p className="text-sm text-danger">{activeWorkTextError}</p>
-                      ) : (
-                        <pre className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
-                          {activeWorkText}
-                        </pre>
-                      )}
+                    <div className="flex h-[70vh] max-h-[70vh] flex-col gap-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setIsWorkReadingMarkerEnabled((prev) => !prev)}
+                          className={cn(
+                            'w-7 h-7 rounded-full border flex items-center justify-center transition-colors',
+                            isWorkReadingMarkerEnabled
+                              ? 'bg-primary text-white border-primary'
+                              : 'bg-white text-text-muted border-border hover:text-text hover:bg-gray-50'
+                          )}
+                          aria-label={isWorkReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
+                          title={isWorkReadingMarkerEnabled ? 'Изключи маркиране' : 'Включи маркиране'}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 20h9" />
+                            <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
+                          </svg>
+                        </button>
+                        <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
+                      </div>
+
+                      <div className="min-h-0 flex-1 overflow-y-auto rounded-xl border border-border bg-white p-4">
+                        {activeWorkTextLoading ? (
+                          <p className="text-sm text-text-muted">Зареждане...</p>
+                        ) : activeWorkTextError ? (
+                          <p className="text-sm text-danger">{activeWorkTextError}</p>
+                        ) : (
+                          <p className="whitespace-pre-wrap break-words text-sm leading-7 text-text font-sans">
+                            {(() => {
+                              let wordIndex = -1
+                              return activeWorkTextTokens.map((token, idx) => {
+                                if (/^\s+$/.test(token)) {
+                                  return <span key={`work-space-${idx}`}>{token}</span>
+                                }
+
+                                wordIndex += 1
+                                const currentWordIndex = wordIndex
+                                const isMarked = activeWorkMarkedWordIndex === currentWordIndex
+
+                                return (
+                                  <span
+                                    key={`work-word-${idx}-${currentWordIndex}`}
+                                    ref={(el) => {
+                                      workWordRefs.current[currentWordIndex] = el
+                                    }}
+                                    onClick={() => handleWorkWordMark(currentWordIndex)}
+                                    className={cn(
+                                      'rounded-sm',
+                                      isMarked && 'bg-amber-200 px-0.5',
+                                      isWorkReadingMarkerEnabled && 'cursor-pointer hover:bg-amber-100'
+                                    )}
+                                  >
+                                    {token}
+                                  </span>
+                                )
+                              })
+                            })()}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   ) : activeWorkPanel === 'summary' ? (
                     <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
