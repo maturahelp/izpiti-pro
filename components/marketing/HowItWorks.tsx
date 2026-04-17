@@ -1,71 +1,78 @@
-import { FadeIn } from '@/components/ui/fade-in'
-import Link from 'next/link'
-
-const steps = [
+const bullets = [
   {
-    step: '01',
-    title: 'Създай профил',
-    description: 'Регистрирай се безплатно за 30 секунди. Не се изисква кредитна карта.',
+    title: 'Най-важните теми в едно видео',
+    desc: 'Получаваш най-същественото от произведението, обяснено ясно и подредено.',
   },
   {
-    step: '02',
-    title: 'Учи по теми и слушай уроци',
-    description: 'Следвай структурирания учебен план — слушай аудио уроци и преглеждай материали по теми.',
+    title: 'Активира визуалната памет',
+    desc: 'Когато гледаш и слушаш едновременно, запомняш по-лесно образи, герои и идеи.',
   },
   {
-    step: '03',
-    title: 'Решавай тестове и виж грешките си',
-    description: 'Провери знанията си с интерактивни тестове. Получи незабавна обратна връзка и обяснения за всяка грешка.',
-  },
-  {
-    step: '04',
-    title: 'Ползвай AI помощ и следи напредъка си',
-    description: 'Когато нещо е неясно, AI помощникът обяснява темата по-лесно. Виж ясно напредъка си и кои теми трябват повече внимание.',
+    title: 'Тест след видео урока',
+    desc: 'След всеки урок можеш да провериш какво си разбрал и какво още трябва да преговориш.',
   },
 ]
 
 export function HowItWorks() {
   return (
-    <section id="kak-raboti" className="py-20 md:py-28 bg-[#FAF8F4] border-y border-[#E5E5E5]">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <FadeIn className="mb-14">
-          <p className="section-label mb-4">Как работи</p>
-          <h2 className="text-[2rem] md:text-[2.8rem] font-extrabold text-[#0D0D0D] tracking-[-0.04em] leading-[1.05] max-w-2xl">
-            От нула до уверено на изпита
+    <section
+      id="how-it-works"
+      className="py-16 md:py-20 relative overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, #f8faff 0%, #ffffff 100%)' }}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4" style={{ color: '#1e2a4a' }}>
+            Видео уроци, които ти показват най-важното
           </h2>
-          <p className="text-[16px] text-[#6B6B6B] max-w-xl mt-4 leading-[1.7]">
-            Четири стъпки, с които започваш подготовката и виждаш реален напредък.
+          <p className="text-gray-500 max-w-xl mx-auto text-sm md:text-base">
+            Разбери произведението по-лесно, запомни ключовите моменти и провери какво си научил веднага след урока.
           </p>
-        </FadeIn>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-[#E5E5E5]">
-          {steps.map((s, i) => (
-            <div
-              key={s.step}
-              className={`p-7 bg-white hover:bg-[#FAF8F4] transition-colors duration-200 ${i < 3 ? 'border-r-0 sm:border-r border-b sm:border-b-0 border-[#E5E5E5]' : ''} ${i === 1 ? 'sm:border-b lg:border-b-0' : ''} ${i === 2 ? 'sm:border-r-0 border-b sm:border-b lg:border-b-0 lg:border-r border-[#E5E5E5]' : ''}`}
-            >
-              {/* Giant step number */}
-              <div
-                className="text-[5rem] font-extrabold leading-none mb-4 tracking-[-0.05em] select-none"
-                style={{ color: i % 2 === 0 ? '#2563EB' : '#E5E5E5' }}
-              >
-                {s.step}
-              </div>
-              <h3 className="font-extrabold text-[#0D0D0D] text-[15px] mb-2 tracking-[-0.02em] leading-snug">
-                {s.title}
-              </h3>
-              <p className="text-[13.5px] text-[#6B6B6B] leading-relaxed">
-                {s.description}
-              </p>
-            </div>
-          ))}
         </div>
 
-        <FadeIn delay={0.2} className="mt-8">
-          <Link href="/dashboard" className="btn-secondary px-6 py-2.5 text-[14px]">
-            Разгледай как работи
-          </Link>
-        </FadeIn>
+        <div className="grid md:grid-cols-2 gap-10 items-start">
+          {/* Video placeholder */}
+          <div className="relative flex justify-center">
+            <div className="w-72 h-72 md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-blue-50 to-indigo-100 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="relative z-10 w-full max-w-lg">
+              <div
+                className="w-full rounded-2xl bg-[#1e2a4a] flex items-center justify-center"
+                style={{ height: '280px', boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-3">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 20 20">
+                      <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                    </svg>
+                  </div>
+                  <p className="text-white/70 text-sm">Видео урок</p>
+                </div>
+              </div>
+              <div className="mt-4 text-center">
+                <p className="text-sm font-bold" style={{ color: '#1e2a4a' }}>Под игото - Радини вълнения</p>
+                <p className="text-xs text-gray-400">Видео урок</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Bullets */}
+          <div className="space-y-5 md:pt-8">
+            {bullets.map((b, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-sm"
+                  style={{ background: '#3b82f6' }}
+                >
+                  {i + 1}
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold mb-1" style={{ color: '#1e2a4a' }}>{b.title}</h4>
+                  <p className="text-xs text-gray-400 leading-relaxed">{b.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
