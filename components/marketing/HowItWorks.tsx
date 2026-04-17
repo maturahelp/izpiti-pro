@@ -1,13 +1,16 @@
 const bullets = [
   {
+    src: '/landing-page3-icons/Gemini_Generated_Image_53y53k53y53k53y5.png',
     title: 'Най-важните теми в едно видео',
     desc: 'Получаваш най-същественото от произведението, обяснено ясно и подредено.',
   },
   {
+    src: '/landing-page3-icons/Gemini_Generated_Image_1zqjw41zqjw41zqj.png',
     title: 'Активира визуалната памет',
     desc: 'Когато гледаш и слушаш едновременно, запомняш по-лесно образи, герои и идеи.',
   },
   {
+    src: '/landing-page3-icons/Gemini_Generated_Image_q54f0wq54f0wq54f.png',
     title: 'Тест след видео урока',
     desc: 'След всеки урок можеш да провериш какво си разбрал и какво още трябва да преговориш.',
   },
@@ -58,13 +61,8 @@ export function HowItWorks() {
           {/* Bullets */}
           <div className="space-y-5 md:pt-8">
             {bullets.map((b, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-sm"
-                  style={{ background: '#3b82f6' }}
-                >
-                  {i + 1}
-                </div>
+              <div key={i} className="flex items-center gap-4">
+                <img src={b.src} alt="" className="w-20 h-20 flex-shrink-0 object-contain" />
                 <div>
                   <h4 className="text-sm font-bold mb-1" style={{ color: '#1e2a4a' }}>{b.title}</h4>
                   <p className="text-xs text-gray-400 leading-relaxed">{b.desc}</p>
