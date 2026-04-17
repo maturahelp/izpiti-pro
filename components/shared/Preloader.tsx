@@ -82,18 +82,11 @@ export default function Preloader() {
   return (
     <div className={`preloader-overlay ${fading ? 'preloader-fade-out' : ''}`} aria-hidden="true">
       <svg className="preloader-svg" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <clipPath id="preloader-reveal">
-            <rect className="preloader-reveal-rect" x="0" y="0" height="80" />
-          </clipPath>
-        </defs>
-
         <text
           className="preloader-text-stroke"
           x="300"
           y="58"
           textAnchor="middle"
-          clipPath="url(#preloader-reveal)"
         >
           MaturaHelp
         </text>
