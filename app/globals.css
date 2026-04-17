@@ -222,6 +222,8 @@
 .preloader-svg {
   width: min(72vw, 440px);
   height: auto;
+  opacity: 0;
+  animation: preloaderFadeIn 0.5s ease forwards 0.1s;
 }
 
 .preloader-svg text {
@@ -231,33 +233,16 @@
   letter-spacing: -0.03em;
 }
 
-.preloader-text-glow {
-  display: none;
-}
-
-.preloader-text-stroke {
-  fill: none;
-  stroke: #3b82f6;
-  stroke-width: 0.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 1200;
-  animation: preloaderDraw 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
+.preloader-text-glow   { display: none; }
+.preloader-text-stroke { display: none; }
 
 .preloader-text-fill {
-  fill: #1e3a5f;
-  opacity: 0;
+  fill: #4f81d6;
+  opacity: 1;
   stroke: none;
-  animation: preloaderFillIn 0.4s ease forwards 0.95s;
 }
 
-@keyframes preloaderDraw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes preloaderFillIn {
+@keyframes preloaderFadeIn {
   to { opacity: 1; }
 }
 
