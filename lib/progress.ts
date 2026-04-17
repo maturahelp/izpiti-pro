@@ -1,5 +1,114 @@
 import { createClient } from '@/lib/supabase/client'
 import { studentLessons, studentTests } from '@/data/student-content'
+import { allTests } from '@/data/tests'
+
+export interface DziAttempt {
+  id: string
+  testId: string
+  testName: string
+  score: number
+  attemptedAt: string
+}
+
+export interface DziProgressData {
+  attempts: DziAttempt[]
+  lastScore: number | null
+  bestScore: number | null
+  avgScore: number | null
+  maxScore: number
+  minPassScore: number
+}
+
+// Реалните прагове за ДЗИ (проценти от 100): максимум 100, успех (оценка 3) ≥ 30%
+export const DZI_MAX_SCORE = 100
+export const DZI_MIN_PASS_SCORE = 30
+
+export async function fetchDziProgress(): Promise<DziProgressData> {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    return emptyDziProgress()
+  }
+
+  const dziIds = new Set(allTests.filter((t) => t.examType === 'dzi12').map((t) => t.id))
+
+  const { data } = await supabase
+    .from('test_results')
+    .select('id, test_id, test_name, score, completed_at')
+    .eq('user_id', user.id)
+    .order('completed_at', { ascending: true })
+
+  const rows = (data ?? []) as Array<{
+    id: string
+    test_id: string
+    test_name: string
+    score: number
+    completed_at: string
+  }>
+
+  const attempts: DziAttempt[] = rows
+    .filter((r) => dziIds.has(r.test_id))
+    .map((r) => ({
+      id: r.id,
+      testId: r.test_id,
+      testName: r.test_name,
+      score: r.score,
+      attemptedAt: r.completed_at,
+    }))
+
+  if (attempts.length === 0) {
+    return emptyDziProgress()
+  }
+
+  const scores = attempts.map((a) => a.score)
+  const lastScore = attempts[attempts.length - 1].score
+  const bestScore = Math.max(...scores)
+  const avgScore = Math.round(scores.reduce((sum, s) => sum + s, 0) / scores.length)
+
+  return {
+    attempts,
+    lastScore,
+    bestScore,
+    avgScore,
+    maxScore: DZI_MAX_SCORE,
+    minPassScore: DZI_MIN_PASS_SCORE,
+  }
+}
+
+function emptyDziProgress(): DziProgressData {
+  return {
+    attempts: [],
+    lastScore: null,
+    bestScore: null,
+    avgScore: null,
+    maxScore: DZI_MAX_SCORE,
+    minPassScore: DZI_MIN_PASS_SCORE,
+  }
+}
+
+export async function saveDziAttempt(params: {
+  testId: string
+  testName: string
+  score: number
+  subject?: string
+}): Promise<void> {
+  try {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
+    await supabase.from('test_results').insert({
+      user_id: user.id,
+      test_id: params.testId,
+      test_name: params.testName,
+      score: Math.max(0, Math.min(100, Math.round(params.score))),
+      subject: params.subject ?? '',
+    })
+  } catch (err) {
+    console.error('Failed to save test attempt', err)
+  }
+}
 
 export interface ProgressData {
   testsCompleted: number

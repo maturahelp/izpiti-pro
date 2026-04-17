@@ -34,7 +34,7 @@ export interface Question {
   points: number
 }
 
-const allTests: Test[] = [
+export const allTests: Test[] = [
   // ── Real NVO exams from MaturaHelp.com ──────────────────────────────────────
   // Bulgarian language (НВО 7. клас)
   {
