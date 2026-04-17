@@ -19,7 +19,7 @@ export default function LoginPage() {
     // Dev bypass
     if (email === 'test@maturahelp.bg' && password === '12345678') {
       localStorage.setItem('dev_auth', '1')
-      window.location.href = '/dashboard'
+      window.location.href = '/dashboard/materials'
       return
     }
     const { user, error } = await signIn(email, password)
@@ -31,7 +31,7 @@ export default function LoginPage() {
       setError(msg)
       return
     }
-    window.location.href = '/dashboard'
+    window.location.href = '/dashboard/materials'
   }
 
   return (
