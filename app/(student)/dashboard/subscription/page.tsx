@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { currentUser } from '@/data/users'
 import Link from 'next/link'
+import { LegalCheckbox } from '@/components/shared/LegalConsentFields'
+import {
+  LEGAL_VERSION,
+  formatBgDate,
+  getBrowserUserAgent,
+  getNextPaymentDate,
+} from '@/lib/legal-consent'
+import { createClient } from '@/lib/supabase/client'
 
 const premiumFeatures = [
   'Неограничен достъп до всички тестове (500+)',
@@ -19,6 +27,62 @@ const premiumFeatures = [
 export default function SubscriptionPage() {
   const isFree = currentUser.plan === 'free'
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly')
+  const [today, setToday] = useState<Date | null>(null)
+  const [acceptedTermsPrivacy, setAcceptedTermsPrivacy] = useState(false)
+  const [immediateAccessAcknowledged, setImmediateAccessAcknowledged] = useState(false)
+  const [marketingEmails, setMarketingEmails] = useState(false)
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [checkoutMessage, setCheckoutMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    setToday(new Date())
+  }, [])
+
+  const nextPaymentDate = today ? getNextPaymentDate(today, billing) : null
+  const nextPaymentDateLabel = nextPaymentDate ? formatBgDate(nextPaymentDate) : '...'
+  const checkoutCanProceed = acceptedTermsPrivacy && immediateAccessAcknowledged
+
+  async function handleCheckout() {
+    setCheckoutError(null)
+    setCheckoutMessage(null)
+
+    if (!checkoutCanProceed) {
+      setCheckoutError('За да продължиш, приеми условията и потвърди незабавния достъп до услугата.')
+      return
+    }
+
+    setCheckoutLoading(true)
+    const supabase = createClient()
+    const { data, error: userError } = await supabase.auth.getUser()
+
+    if (userError || !data.user) {
+      setCheckoutLoading(false)
+      setCheckoutError('Влез в акаунта си отново, за да продължиш към плащане.')
+      return
+    }
+
+    const { error } = await supabase.from('consent_logs').insert({
+      user_id: data.user.id,
+      context: 'checkout',
+      legal_version: LEGAL_VERSION,
+      accepted_terms_privacy: acceptedTermsPrivacy,
+      confirmed_age_14: false,
+      immediate_access_acknowledged: immediateAccessAcknowledged,
+      marketing_emails: marketingEmails,
+      auto_renew_notice_shown: true,
+      user_agent: getBrowserUserAgent(),
+    })
+
+    setCheckoutLoading(false)
+
+    if (error) {
+      setCheckoutError('Не успяхме да запишем съгласието. Опитай отново.')
+      return
+    }
+
+    setCheckoutMessage('Съгласията са записани. Следващата стъпка е плащане през Stripe.')
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -127,11 +191,65 @@ export default function SubscriptionPage() {
                   ))}
                 </ul>
 
-                <button className="btn-primary w-full justify-center py-3 text-base">
-                  Започни 7 дни безплатно
+                <div className="mb-4 rounded-lg border border-primary/20 bg-primary-light/60 p-4 text-[13px] leading-relaxed text-text-muted">
+                  <p className="font-semibold text-text">С покупката се абонирате за автоматично подновяващ се план.</p>
+                  <p>Следващото плащане ще бъде извършено на {nextPaymentDateLabel}.</p>
+                  <p>Можете да прекратите подновяването по всяко време от профила си.</p>
+                  <p>Достъпът остава активен до края на текущия платен период.</p>
+                </div>
+
+                <div className="mb-4 space-y-2.5 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] p-4">
+                  <LegalCheckbox
+                    id="checkout-accepted-terms-privacy"
+                    checked={acceptedTermsPrivacy}
+                    onChange={setAcceptedTermsPrivacy}
+                  >
+                    Приемам{' '}
+                    <Link href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                      Общите условия
+                    </Link>{' '}
+                    и{' '}
+                    <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                      Политиката за поверителност
+                    </Link>
+                  </LegalCheckbox>
+                  <LegalCheckbox
+                    id="checkout-immediate-access"
+                    checked={immediateAccessAcknowledged}
+                    onChange={setImmediateAccessAcknowledged}
+                  >
+                    Искам достъпът до услугата да започне веднага и съм запознат/а, че това може да повлияе на правото ми на отказ
+                  </LegalCheckbox>
+                  <LegalCheckbox
+                    id="checkout-marketing-emails"
+                    checked={marketingEmails}
+                    onChange={setMarketingEmails}
+                  >
+                    Съгласен съм да получавам маркетинг имейли
+                  </LegalCheckbox>
+                </div>
+
+                {checkoutError && (
+                  <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-[13px] text-red-600">
+                    {checkoutError}
+                  </div>
+                )}
+                {checkoutMessage && (
+                  <div className="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-2.5 text-[13px] text-green-700">
+                    {checkoutMessage}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleCheckout}
+                  disabled={!checkoutCanProceed || checkoutLoading}
+                  className="btn-primary w-full justify-center py-3 text-base disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {checkoutLoading ? 'Записване...' : 'Продължи към плащане'}
                 </button>
                 <p className="text-xs text-center text-text-muted mt-2">
-                  Без кредитна карта. Отказ по всяко време.
+                  Плащането ще бъде обработено сигурно. Отказ по всяко време от профила.
                 </p>
               </div>
             </div>
