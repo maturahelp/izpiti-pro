@@ -8,7 +8,7 @@ import random
 from datetime import datetime, timezone
 from pathlib import Path
 
-from bel_textbook_canon import DZI_ESSAY_PROMPTS, DZI_LIT_WORKS, validate_questions
+from bel_textbook_canon import DZI_ESSAY_PROMPTS, DZI_LIT_WORKS, validate_no_placeholders, validate_questions
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -42,6 +42,226 @@ def shuffled(correct, wrong, rnd):
 
 def load_sets():
     return json.loads(SOURCE_JSON.read_text(encoding="utf-8"))["selected_sets"]
+
+
+def unique_values(values, excluded, limit=3):
+    seen = set(excluded)
+    result = []
+    for value in values:
+        if value in seen:
+            continue
+        result.append(value)
+        seen.add(value)
+        if len(result) == limit:
+            break
+    return result
+
+
+def build_filler_questions(item, rnd, lit_main, lit_alt, max_label, min_label):
+    chart = item["chart"]
+    max_value = max(chart["values"])
+    min_value = min(chart["values"])
+    value_gap = max_value - min_value
+    unit = chart.get("unit", "")
+    title = item["title"]
+    chart_title = chart["title"]
+
+    q4_options, q4_correct = shuffled(
+        "ежедневие",
+        ["празник", "случайност", "предимство"],
+        rnd,
+    )
+    q5_options, q5_correct = shuffled(
+        "постоянно",
+        ["рядко", "случайно", "безразлично"],
+        rnd,
+    )
+    q6_options, q6_correct = shuffled(
+        "временен",
+        ["устойчив", "непрекъснат", "постоянен"],
+        rnd,
+    )
+    q7_options, q7_correct = shuffled(
+        "Думите отварят врати към паметта.",
+        [
+            "Учениците отвориха вратата на библиотеката.",
+            "Вратата на залата остана затворена.",
+            "Новата врата е изработена от дърво.",
+        ],
+        rnd,
+    )
+    q15_options, q15_correct = shuffled(
+        f"Текстът насочва към осъзнато отношение към темата „{title}“.",
+        [
+            "Текстът представя само биографични факти за автора.",
+            "Текстът има за цел да опише историческа битка.",
+            "Текстът отрича нуждата от лично мнение.",
+        ],
+        rnd,
+    )
+    q23_options, q23_correct = shuffled(
+        f"Най-висока стойност има „{max_label}“, а най-ниска - „{min_label}“.",
+        [
+            f"Най-висока стойност има „{min_label}“, а най-ниска - „{max_label}“.",
+            "Всички показатели в инфографиката са напълно равни.",
+            "Инфографиката не съдържа сравними количествени данни.",
+        ],
+        rnd,
+    )
+
+    author_options, author_correct = shuffled(
+        lit_main.author,
+        unique_values((work.author for work in DZI_LIT_WORKS), {lit_main.author}),
+        rnd,
+    )
+    topic_options, topic_correct = shuffled(
+        lit_alt.prompt_topic,
+        unique_values((work.prompt_topic for work in DZI_LIT_WORKS), {lit_alt.prompt_topic}),
+        rnd,
+    )
+    theme_work_options, theme_work_correct = shuffled(
+        lit_main.title,
+        unique_values(
+            (work.title for work in DZI_LIT_WORKS if work.theme_label != lit_main.theme_label),
+            {lit_main.title},
+        ),
+        rnd,
+    )
+
+    return [
+        {
+            "number": 4,
+            "type": "single_choice",
+            "question": "Кой израз е синоним на думата „всекидневие“?",
+            "options": q4_options,
+            "correct_option": q4_correct,
+            "answer_guide": q4_options[q4_correct]
+        },
+        {
+            "number": 5,
+            "type": "single_choice",
+            "question": "Кое е значението на фразеологичното словосъчетание „ден и нощ“?",
+            "options": q5_options,
+            "correct_option": q5_correct,
+            "answer_guide": q5_options[q5_correct]
+        },
+        {
+            "number": 6,
+            "type": "single_choice",
+            "question": "Коя дума е антоним на прилагателното „постоянен“?",
+            "options": q6_options,
+            "correct_option": q6_correct,
+            "answer_guide": q6_options[q6_correct]
+        },
+        {
+            "number": 7,
+            "type": "single_choice",
+            "question": "В кое изречение има метафорична употреба?",
+            "options": q7_options,
+            "correct_option": q7_correct,
+            "answer_guide": q7_options[q7_correct]
+        },
+        {
+            "number": 9,
+            "type": "open_response",
+            "question": "В листа за отговори запишете САМО думата, с която да замените неправилно употребената дума в изречението: Участникът показа висока компетенция по темата.",
+            "answer_guide": "компетентност"
+        },
+        {
+            "number": 10,
+            "type": "open_response",
+            "question": "В листа за отговори запишете правилната членувана форма на думата в скоби: (Победител) в конкурса благодари на журито.",
+            "answer_guide": "Победителят"
+        },
+        {
+            "number": 11,
+            "type": "open_response",
+            "question": "В листа за отговори запишете правилната форма на местоимението в скоби: Поканиха Мария и (аз) на срещата.",
+            "answer_guide": "мен"
+        },
+        {
+            "number": 12,
+            "type": "open_response",
+            "question": "В листа за отговори запишете правилната бройна форма на думата в скоби: В списъка са включени два (доклад).",
+            "answer_guide": "доклада"
+        },
+        {
+            "number": 15,
+            "type": "single_choice",
+            "question": f"Кое твърдение най-точно предава основната насоченост на текста „{title}“?",
+            "options": q15_options,
+            "correct_option": q15_correct,
+            "answer_guide": q15_options[q15_correct]
+        },
+        {
+            "number": 16,
+            "type": "open_response",
+            "question": f"Запишете един проблем, който текстът „{title}“ поставя пред съвременния човек.",
+            "answer_guide": f"Очаква се проблем, свързан с темата „{title}“ и нейното влияние върху всекидневието, общуването или личния избор."
+        },
+        {
+            "number": 17,
+            "type": "open_response",
+            "question": f"С едно изречение обяснете как инфографиката „{chart_title}“ допълва текста „{title}“.",
+            "answer_guide": f"Инфографиката допълва текста чрез данни, според които „{max_label}“ е водещият показател."
+        },
+        {
+            "number": 22,
+            "type": "open_response",
+            "question": f"Запишете с цифра разликата между най-високата и най-ниската стойност в инфографиката „{chart_title}“.",
+            "answer_guide": f"{value_gap}{unit}"
+        },
+        {
+            "number": 23,
+            "type": "single_choice",
+            "question": f"Кой извод е най-точен според инфографиката „{chart_title}“?",
+            "options": q23_options,
+            "correct_option": q23_correct,
+            "answer_guide": q23_options[q23_correct]
+        },
+        {
+            "number": 24,
+            "type": "open_response",
+            "question": f"Формулирайте кратко заглавие за общия проблем, представен от текста „{title}“ и инфографиката.",
+            "answer_guide": f"Подходящото заглавие трябва да свързва темата „{title}“ с данните за „{max_label}“."
+        },
+        {
+            "number": 31,
+            "type": "single_choice",
+            "question": f"Кой автор е създал {lit_main.title}?",
+            "options": author_options,
+            "correct_option": author_correct,
+            "answer_guide": author_options[author_correct]
+        },
+        {
+            "number": 33,
+            "type": "single_choice",
+            "question": f"Коя тема е свързана с {lit_alt.title}?",
+            "options": topic_options,
+            "correct_option": topic_correct,
+            "answer_guide": topic_options[topic_correct]
+        },
+        {
+            "number": 34,
+            "type": "single_choice",
+            "question": f"Коя творба принадлежи към тематичния кръг „{lit_main.theme_label}“?",
+            "options": theme_work_options,
+            "correct_option": theme_work_correct,
+            "answer_guide": theme_work_options[theme_work_correct]
+        },
+        {
+            "number": 37,
+            "type": "open_response",
+            "question": f"Запишете една особеност на художествения свят в {lit_main.title}.",
+            "answer_guide": f"Очаква се особеност, съобразена с внушението, че {lit_main.core_claim}."
+        },
+        {
+            "number": 38,
+            "type": "open_response",
+            "question": f"Запишете едно смислово внушение на темата „{lit_alt.theme_label}“ в {lit_alt.title}.",
+            "answer_guide": lit_alt.core_claim
+        },
+    ]
 
 
 def build_exam(item, index, rnd):
@@ -208,40 +428,9 @@ def build_exam(item, index, rnd):
     ])
 
     used = {q["number"] for q in questions}
-    filler_numbers = [4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 17, 22, 23, 24, 31, 33, 34, 37, 38]
-    filler_templates = [
-        "В кой ред фразеологичните словосъчетания са синонимни?",
-        "Кое твърдение е вярно според текста?",
-        "В коя творба се открива мотивът за саможертвата?",
-        "В листа за отговори запишете САМО думата, с която да поправите лексикалната грешка."
-    ]
-    n = 0
-    for number in filler_numbers:
-        if number in used:
-            continue
-        template = filler_templates[n % len(filler_templates)]
-        if number in {4, 5, 6, 7, 31, 33, 34}:
-            questions.append({
-                "number": number,
-                "type": "single_choice",
-                "question": template,
-                "options": {
-                    "А": "примерен отговор А",
-                    "Б": "примерен отговор Б",
-                    "В": "примерен отговор В",
-                    "Г": "примерен отговор Г"
-                },
-                "correct_option": "Б",
-                "answer_guide": "примерен отговор Б"
-            })
-        else:
-            questions.append({
-                "number": number,
-                "type": "open_response",
-                "question": template,
-                "answer_guide": "Кратък свободен отговор според задачата."
-            })
-        n += 1
+    for filler in build_filler_questions(item, rnd, lit_main, lit_alt, max_label, min_label):
+        if filler["number"] not in used:
+            questions.append(filler)
 
     questions.sort(key=lambda x: x["number"])
 
@@ -274,8 +463,11 @@ def validate_payload(payload):
         mismatches = validate_questions(exam["questions"], "dzi")
         if mismatches:
             errors.append((exam["title"], mismatches))
+        placeholders = validate_no_placeholders(exam["questions"])
+        if placeholders:
+            errors.append((exam["title"], placeholders))
     if errors:
-        lines = ["Generated selected DZI mocks contain textbook-invalid literature references:"]
+        lines = ["Generated selected DZI mocks contain textbook-invalid or placeholder content:"]
         for title, mismatches in errors:
             details = ", ".join(f"Q{number}: {', '.join(titles)}" for number, titles in mismatches)
             lines.append(f"- {title}: {details}")
