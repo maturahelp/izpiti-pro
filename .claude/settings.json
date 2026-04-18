@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/danielmladenov/Claude/nvo_pdfs/izpiti-pro && git fetch origin 2>/dev/null; BRANCH=$(git branch --show-current); BEHIND=$(git rev-list --count HEAD..origin/main 2>/dev/null || echo 0); echo \"{\\\"systemMessage\\\": \\\"⚠️  Git status: branch='$BRANCH', $(git status --short | wc -l | tr -d ' ') uncommitted files. origin/main is $BEHIND commits ahead. Run git pull origin main before making any changes.\\\"}\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

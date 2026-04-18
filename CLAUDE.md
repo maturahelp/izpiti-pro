@@ -1,3 +1,10 @@
+## Git Pull Rule (MANDATORY)
+Before making ANY changes to files in this repository — including the very first edit — run:
+```
+git pull origin main
+```
+This is non-negotiable. Do not skip it even for "small" changes. Do not assume the local copy is up to date.
+
 Project Context
 When working in this repository, prefer extending the existing exam platform over building disconnected prototypes. Preserve the current visual language, route structure, and Bulgarian UX copy unless a task explicitly asks for a redesign.
 About This Project
