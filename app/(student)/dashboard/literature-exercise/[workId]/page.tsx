@@ -1,12 +1,13 @@
 'use client'
 
-import { use, useState, useCallback } from 'react'
+import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { getExerciseForWork, type LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { cn } from '@/lib/utils'
 import { fireConfetti } from '@/lib/confetti'
+import { logActivity } from '@/lib/activity-log'
 
 const OPTION_KEYS = ['A', 'B', 'C', 'D'] as const
 type OptionKey = typeof OPTION_KEYS[number]
@@ -292,6 +293,20 @@ export default function LiteratureExercisePage({
   const handlePrev = () => {
     if (currentIndex > 0) setCurrentIndex((i) => i - 1)
   }
+
+  // Log completion of the literature exercise into the activity feed.
+  useEffect(() => {
+    if (!finished || !work) return
+    logActivity({
+      type: 'literature_exercise',
+      refId: work.id,
+      title: work.title,
+      meta: work.author,
+      score,
+      maxScore: total,
+      href: `/dashboard/literature-exercise/${work.id}`,
+    })
+  }, [finished, work, score, total])
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">

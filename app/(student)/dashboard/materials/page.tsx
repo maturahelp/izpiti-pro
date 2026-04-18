@@ -17,6 +17,7 @@ import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { useGrade } from '@/lib/grade-context'
 import { cn } from '@/lib/utils'
+import { logActivity } from '@/lib/activity-log'
 
 type Math7Topic = {
   id: string
@@ -891,7 +892,16 @@ export default function MaterialsPage() {
                     ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath ? (
                       <button
                         type="button"
-                        onClick={() => setIsActiveNvoVideoPlaying(true)}
+                        onClick={() => {
+                          setIsActiveNvoVideoPlaying(true)
+                          logActivity({
+                            type: 'video_lesson',
+                            refId: `nvo-${activeNvoWork.id}`,
+                            title: activeNvoWork.title,
+                            meta: `Литература · 7. клас${activeNvoWork.author ? ` · ${activeNvoWork.author}` : ''}`,
+                            href: `/dashboard/materials`,
+                          })
+                        }}
                         className="relative w-full overflow-hidden rounded-xl border border-border bg-white text-left group"
                         aria-label="Пусни видео урок"
                       >
@@ -1429,7 +1439,16 @@ export default function MaterialsPage() {
                   ) : activeWorkPanel === 'video' && activeWorkVideoPath ? (
                     <button
                       type="button"
-                      onClick={() => setIsActiveWorkVideoPlaying(true)}
+                      onClick={() => {
+                        setIsActiveWorkVideoPlaying(true)
+                        logActivity({
+                          type: 'video_lesson',
+                          refId: `dzi-${activeWork.id}`,
+                          title: activeWork.title,
+                          meta: `Литература · 12. клас${activeWork.author ? ` · ${activeWork.author}` : ''}`,
+                          href: `/dashboard/materials`,
+                        })
+                      }}
                       className="relative w-full overflow-hidden rounded-xl border border-border bg-white text-left group"
                       aria-label="Пусни видео урок"
                     >
