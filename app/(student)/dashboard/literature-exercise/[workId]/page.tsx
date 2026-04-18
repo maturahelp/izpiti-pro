@@ -11,6 +11,20 @@ import { fireConfetti } from '@/lib/confetti'
 const OPTION_KEYS = ['A', 'B', 'C', 'D'] as const
 type OptionKey = typeof OPTION_KEYS[number]
 
+function shuffleLiteratureQuestion(q: LiteratureQuestion): LiteratureQuestion {
+  const order = [...OPTION_KEYS] as OptionKey[]
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[order[i], order[j]] = [order[j], order[i]]
+  }
+  const newOptions = {} as Record<OptionKey, string>
+  for (let i = 0; i < OPTION_KEYS.length; i++) {
+    newOptions[OPTION_KEYS[i]] = q.options[order[i]]
+  }
+  const newCorrectKey = OPTION_KEYS[order.indexOf(q.correct_answer)]
+  return { ...q, options: newOptions, correct_answer: newCorrectKey }
+}
+
 const optionLabels: Record<OptionKey, string> = { A: 'А', B: 'Б', C: 'В', D: 'Г' }
 
 function ScoreScreen({
@@ -199,17 +213,21 @@ export default function LiteratureExercisePage({
   const work = nvoLiteratureWorks.find((w) => w.id === workId)
   const exercise = getExerciseForWork(workId)
 
+  const [shuffledQuestions, setShuffledQuestions] = useState<LiteratureQuestion[]>(
+    () => exercise?.questions.map(shuffleLiteratureQuestion) ?? []
+  )
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<number, OptionKey>>({})
   const [revealed, setRevealed] = useState<Record<number, boolean>>({})
   const [finished, setFinished] = useState(false)
 
   const handleRetry = useCallback(() => {
+    setShuffledQuestions(exercise?.questions.map(shuffleLiteratureQuestion) ?? [])
     setCurrentIndex(0)
     setAnswers({})
     setRevealed({})
     setFinished(false)
-  }, [])
+  }, [exercise])
 
   if (!exercise || !work) {
     return (
@@ -229,7 +247,7 @@ export default function LiteratureExercisePage({
     )
   }
 
-  const questions = exercise.questions
+  const questions = shuffledQuestions.length ? shuffledQuestions : exercise.questions
   const total = questions.length
   const question = questions[currentIndex]
   const selected = answers[currentIndex] ?? null

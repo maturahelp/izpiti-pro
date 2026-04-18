@@ -35,6 +35,19 @@ const allTopics = topicsData.topics as CurriculumTopic[]
 
 const OPTION_LABELS = ['А', 'Б', 'В', 'Г']
 
+function shuffleExercise(ex: Exercise): Exercise {
+  const indices = Array.from({ length: ex.options.length }, (_, i) => i)
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[indices[i], indices[j]] = [indices[j], indices[i]]
+  }
+  return {
+    ...ex,
+    options: indices.map((i) => ex.options[i]),
+    correct_index: indices.indexOf(ex.correct_index),
+  }
+}
+
 export default function CurriculumTopicPage() {
   const params = useParams()
   const router = useRouter()
@@ -46,6 +59,7 @@ export default function CurriculumTopicPage() {
 
   const topic = allTopics[id]
 
+  const [shuffledExercises, setShuffledExercises] = useState<Exercise[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null)
   const [checked, setChecked] = useState(false)
@@ -53,6 +67,9 @@ export default function CurriculumTopicPage() {
   const [finished, setFinished] = useState(false)
 
   useEffect(() => {
+    if (topic) {
+      setShuffledExercises(topic.exercises.map(shuffleExercise))
+    }
     setCurrentIndex(0)
     setSelectedOpt(null)
     setChecked(false)
@@ -71,7 +88,7 @@ export default function CurriculumTopicPage() {
     )
   }
 
-  const exercises = topic.exercises
+  const exercises = shuffledExercises.length ? shuffledExercises : topic.exercises
   const displayTitle = topic.short_title ?? topic.title
 
   const score = exercises.filter((ex, idx) => answers[idx] === ex.correct_index).length
