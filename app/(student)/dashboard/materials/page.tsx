@@ -29,18 +29,6 @@ type Math7Topic = {
 }
 
 const math7Topics = (math7ProblemBank as { topics: Math7Topic[] }).topics
-const math7ProblemCount = math7Topics.reduce(
-  (total, topic) => total + topic.subtopics.reduce((sum, subtopic) => sum + subtopic.problems.length, 0),
-  0
-)
-const math7ShortAnswerCount = math7Topics.reduce(
-  (total, topic) =>
-    total + topic.subtopics.reduce(
-      (sum, subtopic) => sum + subtopic.problems.filter((problem) => problem.type === 'short_answer').length,
-      0
-    ),
-  0
-)
 
 // Build a lookup: (sectionTitle, itemTitle) → global topic index
 // Matches the flat order in bel_topics_question_bank.json
@@ -147,6 +135,18 @@ const englishMaterialGroups: EnglishMaterialGroup[] = [
   },
 ]
 
+function formatMathTitleText(text: string) {
+  return text
+    .replace(/\$([^$]+)\$/g, '$1')
+    .replace(/\^\\circ/g, '°')
+    .replace(/\\circ/g, '°')
+    .replace(/\\cdot/g, '·')
+    .replace(/\\times/g, '×')
+    .replace(/\\le/g, '≤')
+    .replace(/\\ge/g, '≥')
+    .replace(/\\neq/g, '≠')
+}
+
 function splitTopicTitle(title: string) {
   const dashMatch = title.match(/\s[–-]\s/)
   if (dashMatch && dashMatch.index && dashMatch.index > 8) {
@@ -237,7 +237,6 @@ export default function MaterialsPage() {
   const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('cover')
   const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('cover')
   const [searchQuery, setSearchQuery] = useState('')
-  const [expandedRuleKey, setExpandedRuleKey] = useState<string | null>(null)
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
   const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
   const [englishMaterialText, setEnglishMaterialText] = useState('')
@@ -245,6 +244,9 @@ export default function MaterialsPage() {
   const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
   const [fullscreenImageSrc, setFullscreenImageSrc] = useState<string | null>(null)
   const [fullscreenImageZoom, setFullscreenImageZoom] = useState(1)
+  const [fullscreenImageGallery, setFullscreenImageGallery] = useState<string[] | null>(null)
+  const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0)
+  const [fullscreenImageTitle, setFullscreenImageTitle] = useState<string>('')
   const workWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
@@ -368,6 +370,29 @@ export default function MaterialsPage() {
       }
       return { ...prev, [activeNvoWorkId]: wordIndex }
     })
+  }
+
+  const openImageGallery = (images: string[], title: string, startIndex = 0) => {
+    setFullscreenImageGallery(images)
+    setFullscreenImageIndex(startIndex)
+    setFullscreenImageTitle(title)
+    setFullscreenImageSrc(images[startIndex] ?? null)
+    setFullscreenImageZoom(1)
+  }
+
+  const closeImageGallery = () => {
+    setFullscreenImageGallery(null)
+    setFullscreenImageSrc(null)
+    setFullscreenImageZoom(1)
+    setFullscreenImageTitle('')
+  }
+
+  const goToGalleryIndex = (nextIndex: number) => {
+    if (!fullscreenImageGallery) return
+    const clamped = (nextIndex + fullscreenImageGallery.length) % fullscreenImageGallery.length
+    setFullscreenImageIndex(clamped)
+    setFullscreenImageSrc(fullscreenImageGallery[clamped])
+    setFullscreenImageZoom(1)
   }
 
   const openEnglishMaterial = async (material: EnglishMaterial) => {
@@ -711,47 +736,14 @@ export default function MaterialsPage() {
             </div>
           ) : grade7Section === 'math' ? (
             <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <div className="grid md:grid-cols-[1fr_auto] gap-4 items-start">
-                <div>
-                  <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
-                    Математика — 7. клас
-                  </p>
-                  <h2 className="text-lg md:text-xl font-bold text-text mb-2">
-                    Материали по теми
-                  </h2>
-                  <p className="text-sm text-text-muted leading-relaxed max-w-2xl">
-                    Разгледай оригинални тренировъчни задачи по всички теми и подтеми от учебния обхват:
-                    числа и алгебра, геометрия, вероятности, статистика и моделиране.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => router.push('/dashboard/materials/math-7-topics')}
-                  className="rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
-                >
-                  Отвори задачите
-                </button>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
-                {[
-                  [String(math7Topics.length), 'теми'],
-                  [String(math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)), 'подтеми'],
-                  [String(math7ProblemCount), 'задачи'],
-                  [String(math7ShortAnswerCount), 'кратки отговори'],
-                ].map(([value, label]) => (
-                  <div key={label} className="rounded-xl border border-[#D7E7F7] bg-white p-4">
-                    <p className="text-2xl font-bold text-text">{value}</p>
-                    <p className="text-xs font-semibold text-text-muted">{label}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-7 mt-6">
+              <p className="text-sm text-text-muted mb-4">
+                Намерени: <strong className="text-text">{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
+              </p>
+              <div className="space-y-6">
                 {math7Topics.map((topic, topicIndex) => (
                   <section key={topic.id}>
-                    <h3 className="text-sm md:text-base font-bold text-[#1E4D7B] mb-3">
-                      {topicIndex + 1}. {topic.title}
+                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                      {topicIndex + 1}. {formatMathTitleText(topic.title)}
                     </h3>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {topic.subtopics.map((subtopic, subtopicIndex) => (
@@ -759,16 +751,16 @@ export default function MaterialsPage() {
                           key={subtopic.id}
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/math-7-topics?subtopic=${subtopic.id}`)}
-                          className="min-h-[132px] rounded-lg border border-[#D7E7F7] bg-white p-4 text-left transition-colors hover:border-primary/50 hover:bg-primary/5"
+                          className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
                         >
-                          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">
+                          <p className="text-xs font-semibold text-text-muted mb-1">
                             Подтема #{subtopicIndex + 1}
                           </p>
-                          <h4 className="text-sm font-bold text-text leading-snug">
-                            {subtopic.title}
-                          </h4>
-                          <p className="mt-4 text-xs font-semibold text-primary">
-                            {subtopic.problems.length} задачи
+                          <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                            {formatMathTitleText(subtopic.title)}
+                          </h3>
+                          <p className="mt-3 text-xs font-semibold text-primary">
+                            {subtopic.problems.length} задачи →
                           </p>
                         </button>
                       ))}
@@ -1061,51 +1053,43 @@ export default function MaterialsPage() {
                     {sectionIndex + 1}. {section.title}
                   </h3>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                     {section.items.map((item, itemIndex) => {
                       const globalIdx = ruleTopicIndex[section.title]?.[item] ?? -1
                       const key = `${section.title}-${item}`
-                      const isExpanded = expandedRuleKey === key
 
                       return (
-                        <div key={key} className="flex flex-col gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setExpandedRuleKey(isExpanded ? null : key)}
-                            className={cn(
-                              'card p-4 text-left transition-all duration-200 hover:-translate-y-0.5 w-full',
-                              isExpanded && 'border-primary/40 bg-primary/5'
-                            )}
-                          >
+                        <div
+                          key={key}
+                          className="h-full min-h-[220px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                        >
+                          <div className="flex-1 min-w-0">
                             <p className="text-xs font-semibold text-text-muted mb-1">
                               {section.title}
                             </p>
-                            <h3 className="font-semibold text-text text-sm leading-snug mb-3">
+                            <h3 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-3 break-words">
                               {item}
                             </h3>
-                            <p className="text-xs font-semibold text-primary">
+                            <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal mb-4">
                               Правило #{itemIndex + 1}
                             </p>
-                          </button>
-
-                          {isExpanded && (
-                            <div className="flex gap-2">
-                              <button
-                                type="button"
-                                onClick={() => setTheoryIndex(globalIdx)}
-                                className="flex-1 rounded-xl border border-[#1E4D7B]/30 bg-[#F2F8FF] text-[#1E4D7B] text-xs font-semibold py-2 hover:bg-[#1E4D7B]/10 transition-colors"
-                              >
-                                Теория
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
-                                className="flex-1 rounded-xl bg-primary text-white text-xs font-semibold py-2 hover:bg-primary-dark transition-colors"
-                              >
-                                Тест
-                              </button>
-                            </div>
-                          )}
+                          </div>
+                          <div className="flex gap-2 mt-auto">
+                            <button
+                              type="button"
+                              onClick={() => setTheoryIndex(globalIdx)}
+                              className="flex-1 rounded-lg border border-[#AFC4DA] bg-transparent text-[#1E4D7B] text-sm font-bold py-3 hover:bg-[#1E4D7B]/10 transition-colors"
+                            >
+                              Теория
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
+                              className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
+                            >
+                              Тест
+                            </button>
+                          </div>
                         </div>
                       )
                     })}
@@ -1162,7 +1146,7 @@ export default function MaterialsPage() {
                               {item.imageSrcs && item.imageSrcs.length > 0 && (
                                 <button
                                   type="button"
-                                  onClick={() => openEnglishMaterial(item)}
+                                  onClick={() => openImageGallery(item.imageSrcs!, item.title)}
                                   className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
                                 >
                                   Отвори пример
@@ -1564,7 +1548,7 @@ export default function MaterialsPage() {
       {fullscreenImageSrc && (
         <div
           className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center"
-          onClick={() => setFullscreenImageSrc(null)}
+          onClick={() => (fullscreenImageGallery ? closeImageGallery() : setFullscreenImageSrc(null))}
         >
           <div
             className="relative w-full h-full flex items-center justify-center overflow-auto p-4"
@@ -1572,12 +1556,54 @@ export default function MaterialsPage() {
           >
             <img
               src={fullscreenImageSrc}
-              alt="Преглед на цял екран"
+              alt={fullscreenImageTitle || 'Преглед на цял екран'}
               style={{ transform: `scale(${fullscreenImageZoom})`, transformOrigin: 'center center' }}
               className="max-w-full max-h-full object-contain transition-transform duration-150 select-none"
               draggable={false}
             />
           </div>
+
+          {fullscreenImageGallery && fullscreenImageGallery.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); goToGalleryIndex(fullscreenImageIndex - 1) }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-text flex items-center justify-center shadow-lg transition-colors"
+                aria-label="Предишна снимка"
+                title="Предишна снимка"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); goToGalleryIndex(fullscreenImageIndex + 1) }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-text flex items-center justify-center shadow-lg transition-colors"
+                aria-label="Следваща снимка"
+                title="Следваща снимка"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+              <div
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full bg-white/90 text-text text-xs font-semibold shadow-lg"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {fullscreenImageIndex + 1} / {fullscreenImageGallery.length}
+              </div>
+            </>
+          )}
+
+          {fullscreenImageTitle && (
+            <div
+              className="absolute top-4 left-4 max-w-[60%] px-3 py-1.5 rounded-lg bg-white/90 text-text text-xs font-semibold shadow-lg truncate"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {fullscreenImageTitle}
+            </div>
+          )}
 
           <div
             className="absolute top-4 right-4 flex items-center gap-2"
@@ -1618,7 +1644,7 @@ export default function MaterialsPage() {
             </button>
             <button
               type="button"
-              onClick={() => setFullscreenImageSrc(null)}
+              onClick={() => (fullscreenImageGallery ? closeImageGallery() : setFullscreenImageSrc(null))}
               className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-text flex items-center justify-center shadow-lg transition-colors"
               aria-label="Затвори"
               title="Затвори"
