@@ -28,6 +28,12 @@ const sectionLabels12: Record<TestSection12, string> = {
   english: 'Английски',
 }
 
+const sectionTints: Record<'bel' | 'math' | 'english', string> = {
+  bel: 'bg-sky-50',
+  math: 'bg-emerald-50',
+  english: 'bg-rose-50',
+}
+
 const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
   '7': {
     sample: 'Примерен НВО',
@@ -84,8 +90,11 @@ export default function TestsPage() {
     return true
   })
 
+  const activeSection = grade === '7' ? selectedSection7 : selectedSection12
+  const tint = sectionTints[activeSection]
+
   return (
-    <div className="min-h-screen pb-20 md:pb-0">
+    <div className={cn('min-h-screen pb-20 md:pb-0 transition-colors', tint)}>
       <TopBar title="Тестове" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
 

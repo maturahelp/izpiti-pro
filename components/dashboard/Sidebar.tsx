@@ -95,23 +95,23 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-56 bg-sidebar flex flex-col z-40">
+    <aside className="fixed left-0 top-0 h-full w-56 bg-white border-r border-slate-200 flex flex-col z-40">
       {/* Logo */}
-      <Link href="/" className="flex items-center gap-2.5 px-4 py-4 border-b border-white/10 hover:opacity-80 transition-opacity">
+      <Link href="/" className="flex items-center gap-2.5 px-4 py-4 border-b border-slate-100 hover:opacity-80 transition-opacity">
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-          <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#93c5fd" strokeWidth="1.6" strokeLinejoin="round"/>
-          <path d="M14 8V23" stroke="#93c5fd" strokeWidth="1.6" strokeLinecap="round"/>
-          <path d="M8 10.5C9.5 10.2 11 10.1 12.5 10.3" stroke="#93c5fd" strokeWidth="1.3" strokeLinecap="round"/>
-          <path d="M8 13C9.5 12.7 11 12.6 12.5 12.8" stroke="#93c5fd" strokeWidth="1.3" strokeLinecap="round"/>
-          <path d="M15.5 10.3C17 10.1 18.5 10.2 20 10.5" stroke="#93c5fd" strokeWidth="1.3" strokeLinecap="round"/>
-          <path d="M15.5 12.8C17 12.6 18.5 12.7 20 13" stroke="#93c5fd" strokeWidth="1.3" strokeLinecap="round"/>
+          <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#3b82f6" strokeWidth="1.6" strokeLinejoin="round"/>
+          <path d="M14 8V23" stroke="#3b82f6" strokeWidth="1.6" strokeLinecap="round"/>
+          <path d="M8 10.5C9.5 10.2 11 10.1 12.5 10.3" stroke="#3b82f6" strokeWidth="1.3" strokeLinecap="round"/>
+          <path d="M8 13C9.5 12.7 11 12.6 12.5 12.8" stroke="#3b82f6" strokeWidth="1.3" strokeLinecap="round"/>
+          <path d="M15.5 10.3C17 10.1 18.5 10.2 20 10.5" stroke="#3b82f6" strokeWidth="1.3" strokeLinecap="round"/>
+          <path d="M15.5 12.8C17 12.6 18.5 12.7 20 13" stroke="#3b82f6" strokeWidth="1.3" strokeLinecap="round"/>
         </svg>
-        <span className="font-bold text-white text-base font-serif">MaturaHelp</span>
+        <span className="font-bold text-[#1e2a4a] text-base font-serif tracking-[-0.02em]">MaturaHelp</span>
       </Link>
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-0.5 scrollbar-thin flex flex-col">
-        <div className="space-y-0.5">
+      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-thin flex flex-col">
+        <div className="space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -124,7 +124,7 @@ export function Sidebar() {
           ))}
         </div>
 
-        <div className="mt-auto pt-4 border-t border-white/10 space-y-0.5">
+        <div className="mt-auto pt-4 border-t border-slate-100 space-y-1">
           {secondaryNavItems.map((item) => (
             <Link
               key={item.href}
