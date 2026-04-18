@@ -38,6 +38,19 @@ const allTopics: { sectionTitle: string; sectionIndex: number; topicIndex: numbe
 
 const OPTION_LABELS = ['А', 'Б', 'В', 'Г']
 
+function shuffleQuestion(q: Question): Question {
+  const indices = Array.from({ length: q.options.length }, (_, i) => i)
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[indices[i], indices[j]] = [indices[j], indices[i]]
+  }
+  return {
+    ...q,
+    options: indices.map((i) => q.options[i]),
+    correct_index: indices.indexOf(q.correct_index),
+  }
+}
+
 export default function RuleQuizPage() {
   const params = useParams()
   const router = useRouter()
@@ -54,7 +67,7 @@ export default function RuleQuizPage() {
 
   useEffect(() => {
     if (entry) {
-      setShuffledQuestions([...entry.topic.questions])
+      setShuffledQuestions(entry.topic.questions.map(shuffleQuestion))
       setCurrentIndex(0)
       setSelectedOpt(null)
       setChecked(false)
