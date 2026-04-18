@@ -97,9 +97,9 @@ export default function AIPage() {
   }
 
   return (
-    <div className="min-h-screen pb-20 md:pb-0 flex flex-col">
+    <div className="min-h-screen pb-20 md:pb-0 flex flex-col relative">
       <TopBar title="AI помощник" />
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden pointer-events-none select-none" aria-hidden="true">
 
         {/* Chat area */}
         <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full">
@@ -253,6 +253,27 @@ export default function AIPage() {
               </a>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Coming soon overlay */}
+      <div className="absolute inset-0 top-[56px] md:top-[64px] z-30 flex items-center justify-center bg-white/55 backdrop-blur-sm pointer-events-auto p-4">
+        <div className="max-w-md w-full rounded-2xl border border-border bg-white shadow-2xl p-6 md:p-8 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-primary-light mx-auto mb-4 flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+          </div>
+          <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-primary bg-primary-light px-2.5 py-1 rounded-full mb-3">
+            Очаквайте скоро
+          </span>
+          <h2 className="font-serif font-bold text-text text-xl md:text-2xl mb-2">
+            AI помощникът идва скоро
+          </h2>
+          <p className="text-sm text-text-muted leading-relaxed">
+            Работим върху твоя личен AI учител по НВО и ДЗИ. Ще обяснява теми, ще анализира грешки и ще задава упражнения според нивото ти.
+          </p>
         </div>
       </div>
     </div>
