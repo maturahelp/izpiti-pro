@@ -50,6 +50,9 @@ const navItems = [
       </svg>
     ),
   },
+] satisfies NavItem[]
+
+const secondaryNavItems = [
   {
     href: '/dashboard/subscription',
     label: 'Абонамент',
@@ -59,9 +62,6 @@ const navItems = [
       </svg>
     ),
   },
-] satisfies NavItem[]
-
-const secondaryNavItems = [
   {
     href: '/dashboard/profile',
     label: 'Акаунт',
