@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { LEGAL_SUPPORT_EMAIL } from '@/lib/legal-consent'
 
 const footerLinks = {
   Платформа: [
@@ -50,13 +51,13 @@ export function Footer() {
               Интерактивна платформа за подготовка за НВО и ДЗИ с тестове, аудио уроци и AI помощник.
             </p>
             <a
-              href="mailto:support@izpitipro.bg"
+              href={`mailto:${LEGAL_SUPPORT_EMAIL}`}
               className="inline-flex items-center gap-1.5 text-[13px] text-white/30 hover:text-blue-300 transition-colors duration-200"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
               </svg>
-              support@izpitipro.bg
+              {LEGAL_SUPPORT_EMAIL}
             </a>
           </div>
 
@@ -90,15 +91,18 @@ export function Footer() {
             </p>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
+            <Link href="/terms" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
               Общи условия
             </Link>
-            <Link href="#" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
+            <Link href="/privacy" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
               Поверителност
             </Link>
-            <Link href="#" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
-              Контакти
+            <Link href="/cookies" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
+              Бисквитки
             </Link>
+            <a href={`mailto:${LEGAL_SUPPORT_EMAIL}`} className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
+              Контакти
+            </a>
           </div>
         </div>
       </div>

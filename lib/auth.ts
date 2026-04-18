@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
+import type { RegistrationConsentMetadata } from '@/lib/legal-consent'
 
 export async function signIn(email: string, password: string) {
   const supabase = createClient()
@@ -6,12 +7,13 @@ export async function signIn(email: string, password: string) {
   return { user: data?.user ?? null, session: data?.session ?? null, error }
 }
 
-export async function signUp(email: string, password: string, name?: string) {
+export async function signUp(email: string, password: string, name?: string, consent?: RegistrationConsentMetadata) {
   const supabase = createClient()
+  const displayName = name?.trim() || email.split('@')[0]
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { name: name ?? email.split('@')[0] } },
+    options: { data: { name: displayName, ...(consent ?? {}) } },
   })
   return { user: data?.user ?? null, session: data?.session ?? null, error }
 }

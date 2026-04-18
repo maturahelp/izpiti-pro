@@ -5,6 +5,8 @@ import { useState, useEffect, createContext, useContext } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { signIn, signUp, signOut, getUser } from '@/lib/auth'
+import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
+import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
 
 // ── Context ───────────────────────────────────────────────────────────────────
 interface DrawerCtxType {
@@ -181,16 +183,26 @@ export function LoginGateModal() {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [consents, setConsents] = useState<RegistrationConsentValues>({
+    acceptedTermsPrivacy: false,
+    confirmedAge14: false,
+    marketingEmails: false,
+  })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [info, setInfo] = useState<string | null>(null)
 
   function resetForm() {
     setEmail(''); setPassword(''); setName(''); setConfirmPassword(''); setError(null); setInfo(null)
+    setConsents({ acceptedTermsPrivacy: false, confirmedAge14: false, marketingEmails: false })
   }
 
   function handleTabChange(t: 'login' | 'register') {
     setTab(t); resetForm()
+  }
+
+  function updateConsent(key: keyof RegistrationConsentValues, checked: boolean) {
+    setConsents((current) => ({ ...current, [key]: checked }))
   }
 
   async function handleLogin(e: React.FormEvent) {
@@ -218,8 +230,14 @@ export function LoginGateModal() {
     if (!email || !password) { setError('Попълни всички полета.'); return }
     if (password.length < 8) { setError('Паролата трябва да е поне 8 знака.'); return }
     if (password !== confirmPassword) { setError('Паролите не съвпадат.'); return }
+    if (!consents.acceptedTermsPrivacy) { setError('За да продължиш, приеми Общите условия и Политиката за поверителност.'); return }
+    if (!consents.confirmedAge14) { setError('Регистрацията е разрешена само за лица, навършили 14 години.'); return }
     setLoading(true)
-    const { session, error } = await signUp(email, password, name)
+    const consentMetadata = buildRegistrationConsentMetadata({
+      ...consents,
+      userAgent: getBrowserUserAgent(),
+    })
+    const { session, error } = await signUp(email, password, name, consentMetadata)
     setLoading(false)
     if (error) { setError(error.message); return }
     if (session) {
@@ -245,7 +263,7 @@ export function LoginGateModal() {
             transition={{ duration: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="fixed inset-0 z-[310] flex items-center justify-center px-4 pointer-events-none"
           >
-            <div className="w-full max-w-[400px] bg-white rounded-2xl border border-[#E2E8F0] shadow-[0_24px_64px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.08)] pointer-events-auto">
+            <div className="w-full max-w-[400px] max-h-[calc(100vh-2rem)] overflow-y-auto bg-white rounded-2xl border border-[#E2E8F0] shadow-[0_24px_64px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.08)] pointer-events-auto">
 
               <div className="flex justify-end px-5 pt-4">
                 <button onClick={closeLoginGate} className="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:bg-slate-100 hover:text-text transition-colors">
@@ -340,11 +358,14 @@ export function LoginGateModal() {
                         </button>
                       </div>
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-3">
                       <label className="block text-[12.5px] font-semibold text-text mb-1.5">Потвърди паролата</label>
                       <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                         placeholder="Повтори паролата"
                         className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
+                    </div>
+                    <div className="mb-4 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] p-3">
+                      <RegistrationConsentFields values={consents} onChange={updateConsent} idPrefix="nav-register" />
                     </div>
                     <button type="submit" disabled={loading}
                       className="block w-full text-center py-3 rounded-xl font-semibold text-[14px] text-white bg-gradient-to-r from-primary to-[#2563EB] hover:from-[#1741b8] hover:to-[#1d4ed8] shadow-[0_4px_14px_rgba(27,79,216,0.35)] transition-all duration-200 mb-4 disabled:opacity-60 disabled:cursor-not-allowed">
