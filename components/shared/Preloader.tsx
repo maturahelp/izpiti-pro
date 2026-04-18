@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { usePathname } from 'next/navigation'
 
 const LOGO_PATHS = [
   "M4.21484 2.516L4.35938 2.76307L18.5137 26.9144L32.5352 2.76502L32.6797 2.516H36.3965V37.1156H31.9883V11.5873L19.7197 32.5961L19.5752 32.8441H17.3223L17.1768 32.5971L4.9082 11.7308V37.1156H0.5V2.516H4.21484Z",
@@ -20,9 +19,6 @@ const LOGO_PATHS = [
 export default function Preloader() {
   const [visible, setVisible] = useState(true)
   const [fading, setFading] = useState(false)
-  const pathname = usePathname()
-  const isFirstLoad = useRef(true)
-  const previousPath = useRef(pathname)
   const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -31,65 +27,29 @@ export default function Preloader() {
     if (hideTimer.current) clearTimeout(hideTimer.current)
   }
 
-  const show = () => {
-    clearTimers()
-    setFading(false)
-    setVisible(true)
-  }
-
-  const hide = (delay = 400) => {
-    clearTimers()
-    fadeTimer.current = setTimeout(() => {
-      setFading(true)
-      hideTimer.current = setTimeout(() => setVisible(false), 600)
-    }, delay)
-  }
-
   useEffect(() => {
-    const handleLoad = () => hide(1600)
-
-    if (document.readyState === 'complete') {
-      handleLoad()
-      return undefined
+    // Show the preloader only on the very first page load; client-side
+    // navigation between dashboard sections should not re-trigger it.
+    const hide = (delay = 500) => {
+      clearTimers()
+      fadeTimer.current = setTimeout(() => {
+        setFading(true)
+        hideTimer.current = setTimeout(() => setVisible(false), 500)
+      }, delay)
     }
 
+    if (document.readyState === 'complete') {
+      hide()
+      return () => clearTimers()
+    }
+
+    const handleLoad = () => hide()
     window.addEventListener('load', handleLoad)
     return () => {
       window.removeEventListener('load', handleLoad)
       clearTimers()
     }
   }, [])
-
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      const target = event.target
-      if (!(target instanceof Element)) return
-
-      const anchor = target.closest('a')
-      if (!anchor) return
-
-      const href = anchor.getAttribute('href')
-      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return
-
-      show()
-    }
-
-    document.addEventListener('click', handleClick)
-    return () => document.removeEventListener('click', handleClick)
-  }, [])
-
-  useEffect(() => {
-    if (isFirstLoad.current) {
-      isFirstLoad.current = false
-      previousPath.current = pathname
-      return
-    }
-
-    if (pathname !== previousPath.current) {
-      previousPath.current = pathname
-      hide(200)
-    }
-  }, [pathname])
 
   if (!visible) return null
 

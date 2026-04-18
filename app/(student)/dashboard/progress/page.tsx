@@ -1,8 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { DziProgressChart } from '@/components/progress/DziProgressChart'
+import {
+  ACTIVITY_LABELS,
+  clearActivityEntry,
+  getActivityLog,
+  type ActivityEntry,
+} from '@/lib/activity-log'
 
 const CATEGORY_META: Record<string, { label: string; color: string }> = {
   'nvo-primer':  { label: 'НВО Примерен',  color: '#4f63d2' },
@@ -133,20 +140,43 @@ function ScoreChart({ results }: { results: LocalResult[] }) {
   )
 }
 
+function formatActivityAt(iso: string) {
+  const d = new Date(iso)
+  const date = d.toLocaleDateString('bg-BG', { day: '2-digit', month: 'short' })
+  const time = d.toLocaleTimeString('bg-BG', { hour: '2-digit', minute: '2-digit' })
+  return `${date}, ${time}`
+}
+
+const ACTIVITY_ACCENT: Record<string, string> = {
+  test: 'bg-[#4f63d2]',
+  literature_exercise: 'bg-[#C46A28]',
+  video_lesson: 'bg-[#1E4D7B]',
+  lesson: 'bg-[#10b981]',
+  material: 'bg-[#74A5D4]',
+}
+
 export default function ProgressPage() {
   const [results, setResults] = useState<LocalResult[]>([])
   const [logins, setLogins] = useState<string[]>([])
+  const [activity, setActivity] = useState<ActivityEntry[]>([])
   const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     recordTodayLogin()
     setResults(getLocalResults())
     setLogins(getLogins())
+    setActivity(getActivityLog())
   }, [])
 
   function refresh() {
     setResults(getLocalResults())
     setLogins(getLogins())
+    setActivity(getActivityLog())
+  }
+
+  function removeActivity(id: string) {
+    clearActivityEntry(id)
+    setActivity(getActivityLog())
   }
 
   function deleteResult(id: string) {
@@ -247,6 +277,62 @@ export default function ProgressPage() {
 
         {/* Score chart */}
         <ScoreChart results={results} />
+
+        {/* Activity feed — everything the student has done recently */}
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#1e2d5a]">Последна активност</h3>
+            {activity.length > 0 && (
+              <span className="text-xs text-gray-400">{activity.length} записа</span>
+            )}
+          </div>
+          {activity.length === 0 ? (
+            <p className="px-6 py-8 text-sm text-gray-400 text-center">
+              Все още няма активност. Тестовете, упражненията и видео уроците, които гледаш, ще се появят тук.
+            </p>
+          ) : (
+            <ul className="divide-y divide-gray-50">
+              {activity.map((a) => {
+                const pct =
+                  typeof a.score === 'number' && typeof a.maxScore === 'number' && a.maxScore > 0
+                    ? Math.round((a.score / a.maxScore) * 100)
+                    : null
+                const Wrapper: React.ElementType = a.href ? Link : 'div'
+                const wrapperProps = a.href ? { href: a.href } : {}
+                return (
+                  <li key={a.id} className="flex items-center justify-between px-6 py-3 hover:bg-gray-50 transition">
+                    <Wrapper
+                      {...wrapperProps}
+                      className="flex items-center gap-4 flex-1 min-w-0"
+                    >
+                      <span className={`w-2 h-10 rounded-full flex-shrink-0 ${ACTIVITY_ACCENT[a.type] ?? 'bg-gray-300'}`} />
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                          {ACTIVITY_LABELS[a.type] ?? a.type}
+                        </p>
+                        <p className="text-sm font-semibold text-gray-800 truncate">{a.title}</p>
+                        <p className="text-xs text-gray-400 truncate">
+                          {[a.meta, formatActivityAt(a.at)].filter(Boolean).join(' · ')}
+                        </p>
+                      </div>
+                    </Wrapper>
+                    <div className="flex items-center gap-3 flex-shrink-0 pl-3">
+                      {pct !== null && (
+                        <span className="text-sm font-bold text-[#1e2d5a]">{pct}%</span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeActivity(a.id)}
+                        className="text-gray-300 hover:text-red-400 transition text-lg leading-none"
+                        aria-label="Изтрий запис"
+                      >✕</button>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
 
         {/* Results history */}
         {sorted.length > 0 ? (

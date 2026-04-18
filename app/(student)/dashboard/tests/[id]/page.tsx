@@ -9,6 +9,7 @@ import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
 import { saveDziAttempt } from '@/lib/progress'
+import { logActivity } from '@/lib/activity-log'
 import { allTests } from '@/data/tests'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
@@ -561,6 +562,24 @@ export default function TestPage() {
       }
     } catch (err) {
       console.error('Failed to record DZI attempt', err)
+    }
+
+    // Log this test submission to the local activity feed (Progress page).
+    try {
+      const catalogEntry = allTests.find((t) => t.id === testId)
+      const selectable = exam.questions.filter((q) => q.type === 'single_choice')
+      const correct = selectable.filter((q) => answers[q.number] === q.correct_option).length
+      logActivity({
+        type: 'test',
+        refId: testId,
+        title: catalogEntry?.title || exam.source_title || `Тест ${testId}`,
+        meta: catalogEntry?.subjectName,
+        score: correct,
+        maxScore: selectable.length,
+        href: `/dashboard/tests/${testId}`,
+      })
+    } catch (err) {
+      console.error('Failed to log test activity', err)
     }
 
     const MISTAKES_KEY = 'nvo_mistakes'
