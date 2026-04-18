@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
+ROOT = Path(__file__).resolve().parents[2]
 NOTEBOOKLM_DIR = Path(__file__).resolve().parents[1]
 GENERATED_DIR = NOTEBOOKLM_DIR / "generated"
 NVO_SOURCE = GENERATED_DIR / "mock_exams" / "mock_nvo_dzi_exams.json"
@@ -15,6 +16,7 @@ DZI_SOURCE = GENERATED_DIR / "selected_dzi_mocks" / "selected_dzi_mocks.json"
 OUT_DIR = GENERATED_DIR / "exam_practice"
 OUT_JSON = OUT_DIR / "combined_exam_practice.json"
 OUT_HTML = OUT_DIR / "index.html"
+APP_JSON = ROOT / "data" / "mock_exam_practice.json"
 
 
 def load_json(path: Path):
@@ -211,8 +213,10 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     payload = build_payload()
     OUT_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    APP_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     OUT_HTML.write_text(build_html(), encoding="utf-8")
     print(f"Wrote {OUT_JSON}")
+    print(f"Wrote {APP_JSON}")
     print(f"Wrote {OUT_HTML}")
 
 

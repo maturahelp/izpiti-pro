@@ -73,6 +73,12 @@ DZI_LIT_WORKS: list[LitWork] = [
 ALL_TEXTBOOK_WORKS: list[LitWork] = NVO_LIT_WORKS + DZI_LIT_WORKS
 NVO_ALLOWED_TITLES = {work.title for work in NVO_LIT_WORKS}
 DZI_ALLOWED_TITLES = {work.title for work in DZI_LIT_WORKS}
+NVO_TOPIC_PHRASES = {work.prompt_topic for work in NVO_LIT_WORKS}
+DZI_TOPIC_PHRASES = {work.prompt_topic for work in DZI_LIT_WORKS}
+PLACEHOLDER_PHRASES = (
+    "примерен отговор",
+    "Кратък свободен отговор според задачата",
+)
 
 
 DZI_THEME_TO_WORKS: dict[str, list[LitWork]] = {}
@@ -94,7 +100,11 @@ def _flatten_text(value: Any) -> str:
     if isinstance(value, str):
         return value
     if isinstance(value, dict):
-        return " ".join(_flatten_text(v) for v in value.values())
+        parts: list[str] = []
+        for key, item in value.items():
+            parts.append(_flatten_text(key))
+            parts.append(_flatten_text(item))
+        return " ".join(part for part in parts if part)
     if isinstance(value, list):
         return " ".join(_flatten_text(v) for v in value)
     return ""
@@ -110,10 +120,27 @@ def question_text_blob(question: dict[str, Any]) -> str:
 def validate_questions(questions: list[dict[str, Any]], exam_track: str) -> list[tuple[int, list[str]]]:
     allowed = NVO_ALLOWED_TITLES if exam_track == "nvo" else DZI_ALLOWED_TITLES
     disallowed = DZI_ALLOWED_TITLES if exam_track == "nvo" else NVO_ALLOWED_TITLES
+    disallowed_topics = DZI_TOPIC_PHRASES if exam_track == "nvo" else NVO_TOPIC_PHRASES
     mismatches: list[tuple[int, list[str]]] = []
     for question in questions:
         blob = question_text_blob(question)
         hits = sorted(title for title in disallowed if title in blob)
+        hits.extend(sorted(topic for topic in disallowed_topics if topic in blob))
         if hits:
             mismatches.append((question["number"], hits))
     return mismatches
+
+
+def validate_no_placeholders(questions: list[dict[str, Any]]) -> list[tuple[int, list[str]]]:
+    placeholders: list[tuple[int, list[str]]] = []
+    for question in questions:
+        blob = question_text_blob(question)
+        blob_lower = blob.lower()
+        hits = [
+            phrase
+            for phrase in PLACEHOLDER_PHRASES
+            if phrase.lower() in blob_lower
+        ]
+        if hits:
+            placeholders.append((question["number"], hits))
+    return placeholders
