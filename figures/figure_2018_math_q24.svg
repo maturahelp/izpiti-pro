@@ -1,0 +1,76 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .guide { stroke: #d8d2c7; stroke-width: 2.5; stroke-dasharray: 10 10; opacity: 0.68; fill: none; }
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.16; stroke: #4a97f2; stroke-width: 3; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.14; stroke: #7db22f; stroke-width: 3; }
+      .orange-fill { fill: #ffc46e; fill-opacity: 0.14; stroke: #e6a84d; stroke-width: 3; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .point-violet { fill: #7d71f0; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Triangle ABC: A(250,650) B(1070,650) C(550,350)
+       H(550,650) — foot of altitude, interior to AB
+       AH = CH: AH=300, CH=300 (vertical altitude)
+       B = H + (CH*√3, 0) = (550+520,650) = (1070,650)
+       M midpoint of BC: ((550+1070)/2,(350+650)/2) = (810,500)
+       HM = 300 (verified) -->
+  <polygon class="main-line" points="250,650 1070,650 550,350"/>
+
+  <!-- Altitude CH (vertical): green -->
+  <path class="green-line" d="M550,350 L550,650"/>
+
+  <!-- Median HM from H to midpoint M of BC: blue -->
+  <path class="blue-line" d="M550,650 L810,500"/>
+
+  <!-- Segment MN and highlight triangles NMH and CMH -->
+  <!-- N(723,650) on HB -->
+  <polygon class="blue-fill" points="550,650 810,500 723,650"/>
+  <polygon class="green-fill" points="550,350 550,650 810,500"/>
+
+  <!-- Right angle mark at H(550,650): CH⊥AB -->
+  <path class="ra" d="M550,634 L566,634 L566,650"/>
+
+  <!-- Equal tick marks: AH = CH = HM (single tick each) -->
+  <!-- Tick on AH: midpoint (400,650), perp to AB (horizontal) → vertical tick -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M400,640 L400,660"/>
+  <!-- Tick on CH: midpoint (550,500), perp to CH (vertical) → horizontal tick -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M540,500 L560,500"/>
+  <!-- Tick on HM: midpoint (680,575), perp to HM dir=(260,-150)/300; perp=(150,260)/300=(0.5,0.866) -->
+  <!-- tick: (680-6,575+10.4)→(680+6,575-10.4) -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M674,585 L686,565"/>
+
+  <!-- Points -->
+  <circle class="point-main" cx="250" cy="650" r="10"/>
+  <circle class="point-main" cx="1070" cy="650" r="10"/>
+  <circle class="point-main" cx="550" cy="350" r="10"/>
+  <circle class="point-green" cx="550" cy="650" r="10"/>
+  <circle class="point-blue" cx="810" cy="500" r="10"/>
+  <circle class="point-orange" cx="723" cy="650" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="212" y="686">A</text>
+  <text class="label" x="1078" y="686">B</text>
+  <text class="label" x="518" y="338">C</text>
+  <text class="label" x="518" y="694">H</text>
+  <text class="label" x="822" y="498">M</text>
+  <text class="label" x="720" y="694">N</text>
+
+  <!-- Annotations -->
+  <text class="small" x="220" y="750">AH = CH = HM</text>
+  <text class="small" x="580" y="750">N ∈ HB:  HN = MN = NB</text>
+  <text class="small" x="650" y="820">M — среда на BC</text>
+</svg>

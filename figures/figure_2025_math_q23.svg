@@ -1,0 +1,83 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .guide { stroke: #d8d2c7; stroke-width: 2.5; stroke-dasharray: 10 10; opacity: 0.7; fill: none; }
+      .axis  { stroke: #d8d2c7; stroke-width: 3; stroke-dasharray: 12 10; opacity: 0.75; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #4b8d12; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #b6771e; stroke-width: 4; fill: none; }
+      .violet-line { stroke: #5c4dd3; stroke-width: 4; stroke-dasharray: 12 8; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.42; stroke: #4a97f2; stroke-width: 4; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.18; stroke: #7db22f; stroke-width: 4; }
+      .orange-fill { fill: #ffc46e; fill-opacity: 0.18; stroke: #e6a84d; stroke-width: 4; }
+      .violet-fill { fill: #a7a0ff; fill-opacity: 0.18; stroke: #7d71f0; stroke-width: 4; stroke-dasharray: 12 8; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #4b8d12; }
+      .point-orange { fill: #b6771e; }
+      .point-violet { fill: #5c4dd3; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .legend-title { fill: #f4f0e8; font-family: Arial, sans-serif; font-weight: 700; font-size: 34px; }
+      .legend-text { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 28px; }
+      .legend-box { fill: #2a2927; stroke: #4a4946; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <!-- guides -->
+  <path class="axis" d="M275 300 H1115" />
+  <path class="axis" d="M275 405 H980" />
+  <path class="guide" d="M705 160 L1075 565" />
+
+  <!-- main polygons -->
+  <polygon class="blue-fill" points="940,405 470,300 810,300" />
+  <polygon class="green-fill" points="345,405 470,300 600,405" />
+  <polygon class="orange-fill" points="940,405 600,405 940,735" />
+  <polygon class="violet-fill" points="345,405 810,300 940,735" />
+
+  <!-- edge lines -->
+  <path class="blue-line" d="M470 300 L940 405" />
+  <path class="blue-line" d="M470 300 L810 300" />
+  <path class="green-line" d="M345 405 L470 300 L600 405" />
+  <path class="green-line" d="M345 405 L600 405" />
+  <path class="orange-line" d="M600 405 L940 405 L940 735" />
+  <path class="orange-line" d="M600 405 L940 735" />
+  <path class="violet-line" d="M345 405 L810 300 L940 735 Z" />
+
+  <!-- point markers -->
+  <circle class="point-green" cx="345" cy="405" r="10" />
+  <circle class="point-blue" cx="470" cy="300" r="10" />
+  <circle class="point-blue" cx="600" cy="405" r="10" />
+  <circle class="point-violet" cx="810" cy="300" r="10" />
+  <circle class="point-blue" cx="940" cy="405" r="10" />
+  <circle class="point-orange" cx="940" cy="735" r="10" />
+
+  <!-- labels -->
+  <text class="label" x="322" y="393">P</text>
+  <text class="label" x="437" y="281">C</text>
+  <text class="label" x="573" y="448">B</text>
+  <text class="label" x="964" y="392">A</text>
+  <text class="label" x="952" y="777">M</text>
+  <text class="label" x="814" y="279">D</text>
+
+  <!-- line/parallel notes -->
+  <text class="small" x="786" y="292">c ∥ AB</text>
+  <text class="small" x="1038" y="482">a ∥ BC</text>
+
+  <!-- legend -->
+  <rect class="legend-box" x="1050" y="555" width="410" height="285" rx="18" />
+  <text class="legend-title" x="1192" y="610">Легенда</text>
+
+  <rect x="1080" y="640" width="30" height="30" fill="#9ec3f5" stroke="#4a97f2" stroke-width="3" />
+  <text class="legend-text" x="1130" y="665">△ABC</text>
+
+  <rect x="1080" y="700" width="30" height="30" fill="#8fc24a" fill-opacity="0.25" stroke="#7db22f" stroke-width="3" />
+  <text class="legend-text" x="1130" y="725">△BCP</text>
+
+  <rect x="1080" y="760" width="30" height="30" fill="#ffc46e" fill-opacity="0.25" stroke="#e6a84d" stroke-width="3" />
+  <text class="legend-text" x="1130" y="785">△AMB</text>
+
+  <rect x="1080" y="820" width="30" height="30" fill="#a7a0ff" fill-opacity="0.2" stroke="#7d71f0" stroke-width="3" stroke-dasharray="10 6" />
+  <text class="legend-text" x="1130" y="845">△MDP (пунктир)</text>
+</svg>

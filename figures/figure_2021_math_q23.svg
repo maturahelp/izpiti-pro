@@ -1,0 +1,78 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .guide { stroke: #d8d2c7; stroke-width: 2.5; stroke-dasharray: 10 10; opacity: 0.68; fill: none; }
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.16; stroke: #4a97f2; stroke-width: 3; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.14; stroke: #7db22f; stroke-width: 3; }
+      .orange-fill { fill: #ffc46e; fill-opacity: 0.14; stroke: #e6a84d; stroke-width: 3; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Triangle ABC: ∠A=60°, ∠B=45°, ∠C=75°
+       A(200,720) B(1200,720) C(566,86) -->
+  <polygon class="main-line" points="200,720 1200,720 566,86"/>
+
+  <!-- Altitude CD (from C to D on AB, vertical): green -->
+  <path class="green-line" d="M566,86 L566,720"/>
+
+  <!-- Altitude BK (from B to K on AC): blue -->
+  <!-- K(447,292) -->
+  <path class="blue-line" d="M1200,720 L447,292"/>
+
+  <!-- Triangle BKC highlighted -->
+  <polygon class="blue-fill" points="1200,720 447,292 566,86"/>
+  <!-- Triangle BDC highlighted -->
+  <polygon class="green-fill" points="566,86 566,720 1200,720"/>
+
+  <!-- Right angle mark at D(566,720): CD⊥AB (vertical⊥horizontal) -->
+  <path class="ra" d="M566,704 L582,704 L582,720"/>
+
+  <!-- Right angle mark at K(447,292): BK⊥AC
+       AC_norm=(366,-634)/735=(0.498,-0.862); BK_norm=(-0.862,-0.498)
+       Actually perp to AC from B... right angle is at K on line AC.
+       AC dir=(366,-634), perp=(634,366)/735=(0.862,0.498)
+       size 16: p1=K+16*(0.498,-0.862)=(461,278), p2=K+16*(0.498,-0.862)+16*(0.862,0.498)=(475,286), p3=K+16*(0.862,0.498)=(461,300) -->
+  <path class="ra" d="M455,278 L469,286 L461,300"/>
+
+  <!-- Midpoint tick marks on BM and MC -->
+  <!-- M(883,403), B(1200,720), C(566,86) -->
+  <!-- Tick on BM near midpoint (1042,562): perp to BC dir=(-634,634)/896 perp=(634,634)/896=(0.707,0.707) -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M1035,555 L1048,568"/>
+  <!-- Tick on MC near midpoint (725,245): same direction -->
+  <path stroke="#e6a84d" stroke-width="2.5" fill="none" d="M718,238 L731,251"/>
+
+  <!-- Points -->
+  <circle class="point-main" cx="200" cy="720" r="10"/>
+  <circle class="point-main" cx="1200" cy="720" r="10"/>
+  <circle class="point-main" cx="566" cy="86" r="10"/>
+  <circle class="point-green" cx="566" cy="720" r="10"/>
+  <circle class="point-blue" cx="447" cy="292" r="10"/>
+  <circle class="point-orange" cx="883" cy="403" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="162" y="758">A</text>
+  <text class="label" x="1208" y="758">B</text>
+  <text class="label" x="540" y="76">C</text>
+  <text class="label" x="542" y="758">D</text>
+  <text class="label" x="414" y="290">K</text>
+  <text class="label" x="892" y="400">M</text>
+
+  <!-- Angle labels -->
+  <text class="small" x="248" y="700">60°</text>
+  <text class="small" x="1108" y="700">45°</text>
+  <text class="small" x="570" y="130">75°</text>
+  <text class="small" x="300" y="820">M — среда на BC,  BC = 4 cm</text>
+</svg>

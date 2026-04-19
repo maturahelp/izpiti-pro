@@ -1,0 +1,82 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .guide { stroke: #d8d2c7; stroke-width: 2.5; stroke-dasharray: 10 10; opacity: 0.68; fill: none; }
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .violet-line { stroke: #7d71f0; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.18; stroke: #4a97f2; stroke-width: 3; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.16; stroke: #7db22f; stroke-width: 3; }
+      .orange-fill { fill: #ffc46e; fill-opacity: 0.16; stroke: #e6a84d; stroke-width: 3; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .point-violet { fill: #7d71f0; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Parallelogram ABCD: A(250,720) B(950,720) C(1250,280) D(550,280) -->
+  <polygon class="main-line" points="250,720 950,720 1250,280 550,280"/>
+
+  <!-- Diagonal AC: blue -->
+  <path class="blue-line" d="M250,720 L1250,280"/>
+
+  <!-- Height DK (vertical): green -->
+  <path class="green-line" d="M550,280 L550,720"/>
+
+  <!-- Line through D perpendicular to AC, through H and L: orange -->
+  <path class="orange-line" d="M550,280 L744,720"/>
+
+  <!-- Colored fills for sub-regions -->
+  <!-- Triangle AFK (blue) -->
+  <polygon class="blue-fill" points="250,720 664,538 550,588"/>
+  <!-- Triangle DKF (green) -->
+  <polygon class="green-fill" points="550,280 550,588 664,538"/>
+  <!-- Triangle DHL region -->
+  <polygon class="orange-fill" points="550,280 664,538 744,720"/>
+
+  <!-- Right angle mark at K (DK⊥AB) -->
+  <path class="ra" d="M550,704 L566,704 L566,720"/>
+
+  <!-- Right angle mark at H (DH⊥AC) — small square perpendicular to AC direction -->
+  <!-- AC dir norm ≈ (0.915,−0.403), DH dir norm ≈ (0.403,0.915); size 16 -->
+  <path class="ra" d="M670,531 L676,544 L663,551 L657,538 Z"/>
+
+  <!-- Points -->
+  <circle class="point-main" cx="250" cy="720" r="10"/>
+  <circle class="point-main" cx="950" cy="720" r="10"/>
+  <circle class="point-main" cx="1250" cy="280" r="10"/>
+  <circle class="point-main" cx="550" cy="280" r="10"/>
+  <circle class="point-green" cx="550" cy="720" r="10"/>
+  <circle class="point-blue" cx="550" cy="588" r="10"/>
+  <circle class="point-orange" cx="664" cy="538" r="10"/>
+  <circle class="point-violet" cx="744" cy="720" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="216" y="756">A</text>
+  <text class="label" x="956" y="756">B</text>
+  <text class="label" x="1262" y="275">C</text>
+  <text class="label" x="516" y="268">D</text>
+  <text class="label" x="522" y="758">K</text>
+  <text class="label" x="524" y="580">F</text>
+  <text class="label" x="676" y="535">H</text>
+  <text class="label" x="752" y="758">L</text>
+
+  <!-- Annotations -->
+  <text class="small" x="590" y="640">DK ⊥ AB</text>
+  <text class="small" x="680" y="490">DH ⊥ AC</text>
+
+  <!-- Equal side tick marks (AB = AD) -->
+  <!-- tick on AB -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M598,712 L602,728"/>
+  <!-- tick on AD -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M389,502 L405,498"/>
+</svg>

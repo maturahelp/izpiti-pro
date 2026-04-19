@@ -1,0 +1,72 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#262523"/>
+
+  <defs>
+    <style>
+      .main-line { stroke: #f0ede6; stroke-width: 4; fill: none; }
+      .blue-line { stroke: #4a97f2; stroke-width: 4; fill: none; }
+      .green-line { stroke: #7db22f; stroke-width: 4; fill: none; }
+      .orange-line { stroke: #e6a84d; stroke-width: 4; fill: none; }
+      .blue-fill { fill: #9ec3f5; fill-opacity: 0.18; stroke: #4a97f2; stroke-width: 3; }
+      .green-fill { fill: #8fc24a; fill-opacity: 0.16; stroke: #7db22f; stroke-width: 3; }
+      .orange-fill { fill: #ffc46e; fill-opacity: 0.16; stroke: #e6a84d; stroke-width: 3; }
+      .point-main { fill: #f0ede6; }
+      .point-blue { fill: #4a97f2; }
+      .point-green { fill: #7db22f; }
+      .point-orange { fill: #e6a84d; }
+      .label { fill: #f2efe8; font-family: Arial, sans-serif; font-weight: 700; font-size: 32px; }
+      .small { fill: #d8d2c7; font-family: Arial, sans-serif; font-weight: 600; font-size: 24px; }
+      .ra { stroke: #d8d2c7; stroke-width: 2.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Equilateral triangle ABC: A(350,750) B(1050,750) C(700,144) side=700 -->
+  <polygon class="main-line" points="350,750 1050,750 700,144"/>
+
+  <!-- M on BC with CM = BC/3: M(817,346) -->
+  <!-- MK perpendicular to AB (vertical line), K(817,750) -->
+  <path class="green-line" d="M817,346 L817,750"/>
+
+  <!-- Triangle KCM highlighted -->
+  <polygon class="blue-fill" points="817,346 700,144 817,750"/>
+  <!-- Actually KCM: K(817,750) C(700,144) M(817,346) -->
+  <polygon class="orange-fill" points="817,750 700,144 817,346"/>
+
+  <!-- Right angle mark at K(817,750): MK⊥AB (vertical⊥horizontal) -->
+  <path class="ra" d="M817,734 L833,734 L833,750"/>
+
+  <!-- Equal side tick marks on equilateral triangle -->
+  <!-- AB tick near midpoint (700,750) -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M697,740 L703,760"/>
+  <!-- BC tick near midpoint (875,447): BC dir=(350,606)/700=(0.5,0.866) perp=(-0.866,0.5) -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M868,443 L882,452"/>
+  <!-- CA tick near midpoint (525,447): CA dir=(-350,606)/700=(-0.5,0.866) perp=(-0.866,-0.5) -->
+  <path stroke="#d8d2c7" stroke-width="2.5" fill="none" d="M519,451 L531,442"/>
+
+  <!-- Ratio marks on BC: single tick CM (1 part), double tick MB (2 parts) -->
+  <!-- CM: C(700,144) to M(817,346), midpoint (759,245) -->
+  <!-- BC dir=(350,606)/700=(0.5,0.866), perp=(-0.866,0.5) -->
+  <path stroke="#4a97f2" stroke-width="2.5" fill="none" d="M752,249 L766,241"/>
+  <!-- MB: M(817,346) to B(1050,750), midpoint (934,548) — double tick -->
+  <path stroke="#4a97f2" stroke-width="2.5" fill="none" d="M928,552 L940,543"/>
+  <path stroke="#4a97f2" stroke-width="2.5" fill="none" d="M924,559 L936,549"/>
+
+  <!-- Points -->
+  <circle class="point-main" cx="350" cy="750" r="10"/>
+  <circle class="point-main" cx="1050" cy="750" r="10"/>
+  <circle class="point-main" cx="700" cy="144" r="10"/>
+  <circle class="point-blue" cx="817" cy="346" r="10"/>
+  <circle class="point-green" cx="817" cy="750" r="10"/>
+
+  <!-- Labels -->
+  <text class="label" x="312" y="786">A</text>
+  <text class="label" x="1058" y="786">B</text>
+  <text class="label" x="670" y="132">C</text>
+  <text class="label" x="830" y="343">M</text>
+  <text class="label" x="830" y="786">K</text>
+
+  <!-- Annotations -->
+  <text class="small" x="280" y="840">ABC — равностранен</text>
+  <text class="small" x="700" y="840">CM = BC/3,  MK ⊥ AB</text>
+  <text class="small" x="520" y="560">S(KCM) = 3 cm²</text>
+</svg>
