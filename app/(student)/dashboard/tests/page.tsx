@@ -28,11 +28,16 @@ const sectionLabels12: Record<TestSection12, string> = {
   english: 'Английски',
 }
 
-const sectionTints: Record<'bel' | 'math' | 'english', string> = {
-  bel: 'bg-sky-50',
-  math: 'bg-emerald-50',
-  english: 'bg-rose-50',
-}
+const sectionTintsByGrade = {
+  '7': {
+    bel: { wrap: 'bg-[#274060]', counter: 'text-white/80', counterStrong: 'text-white', empty: 'text-white/80' },
+    math: { wrap: 'bg-[#5899E2]', counter: 'text-white/90', counterStrong: 'text-white', empty: 'text-white/90' },
+  },
+  '12': {
+    bel: { wrap: 'bg-[#335C81]', counter: 'text-white/80', counterStrong: 'text-white', empty: 'text-white/80' },
+    english: { wrap: 'bg-[#1B2845]', counter: 'text-white/80', counterStrong: 'text-white', empty: 'text-white/80' },
+  },
+} as const
 
 const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
   '7': {
@@ -90,11 +95,12 @@ export default function TestsPage() {
     return true
   })
 
-  const activeSection = grade === '7' ? selectedSection7 : selectedSection12
-  const tint = sectionTints[activeSection]
+  const tint = grade === '7'
+    ? sectionTintsByGrade['7'][selectedSection7]
+    : sectionTintsByGrade['12'][selectedSection12]
 
   return (
-    <div className={cn('min-h-screen pb-20 md:pb-0 transition-colors', tint)}>
+    <div className={cn('min-h-screen pb-20 md:pb-0 transition-colors', tint.wrap)}>
       <TopBar title="Тестове" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
 
@@ -163,8 +169,8 @@ export default function TestsPage() {
 
         {/* Results count */}
         {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
-          <p className="text-sm text-text-muted mb-4">
-            Намерени: <strong className="text-text">{filtered.length}</strong> теста
+          <p className={cn('text-sm mb-4', tint.counter)}>
+            Намерени: <strong className={tint.counterStrong}>{filtered.length}</strong> теста
           </p>
         )}
 
@@ -303,7 +309,7 @@ export default function TestsPage() {
         </div>
 
         {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
-          <div className="text-center py-16 text-text-muted">
+          <div className={cn('text-center py-16', tint.empty)}>
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
           </div>
