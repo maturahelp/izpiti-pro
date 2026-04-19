@@ -77,7 +77,6 @@ const sectionTints: Record<MaterialSection, {
   innerCard: string
   innerShadow: string
   heading: string
-  ruleBorder: string
   counter: string
   counterStrong: string
 }> = {
@@ -86,7 +85,6 @@ const sectionTints: Record<MaterialSection, {
     innerCard: 'border-white/10 bg-white',
     innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
     heading: 'text-white',
-    ruleBorder: 'border-white/20',
     counter: 'text-white/80',
     counterStrong: 'text-white',
   },
@@ -95,7 +93,6 @@ const sectionTints: Record<MaterialSection, {
     innerCard: 'border-white/10 bg-white',
     innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
     heading: 'text-white',
-    ruleBorder: 'border-white/20',
     counter: 'text-white/80',
     counterStrong: 'text-white',
   },
@@ -104,7 +101,6 @@ const sectionTints: Record<MaterialSection, {
     innerCard: 'border-white/10 bg-white',
     innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
     heading: 'text-white',
-    ruleBorder: 'border-white/20',
     counter: 'text-white/90',
     counterStrong: 'text-white',
   },
@@ -113,7 +109,6 @@ const sectionTints: Record<MaterialSection, {
     innerCard: 'border-white/10 bg-white',
     innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.22)]',
     heading: 'text-white',
-    ruleBorder: 'border-white/20',
     counter: 'text-white/80',
     counterStrong: 'text-white',
   },
