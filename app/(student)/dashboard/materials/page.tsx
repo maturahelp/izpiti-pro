@@ -1159,7 +1159,7 @@ export default function MaterialsPage() {
           <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.english.wrap)}>
             <div className="text-center mb-5">
               <h2 className={cn('text-3xl font-extrabold leading-none tracking-tight', sectionTints.english.heading)}>Материали 12 клас</h2>
-              <p className="text-sm text-text-muted mt-1">Английски език</p>
+              <p className={cn('text-sm mt-1', sectionTints.english.counter)}>Английски език</p>
             </div>
             <p className={cn('text-sm mb-4', sectionTints.english.counter)}>
               Намерени: <strong className={sectionTints.english.counterStrong}>{englishMaterialsCount}</strong> материала
@@ -1172,7 +1172,7 @@ export default function MaterialsPage() {
                       <h3 className={cn('text-sm md:text-base font-semibold text-center mb-2', sectionTints.english.heading)}>
                         {groupIndex + 1}. {group.title}
                       </h3>
-                      <p className="text-xs text-text-muted text-center mb-3">{group.description}</p>
+                      <p className={cn('text-xs text-center mb-3', sectionTints.english.counter)}>{group.description}</p>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {group.items.map((item) => (
                           <div key={item.title} className="card p-4 flex flex-col gap-3">
