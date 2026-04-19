@@ -18,10 +18,10 @@ export function Hero() {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Left */}
           <div className="max-w-lg md:max-w-xl md:ml-auto md:pr-4 lg:pr-8">
-            <h1 className="text-4xl md:text-[2.85rem] lg:text-[3.1rem] font-extrabold leading-tight mb-6" style={{ color: '#1e2a4a' }}>
+            <h1 className="text-4xl md:text-[2.85rem] lg:text-[3.1rem] font-extrabold leading-tight mb-6" style={{ color: '#1B2845' }}>
               Всичко за{' '}
-              <span style={{ color: '#3b82f6' }}>НВО</span> и{' '}
-              <span style={{ color: '#3b82f6' }}>ДЗИ</span> на едно място
+              <span style={{ color: '#5899E2' }}>НВО</span> и{' '}
+              <span style={{ color: '#5899E2' }}>ДЗИ</span> на едно място
             </h1>
             <p className="text-gray-500 text-base md:text-lg leading-relaxed mb-8 max-w-md">
               MaturaHelp ти дава подредена подготовка за 7 и 12 клас с уроци, видеа, тестове и практика по всички теми.
@@ -30,7 +30,7 @@ export function Hero() {
               <Link
                 href="/register"
                 className="text-white font-semibold px-12 py-3.5 rounded-full text-sm transition-all hover:shadow-lg hover:shadow-blue-200"
-                style={{ background: '#3b82f6' }}
+                style={{ background: '#5899E2' }}
               >
                 Започни
               </Link>
@@ -42,7 +42,7 @@ export function Hero() {
                   className="w-10 h-10 rounded-full bg-white flex items-center justify-center"
                   style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
                 >
-                  <svg className="w-4 h-4 ml-0.5" fill="#3b82f6" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 ml-0.5" fill="#5899E2" viewBox="0 0 20 20">
                     <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                   </svg>
                 </span>
@@ -77,7 +77,7 @@ export function Hero() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-bold leading-none" style={{ color: '#1e2a4a' }}>4 800+</p>
+                  <p className="text-lg font-bold leading-none" style={{ color: '#1B2845' }}>4 800+</p>
                   <p className="text-xs text-gray-400 mt-0.5">Активни ученици</p>
                 </div>
               </div>
@@ -92,7 +92,7 @@ export function Hero() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm font-bold leading-none" style={{ color: '#1e2a4a' }}>500+</p>
+                  <p className="text-sm font-bold leading-none" style={{ color: '#1B2845' }}>500+</p>
                   <p className="text-[11px] text-gray-400">Теста</p>
                 </div>
               </div>

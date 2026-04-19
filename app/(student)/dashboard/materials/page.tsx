@@ -73,6 +73,63 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
 
 type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
 
+const sectionTints: Record<MaterialSection, {
+  wrap: string
+  innerCard: string
+  innerShadow: string
+  heading: string
+  counter: string
+  counterStrong: string
+  accentText: string
+  filledBtn: string
+  outlineBtn: string
+}> = {
+  bulgarian: {
+    wrap: 'border-[#B5CBE4] bg-[#D9E4F2]',
+    innerCard: 'border-[#C8DAF0] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(39,64,96,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#274060]/70',
+    counterStrong: 'text-[#274060]',
+    accentText: 'text-[#274060]',
+    filledBtn: 'bg-[#274060] text-white hover:bg-[#1B2845]',
+    outlineBtn: 'border border-[#8AAACF] bg-transparent text-[#274060] hover:bg-[#C8DAF0]',
+  },
+  literature: {
+    wrap: 'border-[#AECCE7] bg-[#DCE8F7]',
+    innerCard: 'border-[#C3DAF0] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(51,92,129,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#335C81]/70',
+    counterStrong: 'text-[#335C81]',
+    accentText: 'text-[#335C81]',
+    filledBtn: 'bg-[#335C81] text-white hover:bg-[#274060]',
+    outlineBtn: 'border border-[#8BBAD9] bg-transparent text-[#335C81] hover:bg-[#C3DAF0]',
+  },
+  math: {
+    wrap: 'border-[#ADC9E2] bg-[#D6E3F0]',
+    innerCard: 'border-[#C0D5EB] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(39,64,96,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#274060]/70',
+    counterStrong: 'text-[#274060]',
+    accentText: 'text-[#3A6EA5]',
+    filledBtn: 'bg-[#3A6EA5] text-white hover:bg-[#274060]',
+    outlineBtn: 'border border-[#88B8D5] bg-transparent text-[#3A6EA5] hover:bg-[#C0D5EB]',
+  },
+  english: {
+    wrap: 'border-[#A9BDD6] bg-[#D5E2F2]',
+    innerCard: 'border-[#BDD0E6] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(27,40,69,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#1B2845]/70',
+    counterStrong: 'text-[#1B2845]',
+    accentText: 'text-[#1B2845]',
+    filledBtn: 'bg-[#1B2845] text-white hover:bg-[#12192E]',
+    outlineBtn: 'border border-[#85A5C5] bg-transparent text-[#1B2845] hover:bg-[#BDD0E6]',
+  },
+}
+
 interface CurriculumTopic {
   number: number
   title: string
@@ -643,9 +700,9 @@ export default function MaterialsPage() {
           </div>
 
           {grade7Section === 'bulgarian' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{filteredBelCurriculumTopics.length}</strong> учебни теми
+            <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.bulgarian.wrap)}>
+              <p className={cn('text-sm mb-4', sectionTints.bulgarian.counter)}>
+                Намерени: <strong className={sectionTints.bulgarian.counterStrong}>{filteredBelCurriculumTopics.length}</strong> учебни теми
               </p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                 {filteredBelCurriculumTopics.map(({ topic, topicIndex }) => {
@@ -655,7 +712,11 @@ export default function MaterialsPage() {
                   return (
                     <div
                       key={topic.number}
-                      className="h-full min-h-[220px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                      className={cn(
+                        'h-full min-h-[220px] rounded-xl border p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col',
+                        sectionTints.bulgarian.innerCard,
+                        sectionTints.bulgarian.innerShadow,
+                      )}
                     >
                       <div className="flex-1 min-w-0">
                         <h3
@@ -678,14 +739,14 @@ export default function MaterialsPage() {
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
-                          className="flex-1 rounded-lg border border-[#AFC4DA] bg-transparent text-[#1E4D7B] text-sm font-bold py-3 hover:bg-[#1E4D7B]/10 transition-colors"
+                          className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.outlineBtn)}
                         >
                           Теория
                         </button>
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)}
-                          className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
+                          className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.filledBtn)}
                         >
                           Тест
                         </button>
@@ -695,21 +756,21 @@ export default function MaterialsPage() {
                 })}
               </div>
               {filteredBelCurriculumTopics.length === 0 && (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.bulgarian.counter)}>
                   <p className="font-medium mb-1">Няма намерени теми</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
               )}
             </div>
           ) : grade7Section === 'literature' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
+            <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.literature.wrap)}>
+              <p className={cn('text-sm mb-4', sectionTints.literature.counter)}>
+                Намерени: <strong className={sectionTints.literature.counterStrong}>{nvoLiteratureWorks.length}</strong> творби
               </p>
               <div className="space-y-6">
                 {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
                   <section key={theme}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                    <h3 className={cn('text-sm md:text-base font-semibold text-center mb-3', sectionTints.literature.heading)}>
                       {themeIndex + 1}. {theme}
                     </h3>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -727,7 +788,7 @@ export default function MaterialsPage() {
                             alt={work.title}
                             className="w-full h-auto object-contain rounded-lg border border-border"
                           />
-                          <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                          <p className={cn('mt-3 text-xs font-semibold', sectionTints.literature.accentText)}>Отвори произведението</p>
                         </button>
                       ))}
                     </div>
@@ -736,14 +797,14 @@ export default function MaterialsPage() {
               </div>
             </div>
           ) : grade7Section === 'math' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
+            <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.math.wrap)}>
+              <p className={cn('text-sm mb-4', sectionTints.math.counter)}>
+                Намерени: <strong className={sectionTints.math.counterStrong}>{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
               </p>
               <div className="space-y-6">
                 {math7Topics.map((topic, topicIndex) => (
                   <section key={topic.id}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                    <h3 className={cn('text-sm md:text-base font-semibold text-center mb-3', sectionTints.math.heading)}>
                       {topicIndex + 1}. {formatMathTitleText(topic.title)}
                     </h3>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -760,7 +821,7 @@ export default function MaterialsPage() {
                           <h3 className="font-semibold text-text text-sm leading-snug mb-3">
                             {formatMathTitleText(subtopic.title)}
                           </h3>
-                          <p className="mt-3 text-xs font-semibold text-primary">
+                          <p className={cn('mt-3 text-xs font-semibold', sectionTints.math.accentText)}>
                             {subtopic.problems.length} задачи →
                           </p>
                         </button>
@@ -912,8 +973,8 @@ export default function MaterialsPage() {
                         />
                         <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
                         <span className="absolute inset-0 flex items-center justify-center">
-                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#335C81] shadow-lg transition-transform group-hover:scale-105">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#335C81] text-white">
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M8 5v14l11-7z" />
                               </svg>
@@ -931,9 +992,9 @@ export default function MaterialsPage() {
                     )}
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#335C81] text-white text-sm font-semibold py-3 px-4">Текст</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#274060] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#5899E2] text-white text-sm font-semibold py-3 px-4 hover:bg-[#335C81] transition-colors">Упражнение</button>
                     {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
                       <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                     )}
@@ -1009,15 +1070,15 @@ export default function MaterialsPage() {
         </div>
 
         {selectedSection === 'literature' ? (
-          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{filteredLiteratureCount}</strong> творби
+          <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.literature.wrap)}>
+            <p className={cn('text-sm mb-4', sectionTints.literature.counter)}>
+              Намерени: <strong className={sectionTints.literature.counterStrong}>{filteredLiteratureCount}</strong> творби
             </p>
 
             <div className="space-y-6">
               {literatureGroups.map(({ theme, works }, themeIndex) => (
                 <section key={theme}>
-                  <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                  <h3 className={cn('text-sm md:text-base font-semibold text-center mb-3', sectionTints.literature.heading)}>
                     {themeIndex + 1}. {theme}
                   </h3>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1035,7 +1096,7 @@ export default function MaterialsPage() {
                           alt={work.title}
                           className="w-full h-auto object-contain rounded-lg border border-border"
                         />
-                        <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                        <p className={cn('mt-3 text-xs font-semibold', sectionTints.literature.accentText)}>Отвори произведението</p>
                       </button>
                     ))}
                   </div>
@@ -1043,7 +1104,7 @@ export default function MaterialsPage() {
               ))}
 
               {filteredLiteratureCount === 0 && (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.literature.counter)}>
                   <p className="font-medium mb-1">Няма намерени произведения</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
@@ -1051,15 +1112,15 @@ export default function MaterialsPage() {
             </div>
           </div>
         ) : selectedSection === 'bulgarian' ? (
-          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{bulgarianRulesCount}</strong> правила и термини
+          <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.bulgarian.wrap)}>
+            <p className={cn('text-sm mb-4', sectionTints.bulgarian.counter)}>
+              Намерени: <strong className={sectionTints.bulgarian.counterStrong}>{bulgarianRulesCount}</strong> правила и термини
             </p>
 
             <div className="space-y-6">
               {bulgarianRuleGroups.map((section, sectionIndex) => (
                 <section key={section.title}>
-                  <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                  <h3 className={cn('text-sm md:text-base font-semibold text-center mb-3', sectionTints.bulgarian.heading)}>
                     {sectionIndex + 1}. {section.title}
                   </h3>
 
@@ -1071,7 +1132,11 @@ export default function MaterialsPage() {
                       return (
                         <div
                           key={key}
-                          className="h-full min-h-[220px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                          className={cn(
+                            'h-full min-h-[220px] rounded-xl border p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col',
+                            sectionTints.bulgarian.innerCard,
+                            sectionTints.bulgarian.innerShadow,
+                          )}
                         >
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-semibold text-text-muted mb-1">
@@ -1088,14 +1153,14 @@ export default function MaterialsPage() {
                             <button
                               type="button"
                               onClick={() => setTheoryIndex(globalIdx)}
-                              className="flex-1 rounded-lg border border-[#AFC4DA] bg-transparent text-[#1E4D7B] text-sm font-bold py-3 hover:bg-[#1E4D7B]/10 transition-colors"
+                              className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.outlineBtn)}
                             >
                               Теория
                             </button>
                             <button
                               type="button"
                               onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
-                              className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
+                              className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.filledBtn)}
                             >
                               Тест
                             </button>
@@ -1108,7 +1173,7 @@ export default function MaterialsPage() {
               ))}
 
               {bulgarianRulesCount === 0 && (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.bulgarian.counter)}>
                   <p className="font-medium mb-1">Няма намерени правила</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
@@ -1116,23 +1181,23 @@ export default function MaterialsPage() {
             </div>
           </div>
         ) : selectedSection === 'english' ? (
-          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+          <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.english.wrap)}>
             <div className="text-center mb-5">
-              <h2 className="text-3xl font-extrabold text-[#1E4D7B] leading-none tracking-tight">Материали 12 клас</h2>
-              <p className="text-sm text-text-muted mt-1">Английски език</p>
+              <h2 className={cn('text-3xl font-extrabold leading-none tracking-tight', sectionTints.english.heading)}>Материали 12 клас</h2>
+              <p className={cn('text-sm mt-1', sectionTints.english.counter)}>Английски език</p>
             </div>
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{englishMaterialsCount}</strong> материала
+            <p className={cn('text-sm mb-4', sectionTints.english.counter)}>
+              Намерени: <strong className={sectionTints.english.counterStrong}>{englishMaterialsCount}</strong> материала
             </p>
             <div className="space-y-6">
               {filteredEnglishMaterialGroups.length > 0 ? (
                 <>
                   {filteredEnglishMaterialGroups.map((group, groupIndex) => (
                     <section key={group.title}>
-                      <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-2">
+                      <h3 className={cn('text-sm md:text-base font-semibold text-center mb-2', sectionTints.english.heading)}>
                         {groupIndex + 1}. {group.title}
                       </h3>
-                      <p className="text-xs text-text-muted text-center mb-3">{group.description}</p>
+                      <p className={cn('text-xs text-center mb-3', sectionTints.english.counter)}>{group.description}</p>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {group.items.map((item) => (
                           <div key={item.title} className="card p-4 flex flex-col gap-3">
@@ -1148,7 +1213,7 @@ export default function MaterialsPage() {
                                 <button
                                   type="button"
                                   onClick={() => openEnglishMaterial(item)}
-                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-[#BDD0E6] text-[#1B2845] hover:bg-[#D5E2F2]/30 transition-colors px-3"
                                 >
                                   Отвори
                                 </button>
@@ -1157,7 +1222,7 @@ export default function MaterialsPage() {
                                 <button
                                   type="button"
                                   onClick={() => openImageGallery(item.imageSrcs!, item.title)}
-                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-[#BDD0E6] text-[#1B2845] hover:bg-[#D5E2F2]/30 transition-colors px-3"
                                 >
                                   Отвори пример
                                 </button>
@@ -1170,7 +1235,7 @@ export default function MaterialsPage() {
                   ))}
                 </>
               ) : (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.english.counter)}>
                   <p className="font-medium mb-1">Няма намерени материали</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
@@ -1412,7 +1477,7 @@ export default function MaterialsPage() {
                     </div>
                   ) : activeWorkPanel === 'summary' ? (
                     <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                      <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
+                      <h4 className="text-sm font-semibold text-[#335C81] mb-3">„{activeWork.title}”</h4>
                       {activeWorkSummary.length > 0 ? (
                         <div className="space-y-2 text-sm leading-7 text-text">
                           {activeWorkSummary.map((sentence, index) => (
@@ -1459,8 +1524,8 @@ export default function MaterialsPage() {
                       />
                       <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
                       <span className="absolute inset-0 flex items-center justify-center">
-                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#335C81] shadow-lg transition-transform group-hover:scale-105">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#335C81] text-white">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                               <path d="M8 5v14l11-7z" />
                             </svg>
@@ -1478,10 +1543,10 @@ export default function MaterialsPage() {
                   )}
                 </div>
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                  <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#335C81] text-white text-sm font-semibold py-3 px-4">Текст</button>
                   <button type="button" onClick={() => { setActiveWorkPanel('summary'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#274060] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#5899E2] text-white text-sm font-semibold py-3 px-4 hover:bg-[#335C81] transition-colors">Упражнение</button>
                   {activeWorkPanel === 'video' && !activeWorkVideoPath && (
                     <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                   )}

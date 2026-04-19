@@ -28,6 +28,17 @@ const sectionLabels12: Record<TestSection12, string> = {
   english: 'Английски',
 }
 
+const sectionTintsByGrade = {
+  '7': {
+    bel: { wrap: 'bg-[#D9E4F2]', counter: 'text-[#274060]/70', counterStrong: 'text-[#274060]', empty: 'text-[#274060]/70' },
+    math: { wrap: 'bg-[#D6E3F0]', counter: 'text-[#274060]/70', counterStrong: 'text-[#274060]', empty: 'text-[#274060]/70' },
+  },
+  '12': {
+    bel: { wrap: 'bg-[#D9E4F2]', counter: 'text-[#274060]/70', counterStrong: 'text-[#274060]', empty: 'text-[#274060]/70' },
+    english: { wrap: 'bg-[#D5E2F2]', counter: 'text-[#1B2845]/70', counterStrong: 'text-[#1B2845]', empty: 'text-[#1B2845]/70' },
+  },
+} as const
+
 const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
   '7': {
     sample: 'Примерен НВО',
@@ -84,8 +95,12 @@ export default function TestsPage() {
     return true
   })
 
+  const tint = grade === '7'
+    ? sectionTintsByGrade['7'][selectedSection7]
+    : sectionTintsByGrade['12'][selectedSection12]
+
   return (
-    <div className="min-h-screen pb-20 md:pb-0">
+    <div className={cn('min-h-screen pb-20 md:pb-0 transition-colors', tint.wrap)}>
       <TopBar title="Тестове" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
 
@@ -154,8 +169,8 @@ export default function TestsPage() {
 
         {/* Results count */}
         {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
-          <p className="text-sm text-text-muted mb-4">
-            Намерени: <strong className="text-text">{filtered.length}</strong> теста
+          <p className={cn('text-sm mb-4', tint.counter)}>
+            Намерени: <strong className={tint.counterStrong}>{filtered.length}</strong> теста
           </p>
         )}
 
@@ -294,7 +309,7 @@ export default function TestsPage() {
         </div>
 
         {filtered.length === 0 && !(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
-          <div className="text-center py-16 text-text-muted">
+          <div className={cn('text-center py-16', tint.empty)}>
             <p className="font-medium mb-1">Няма намерени тестове</p>
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
           </div>
