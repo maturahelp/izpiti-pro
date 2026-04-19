@@ -28,6 +28,38 @@ const sectionLabels12: Record<TestSection12, string> = {
   english: 'Английски',
 }
 
+type SubjectThemeColors = {
+  accent: string
+  accentHover: string
+  soft: string
+  softHover: string
+  onSoft: string
+}
+
+const sectionTheme: Record<'bel' | 'math' | 'english', SubjectThemeColors> = {
+  bel: {
+    accent: '#8B5CF6',
+    accentHover: '#6D3FE0',
+    soft: '#F3EBFF',
+    softHover: '#E4D4FA',
+    onSoft: '#5B21B6',
+  },
+  math: {
+    accent: '#16A34A',
+    accentHover: '#15803D',
+    soft: '#E8F8EE',
+    softHover: '#D2EFDB',
+    onSoft: '#166534',
+  },
+  english: {
+    accent: '#DC2626',
+    accentHover: '#B91C1C',
+    soft: '#FFECEE',
+    softHover: '#FBD9DD',
+    onSoft: '#991B1B',
+  },
+}
+
 const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
   '7': {
     sample: 'Примерен НВО',
@@ -71,6 +103,10 @@ export default function TestsPage() {
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
   const [selectedMode, setSelectedMode] = useState<TestMode>('sample')
 
+  const activeSectionKey: 'bel' | 'math' | 'english' =
+    grade === '7' ? selectedSection7 : selectedSection12
+  const activeTheme = sectionTheme[activeSectionKey]
+
   const filtered = tests.filter((t) => {
     if (grade === '7') {
       if (t.examType !== 'nvo7') return false
@@ -93,41 +129,61 @@ export default function TestsPage() {
         <div className="mb-6 -mt-4 space-y-3">
           {grade === '7' && (
             <div className="flex flex-wrap justify-center gap-3">
-              {(Object.keys(sectionLabels7) as TestSection7[]).map((section) => (
-                <button
-                  key={section}
-                  type="button"
-                  onClick={() => setSelectedSection7(section)}
-                  className={cn(
-                    'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
-                    selectedSection7 === section
-                      ? 'bg-primary text-white'
-                      : 'bg-primary-light text-primary hover:bg-primary-light/70'
-                  )}
-                >
-                  {sectionLabels7[section]}
-                </button>
-              ))}
+              {(Object.keys(sectionLabels7) as TestSection7[]).map((section) => {
+                const theme = sectionTheme[section]
+                const isActive = selectedSection7 === section
+                return (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => setSelectedSection7(section)}
+                    style={
+                      isActive
+                        ? { backgroundColor: theme.accent, color: '#ffffff' }
+                        : { backgroundColor: theme.soft, color: theme.onSoft }
+                    }
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = isActive ? theme.accentHover : theme.softHover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = isActive ? theme.accent : theme.soft
+                    }}
+                    className="inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors"
+                  >
+                    {sectionLabels7[section]}
+                  </button>
+                )
+              })}
             </div>
           )}
 
           {grade === '12' && (
             <div className="flex flex-wrap justify-center gap-3">
-              {(Object.keys(sectionLabels12) as TestSection12[]).map((section) => (
-                <button
-                  key={section}
-                  type="button"
-                  onClick={() => setSelectedSection12(section)}
-                  className={cn(
-                    'inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors',
-                    selectedSection12 === section
-                      ? 'bg-primary text-white'
-                      : 'bg-primary-light text-primary hover:bg-primary-light/70'
-                  )}
-                >
-                  {sectionLabels12[section]}
-                </button>
-              ))}
+              {(Object.keys(sectionLabels12) as TestSection12[]).map((section) => {
+                const theme = sectionTheme[section]
+                const isActive = selectedSection12 === section
+                return (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => setSelectedSection12(section)}
+                    style={
+                      isActive
+                        ? { backgroundColor: theme.accent, color: '#ffffff' }
+                        : { backgroundColor: theme.soft, color: theme.onSoft }
+                    }
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = isActive ? theme.accentHover : theme.softHover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = isActive ? theme.accent : theme.soft
+                    }}
+                    className="inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors"
+                  >
+                    {sectionLabels12[section]}
+                  </button>
+                )
+              })}
             </div>
           )}
 
@@ -151,6 +207,12 @@ export default function TestsPage() {
             </div>
           </div>
         </div>
+
+        {/* Themed section wrapper */}
+        <div
+          className="rounded-2xl border p-4 md:p-5"
+          style={{ backgroundColor: activeTheme.soft, borderColor: activeTheme.softHover }}
+        >
 
         {/* Results count */}
         {!(grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample') && (
@@ -179,7 +241,10 @@ export default function TestsPage() {
                 <span className="badge text-xs bg-blue-100 text-blue-700">Reading</span>
                 <Link
                   href="/english-generated#reading"
-                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-primary text-white hover:bg-primary-dark"
+                  style={{ backgroundColor: activeTheme.accent }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = activeTheme.accentHover }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = activeTheme.accent }}
+                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
                 >
                   Отвори
                 </Link>
@@ -279,11 +344,18 @@ export default function TestsPage() {
                 </span>
                 <Link
                   href={getTestHref(test)}
+                  style={
+                    test.isPremium
+                      ? undefined
+                      : { backgroundColor: activeTheme.accent }
+                  }
+                  onMouseEnter={test.isPremium ? undefined : (e) => { e.currentTarget.style.backgroundColor = activeTheme.accentHover }}
+                  onMouseLeave={test.isPremium ? undefined : (e) => { e.currentTarget.style.backgroundColor = activeTheme.accent }}
                   className={cn(
                     'text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors',
                     test.isPremium
                       ? 'bg-gray-100 text-text-muted cursor-not-allowed'
-                      : 'bg-primary text-white hover:bg-primary-dark'
+                      : 'text-white'
                   )}
                 >
                   {test.status === 'completed' ? 'Повтори' : test.status === 'in_progress' ? 'Продължи' : 'Започни'}
@@ -299,6 +371,7 @@ export default function TestsPage() {
             <p className="text-sm">Промени филтрите, за да видиш резултати.</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   )

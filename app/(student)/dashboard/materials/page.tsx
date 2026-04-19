@@ -177,7 +177,7 @@ const sectionLabels: Record<MaterialSection, string> = {
 
 const grade12Sections: MaterialSection[] = ['bulgarian', 'literature', 'english']
 
-const grade12SectionTheme: Record<'bulgarian' | 'literature' | 'english', {
+type SubjectTheme = {
   accent: string
   accentHover: string
   sectionBg: string
@@ -186,37 +186,67 @@ const grade12SectionTheme: Record<'bulgarian' | 'literature' | 'english', {
   cardBorder: string
   outlineBorder: string
   outlineText: string
-}> = {
+  outlineHoverBg: string
+}
+
+const subjectTheme: Record<'bulgarian' | 'literature' | 'english' | 'math', SubjectTheme> = {
   bulgarian: {
-    accent: '#6C5CE7',
-    accentHover: '#5B4CE0',
-    sectionBg: '#F7F5FF',
-    sectionBorder: '#E1DBF7',
-    headerText: '#5B4CE0',
-    cardBorder: '#E1DBF7',
-    outlineBorder: '#D4CCF0',
-    outlineText: '#5B4CE0',
+    accent: '#8B5CF6',
+    accentHover: '#6D3FE0',
+    sectionBg: '#F3EBFF',
+    sectionBorder: '#E0D0F7',
+    headerText: '#5B21B6',
+    cardBorder: '#E0D0F7',
+    outlineBorder: '#CFBDEF',
+    outlineText: '#5B21B6',
+    outlineHoverBg: '#E4D4FA',
   },
   literature: {
     accent: '#1E4D7B',
     accentHover: '#174060',
-    sectionBg: '#F2F8FF',
-    sectionBorder: '#D7E7F7',
+    sectionBg: '#EAF4FF',
+    sectionBorder: '#D0E4F7',
     headerText: '#1E4D7B',
     cardBorder: '#BCD6EF',
     outlineBorder: '#AFC4DA',
     outlineText: '#1E4D7B',
+    outlineHoverBg: '#DDE9F6',
   },
   english: {
-    accent: '#B83A4A',
-    accentHover: '#9F2F3D',
-    sectionBg: '#FCF3F4',
-    sectionBorder: '#F1D4D8',
-    headerText: '#8D2A38',
-    cardBorder: '#F1D4D8',
-    outlineBorder: '#E6BEC3',
-    outlineText: '#8D2A38',
+    accent: '#DC2626',
+    accentHover: '#B91C1C',
+    sectionBg: '#FFECEE',
+    sectionBorder: '#F7CBD0',
+    headerText: '#991B1B',
+    cardBorder: '#F7CBD0',
+    outlineBorder: '#F1B4BB',
+    outlineText: '#991B1B',
+    outlineHoverBg: '#FBD9DD',
   },
+  math: {
+    accent: '#16A34A',
+    accentHover: '#15803D',
+    sectionBg: '#E8F8EE',
+    sectionBorder: '#C3E9CF',
+    headerText: '#166534',
+    cardBorder: '#C3E9CF',
+    outlineBorder: '#A9DCB8',
+    outlineText: '#166534',
+    outlineHoverBg: '#D2EFDB',
+  },
+}
+
+// Backwards-compatible alias — existing references read via grade12SectionTheme.
+const grade12SectionTheme = subjectTheme
+
+function stripRomanNumeralPrefix(label: string): string {
+  return label.replace(/^[IVXІVХ]+\.\s*/i, '')
+}
+
+function sentenceCase(label: string): string {
+  if (!label) return label
+  const lower = label.toLocaleLowerCase('bg-BG')
+  return lower.charAt(0).toLocaleUpperCase('bg-BG') + lower.slice(1)
 }
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
@@ -650,21 +680,28 @@ export default function MaterialsPage() {
         <TopBar title="Материали" />
         <div className="p-4 md:p-6 max-w-5xl mx-auto">
           <div className="mb-4 flex flex-wrap justify-center gap-2">
-            {grade7Sections.map((section) => (
-              <button
-                key={section}
-                type="button"
-                onClick={() => setGrade7Section(section)}
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
-                  grade7Section === section
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-white text-text border-border hover:bg-primary-light'
-                )}
-              >
-                {grade7SectionLabels[section]}
-              </button>
-            ))}
+            {grade7Sections.map((section) => {
+              const theme = subjectTheme[section]
+              const isActive = grade7Section === section
+              return (
+                <button
+                  key={section}
+                  type="button"
+                  onClick={() => setGrade7Section(section)}
+                  style={
+                    isActive
+                      ? { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
+                      : undefined
+                  }
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                    isActive ? '' : 'bg-white text-text border-border hover:bg-slate-50'
+                  )}
+                >
+                  {grade7SectionLabels[section]}
+                </button>
+              )
+            })}
           </div>
           <div className="flex justify-center md:justify-end mb-4">
             <label className="relative w-full max-w-[180px]">
@@ -685,7 +722,13 @@ export default function MaterialsPage() {
           </div>
 
           {grade7Section === 'bulgarian' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <div
+              className="rounded-2xl border p-4 md:p-5"
+              style={{
+                backgroundColor: subjectTheme.bulgarian.sectionBg,
+                borderColor: subjectTheme.bulgarian.sectionBorder,
+              }}
+            >
               <p className="text-sm text-text-muted mb-4">
                 Намерени: <strong className="text-text">{filteredBelCurriculumTopics.length}</strong> учебни теми
               </p>
@@ -697,7 +740,8 @@ export default function MaterialsPage() {
                   return (
                     <div
                       key={topic.number}
-                      className="h-full min-h-[220px] rounded-sm border border-[#BCD6EF] bg-[#F2F8FF] p-5 text-left shadow-[8px_8px_0_rgba(30,77,123,0.06)] transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                      className="h-full min-h-[220px] rounded-sm border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                      style={{ borderColor: subjectTheme.bulgarian.cardBorder }}
                     >
                       <div className="flex-1 min-w-0">
                         <h3
@@ -712,7 +756,10 @@ export default function MaterialsPage() {
                         >
                           {subtitle || '\u00A0'}
                         </p>
-                        <p className="font-sans text-sm font-semibold text-primary/70 tracking-normal mb-4">
+                        <p
+                          className="font-sans text-sm font-semibold tracking-normal mb-4"
+                          style={{ color: subjectTheme.bulgarian.accent, opacity: 0.8 }}
+                        >
                           Тема #{topic.number}
                         </p>
                       </div>
@@ -720,14 +767,26 @@ export default function MaterialsPage() {
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
-                          className="flex-1 rounded-lg border border-[#AFC4DA] bg-transparent text-[#1E4D7B] text-sm font-bold py-3 hover:bg-[#1E4D7B]/10 transition-colors"
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
+                          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
+                          className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
+                          style={{
+                            borderColor: subjectTheme.bulgarian.outlineBorder,
+                            color: subjectTheme.bulgarian.outlineText,
+                          }}
                         >
                           Теория
                         </button>
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)}
-                          className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
+                          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
+                          className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
+                          style={{
+                            borderColor: subjectTheme.bulgarian.outlineBorder,
+                            color: subjectTheme.bulgarian.outlineText,
+                          }}
                         >
                           Тест
                         </button>
@@ -744,15 +803,24 @@ export default function MaterialsPage() {
               )}
             </div>
           ) : grade7Section === 'literature' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <div
+              className="rounded-2xl border p-4 md:p-5"
+              style={{
+                backgroundColor: subjectTheme.literature.sectionBg,
+                borderColor: subjectTheme.literature.sectionBorder,
+              }}
+            >
               <p className="text-sm text-text-muted mb-4">
                 Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
               </p>
               <div className="space-y-6">
                 {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
                   <section key={theme}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                      {themeIndex + 1}. {theme}
+                    <h3
+                      className="text-sm md:text-base font-semibold text-center mb-3"
+                      style={{ color: subjectTheme.literature.headerText }}
+                    >
+                      {themeIndex + 1}. {stripRomanNumeralPrefix(theme)}
                     </h3>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {works.map((work) => (
@@ -778,14 +846,23 @@ export default function MaterialsPage() {
               </div>
             </div>
           ) : grade7Section === 'math' ? (
-            <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+            <div
+              className="rounded-2xl border p-4 md:p-5"
+              style={{
+                backgroundColor: subjectTheme.math.sectionBg,
+                borderColor: subjectTheme.math.sectionBorder,
+              }}
+            >
               <p className="text-sm text-text-muted mb-4">
                 Намерени: <strong className="text-text">{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
               </p>
               <div className="space-y-6">
                 {math7Topics.map((topic, topicIndex) => (
                   <section key={topic.id}>
-                    <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
+                    <h3
+                      className="text-sm md:text-base font-semibold text-center mb-3"
+                      style={{ color: subjectTheme.math.headerText }}
+                    >
                       {topicIndex + 1}. {formatMathTitleText(topic.title)}
                     </h3>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -795,6 +872,7 @@ export default function MaterialsPage() {
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/math-7-topics?subtopic=${subtopic.id}`)}
                           className="card p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                          style={{ borderColor: subjectTheme.math.cardBorder }}
                         >
                           <p className="text-xs font-semibold text-text-muted mb-1">
                             Подтема #{subtopicIndex + 1}
@@ -802,7 +880,10 @@ export default function MaterialsPage() {
                           <h3 className="font-semibold text-text text-sm leading-snug mb-3">
                             {formatMathTitleText(subtopic.title)}
                           </h3>
-                          <p className="mt-3 text-xs font-semibold text-primary">
+                          <p
+                            className="mt-3 text-xs font-semibold"
+                            style={{ color: subjectTheme.math.headerText }}
+                          >
                             {subtopic.problems.length} задачи →
                           </p>
                         </button>
@@ -1055,7 +1136,13 @@ export default function MaterialsPage() {
         </div>
 
         {selectedSection === 'literature' ? (
-          <div className="rounded-2xl border border-[#D7E7F7] bg-[#F2F8FF] p-4 md:p-5">
+          <div
+            className="rounded-2xl border p-4 md:p-5"
+            style={{
+              backgroundColor: subjectTheme.literature.sectionBg,
+              borderColor: subjectTheme.literature.sectionBorder,
+            }}
+          >
             <p className="text-sm text-text-muted mb-4">
               Намерени: <strong className="text-text">{filteredLiteratureCount}</strong> творби
             </p>
@@ -1063,8 +1150,11 @@ export default function MaterialsPage() {
             <div className="space-y-6">
               {literatureGroups.map(({ theme, works }, themeIndex) => (
                 <section key={theme}>
-                  <h3 className="text-sm md:text-base font-semibold text-[#1E4D7B] text-center mb-3">
-                    {themeIndex + 1}. {theme}
+                  <h3
+                    className="text-sm md:text-base font-semibold text-center mb-3"
+                    style={{ color: subjectTheme.literature.headerText }}
+                  >
+                    {themeIndex + 1}. {stripRomanNumeralPrefix(theme)}
                   </h3>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {works.map((work) => (
@@ -1109,13 +1199,15 @@ export default function MaterialsPage() {
             </p>
 
             <div className="space-y-6">
-              {bulgarianRuleGroups.map((section, sectionIndex) => (
+              {bulgarianRuleGroups.map((section, sectionIndex) => {
+                const sectionLabel = sentenceCase(section.title)
+                return (
                 <section key={section.title}>
                   <h3
                     className="text-sm md:text-base font-semibold text-center mb-3"
-                    style={{ color: grade12SectionTheme.bulgarian.headerText }}
+                    style={{ color: subjectTheme.bulgarian.headerText }}
                   >
-                    {sectionIndex + 1}. {section.title}
+                    {sectionIndex + 1}. {sectionLabel}
                   </h3>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
@@ -1127,18 +1219,18 @@ export default function MaterialsPage() {
                         <div
                           key={key}
                           className="h-full min-h-[220px] rounded-sm border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
-                          style={{ borderColor: grade12SectionTheme.bulgarian.cardBorder }}
+                          style={{ borderColor: subjectTheme.bulgarian.cardBorder }}
                         >
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-semibold text-text-muted mb-1">
-                              {section.title}
+                              {sectionLabel}
                             </p>
                             <h3 className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-3 break-words">
                               {item}
                             </h3>
                             <p
                               className="font-sans text-sm font-semibold tracking-normal mb-4"
-                              style={{ color: grade12SectionTheme.bulgarian.accent, opacity: 0.8 }}
+                              style={{ color: subjectTheme.bulgarian.accent, opacity: 0.8 }}
                             >
                               Правило #{itemIndex + 1}
                             </p>
@@ -1147,10 +1239,12 @@ export default function MaterialsPage() {
                             <button
                               type="button"
                               onClick={() => setTheoryIndex(globalIdx)}
-                              className="flex-1 rounded-lg border bg-transparent text-sm font-bold py-3 transition-colors"
+                              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
+                              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
+                              className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
                               style={{
-                                borderColor: grade12SectionTheme.bulgarian.outlineBorder,
-                                color: grade12SectionTheme.bulgarian.outlineText,
+                                borderColor: subjectTheme.bulgarian.outlineBorder,
+                                color: subjectTheme.bulgarian.outlineText,
                               }}
                             >
                               Теория
@@ -1158,8 +1252,13 @@ export default function MaterialsPage() {
                             <button
                               type="button"
                               onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
-                              className="flex-1 rounded-lg text-white text-sm font-bold py-3 transition-colors"
-                              style={{ backgroundColor: grade12SectionTheme.bulgarian.accent }}
+                              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
+                              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
+                              className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
+                              style={{
+                                borderColor: subjectTheme.bulgarian.outlineBorder,
+                                color: subjectTheme.bulgarian.outlineText,
+                              }}
                             >
                               Тест
                             </button>
@@ -1169,7 +1268,7 @@ export default function MaterialsPage() {
                     })}
                   </div>
                 </section>
-              ))}
+              )})}
 
               {bulgarianRulesCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
@@ -1338,7 +1437,6 @@ export default function MaterialsPage() {
           >
             <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
               <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">12. клас · Английски</p>
                 <h3 className="text-lg md:text-xl font-bold text-text">{activeEnglishMaterial.title}</h3>
                 <p className="text-sm text-text-muted mt-1">{activeEnglishMaterial.description}</p>
               </div>
