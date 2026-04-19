@@ -78,34 +78,44 @@ const sectionTints: Record<MaterialSection, {
   innerShadow: string
   heading: string
   ruleBorder: string
+  counter: string
+  counterStrong: string
 }> = {
   bulgarian: {
-    wrap: 'border-violet-200 bg-violet-50',
-    innerCard: 'border-violet-200 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(139,92,246,0.08)]',
-    heading: 'text-violet-800',
-    ruleBorder: 'border-violet-200',
+    wrap: 'border-[#1B2845] bg-[#274060]',
+    innerCard: 'border-white/10 bg-white',
+    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
+    heading: 'text-white',
+    ruleBorder: 'border-white/20',
+    counter: 'text-white/80',
+    counterStrong: 'text-white',
   },
   literature: {
-    wrap: 'border-sky-200 bg-sky-50',
-    innerCard: 'border-sky-200 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(59,130,246,0.08)]',
-    heading: 'text-sky-800',
-    ruleBorder: 'border-sky-200',
+    wrap: 'border-[#1B2845] bg-[#335C81]',
+    innerCard: 'border-white/10 bg-white',
+    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
+    heading: 'text-white',
+    ruleBorder: 'border-white/20',
+    counter: 'text-white/80',
+    counterStrong: 'text-white',
   },
   math: {
-    wrap: 'border-emerald-200 bg-emerald-50',
-    innerCard: 'border-emerald-200 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(16,185,129,0.08)]',
-    heading: 'text-emerald-800',
-    ruleBorder: 'border-emerald-200',
+    wrap: 'border-[#274060] bg-[#5899E2]',
+    innerCard: 'border-white/10 bg-white',
+    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
+    heading: 'text-white',
+    ruleBorder: 'border-white/20',
+    counter: 'text-white/90',
+    counterStrong: 'text-white',
   },
   english: {
-    wrap: 'border-rose-200 bg-rose-50',
-    innerCard: 'border-rose-200 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(244,63,94,0.08)]',
-    heading: 'text-rose-800',
-    ruleBorder: 'border-rose-200',
+    wrap: 'border-[#12192E] bg-[#1B2845]',
+    innerCard: 'border-white/10 bg-white',
+    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.22)]',
+    heading: 'text-white',
+    ruleBorder: 'border-white/20',
+    counter: 'text-white/80',
+    counterStrong: 'text-white',
   },
 }
 
@@ -680,8 +690,8 @@ export default function MaterialsPage() {
 
           {grade7Section === 'bulgarian' ? (
             <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.bulgarian.wrap)}>
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{filteredBelCurriculumTopics.length}</strong> учебни теми
+              <p className={cn('text-sm mb-4', sectionTints.bulgarian.counter)}>
+                Намерени: <strong className={sectionTints.bulgarian.counterStrong}>{filteredBelCurriculumTopics.length}</strong> учебни теми
               </p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                 {filteredBelCurriculumTopics.map(({ topic, topicIndex }) => {
@@ -743,8 +753,8 @@ export default function MaterialsPage() {
             </div>
           ) : grade7Section === 'literature' ? (
             <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.literature.wrap)}>
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
+              <p className={cn('text-sm mb-4', sectionTints.literature.counter)}>
+                Намерени: <strong className={sectionTints.literature.counterStrong}>{nvoLiteratureWorks.length}</strong> творби
               </p>
               <div className="space-y-6">
                 {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
@@ -777,8 +787,8 @@ export default function MaterialsPage() {
             </div>
           ) : grade7Section === 'math' ? (
             <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.math.wrap)}>
-              <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
+              <p className={cn('text-sm mb-4', sectionTints.math.counter)}>
+                Намерени: <strong className={sectionTints.math.counterStrong}>{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
               </p>
               <div className="space-y-6">
                 {math7Topics.map((topic, topicIndex) => (
@@ -1041,8 +1051,8 @@ export default function MaterialsPage() {
 
         {selectedSection === 'literature' ? (
           <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.literature.wrap)}>
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{filteredLiteratureCount}</strong> творби
+            <p className={cn('text-sm mb-4', sectionTints.literature.counter)}>
+              Намерени: <strong className={sectionTints.literature.counterStrong}>{filteredLiteratureCount}</strong> творби
             </p>
 
             <div className="space-y-6">
@@ -1083,8 +1093,8 @@ export default function MaterialsPage() {
           </div>
         ) : selectedSection === 'bulgarian' ? (
           <div className={cn('rounded-2xl border p-4 md:p-5', sectionTints.bulgarian.wrap)}>
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{bulgarianRulesCount}</strong> правила и термини
+            <p className={cn('text-sm mb-4', sectionTints.bulgarian.counter)}>
+              Намерени: <strong className={sectionTints.bulgarian.counterStrong}>{bulgarianRulesCount}</strong> правила и термини
             </p>
 
             <div className="space-y-6">
@@ -1156,8 +1166,8 @@ export default function MaterialsPage() {
               <h2 className={cn('text-3xl font-extrabold leading-none tracking-tight', sectionTints.english.heading)}>Материали 12 клас</h2>
               <p className="text-sm text-text-muted mt-1">Английски език</p>
             </div>
-            <p className="text-sm text-text-muted mb-4">
-              Намерени: <strong className="text-text">{englishMaterialsCount}</strong> материала
+            <p className={cn('text-sm mb-4', sectionTints.english.counter)}>
+              Намерени: <strong className={sectionTints.english.counterStrong}>{englishMaterialsCount}</strong> материала
             </p>
             <div className="space-y-6">
               {filteredEnglishMaterialGroups.length > 0 ? (
