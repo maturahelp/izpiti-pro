@@ -745,7 +745,7 @@ export default function MaterialsPage() {
                 })}
               </div>
               {filteredBelCurriculumTopics.length === 0 && (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.bulgarian.counter)}>
                   <p className="font-medium mb-1">Няма намерени теми</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
@@ -1084,7 +1084,7 @@ export default function MaterialsPage() {
               ))}
 
               {filteredLiteratureCount === 0 && (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.literature.counter)}>
                   <p className="font-medium mb-1">Няма намерени произведения</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
@@ -1153,7 +1153,7 @@ export default function MaterialsPage() {
               ))}
 
               {bulgarianRulesCount === 0 && (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.bulgarian.counter)}>
                   <p className="font-medium mb-1">Няма намерени правила</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
@@ -1215,7 +1215,7 @@ export default function MaterialsPage() {
                   ))}
                 </>
               ) : (
-                <div className="text-center py-10 text-text-muted">
+                <div className={cn('text-center py-10', sectionTints.english.counter)}>
                   <p className="font-medium mb-1">Няма намерени материали</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
