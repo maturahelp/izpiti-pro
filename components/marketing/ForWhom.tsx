@@ -1,7 +1,7 @@
 const valueBullets = [
   {
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5899E2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
         <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
       </svg>
@@ -49,7 +49,7 @@ export function ForWhom() {
 
           {/* Value prop */}
           <div>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4" style={{ color: '#1e2a4a' }}>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4" style={{ color: '#1B2845' }}>
               От първия ден учиш по-спокойно
             </h2>
             <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-6 max-w-md">
@@ -63,7 +63,7 @@ export function ForWhom() {
                     {b.icon}
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold" style={{ color: '#1e2a4a' }}>{b.title}</h4>
+                    <h4 className="text-sm font-bold" style={{ color: '#1B2845' }}>{b.title}</h4>
                     <p className="text-xs text-gray-400">{b.sub}</p>
                   </div>
                 </div>
@@ -72,7 +72,7 @@ export function ForWhom() {
             <a
               href="#how-it-works"
               className="inline-block text-white font-semibold px-8 py-3 rounded-full text-sm transition-all hover:shadow-lg hover:shadow-blue-200"
-              style={{ background: '#3b82f6' }}
+              style={{ background: '#5899E2' }}
             >
               Виж как работи
             </a>

@@ -943,8 +943,8 @@ export default function MaterialsPage() {
                         />
                         <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
                         <span className="absolute inset-0 flex items-center justify-center">
-                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#274060] shadow-lg transition-transform group-hover:scale-105">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#274060] text-white">
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M8 5v14l11-7z" />
                               </svg>
@@ -963,8 +963,8 @@ export default function MaterialsPage() {
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                     <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#6366f1] text-white text-sm font-semibold py-3 px-4 hover:bg-[#4f46e5] transition-colors">Упражнение</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#274060] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#5899E2] text-white text-sm font-semibold py-3 px-4 hover:bg-[#335C81] transition-colors">Упражнение</button>
                     {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
                       <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                     )}
@@ -1447,7 +1447,7 @@ export default function MaterialsPage() {
                     </div>
                   ) : activeWorkPanel === 'summary' ? (
                     <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                      <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
+                      <h4 className="text-sm font-semibold text-[#274060] mb-3">„{activeWork.title}“</h4>
                       {activeWorkSummary.length > 0 ? (
                         <div className="space-y-2 text-sm leading-7 text-text">
                           {activeWorkSummary.map((sentence, index) => (
@@ -1485,8 +1485,8 @@ export default function MaterialsPage() {
                       />
                       <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
                       <span className="absolute inset-0 flex items-center justify-center">
-                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#1E4D7B] shadow-lg transition-transform group-hover:scale-105">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E4D7B] text-white">
+                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#274060] shadow-lg transition-transform group-hover:scale-105">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#274060] text-white">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                               <path d="M8 5v14l11-7z" />
                             </svg>
@@ -1506,8 +1506,8 @@ export default function MaterialsPage() {
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                   <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
                   <button type="button" onClick={() => { setActiveWorkPanel('summary'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#6366f1] text-white text-sm font-semibold py-3 px-4 hover:bg-[#4f46e5] transition-colors">Упражнение</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#274060] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#5899E2] text-white text-sm font-semibold py-3 px-4 hover:bg-[#335C81] transition-colors">Упражнение</button>
                   {activeWorkPanel === 'video' && !activeWorkVideoPath && (
                     <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                   )}
