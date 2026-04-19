@@ -30,12 +30,12 @@ const sectionLabels12: Record<TestSection12, string> = {
 
 const sectionTintsByGrade = {
   '7': {
-    bel: { wrap: 'bg-[#274060]', counter: 'text-white/80', counterStrong: 'text-white', empty: 'text-white/80' },
-    math: { wrap: 'bg-[#5899E2]', counter: 'text-white/90', counterStrong: 'text-white', empty: 'text-white/90' },
+    bel: { wrap: 'bg-[#D9E4F2]', counter: 'text-[#274060]/70', counterStrong: 'text-[#274060]', empty: 'text-[#274060]/70' },
+    math: { wrap: 'bg-[#D6E3F0]', counter: 'text-[#274060]/70', counterStrong: 'text-[#274060]', empty: 'text-[#274060]/70' },
   },
   '12': {
-    bel: { wrap: 'bg-[#335C81]', counter: 'text-white/80', counterStrong: 'text-white', empty: 'text-white/80' },
-    english: { wrap: 'bg-[#1B2845]', counter: 'text-white/80', counterStrong: 'text-white', empty: 'text-white/80' },
+    bel: { wrap: 'bg-[#D9E4F2]', counter: 'text-[#274060]/70', counterStrong: 'text-[#274060]', empty: 'text-[#274060]/70' },
+    english: { wrap: 'bg-[#D5E2F2]', counter: 'text-[#1B2845]/70', counterStrong: 'text-[#1B2845]', empty: 'text-[#1B2845]/70' },
   },
 } as const
 

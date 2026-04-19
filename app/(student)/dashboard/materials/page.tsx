@@ -79,38 +79,53 @@ const sectionTints: Record<MaterialSection, {
   heading: string
   counter: string
   counterStrong: string
+  accentText: string
+  filledBtn: string
+  outlineBtn: string
 }> = {
   bulgarian: {
-    wrap: 'border-[#1B2845] bg-[#274060]',
-    innerCard: 'border-white/10 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
-    heading: 'text-white',
-    counter: 'text-white/80',
-    counterStrong: 'text-white',
+    wrap: 'border-[#B5CBE4] bg-[#D9E4F2]',
+    innerCard: 'border-[#C8DAF0] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(39,64,96,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#274060]/70',
+    counterStrong: 'text-[#274060]',
+    accentText: 'text-[#274060]',
+    filledBtn: 'bg-[#274060] text-white hover:bg-[#1B2845]',
+    outlineBtn: 'border border-[#8AAACF] bg-transparent text-[#274060] hover:bg-[#C8DAF0]',
   },
   literature: {
-    wrap: 'border-[#1B2845] bg-[#335C81]',
-    innerCard: 'border-white/10 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
-    heading: 'text-white',
-    counter: 'text-white/80',
-    counterStrong: 'text-white',
+    wrap: 'border-[#AECCE7] bg-[#DCE8F7]',
+    innerCard: 'border-[#C3DAF0] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(51,92,129,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#335C81]/70',
+    counterStrong: 'text-[#335C81]',
+    accentText: 'text-[#335C81]',
+    filledBtn: 'bg-[#335C81] text-white hover:bg-[#274060]',
+    outlineBtn: 'border border-[#8BBAD9] bg-transparent text-[#335C81] hover:bg-[#C3DAF0]',
   },
   math: {
-    wrap: 'border-[#274060] bg-[#5899E2]',
-    innerCard: 'border-white/10 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.18)]',
-    heading: 'text-white',
-    counter: 'text-white/90',
-    counterStrong: 'text-white',
+    wrap: 'border-[#ADC9E2] bg-[#D6E3F0]',
+    innerCard: 'border-[#C0D5EB] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(39,64,96,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#274060]/70',
+    counterStrong: 'text-[#274060]',
+    accentText: 'text-[#3A6EA5]',
+    filledBtn: 'bg-[#3A6EA5] text-white hover:bg-[#274060]',
+    outlineBtn: 'border border-[#88B8D5] bg-transparent text-[#3A6EA5] hover:bg-[#C0D5EB]',
   },
   english: {
-    wrap: 'border-[#12192E] bg-[#1B2845]',
-    innerCard: 'border-white/10 bg-white',
-    innerShadow: 'shadow-[8px_8px_0_rgba(0,0,0,0.22)]',
-    heading: 'text-white',
-    counter: 'text-white/80',
-    counterStrong: 'text-white',
+    wrap: 'border-[#A9BDD6] bg-[#D5E2F2]',
+    innerCard: 'border-[#BDD0E6] bg-white',
+    innerShadow: 'shadow-[4px_4px_0_rgba(27,40,69,0.08)]',
+    heading: 'text-[#1B2845]',
+    counter: 'text-[#1B2845]/70',
+    counterStrong: 'text-[#1B2845]',
+    accentText: 'text-[#1B2845]',
+    filledBtn: 'bg-[#1B2845] text-white hover:bg-[#12192E]',
+    outlineBtn: 'border border-[#85A5C5] bg-transparent text-[#1B2845] hover:bg-[#BDD0E6]',
   },
 }
 
@@ -723,14 +738,14 @@ export default function MaterialsPage() {
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
-                          className="flex-1 rounded-lg border border-violet-300 bg-transparent text-violet-800 text-sm font-bold py-3 hover:bg-violet-100 transition-colors"
+                          className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.outlineBtn)}
                         >
                           Теория
                         </button>
                         <button
                           type="button"
                           onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)}
-                          className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
+                          className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.filledBtn)}
                         >
                           Тест
                         </button>
@@ -772,7 +787,7 @@ export default function MaterialsPage() {
                             alt={work.title}
                             className="w-full h-auto object-contain rounded-lg border border-border"
                           />
-                          <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                          <p className={cn('mt-3 text-xs font-semibold', sectionTints.literature.accentText)}>Отвори произведението</p>
                         </button>
                       ))}
                     </div>
@@ -805,7 +820,7 @@ export default function MaterialsPage() {
                           <h3 className="font-semibold text-text text-sm leading-snug mb-3">
                             {formatMathTitleText(subtopic.title)}
                           </h3>
-                          <p className="mt-3 text-xs font-semibold text-primary">
+                          <p className={cn('mt-3 text-xs font-semibold', sectionTints.math.accentText)}>
                             {subtopic.problems.length} задачи →
                           </p>
                         </button>
@@ -948,8 +963,8 @@ export default function MaterialsPage() {
                         />
                         <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
                         <span className="absolute inset-0 flex items-center justify-center">
-                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#274060] shadow-lg transition-transform group-hover:scale-105">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#274060] text-white">
+                          <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#335C81] shadow-lg transition-transform group-hover:scale-105">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#335C81] text-white">
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M8 5v14l11-7z" />
                               </svg>
@@ -967,7 +982,7 @@ export default function MaterialsPage() {
                     )}
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                    <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#335C81] text-white text-sm font-semibold py-3 px-4">Текст</button>
                     <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#274060] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
                     <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#5899E2] text-white text-sm font-semibold py-3 px-4 hover:bg-[#335C81] transition-colors">Упражнение</button>
                     {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
@@ -1071,7 +1086,7 @@ export default function MaterialsPage() {
                           alt={work.title}
                           className="w-full h-auto object-contain rounded-lg border border-border"
                         />
-                        <p className="mt-3 text-xs font-semibold text-primary">Отвори произведението</p>
+                        <p className={cn('mt-3 text-xs font-semibold', sectionTints.literature.accentText)}>Отвори произведението</p>
                       </button>
                     ))}
                   </div>
@@ -1128,14 +1143,14 @@ export default function MaterialsPage() {
                             <button
                               type="button"
                               onClick={() => setTheoryIndex(globalIdx)}
-                              className="flex-1 rounded-lg border border-violet-300 bg-transparent text-violet-800 text-sm font-bold py-3 hover:bg-violet-100 transition-colors"
+                              className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.outlineBtn)}
                             >
                               Теория
                             </button>
                             <button
                               type="button"
                               onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
-                              className="flex-1 rounded-lg bg-primary text-white text-sm font-bold py-3 hover:bg-primary-dark transition-colors"
+                              className={cn('flex-1 rounded-lg text-sm font-bold py-3 transition-colors', sectionTints.bulgarian.filledBtn)}
                             >
                               Тест
                             </button>
@@ -1188,7 +1203,7 @@ export default function MaterialsPage() {
                                 <button
                                   type="button"
                                   onClick={() => openEnglishMaterial(item)}
-                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-[#BDD0E6] text-[#1B2845] hover:bg-[#D5E2F2]/30 transition-colors px-3"
                                 >
                                   Отвори
                                 </button>
@@ -1197,7 +1212,7 @@ export default function MaterialsPage() {
                                 <button
                                   type="button"
                                   onClick={() => openImageGallery(item.imageSrcs!, item.title)}
-                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-border text-primary hover:bg-primary/5 transition-colors px-3"
+                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border border-[#BDD0E6] text-[#1B2845] hover:bg-[#D5E2F2]/30 transition-colors px-3"
                                 >
                                   Отвори пример
                                 </button>
@@ -1452,7 +1467,7 @@ export default function MaterialsPage() {
                     </div>
                   ) : activeWorkPanel === 'summary' ? (
                     <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                      <h4 className="text-sm font-semibold text-[#274060] mb-3">„{activeWork.title}“</h4>
+                      <h4 className="text-sm font-semibold text-[#335C81] mb-3">„{activeWork.title}”</h4>
                       {activeWorkSummary.length > 0 ? (
                         <div className="space-y-2 text-sm leading-7 text-text">
                           {activeWorkSummary.map((sentence, index) => (
@@ -1490,8 +1505,8 @@ export default function MaterialsPage() {
                       />
                       <span className="absolute inset-0 bg-slate-950/10 transition-colors group-hover:bg-slate-950/20" />
                       <span className="absolute inset-0 flex items-center justify-center">
-                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#274060] shadow-lg transition-transform group-hover:scale-105">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#274060] text-white">
+                        <span className="inline-flex items-center gap-3 rounded-full bg-white/95 px-5 py-3 text-sm font-semibold text-[#335C81] shadow-lg transition-transform group-hover:scale-105">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#335C81] text-white">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                               <path d="M8 5v14l11-7z" />
                             </svg>
@@ -1509,7 +1524,7 @@ export default function MaterialsPage() {
                   )}
                 </div>
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                  <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                  <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#335C81] text-white text-sm font-semibold py-3 px-4">Текст</button>
                   <button type="button" onClick={() => { setActiveWorkPanel('summary'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
                   <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#274060] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
                   <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#5899E2] text-white text-sm font-semibold py-3 px-4 hover:bg-[#335C81] transition-colors">Упражнение</button>
