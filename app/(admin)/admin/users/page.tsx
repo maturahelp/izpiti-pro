@@ -33,9 +33,13 @@ export default function AdminUsersPage() {
       <AdminTopBar title="Потребители" />
       <div className="p-6 max-w-7xl mx-auto">
 
+        <div className="mb-5 px-4 py-3 rounded-xl border border-amber-200 bg-amber-50 text-[13px] text-amber-900">
+          <span className="font-semibold">Preview — </span>
+          Страницата показва примерни данни. CRUD операциите (добавяне, редакция, блокиране) предстоят.
+        </div>
+
         <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
           <p className="text-sm text-text-muted">{adminUsers.length} потребители общо</p>
-          <button className="btn-primary text-sm">Добави потребител</button>
         </div>
 
         {/* Filters */}
@@ -78,7 +82,6 @@ export default function AdminUsersPage() {
                   <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Тестове</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Резултат</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Статус</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Действия</th>
                 </tr>
               </thead>
               <tbody>
@@ -120,13 +123,6 @@ export default function AdminUsersPage() {
                       <Badge variant={user.isActive ? 'success' : 'neutral'}>
                         {user.isActive ? 'Активен' : 'Неактивен'}
                       </Badge>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <button className="text-xs text-primary hover:underline font-medium">Виж</button>
-                        <button className="text-xs text-text-muted hover:text-text">Редактирай</button>
-                        <button className="text-xs text-danger hover:underline">Блокирай</button>
-                      </div>
                     </td>
                   </tr>
                 ))}

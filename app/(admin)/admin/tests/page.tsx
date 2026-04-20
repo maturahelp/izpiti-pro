@@ -30,9 +30,13 @@ export default function AdminTestsPage() {
     <div className="min-h-screen">
       <AdminTopBar title="Управление на тестове" />
       <div className="p-6 max-w-7xl mx-auto">
+        <div className="mb-5 px-4 py-3 rounded-xl border border-amber-200 bg-amber-50 text-[13px] text-amber-900">
+          <span className="font-semibold">Preview — </span>
+          Страницата показва каталога на тестовете. CRUD операциите (добавяне, редакция, дублиране, изтриване) предстоят.
+        </div>
+
         <div className="flex items-center justify-between gap-3 mb-5">
           <p className="text-sm text-text-muted">{tests.length} теста общо</p>
-          <button className="btn-primary text-sm">Добави тест</button>
         </div>
 
         <div className="card p-4 mb-5">
@@ -68,7 +72,6 @@ export default function AdminTestsPage() {
                   <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Въпроси</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Решения</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Достъп</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Действия</th>
                 </tr>
               </thead>
               <tbody>
@@ -94,13 +97,6 @@ export default function AdminTestsPage() {
                       <Badge variant={test.isPremium ? 'amber' : 'success'}>
                         {test.isPremium ? 'Премиум' : 'Безплатен'}
                       </Badge>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <button className="text-xs text-primary hover:underline font-medium">Редактирай</button>
-                        <button className="text-xs text-text-muted hover:text-text">Дублирай</button>
-                        <button className="text-xs text-danger hover:underline">Изтрий</button>
-                      </div>
                     </td>
                   </tr>
                 ))}
