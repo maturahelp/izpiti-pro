@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
 import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import { useGrade } from '@/lib/grade-context'
+import { createClient } from '@/lib/supabase/client'
 import {
   generatedEnglishReadingQuestionCount,
   generatedEnglishWritingQuestionCount,
@@ -101,6 +102,31 @@ export default function TestsPage() {
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>('bel')
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>('bel')
   const [selectedMode, setSelectedMode] = useState<TestMode>('sample')
+  const [isPremiumUser, setIsPremiumUser] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    const supabase = createClient()
+    ;(async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      if (!user) return
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('plan, plan_expires_at')
+        .eq('id', user.id)
+        .single()
+      if (cancelled) return
+      const active =
+        profile?.plan === 'premium' &&
+        (!profile?.plan_expires_at || new Date(profile.plan_expires_at) > new Date())
+      setIsPremiumUser(Boolean(active))
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const activeSectionKey: 'bel' | 'math' | 'english' =
     grade === '7' ? selectedSection7 : selectedSection12
@@ -361,24 +387,24 @@ export default function TestsPage() {
               </div>
 
               <div className="flex justify-end">
-                <Link
-                  href={getTestHref(test)}
-                  style={
-                    test.isPremium
-                      ? undefined
-                      : { backgroundColor: activeTheme.accent }
-                  }
-                  onMouseEnter={test.isPremium ? undefined : (e) => { e.currentTarget.style.backgroundColor = activeTheme.accentHover }}
-                  onMouseLeave={test.isPremium ? undefined : (e) => { e.currentTarget.style.backgroundColor = activeTheme.accent }}
-                  className={cn(
-                    'text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors',
-                    test.isPremium
-                      ? 'bg-gray-100 text-text-muted cursor-not-allowed'
-                      : 'text-white'
-                  )}
-                >
-                  {test.status === 'completed' ? 'Повтори' : test.status === 'in_progress' ? 'Продължи' : 'Започни'}
-                </Link>
+                {test.isPremium && !isPremiumUser ? (
+                  <Link
+                    href="/dashboard/subscription"
+                    className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-gray-100 text-text-muted hover:bg-gray-200"
+                  >
+                    Отключи с премиум
+                  </Link>
+                ) : (
+                  <Link
+                    href={getTestHref(test)}
+                    style={{ backgroundColor: activeTheme.accent }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = activeTheme.accentHover }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = activeTheme.accent }}
+                    className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
+                  >
+                    {test.status === 'completed' ? 'Повтори' : test.status === 'in_progress' ? 'Продължи' : 'Започни'}
+                  </Link>
+                )}
               </div>
             </div>
           ))}

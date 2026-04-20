@@ -1,10 +1,29 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { signIn } from '@/lib/auth'
 
+// Only allow same-origin redirects (must start with "/" and not with "//" to prevent protocol-relative open redirects).
+function safeRedirectTo(raw: string | null): string {
+  if (!raw) return '/dashboard/materials'
+  if (!raw.startsWith('/') || raw.startsWith('//')) return '/dashboard/materials'
+  return raw
+}
+
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  )
+}
+
+function LoginForm() {
+  const searchParams = useSearchParams()
+  const redirectTo = safeRedirectTo(searchParams.get('redirectTo'))
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -16,12 +35,6 @@ export default function LoginPage() {
     setError(null)
     if (!email || !password) { setError('Попълни всички полета.'); return }
     setLoading(true)
-    // Dev bypass
-    if (email === 'test@maturahelp.bg' && password === '12345678') {
-      localStorage.setItem('dev_auth', '1')
-      window.location.href = '/dashboard/materials'
-      return
-    }
     const { user, error } = await signIn(email, password)
     setLoading(false)
     if (error || !user) {
@@ -31,7 +44,7 @@ export default function LoginPage() {
       setError(msg)
       return
     }
-    window.location.href = '/dashboard/materials'
+    window.location.href = redirectTo
   }
 
   return (
