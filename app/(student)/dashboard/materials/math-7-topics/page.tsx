@@ -180,6 +180,8 @@ export default function Math7TopicsPage() {
   }
 
   function handleRevealShortAnswer() {
+    const problem = filteredProblems[currentIndex]
+    setAnswers((prev) => ({ ...prev, [problem.id]: problem.correctAnswer }))
     setChecked(true)
   }
 
