@@ -1384,7 +1384,8 @@
     }
   </script>
 
-  <!-- Auth state: swap login/register CTAs if user already has a Supabase session -->
+  <!-- Auth state: swap login/register CTAs only if user has a real Supabase session. -->
+  <!-- Note: this is a UX convenience — route protection lives in middleware / server components. -->
   <script>
     (function () {
       try {
@@ -1394,10 +1395,8 @@
             var n = c.trim();
             return n.indexOf('sb-') === 0 && n.indexOf('-auth-token') !== -1;
           });
-        var hasDevAuth = false;
-        try { hasDevAuth = localStorage.getItem('dev_auth') === '1'; } catch (e) {}
 
-        if (!(hasSupabaseCookie || hasDevAuth)) return;
+        if (!hasSupabaseCookie) return;
 
         var APP_HREF = '/dashboard/materials';
 
