@@ -8,6 +8,8 @@ import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { fetchProgressData, type ProgressData } from '@/lib/progress'
 import { getScoreColor } from '@/lib/utils'
+import { getUser } from '@/lib/auth'
+import { getUserFirstName } from '@/lib/user-display'
 
 const completedTests = tests.filter((t) => t.status === 'completed')
 const completedLessons = lessons.filter((l) => l.status === 'completed')
@@ -20,10 +22,11 @@ const averageScore = completedTests.length
 
 export default function DashboardPage() {
   const [data, setData] = useState<ProgressData | null>(null)
-  const firstName = 'Ученик'
+  const [firstName, setFirstName] = useState('Ученик')
 
   useEffect(() => {
     fetchProgressData().then(setData).catch(() => setData(null))
+    getUser().then((user) => setFirstName(getUserFirstName(user))).catch(() => {})
   }, [])
 
   const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']

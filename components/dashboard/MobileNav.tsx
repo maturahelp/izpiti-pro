@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
@@ -49,7 +48,7 @@ export function MobileNav() {
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-border z-40">
       <div className="grid grid-cols-3">
         {mobileNavItems.map((item) => (
-          <Link
+          <a
             key={item.href}
             href={item.href}
             className={cn(
@@ -59,7 +58,7 @@ export function MobileNav() {
           >
             {item.icon}
             {item.label}
-          </Link>
+          </a>
         ))}
       </div>
     </nav>
