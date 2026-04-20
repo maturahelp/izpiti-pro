@@ -24,6 +24,17 @@ function getBooleanPreference(value: unknown, fallback: boolean) {
   return typeof value === 'boolean' ? value : fallback
 }
 
+function arePreferencesEqual(
+  left: NotificationPreferences,
+  right: NotificationPreferences
+) {
+  return (
+    left.newTests === right.newTests &&
+    left.weeklyReport === right.weeklyReport &&
+    left.promotions === right.promotions
+  )
+}
+
 export function readNotificationPreferences(): NotificationPreferences {
   if (typeof window === 'undefined') return defaultNotificationPreferences
 
@@ -48,13 +59,19 @@ export function useNotificationPreferences() {
   const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
-    setPreferences(readNotificationPreferences())
+    const nextPreferences = readNotificationPreferences()
+    setPreferences((currentPreferences) =>
+      arePreferencesEqual(currentPreferences, nextPreferences) ? currentPreferences : nextPreferences
+    )
     setIsHydrated(true)
   }, [])
 
   useEffect(() => {
     const syncPreferences = () => {
-      setPreferences(readNotificationPreferences())
+      const nextPreferences = readNotificationPreferences()
+      setPreferences((currentPreferences) =>
+        arePreferencesEqual(currentPreferences, nextPreferences) ? currentPreferences : nextPreferences
+      )
     }
 
     const handleStorage = (event: StorageEvent) => {
