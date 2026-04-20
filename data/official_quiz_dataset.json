@@ -114,7 +114,7 @@
           "А": "25",
           "Б": "30",
           "В": "35",
-          "Г": "40 Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          "Г": "40"
         },
         "official_answer": "Б 3",
         "correct_option": "Б",
@@ -132,7 +132,8 @@
         },
         "official_answer": "А 3",
         "correct_option": "А",
-        "question_image": "official_assets/math_questions/2025_math/q09.png"
+        "question_image": "official_assets/math_questions/2025_math/q09.png",
+        "task_condition": "Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
       },
       {
         "number": 10,
@@ -733,7 +734,7 @@
           "А": "0,06",
           "Б": "0,6",
           "В": "6",
-          "Г": "60 Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          "Г": "60"
         },
         "official_answer": "В 3",
         "correct_option": "В",
@@ -751,7 +752,8 @@
         },
         "official_answer": "Б 3",
         "correct_option": "Б",
-        "question_image": "official_assets/math_questions/2024_math/q10.png"
+        "question_image": "official_assets/math_questions/2024_math/q10.png",
+        "task_condition": "Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
       },
       {
         "number": 11,
@@ -1353,7 +1355,7 @@
           "А": "10",
           "Б": "12",
           "В": "14",
-          "Г": "16 Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          "Г": "16"
         },
         "official_answer": "Г 3",
         "correct_option": "Г",
@@ -1371,7 +1373,8 @@
         },
         "official_answer": "В 2",
         "correct_option": "В",
-        "question_image": "official_assets/math_questions/2023_math/q11.png"
+        "question_image": "official_assets/math_questions/2023_math/q11.png",
+        "task_condition": "Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
       },
       {
         "number": 12,
@@ -1969,7 +1972,7 @@
           "А": "144°",
           "Б": "100°",
           "В": "80°",
-          "Г": "36° Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          "Г": "36°"
         },
         "official_answer": "Б 3",
         "correct_option": "Б",
@@ -1987,7 +1990,8 @@
         },
         "official_answer": "Г 3",
         "correct_option": "Г",
-        "question_image": "official_assets/math_questions/2022_math/q12.png"
+        "question_image": "official_assets/math_questions/2022_math/q12.png",
+        "task_condition": "Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
       },
       {
         "number": 13,
@@ -3077,7 +3081,7 @@
           "А": "3 2",
           "Б": "5 3",
           "В": "5 2",
-          "Г": "3 Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          "Г": "3"
         },
         "official_answer": "А 3",
         "correct_option": "А",
@@ -3095,7 +3099,8 @@
         },
         "official_answer": "Б 3",
         "correct_option": "Б",
-        "question_image": "official_assets/math_questions/2021_math/q10.png"
+        "question_image": "official_assets/math_questions/2021_math/q10.png",
+        "task_condition": "Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
       },
       {
         "number": 11,
@@ -3978,7 +3983,7 @@
           "А": ";+∈) 3) (1",
           "Б": "(−∈;  (3 (1)",
           "В": "(−∈;) (3) (1)",
-          "Г": "(;+∈) (3) Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
+          "Г": "(;+∈) (3)"
         },
         "official_answer": "Б 2",
         "correct_option": "Б",
@@ -3996,7 +4001,8 @@
         },
         "official_answer": "А 3",
         "correct_option": "А",
-        "question_image": "official_assets/math_questions/2019_math/q09.png"
+        "question_image": "official_assets/math_questions/2019_math/q09.png",
+        "task_condition": "Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли."
       },
       {
         "number": 10,

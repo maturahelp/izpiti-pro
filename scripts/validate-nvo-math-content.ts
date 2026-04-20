@@ -40,6 +40,9 @@ interface MockExam {
 const SHARED_Q19_Q20_CONDITION =
   'За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея.'
 
+const DRAWING_NOTE_CONDITION =
+  'Чертежите са само за илюстрация. Те не са начертани в мащаб и не са предназначени за директно измерване на дължини и на ъгли.'
+
 const BOILERPLATE_RE = /За задачи 19\. и 20\.|ПО МАТЕМАТИКА\s*[–-]\s*VII|ВТОРА ЧАСТ|Пълните решения|ОБРАЗОВАНИЕ\s+МАТЕМАТИКА/i
 const VISUAL_PROMPT_RE = /чертеж|диаграм|координатна система|квадратна мрежа|изобразена на чертежа/i
 
@@ -52,6 +55,15 @@ const EXPECTED_OPEN_RESPONSE: Record<string, Partial<Record<18 | 19 | 20, string
 }
 
 const EXPECTED_TASK_CONDITION_EXAMS = new Set(['2020_math', '2021_math', '2022_math', '2023_math'])
+
+const EXPECTED_DRAWING_NOTE_TARGETS: Record<string, number> = {
+  '2019_math': 9,
+  '2021_math': 10,
+  '2022_math': 12,
+  '2023_math': 11,
+  '2024_math': 10,
+  '2025_math': 9,
+}
 
 const EXPECTED_FIGURE_SOURCE_IDS = [
   '2018_math_q13',
@@ -110,6 +122,23 @@ function validateOfficialMathNvo() {
   if (!exams.length) fail('No official math NVO exams found')
 
   for (const exam of exams) {
+    for (const question of exam.questions) {
+      if (!question.options) continue
+      for (const [label, text] of Object.entries(question.options)) {
+        if (/Чертежите са само|директно измерване/i.test(text)) {
+          fail(`${exam.id} q${question.number} option ${label} still includes the drawing note`)
+        }
+      }
+    }
+
+    const drawingNoteTarget = EXPECTED_DRAWING_NOTE_TARGETS[exam.id]
+    if (drawingNoteTarget) {
+      const question = getQuestion(exam, drawingNoteTarget)
+      if (question.task_condition !== DRAWING_NOTE_CONDITION) {
+        fail(`${exam.id} q${drawingNoteTarget} should carry the extracted drawing-note task_condition`)
+      }
+    }
+
     const q18 = getQuestion(exam, 18)
     if (q18.options) {
       for (const [label, text] of Object.entries(q18.options)) {
