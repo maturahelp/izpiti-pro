@@ -1,11 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-import type { ReactNode } from 'react'
 import { useState } from 'react'
+import type { ReactNode } from 'react'
 import { FadeIn } from '@/components/ui/fade-in'
 
 type ExamTab = 'nvo' | 'dzi'
+type PlanKey = 'nvo-monthly' | 'nvo-full' | 'dzi-monthly' | 'dzi-full' | 'family'
 
 type Plan = {
   label: string
@@ -17,6 +17,7 @@ type Plan = {
   cta: string
   featured?: boolean
   badge?: string
+  planKey: PlanKey
 }
 
 const nvoPlans: Plan[] = [
@@ -34,6 +35,7 @@ const nvoPlans: Plan[] = [
       'Напредък и по-добра организация на ученето',
     ],
     cta: 'Започни подготовка',
+    planKey: 'nvo-monthly',
   },
   {
     label: 'НВО до края на изпитите',
@@ -52,6 +54,7 @@ const nvoPlans: Plan[] = [
     cta: 'Вземи достъп до 19 юни',
     featured: true,
     badge: 'Най-изгоден за целия период',
+    planKey: 'nvo-full',
   },
 ]
 
@@ -70,6 +73,7 @@ const dziPlans: Plan[] = [
       'Проследяване на напредъка ти в платформата',
     ],
     cta: 'Започни сега',
+    planKey: 'dzi-monthly',
   },
   {
     label: 'ДЗИ до края на матурите',
@@ -88,6 +92,7 @@ const dziPlans: Plan[] = [
     cta: 'Вземи достъп до 22 май',
     featured: true,
     badge: 'Най-подходящ за финална подготовка',
+    planKey: 'dzi-full',
   },
 ]
 
@@ -99,6 +104,16 @@ const familyFeatures = [
   'Подходящ за семейства с ученик в 7. и 12. клас',
   'Един по-изгоден план вместо два отделни абонамента',
 ]
+
+async function startCheckout(plan: PlanKey) {
+  const res = await fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ plan }),
+  })
+  const data = await res.json()
+  if (data.url) window.location.href = data.url
+}
 
 export function Pricing() {
   const [tab, setTab] = useState<ExamTab>('nvo')
@@ -130,7 +145,7 @@ export function Pricing() {
 
         <div className="grid md:grid-cols-2 gap-7 max-w-3xl mx-auto mb-8">
           {plans.map((plan) => (
-            <PlanCard key={plan.label} plan={plan} />
+            <PlanCard key={plan.label} plan={plan} onCheckout={startCheckout} />
           ))}
         </div>
 
@@ -159,12 +174,13 @@ export function Pricing() {
                     <CheckItem key={feature}>{feature}</CheckItem>
                   ))}
                 </ul>
-                <Link
-                  href="/register"
+                <button
+                  type="button"
+                  onClick={() => startCheckout('family')}
                   className="block w-full bg-[#1e2a4a] text-white text-center font-semibold py-3 rounded-full text-sm hover:bg-indigo-900 hover:shadow-lg transition-all"
                 >
                   Избери семеен план
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -198,7 +214,7 @@ function PricingTabButton({
   )
 }
 
-function PlanCard({ plan }: { plan: Plan }) {
+function PlanCard({ plan, onCheckout }: { plan: Plan; onCheckout: (key: PlanKey) => void }) {
   return (
     <div
       className={`bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-8 relative ${
@@ -222,12 +238,13 @@ function PlanCard({ plan }: { plan: Plan }) {
           <CheckItem key={feature}>{feature}</CheckItem>
         ))}
       </ul>
-      <Link
-        href="/register"
+      <button
+        type="button"
+        onClick={() => onCheckout(plan.planKey)}
         className="block w-full text-center text-white font-semibold py-3 rounded-full text-sm bg-[#3b82f6] hover:shadow-lg hover:shadow-blue-200 transition-all"
       >
         {plan.cta}
-      </Link>
+      </button>
     </div>
   )
 }
