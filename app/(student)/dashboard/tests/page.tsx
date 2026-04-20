@@ -5,7 +5,6 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
 import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
-import { getDifficultyColor } from '@/lib/utils'
 import { useGrade } from '@/lib/grade-context'
 import {
   generatedEnglishReadingQuestionCount,
@@ -197,9 +196,10 @@ export default function TestsPage() {
                   className={cn(
                     'rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-colors',
                     selectedMode === mode
-                      ? 'bg-white text-primary shadow-sm'
+                      ? 'bg-white shadow-sm'
                       : 'text-text-muted hover:text-text'
                   )}
+                  style={selectedMode === mode ? { color: activeTheme.onSoft } : undefined}
                 >
                   {modeLabelsByGrade[grade][mode]}
                 </button>
@@ -306,9 +306,12 @@ export default function TestsPage() {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <Badge variant={test.examType === 'nvo7' ? 'primary' : 'amber'}>
+                    <span
+                      className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                      style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
+                    >
                       {test.examType === 'nvo7' ? '7. клас НВО' : '12. клас ДЗИ'}
-                    </Badge>
+                    </span>
                     {test.status === 'completed' && (
                       <Badge variant="success">Завършен</Badge>
                     )}
@@ -338,10 +341,7 @@ export default function TestsPage() {
                 )}
               </div>
 
-              <div className="flex items-center justify-between">
-                <span className={`badge text-xs ${getDifficultyColor(test.difficulty)}`}>
-                  {test.difficulty}
-                </span>
+              <div className="flex justify-end">
                 <Link
                   href={getTestHref(test)}
                   style={
