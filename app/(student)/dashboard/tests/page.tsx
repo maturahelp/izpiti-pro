@@ -89,9 +89,9 @@ function getTestMode(test: (typeof tests)[number]): TestMode {
 function getTestHref(test: (typeof tests)[number]): string {
   if (test.subjectId === 'eng-12') {
     if (test.id.startsWith('english-generated-')) {
-      return `/dashboard/tests/english-generated#${test.id.replace('english-generated-', '')}`
+      return `/english-generated#${test.id.replace('english-generated-', '')}`
     }
-    return `/dashboard/tests/${test.id}`
+    return `/english-mock/${test.id}`
   }
   return `/dashboard/tests/${test.id}`
 }
