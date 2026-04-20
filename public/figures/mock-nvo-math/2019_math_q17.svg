@@ -1,0 +1,21 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">2019 math q17</title>
+  <desc id="desc">Помощен чертеж към примерна задача от НВО по математика.</desc>
+  <rect width="900" height="520" fill="#262523"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="#d8d2c7"/></marker>
+    <style>
+      .line{stroke:#f0ede6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.thin{stroke:#d8d2c7;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}.dash{stroke:#d8d2c7;stroke-width:3;fill:none;stroke-dasharray:12 10;stroke-linecap:round;stroke-linejoin:round}.blue{stroke:#4a97f2;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.green{stroke:#7db22f;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.orange{stroke:#e6a84d;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.violet{stroke:#8f7cf6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.fill-blue{fill:#4a97f2;fill-opacity:.18;stroke:#4a97f2;stroke-width:3}.fill-green{fill:#7db22f;fill-opacity:.16;stroke:#7db22f;stroke-width:3}.fill-orange{fill:#e6a84d;fill-opacity:.16;stroke:#e6a84d;stroke-width:3}.grid{stroke:#5c5a55;stroke-width:1.5;opacity:.8}.point{fill:#f0ede6}.point-blue{fill:#4a97f2}.point-green{fill:#7db22f}.point-orange{fill:#e6a84d}.label{fill:#f2efe8;font-family:Arial,sans-serif;font-weight:700;font-size:28px}.small{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:20px}.tiny{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:16px}.caption{fill:#f4f0e8;font-family:Arial,sans-serif;font-weight:700;font-size:24px}.muted{fill:#bdb7ad;font-family:Arial,sans-serif;font-size:18px}.sector1{fill:#4a97f2;fill-opacity:.65}.sector2{fill:#7db22f;fill-opacity:.62}.sector3{fill:#e6a84d;fill-opacity:.68}.sector4{fill:#8f7cf6;fill-opacity:.58}
+    </style>
+  </defs>
+
+  <text class="caption" x="54" y="54">Спортна площадка с правоъгълник PMNK</text>
+  <path class="line" d="M190 138 H654 A106 106 0 0 1 760 244 V334 A106 106 0 0 1 654 440 H190 A151 151 0 0 1 190 138 Z"/>
+  <path class="dash" d="M275 138 V440 M590 138 V440 M170 245 H760 M170 334 H700"/>
+  <path class="dash" d="M590 245 m-88 0 a88 88 0 1 0 176 0 a88 88 0 1 0 -176 0"/>
+  <path class="thin" d="M275 122 v-30 M590 122 v-30 M275 456 v30 M590 456 v30"/>
+  <path class="thin" d="M256 245 h-44 M610 245 h44 M256 334 h-44 M610 334 h44"/>
+  <circle class="point" cx="275" cy="245" r="8"/><circle class="point" cx="590" cy="245" r="8"/><circle class="point" cx="275" cy="334" r="8"/><circle class="point" cx="590" cy="334" r="8"/><circle class="point-orange" cx="760" cy="245" r="8"/>
+  <text class="label" x="234" y="286">K</text><text class="label" x="608" y="234">N</text><text class="label" x="236" y="377">P</text><text class="label" x="548" y="378">M</text><text class="label" x="784" y="258">T</text>
+  <text class="small" x="388" y="225">KN = 20 m</text><text class="small" x="612" y="300">MN = 15 m</text><text class="small" x="654" y="224">KT = 23 m</text>
+</svg>
