@@ -681,46 +681,51 @@ export default function MaterialsPage() {
       <div className="min-h-screen pb-20 md:pb-0">
         <TopBar title="Материали" />
         <div className="p-4 md:p-6 max-w-5xl mx-auto">
-          <div className="mb-4 flex flex-wrap justify-center gap-2">
-            {grade7Sections.map((section) => {
-              const theme = subjectTheme[section]
-              const isActive = grade7Section === section
-              return (
-                <button
-                  key={section}
-                  type="button"
-                  onClick={() => setGrade7Section(section)}
-                  style={
-                    isActive
-                      ? { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
-                      : undefined
-                  }
-                  className={cn(
-                    'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
-                    isActive ? '' : 'bg-white text-text border-border hover:bg-slate-50'
-                  )}
-                >
-                  {grade7SectionLabels[section]}
-                </button>
-              )
-            })}
-          </div>
-          <div className="flex justify-center md:justify-end mb-4">
-            <label className="relative w-full max-w-[180px]">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="M21 21l-4.35-4.35" />
-                </svg>
-              </span>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Търси"
-                className="w-full rounded-xl border border-border bg-white py-1.5 pl-8 pr-2 text-xs text-text placeholder:text-text-muted/70 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
-              />
-            </label>
+          <div className="mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
+            <div className="hidden md:block" />
+
+            <div className="flex flex-wrap justify-center gap-2">
+              {grade7Sections.map((section) => {
+                const theme = subjectTheme[section]
+                const isActive = grade7Section === section
+                return (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => setGrade7Section(section)}
+                    style={
+                      isActive
+                        ? { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
+                        : undefined
+                    }
+                    className={cn(
+                      'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                      isActive ? '' : 'bg-white text-text border-border hover:bg-slate-50'
+                    )}
+                  >
+                    {grade7SectionLabels[section]}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="flex justify-center md:justify-end">
+              <label className="relative w-full max-w-[180px]">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Търси"
+                  className="w-full rounded-xl border border-border bg-white py-1.5 pl-8 pr-2 text-xs text-text placeholder:text-text-muted/70 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                />
+              </label>
+            </div>
           </div>
 
           {grade7Section === 'bulgarian' ? (
