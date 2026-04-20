@@ -7,6 +7,7 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import Confetti from '@/components/ui/confetti'
 import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
+import { getMockNvoMathFigure } from '@/data/nvo-math-figure-assets'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
 import { saveDziAttempt } from '@/lib/progress'
@@ -31,8 +32,15 @@ interface NvoQuestion {
   correct_option?: string
   official_answer?: string
   answer_guide?: string
+  question_image?: string
+  task_condition?: string
   points?: number
   section?: string
+  source_tags?: {
+    source_id?: string
+    official_year?: string
+    topic_bucket?: string
+  }
 }
 
 interface NvoExam {
@@ -75,6 +83,11 @@ interface MockPracticeExam {
     correct_option?: string
     answer_guide?: string | Record<string, string>
     section?: string
+    source_tags?: {
+      source_id?: string
+      official_year?: string
+      topic_bucket?: string
+    }
   }>
 }
 
@@ -122,6 +135,9 @@ const FIGURE_HELPERS: Record<string, Record<number, string>> = {
   '2019_math': { 23: '/figures/figure_2019_math_q23.svg' },
   '2018_math': { 24: '/figures/figure_2018_math_q24.svg' },
 }
+
+const SHARED_Q19_Q20_TASK_CONDITION =
+  'За задачи 19. и 20. в листа за отговори запишете буквата на въпроса и Вашия отговор срещу нея.'
 
 // ---------------------------------------------------------------------------
 // Utility: text normalisation (ported from app.js)
@@ -175,6 +191,20 @@ function stripExamBoilerplate(text: string): string {
     .replace(/\b\d{1,2}\s+[а-яА-Я]+\s+\d{4}\s+година\s*/g, '')
     .replace(/ЧАСТ\s*[12]\s*\(Време за работа:\s*\d+\s*минути\)\s*/g, '')
     .replace(/Отговорите на задачите от \d+\. до \d+\. включително отбелязвайте в листа за отговори\.\s*/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+function cleanMathChoiceText(text: string): string {
+  if (!text) return ''
+  return normalizeMathText(text)
+    .replace(SHARED_Q19_Q20_TASK_CONDITION, '')
+    .replace(/За задачи 19\. и 20\.[\s\S]*?срещу нея\.?/u, '')
+    .replace(/\s+ПО МАТЕМАТИКА[\s\S]*$/u, '')
+    .replace(/\s+\d+\s+инозес\s+имибюл\s+йорБ[\s\S]*$/u, '')
+    .replace(/\s+\d+\s+етищетобар\s+ан\s+йорБ[\s\S]*$/u, '')
+    .replace(/\s+\d+\s+итуним\s+в\s+емерВ[\s\S]*$/u, '')
+    .replace(/\s+Видове изпълнения\s*$/u, '')
     .replace(/\s{2,}/g, ' ')
     .trim()
 }
@@ -387,6 +417,7 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
         official_answer: guideStr,
         answer_guide: guideStr,
         section: question.section,
+        source_tags: question.source_tags,
       }
     }),
   }
@@ -859,7 +890,7 @@ function QuestionCard({
 }) {
   const isMath = exam.subject === 'Математика'
   const override = MATH_TEXT_OVERRIDES[exam.id]?.[question.number]
-  const figureHref = FIGURE_HELPERS[exam.id]?.[question.number]
+  const figureHref = FIGURE_HELPERS[exam.id]?.[question.number] ?? getMockNvoMathFigure(question.source_tags?.source_id)
   const questionImageSrc = QUESTION_IMAGES[exam.id]?.[question.number]
 
   const showFeedback = submitted || revealAnswers
@@ -944,6 +975,11 @@ function QuestionCard({
       </div>
 
       {/* Question text */}
+      {question.task_condition && (
+        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-relaxed text-amber-800">
+          {normalizeMathText(question.task_condition)}
+        </div>
+      )}
       <div className="text-sm font-medium text-text leading-relaxed mb-4">
         {questionContent}
       </div>
@@ -962,19 +998,17 @@ function QuestionCard({
         </figure>
       )}
 
-      {/* Figure link */}
+      {/* Inline generated figure */}
       {figureHref && (
-        <div className="mb-4 flex flex-wrap items-center gap-3 p-3 rounded-xl border border-dashed border-border bg-white/60">
-          <a
-            href={figureHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-primary-light text-primary text-xs font-bold hover:bg-primary/20 transition-colors"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Отвори фигурата
-          </a>
-          <span className="text-xs text-text-muted">Помощна фигура към условието — отваря се при нужда.</span>
+        <div className="mb-4 rounded-lg border border-dashed border-border bg-white/60 p-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={figureHref}
+            alt={`Чертеж към въпрос ${question.number}`}
+            className="mb-3 block max-w-full rounded-lg border border-border bg-[#262523]"
+            loading="lazy"
+            style={{ maxHeight: '420px', width: 'auto' }}
+          />
         </div>
       )}
 
@@ -987,7 +1021,7 @@ function QuestionCard({
             const showCorrect = showFeedback && isCorrect
             const showWrong = showFeedback && isSelected && !isCorrect
 
-            let optText: React.ReactNode = normalizeMathText(text || 'Избор по изображение')
+            let optText: React.ReactNode = cleanMathChoiceText(text || 'Избор по изображение')
             if (override?.optionsHtml?.[label]) {
               optText = <span dangerouslySetInnerHTML={{ __html: override.optionsHtml[label] }} />
             }
@@ -1041,7 +1075,7 @@ function QuestionCard({
           {question.options && Object.entries(question.options).map(([label, text]) => (
             <div key={label} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-gray-50 text-sm text-text-muted">
               <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold flex-shrink-0">{label}</span>
-              <span>{normalizeMathText(text)}</span>
+              <span>{cleanMathChoiceText(text)}</span>
             </div>
           ))}
           <div className="space-y-3">

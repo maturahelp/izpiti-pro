@@ -1,0 +1,24 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">2021 math q17</title>
+  <desc id="desc">Помощен чертеж към примерна задача от НВО по математика.</desc>
+  <rect width="900" height="520" fill="#262523"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="#d8d2c7"/></marker>
+    <style>
+      .line{stroke:#f0ede6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.thin{stroke:#d8d2c7;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}.dash{stroke:#d8d2c7;stroke-width:3;fill:none;stroke-dasharray:12 10;stroke-linecap:round;stroke-linejoin:round}.blue{stroke:#4a97f2;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.green{stroke:#7db22f;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.orange{stroke:#e6a84d;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.violet{stroke:#8f7cf6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.fill-blue{fill:#4a97f2;fill-opacity:.18;stroke:#4a97f2;stroke-width:3}.fill-green{fill:#7db22f;fill-opacity:.16;stroke:#7db22f;stroke-width:3}.fill-orange{fill:#e6a84d;fill-opacity:.16;stroke:#e6a84d;stroke-width:3}.grid{stroke:#5c5a55;stroke-width:1.5;opacity:.8}.point{fill:#f0ede6}.point-blue{fill:#4a97f2}.point-green{fill:#7db22f}.point-orange{fill:#e6a84d}.label{fill:#f2efe8;font-family:Arial,sans-serif;font-weight:700;font-size:28px}.small{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:20px}.tiny{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:16px}.caption{fill:#f4f0e8;font-family:Arial,sans-serif;font-weight:700;font-size:24px}.muted{fill:#bdb7ad;font-family:Arial,sans-serif;font-size:18px}.sector1{fill:#4a97f2;fill-opacity:.65}.sector2{fill:#7db22f;fill-opacity:.62}.sector3{fill:#e6a84d;fill-opacity:.68}.sector4{fill:#8f7cf6;fill-opacity:.58}
+    </style>
+  </defs>
+
+  <text class="caption" x="54" y="54">Трапец ABCD върху квадратна мрежа</text>
+  <g transform="translate(230 95)">
+    <path class="grid" d="M0 0 V294"/><path class="grid" d="M42 0 V294"/><path class="grid" d="M84 0 V294"/><path class="grid" d="M126 0 V294"/><path class="grid" d="M168 0 V294"/><path class="grid" d="M210 0 V294"/><path class="grid" d="M252 0 V294"/><path class="grid" d="M294 0 V294"/><path class="grid" d="M336 0 V294"/><path class="grid" d="M378 0 V294"/>
+    <path class="grid" d="M0 0 H378"/><path class="grid" d="M0 42 H378"/><path class="grid" d="M0 84 H378"/><path class="grid" d="M0 126 H378"/><path class="grid" d="M0 168 H378"/><path class="grid" d="M0 210 H378"/><path class="grid" d="M0 252 H378"/><path class="grid" d="M0 294 H378"/>
+    <polygon class="fill-blue" points="42,252 168,84 336,84 336,252"/>
+    <path class="line" d="M42 252 L168 84 H336 V252 Z"/>
+    <path class="dash" d="M168 84 V252 M42 252 H336"/>
+    <path class="thin" d="M158 252 L158 242 L168 242"/>
+    <circle class="point" cx="42" cy="252" r="7"/><circle class="point" cx="168" cy="84" r="7"/><circle class="point" cx="336" cy="84" r="7"/><circle class="point" cx="336" cy="252" r="7"/>
+    <text class="label" x="18" y="286">A</text><text class="label" x="152" y="76">B</text><text class="label" x="346" y="82">C</text><text class="label" x="346" y="286">D</text>
+  </g>
+  <text class="small" x="624" y="385">1 cm</text><text class="muted" x="318" y="462">ABCD е трапец върху квадратната мрежа</text>
+</svg>

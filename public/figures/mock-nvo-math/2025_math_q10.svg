@@ -1,0 +1,24 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">2025 math q10</title>
+  <desc id="desc">Помощен чертеж към примерна задача от НВО по математика.</desc>
+  <rect width="900" height="520" fill="#262523"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="#d8d2c7"/></marker>
+    <style>
+      .line{stroke:#f0ede6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.thin{stroke:#d8d2c7;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}.dash{stroke:#d8d2c7;stroke-width:3;fill:none;stroke-dasharray:12 10;stroke-linecap:round;stroke-linejoin:round}.blue{stroke:#4a97f2;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.green{stroke:#7db22f;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.orange{stroke:#e6a84d;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.violet{stroke:#8f7cf6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.fill-blue{fill:#4a97f2;fill-opacity:.18;stroke:#4a97f2;stroke-width:3}.fill-green{fill:#7db22f;fill-opacity:.16;stroke:#7db22f;stroke-width:3}.fill-orange{fill:#e6a84d;fill-opacity:.16;stroke:#e6a84d;stroke-width:3}.grid{stroke:#5c5a55;stroke-width:1.5;opacity:.8}.point{fill:#f0ede6}.point-blue{fill:#4a97f2}.point-green{fill:#7db22f}.point-orange{fill:#e6a84d}.label{fill:#f2efe8;font-family:Arial,sans-serif;font-weight:700;font-size:28px}.small{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:20px}.tiny{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:16px}.caption{fill:#f4f0e8;font-family:Arial,sans-serif;font-weight:700;font-size:24px}.muted{fill:#bdb7ad;font-family:Arial,sans-serif;font-size:18px}.sector1{fill:#4a97f2;fill-opacity:.65}.sector2{fill:#7db22f;fill-opacity:.62}.sector3{fill:#e6a84d;fill-opacity:.68}.sector4{fill:#8f7cf6;fill-opacity:.58}
+    </style>
+  </defs>
+
+  <text class="caption" x="54" y="54">Координатна система Oxy</text>
+  <g transform="translate(165 55)">
+    <path class="grid" d="M0 0 V406"/><path class="grid" d="M58 0 V406"/><path class="grid" d="M116 0 V406"/><path class="grid" d="M174 0 V406"/><path class="grid" d="M232 0 V406"/><path class="grid" d="M290 0 V406"/><path class="grid" d="M348 0 V406"/><path class="grid" d="M406 0 V406"/><path class="grid" d="M464 0 V406"/><path class="grid" d="M522 0 V406"/>
+    <path class="grid" d="M0 0 H522"/><path class="grid" d="M0 58 H522"/><path class="grid" d="M0 116 H522"/><path class="grid" d="M0 174 H522"/><path class="grid" d="M0 232 H522"/><path class="grid" d="M0 290 H522"/><path class="grid" d="M0 348 H522"/><path class="grid" d="M0 406 H522"/>
+    <path class="line" marker-end="url(#arrow)" d="M232 406 V8"/><path class="line" marker-end="url(#arrow)" d="M0 232 H510"/>
+    <path class="thin" d="M232 174 H242 M290 232 V222"/>
+    <path class="thin" d="M448 58 H500 M448 58 L462 52 M448 58 L462 64"/>
+    <circle class="point-orange" cx="58" cy="348" r="8"/><circle class="point-blue" cx="348" cy="174" r="8"/><circle class="point" cx="232" cy="232" r="7"/>
+    <text class="label" x="26" y="372">A</text><text class="label" x="360" y="168">B</text><text class="label" x="205" y="260">O</text>
+    <text class="small" x="502" y="248">x</text><text class="small" x="246" y="25">y</text><text class="tiny" x="214" y="174">1</text><text class="tiny" x="290" y="256">1</text><text class="tiny" x="466" y="94">1 cm</text>
+  </g>
+  <text class="muted" x="262" y="485">C се построява симетрично на A спрямо Oy</text>
+</svg>

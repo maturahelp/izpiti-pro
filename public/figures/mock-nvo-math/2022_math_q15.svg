@@ -1,0 +1,19 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">2022 math q15</title>
+  <desc id="desc">Помощен чертеж към примерна задача от НВО по математика.</desc>
+  <rect width="900" height="520" fill="#262523"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="#d8d2c7"/></marker>
+    <style>
+      .line{stroke:#f0ede6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.thin{stroke:#d8d2c7;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}.dash{stroke:#d8d2c7;stroke-width:3;fill:none;stroke-dasharray:12 10;stroke-linecap:round;stroke-linejoin:round}.blue{stroke:#4a97f2;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.green{stroke:#7db22f;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.orange{stroke:#e6a84d;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.violet{stroke:#8f7cf6;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.fill-blue{fill:#4a97f2;fill-opacity:.18;stroke:#4a97f2;stroke-width:3}.fill-green{fill:#7db22f;fill-opacity:.16;stroke:#7db22f;stroke-width:3}.fill-orange{fill:#e6a84d;fill-opacity:.16;stroke:#e6a84d;stroke-width:3}.grid{stroke:#5c5a55;stroke-width:1.5;opacity:.8}.point{fill:#f0ede6}.point-blue{fill:#4a97f2}.point-green{fill:#7db22f}.point-orange{fill:#e6a84d}.label{fill:#f2efe8;font-family:Arial,sans-serif;font-weight:700;font-size:28px}.small{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:20px}.tiny{fill:#d8d2c7;font-family:Arial,sans-serif;font-weight:600;font-size:16px}.caption{fill:#f4f0e8;font-family:Arial,sans-serif;font-weight:700;font-size:24px}.muted{fill:#bdb7ad;font-family:Arial,sans-serif;font-size:18px}.sector1{fill:#4a97f2;fill-opacity:.65}.sector2{fill:#7db22f;fill-opacity:.62}.sector3{fill:#e6a84d;fill-opacity:.68}.sector4{fill:#8f7cf6;fill-opacity:.58}
+    </style>
+  </defs>
+
+  <text class="caption" x="54" y="54">Равнобедрен триъгълник ABC с височина CH</text>
+  <polygon class="line" points="230,400 690,400 460,130"/>
+  <path class="blue" d="M460 130 V400"/><path class="thin" d="M442 400 V382 H460"/>
+  <path class="orange" d="M230 400 H460"/><path class="green" d="M460 400 H690"/>
+  <circle class="point" cx="230" cy="400" r="8"/><circle class="point" cx="690" cy="400" r="8"/><circle class="point" cx="460" cy="130" r="8"/><circle class="point-blue" cx="460" cy="400" r="8"/>
+  <text class="label" x="196" y="438">A</text><text class="label" x="704" y="438">B</text><text class="label" x="472" y="124">C</text><text class="label" x="470" y="438">H</text>
+  <text class="small" x="318" y="426">3</text><text class="small" x="564" y="426">x</text><text class="small" x="486" y="275">CH</text>
+</svg>
