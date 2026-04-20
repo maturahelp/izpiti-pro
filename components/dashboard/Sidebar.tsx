@@ -119,33 +119,31 @@ export function Sidebar() {
       </Link>
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-thin flex flex-col">
-        <div className="space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')}
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-auto pt-4 border-t border-slate-100 space-y-1">
-          {secondaryNavItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')}
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          ))}
-        </div>
+      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-thin">
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')}
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
       </nav>
+
+      <div className="flex-shrink-0 border-t border-slate-100 px-3 py-4 space-y-1">
+        {secondaryNavItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')}
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
+      </div>
     </aside>
   )
 }
