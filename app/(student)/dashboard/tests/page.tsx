@@ -89,11 +89,21 @@ function getTestMode(test: (typeof tests)[number]): TestMode {
 function getTestHref(test: (typeof tests)[number]): string {
   if (test.subjectId === 'eng-12') {
     if (test.id.startsWith('english-generated-')) {
-      return `/english-generated#${test.id.replace('english-generated-', '')}`
+      return `/dashboard/tests/english-generated#${test.id.replace('english-generated-', '')}`
     }
-    return `/english-mock/${test.id}`
+    return `/dashboard/tests/${test.id}`
   }
   return `/dashboard/tests/${test.id}`
+}
+
+function usesSelectableQuestionLabel(test: (typeof tests)[number]) {
+  return /^nvo-(bel|math)-\d{4}$/.test(test.id) || /^dzi-bel-\d{4}-(may|aug|june)$/.test(test.id)
+}
+
+function getQuestionCountLabel(test: (typeof tests)[number]) {
+  return usesSelectableQuestionLabel(test)
+    ? `${test.questionsCount} тестови`
+    : `${test.questionsCount} въпроса`
 }
 
 export default function TestsPage() {
@@ -348,7 +358,7 @@ export default function TestsPage() {
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                   {test.timeMinutes} мин.
                 </span>
-                <span>{test.questionsCount} въпроса</span>
+                <span>{getQuestionCountLabel(test)}</span>
                 <span>{test.completedCount.toLocaleString()} реш.</span>
                 {test.status === 'completed' && test.lastScore && (
                   <span className={`ml-auto font-bold text-sm font-serif ${

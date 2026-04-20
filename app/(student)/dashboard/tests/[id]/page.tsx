@@ -670,6 +670,7 @@ export default function TestPage() {
   const hasMedia = Boolean(exam.context_images?.length)
   const hasChart = Boolean(exam.chart?.labels?.length)
   const totalQuestions = exam.questions.length
+  const openResponseCount = Math.max(totalQuestions - totalSelectable, 0)
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -694,7 +695,11 @@ export default function TestPage() {
             <div>
               <p className="text-xs text-text-muted font-semibold uppercase tracking-wide">Напредък</p>
               <p className="text-sm font-semibold text-text">{answeredCount} / {totalSelectable} тестови отговорени</p>
-              <p className="text-xs text-text-muted">{totalQuestions} въпроса общо</p>
+              <p className="text-xs text-text-muted">
+                {openResponseCount > 0
+                  ? `${totalQuestions} задачи общо · ${openResponseCount} със свободен отговор`
+                  : `${totalQuestions} въпроса общо`}
+              </p>
               {(submitted || revealAnswers) && (
                 <p className="text-xs text-text-muted">{score.correct} верни от {score.total}</p>
               )}
