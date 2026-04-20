@@ -11,11 +11,6 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [notifications, setNotifications] = useState({
-    newTests: true,
-    weeklyReport: true,
-    promotions: false,
-  })
 
   useEffect(() => {
     getUser().then((u) => setEmail(u?.email || ''))
@@ -77,31 +72,6 @@ export default function SettingsPage() {
           >
             {loading ? 'Изпращане...' : 'Изпрати линк за смяна'}
           </button>
-        </div>
-
-        {/* Notifications */}
-        <div className="card p-6">
-          <h2 className="text-base font-serif font-bold text-text mb-1">Известия</h2>
-          <p className="text-sm text-text-muted mb-4">Избери какво да получаваш по имейл.</p>
-          <div className="space-y-3">
-            {(
-              [
-                ['newTests', 'Нови тестове и ресурси'],
-                ['weeklyReport', 'Седмичен отчет за прогреса'],
-                ['promotions', 'Промоции и новини'],
-              ] as const
-            ).map(([key, label]) => (
-              <label key={key} className="flex items-center justify-between gap-4 py-2">
-                <span className="text-sm text-text">{label}</span>
-                <input
-                  type="checkbox"
-                  checked={notifications[key]}
-                  onChange={(e) => setNotifications((n) => ({ ...n, [key]: e.target.checked }))}
-                  className="w-5 h-5 accent-primary cursor-pointer"
-                />
-              </label>
-            ))}
-          </div>
         </div>
 
         <div className="text-center">

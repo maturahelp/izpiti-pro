@@ -8,6 +8,7 @@ import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { fetchProgressData, type ProgressData } from '@/lib/progress'
 import { getScoreColor } from '@/lib/utils'
+import { getUser } from '@/lib/auth'
 
 const completedTests = tests.filter((t) => t.status === 'completed')
 const completedLessons = lessons.filter((l) => l.status === 'completed')
@@ -20,10 +21,17 @@ const averageScore = completedTests.length
 
 export default function DashboardPage() {
   const [data, setData] = useState<ProgressData | null>(null)
-  const firstName = 'Ученик'
+  const [firstName, setFirstName] = useState('')
 
   useEffect(() => {
     fetchProgressData().then(setData).catch(() => setData(null))
+    getUser()
+      .then((user) => {
+        if (!user) return
+        const fullName = (user.user_metadata?.name as string | undefined) ?? user.email?.split('@')[0] ?? ''
+        setFirstName(fullName.split(' ').filter(Boolean)[0] ?? '')
+      })
+      .catch(() => {})
   }, [])
 
   const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
@@ -45,7 +53,7 @@ export default function DashboardPage() {
             <div>
               <p className="text-xs font-semibold text-primary tracking-wide uppercase mb-2">MaturaHelp</p>
               <h1 className="text-2xl md:text-3xl font-serif font-bold text-text">
-                Здравей, {firstName}. Учи по-умно, постигай повече.
+                {firstName ? `Здравей, ${firstName}. ` : 'Здравей. '}Учи по-умно, постигай повече.
               </h1>
               <p className="text-text-muted text-sm mt-2 max-w-2xl">
                 Избери една задача за следващите 20 минути и я довърши.

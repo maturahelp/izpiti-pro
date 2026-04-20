@@ -725,7 +725,9 @@ export default function TestPage() {
             <div>
               <p className="text-xs text-text-muted font-semibold uppercase tracking-wide">Напредък</p>
               <p className="text-sm font-semibold text-text">{answeredCount} / {totalSelectable} тестови отговорени</p>
-              <p className="text-xs text-text-muted">{totalQuestions} въпроса общо</p>
+              {totalQuestions > totalSelectable && (
+                <p className="text-xs text-text-muted">+ {totalQuestions - totalSelectable} свободни отговора (самопроверка)</p>
+              )}
               {(submitted || revealAnswers) && (
                 <p className="text-xs text-text-muted">{score.correct} верни от {score.total}</p>
               )}

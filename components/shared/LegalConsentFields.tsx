@@ -44,11 +44,11 @@ export function RegistrationConsentFields({ values, onChange, idPrefix = 'regist
         onChange={(checked) => onChange('acceptedTermsPrivacy', checked)}
       >
         Приемам{' '}
-        <Link href="/terms" className="font-semibold text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+        <Link href="/terms" className="font-semibold text-primary hover:underline">
           Общите условия
         </Link>{' '}
         и{' '}
-        <Link href="/privacy" className="font-semibold text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+        <Link href="/privacy" className="font-semibold text-primary hover:underline">
           Политиката за поверителност
         </Link>
       </LegalCheckbox>
