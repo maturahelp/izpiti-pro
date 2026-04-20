@@ -226,7 +226,10 @@ export default function TestsPage() {
           <div className="mb-4 grid sm:grid-cols-2 gap-4">
             <div className="card-hover p-5 flex flex-col gap-4">
               <div>
-                <span className="badge text-xs bg-emerald-100 text-emerald-700 mb-2 inline-block">
+                <span
+                  className="mb-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
+                >
                   {generatedEnglishReadingQuestionCount} въпроса
                 </span>
                 <h3 className="font-semibold text-text text-sm leading-snug">Reading Comprehension Bank</h3>
@@ -238,7 +241,12 @@ export default function TestsPage() {
                 <span>ABCD формат</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="badge text-xs bg-blue-100 text-blue-700">Reading</span>
+                <span
+                  className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
+                >
+                  Reading
+                </span>
                 <Link
                   href="/english-generated#reading"
                   style={{ backgroundColor: activeTheme.accent }}
@@ -253,7 +261,10 @@ export default function TestsPage() {
 
             <div className="card-hover p-5 flex flex-col gap-4">
               <div>
-                <span className="badge text-xs bg-amber-light text-amber mb-2 inline-block">
+                <span
+                  className="mb-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
+                >
                   {generatedEnglishWritingQuestionCount} задачи
                 </span>
                 <h3 className="font-semibold text-text text-sm leading-snug">Writing Prompts Bank</h3>
@@ -265,10 +276,18 @@ export default function TestsPage() {
                 <span>Checklists</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="badge text-xs bg-amber-light text-amber">Writing</span>
+                <span
+                  className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
+                >
+                  Writing
+                </span>
                 <Link
                   href="/english-generated#writing"
-                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-amber text-white hover:bg-amber/90"
+                  style={{ backgroundColor: activeTheme.accent }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = activeTheme.accentHover }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = activeTheme.accent }}
+                  className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
                 >
                   Отвори
                 </Link>
