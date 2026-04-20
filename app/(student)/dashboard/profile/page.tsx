@@ -3,36 +3,161 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { getUser, signOut } from '@/lib/auth'
+import { createClient } from '@/lib/supabase/client'
+import { signOut } from '@/lib/auth'
+
+const EXAM_PATH_OPTIONS = [
+  'НВО',
+  'НВО — Български език',
+  'НВО — Математика',
+  'ДЗИ',
+  'ДЗИ — Български език и литература',
+  'ДЗИ — Математика',
+  'ДЗИ — История и цивилизации',
+]
+
+type Status = 'idle' | 'saving' | 'saved' | 'error'
 
 export default function ProfilePage() {
-  const [userName, setUserName] = useState('')
-  const [userEmail, setUserEmail] = useState('')
   const router = useRouter()
+  const supabase = createClient()
+
+  const [loaded, setLoaded] = useState(false)
+  const [userId, setUserId] = useState<string | null>(null)
+  const [userEmail, setUserEmail] = useState('')
+  const [plan, setPlan] = useState<'free' | 'premium' | null>(null)
+
+  const [name, setName] = useState('')
+  const [classYear, setClassYear] = useState<'7' | '12' | ''>('')
+  const [examPath, setExamPath] = useState<string>('НВО')
+
+  const [profileStatus, setProfileStatus] = useState<Status>('idle')
+  const [profileError, setProfileError] = useState<string | null>(null)
+
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [pwStatus, setPwStatus] = useState<Status>('idle')
+  const [pwError, setPwError] = useState<string | null>(null)
 
   useEffect(() => {
-    getUser().then(user => {
-      if (user) {
-        const name = user.user_metadata?.name || user.email?.split('@')[0] || ''
-        setUserName(name)
-        setUserEmail(user.email || '')
-      }
-    })
+    let cancelled = false
+    async function load() {
+      const { data: userData } = await supabase.auth.getUser()
+      const user = userData.user
+      if (!user) return
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('name, class, exam_path, plan')
+        .eq('id', user.id)
+        .single()
+      if (cancelled) return
+      setUserId(user.id)
+      setUserEmail(user.email ?? '')
+      setName(profile?.name ?? user.user_metadata?.name ?? user.email?.split('@')[0] ?? '')
+      setClassYear((profile?.class as '7' | '12' | null) ?? '')
+      setExamPath(profile?.exam_path ?? 'НВО')
+      setPlan((profile?.plan as 'free' | 'premium' | null) ?? null)
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const initials = userName.split(' ').filter(Boolean).map((n) => n[0]).join('').slice(0, 2).toUpperCase()
+  const initials = name.split(' ').filter(Boolean).map((n) => n[0]).join('').slice(0, 2).toUpperCase()
 
   const handleLogout = async () => {
     await signOut()
     router.push('/')
   }
 
-  const [notifications, setNotifications] = useState({
-    newTests: true,
-    weeklyReport: true,
-    aiAnswers: false,
-    promotions: false,
-  })
+  async function handleSaveProfile(e: React.FormEvent) {
+    e.preventDefault()
+    if (!userId) return
+    setProfileStatus('saving')
+    setProfileError(null)
+
+    const trimmedName = name.trim()
+    if (!trimmedName) {
+      setProfileStatus('error')
+      setProfileError('Името не може да е празно.')
+      return
+    }
+
+    const { error: updateAuthError } = await supabase.auth.updateUser({
+      data: { name: trimmedName },
+    })
+    if (updateAuthError) {
+      setProfileStatus('error')
+      setProfileError('Неуспех при запис. Опитай отново.')
+      return
+    }
+
+    const { error: updateProfileError } = await supabase
+      .from('profiles')
+      .update({
+        name: trimmedName,
+        class: classYear === '' ? null : classYear,
+        exam_path: examPath,
+      })
+      .eq('id', userId)
+
+    if (updateProfileError) {
+      setProfileStatus('error')
+      setProfileError('Неуспех при запис в профила.')
+      return
+    }
+
+    setProfileStatus('saved')
+    setTimeout(() => setProfileStatus('idle'), 2500)
+  }
+
+  async function handleChangePassword(e: React.FormEvent) {
+    e.preventDefault()
+    setPwStatus('saving')
+    setPwError(null)
+
+    if (!newPassword || newPassword.length < 8) {
+      setPwStatus('error')
+      setPwError('Новата парола трябва да е поне 8 знака.')
+      return
+    }
+    if (newPassword !== confirmPassword) {
+      setPwStatus('error')
+      setPwError('Новата парола и потвърждението не съвпадат.')
+      return
+    }
+
+    // Re-authenticate to verify current password (supabase doesn't require it,
+    // but we ask for it in the UI — check by signing in with current password).
+    if (currentPassword && userEmail) {
+      const { error: verifyError } = await supabase.auth.signInWithPassword({
+        email: userEmail,
+        password: currentPassword,
+      })
+      if (verifyError) {
+        setPwStatus('error')
+        setPwError('Текущата парола е грешна.')
+        return
+      }
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: newPassword })
+    if (error) {
+      setPwStatus('error')
+      setPwError('Неуспех при смяна на паролата.')
+      return
+    }
+
+    setCurrentPassword('')
+    setNewPassword('')
+    setConfirmPassword('')
+    setPwStatus('saved')
+    setTimeout(() => setPwStatus('idle'), 2500)
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -43,118 +168,150 @@ export default function ProfilePage() {
         <div className="card p-6 flex items-center gap-4">
           <div className="w-16 h-16 rounded-2xl bg-primary-light flex items-center justify-center flex-shrink-0">
             <span className="text-xl font-bold text-primary font-serif">
-              {initials}
+              {initials || '—'}
             </span>
           </div>
           <div>
-            <h1 className="text-xl font-serif font-bold text-text">{userName}</h1>
+            <h1 className="text-xl font-serif font-bold text-text">{name || '—'}</h1>
             <div className="flex items-center gap-2 mt-1.5">
-              <span className="badge text-xs bg-gray-100 text-text-muted">
-                Безплатен план
+              <span className={`badge text-xs ${plan === 'premium' ? 'bg-amber-100 text-amber-800' : 'bg-gray-100 text-text-muted'}`}>
+                {plan === 'premium' ? 'Премиум план' : plan === 'free' ? 'Безплатен план' : 'Зареждане...'}
               </span>
             </div>
           </div>
         </div>
 
         {/* Personal info */}
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-text text-sm">Лична информация</h2>
-            <button className="text-xs text-primary hover:underline font-medium">Редактирай</button>
-          </div>
+        <form onSubmit={handleSaveProfile} className="card p-5">
+          <h2 className="font-semibold text-text text-sm mb-4">Лична информация</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Пълно име</label>
-              <input type="text" defaultValue={userName} className="input-field" readOnly />
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="input-field"
+                disabled={!loaded}
+              />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Имейл адрес</label>
-              <input type="email" placeholder="Имейл адрес" className="input-field" readOnly />
+              <input
+                type="email"
+                value={userEmail}
+                className="input-field bg-gray-50"
+                readOnly
+              />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Клас</label>
-              <select defaultValue="7" className="input-field">
+              <select
+                value={classYear}
+                onChange={(e) => setClassYear(e.target.value as '7' | '12' | '')}
+                className="input-field"
+                disabled={!loaded}
+              >
+                <option value="">Не е избран</option>
                 <option value="7">7. клас</option>
                 <option value="12">12. клас</option>
               </select>
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Изпитен път</label>
-              <select defaultValue="НВО — Български език" className="input-field">
-                <option>НВО — Български език</option>
-                <option>НВО — Математика</option>
-                <option>ДЗИ — Български език и литература</option>
-                <option>ДЗИ — Математика</option>
-                <option>ДЗИ — История и цивилизации</option>
+              <select
+                value={EXAM_PATH_OPTIONS.includes(examPath) ? examPath : ''}
+                onChange={(e) => setExamPath(e.target.value)}
+                className="input-field"
+                disabled={!loaded}
+              >
+                {!EXAM_PATH_OPTIONS.includes(examPath) && examPath && (
+                  <option value="">{examPath}</option>
+                )}
+                {EXAM_PATH_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
               </select>
             </div>
           </div>
-          <button className="btn-primary mt-4 text-sm">Запази промените</button>
-        </div>
+          <div className="flex items-center gap-3 mt-4">
+            <button
+              type="submit"
+              className="btn-primary text-sm"
+              disabled={profileStatus === 'saving' || !loaded}
+            >
+              {profileStatus === 'saving' ? 'Записване...' : 'Запази промените'}
+            </button>
+            {profileStatus === 'saved' && (
+              <span className="text-xs text-success font-medium">Запазено.</span>
+            )}
+            {profileStatus === 'error' && profileError && (
+              <span className="text-xs text-danger font-medium">{profileError}</span>
+            )}
+          </div>
+        </form>
 
         {/* Password */}
-        <div className="card p-5">
+        <form onSubmit={handleChangePassword} className="card p-5">
           <h2 className="font-semibold text-text mb-4 text-sm">Смяна на парола</h2>
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Текуща парола</label>
-              <input type="password" placeholder="Въведи текущата парола" className="input-field" />
+              <input
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Въведи текущата парола"
+                className="input-field"
+                autoComplete="current-password"
+              />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Нова парола</label>
-              <input type="password" placeholder="Минимум 8 знака" className="input-field" />
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Минимум 8 знака"
+                className="input-field"
+                autoComplete="new-password"
+              />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Потвърди нова парола</label>
-              <input type="password" placeholder="Повтори новата парола" className="input-field" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Повтори новата парола"
+                className="input-field"
+                autoComplete="new-password"
+              />
             </div>
           </div>
-          <button className="btn-secondary mt-4 text-sm">Смени паролата</button>
-        </div>
+          <div className="flex items-center gap-3 mt-4">
+            <button
+              type="submit"
+              className="btn-secondary text-sm"
+              disabled={pwStatus === 'saving'}
+            >
+              {pwStatus === 'saving' ? 'Смяна...' : 'Смени паролата'}
+            </button>
+            {pwStatus === 'saved' && (
+              <span className="text-xs text-success font-medium">Паролата е сменена.</span>
+            )}
+            {pwStatus === 'error' && pwError && (
+              <span className="text-xs text-danger font-medium">{pwError}</span>
+            )}
+          </div>
+        </form>
 
-        {/* Notifications */}
+        {/* Sign out */}
         <div className="card p-5">
-          <h2 className="font-semibold text-text mb-4 text-sm">Настройки за известия</h2>
-          <div className="space-y-3">
-            {[
-              { key: 'newTests', label: 'Нови тестове и уроци', desc: 'Когато добавим ново съдържание' },
-              { key: 'weeklyReport', label: 'Седмичен отчет за напредъка', desc: 'Всеки понеделник' },
-              { key: 'aiAnswers', label: 'Имейл при AI отговор', desc: 'Ако не ти отговорим веднага' },
-              { key: 'promotions', label: 'Промоции и оферти', desc: 'Специални ценови предложения' },
-            ].map((item) => (
-              <div key={item.key} className="flex items-center justify-between py-2">
-                <div>
-                  <p className="text-sm font-medium text-text">{item.label}</p>
-                  <p className="text-xs text-text-muted">{item.desc}</p>
-                </div>
-                <button
-                  onClick={() => setNotifications((prev) => ({ ...prev, [item.key]: !prev[item.key as keyof typeof prev] }))}
-                  className={`relative w-10 h-5 rounded-full transition-colors ${
-                    notifications[item.key as keyof typeof notifications] ? 'bg-primary' : 'bg-gray-200'
-                  }`}
-                >
-                  <span
-                    className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-                      notifications[item.key as keyof typeof notifications] ? 'translate-x-5' : 'translate-x-0.5'
-                    }`}
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Danger zone */}
-        <div className="card p-5 border-danger/20">
-          <h2 className="font-semibold text-text mb-3 text-sm">Изход и изтриване</h2>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button onClick={handleLogout} className="btn-secondary text-sm justify-center">
-              Изход от профила
-            </button>
-            <button className="text-sm font-medium text-danger hover:bg-danger-light px-4 py-2.5 rounded-lg transition-colors">
-              Изтрий профила
-            </button>
-          </div>
+          <h2 className="font-semibold text-text mb-3 text-sm">Изход</h2>
+          <button onClick={handleLogout} className="btn-secondary text-sm justify-center">
+            Изход от профила
+          </button>
         </div>
       </div>
     </div>
