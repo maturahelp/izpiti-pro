@@ -298,16 +298,6 @@ export default function Math7TopicsPage() {
               const isOpen = showAnswers || openAnswers[problem.id]
               return (
                 <article key={problem.id} className="rounded-2xl border border-border bg-white p-4 md:p-5">
-                    <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
-                      <div className="flex flex-wrap gap-2">
-                        <Badge>{problem.topicTitle}</Badge>
-                        <Badge>{problem.subtopicTitle}</Badge>
-                        <Badge tone={problem.difficulty}>{difficultyLabels[problem.difficulty]}</Badge>
-                        <Badge>{typeLabels[problem.type]}</Badge>
-                      </div>
-                      <span className="text-xs text-text-muted">{problem.id} · #{index + 1}</span>
-                    </div>
-
                     <p className="text-sm md:text-base font-semibold text-text leading-relaxed mb-4">
                       <MathText text={problem.question} mathJaxReady={mathJaxReady} />
                     </p>
