@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
+import { fireConfetti } from '@/lib/confetti'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
 type Difficulty = 'easy' | 'medium' | 'exam_ready'
@@ -48,17 +49,6 @@ const allProblems = mathTopics.flatMap((topic) =>
   )
 )
 
-const difficultyLabels: Record<Difficulty, string> = {
-  easy: 'Основно',
-  medium: 'Средно',
-  exam_ready: 'Изпитно',
-}
-
-const typeLabels: Record<ProblemType, string> = {
-  multiple_choice: 'Избираем отговор',
-  short_answer: 'Кратък отговор',
-}
-
 declare global {
   interface Window {
     MathJax?: {
@@ -72,8 +62,11 @@ export default function Math7TopicsPage() {
   const router = useRouter()
   const [topicId, setTopicId] = useState('')
   const [subtopicId, setSubtopicId] = useState('')
-  const [showAnswers, setShowAnswers] = useState(false)
-  const [openAnswers, setOpenAnswers] = useState<Record<string, boolean>>({})
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [selectedOpt, setSelectedOpt] = useState<string | null>(null)
+  const [checked, setChecked] = useState(false)
+  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [finished, setFinished] = useState(false)
   const [mathJaxReady, setMathJaxReady] = useState(false)
 
   const visibleSubtopics = useMemo(() => (
@@ -137,11 +130,17 @@ export default function Math7TopicsPage() {
     setSubtopicId(selectedSubtopicId)
   }, [])
 
+  useEffect(() => {
+    setCurrentIndex(0)
+    setSelectedOpt(null)
+    setChecked(false)
+    setAnswers({})
+    setFinished(false)
+  }, [subtopicId])
+
   function chooseSubtopic(nextTopicId: string, nextSubtopicId: string) {
     setTopicId(nextTopicId)
     setSubtopicId(nextSubtopicId)
-    setShowAnswers(false)
-    setOpenAnswers({})
     window.history.replaceState(null, '', `/dashboard/materials/math-7-topics?subtopic=${nextSubtopicId}`)
     requestAnimationFrame(() => {
       document.getElementById('math-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -151,8 +150,6 @@ export default function Math7TopicsPage() {
   function returnToSubtopics() {
     setTopicId('')
     setSubtopicId('')
-    setShowAnswers(false)
-    setOpenAnswers({})
     window.history.replaceState(null, '', '/dashboard/materials/math-7-topics')
     requestAnimationFrame(() => {
       document.getElementById('math-subtopic-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -161,14 +158,55 @@ export default function Math7TopicsPage() {
 
   useEffect(() => {
     if (!window.MathJax?.typesetPromise) return
-    const root = document.getElementById('math-problem-list')
+    const root = document.getElementById('math-workspace')
     if (!root) return
     window.MathJax.typesetClear?.([root])
     window.MathJax.typesetPromise([root]).catch(() => {})
-  }, [filteredProblems, openAnswers, showAnswers, mathJaxReady])
+  }, [currentIndex, checked, mathJaxReady])
 
-  function toggleAnswer(problemId: string) {
-    setOpenAnswers((prev) => ({ ...prev, [problemId]: !prev[problemId] }))
+  function handleSelect(optValue: string) {
+    if (checked) return
+    setSelectedOpt(optValue)
+  }
+
+  function handleCheck() {
+    if (selectedOpt === null) return
+    const problem = filteredProblems[currentIndex]
+    setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
+    setChecked(true)
+    if (selectedOpt === problem.correctAnswer) {
+      fireConfetti()
+    }
+  }
+
+  function handleRetryQuestion() {
+    const problem = filteredProblems[currentIndex]
+    setAnswers((prev) => {
+      const next = { ...prev }
+      delete next[problem.id]
+      return next
+    })
+    setSelectedOpt(null)
+    setChecked(false)
+  }
+
+  function handleNext() {
+    if (currentIndex + 1 >= filteredProblems.length) {
+      setFinished(true)
+    } else {
+      setCurrentIndex((i) => i + 1)
+      setSelectedOpt(null)
+      setChecked(false)
+    }
+  }
+
+  function handleRestart() {
+    setCurrentIndex(0)
+    setSelectedOpt(null)
+    setChecked(false)
+    setAnswers({})
+    setFinished(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -195,7 +233,7 @@ export default function Math7TopicsPage() {
         strategy="afterInteractive"
         onLoad={() => {
           setMathJaxReady(true)
-          const root = document.getElementById('math-problem-list')
+          const root = document.getElementById('math-workspace')
           if (root) window.MathJax?.typesetPromise?.([root])
         }}
       />
@@ -284,74 +322,202 @@ export default function Math7TopicsPage() {
                 {formatTitleText(selectedSubtopic.title)}
               </h2>
             </div>
-            <button
-              type="button"
-              onClick={() => setShowAnswers((value) => !value)}
-              className="rounded-lg border border-primary bg-white px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-light transition-colors"
-            >
-              {showAnswers ? 'Скрий всички отговори' : 'Покажи всички отговори'}
-            </button>
           </div>
 
-          <div id="math-problem-list" className="space-y-4">
-            {filteredProblems.map((problem, index) => {
-              const isOpen = showAnswers || openAnswers[problem.id]
-              return (
-                <article key={problem.id} className="rounded-2xl border border-border bg-white p-4 md:p-5">
-                    <p className="text-sm md:text-base font-semibold text-text leading-relaxed mb-4">
-                      <MathText text={problem.question} mathJaxReady={mathJaxReady} />
-                    </p>
+          {!finished && filteredProblems.length > 0 && (
+            <>
+              {/* Progress bar */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wide">
+                    Въпрос {currentIndex + 1} от {filteredProblems.length}
+                  </h2>
+                  <span className="text-xs text-text-muted font-semibold">
+                    {currentIndex + 1}/{filteredProblems.length}
+                  </span>
+                </div>
+                <div className="w-full bg-border rounded-full h-1.5">
+                  <div
+                    className="bg-primary h-1.5 rounded-full transition-all duration-300"
+                    style={{ width: `${((currentIndex + 1) / filteredProblems.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Question card */}
+              {(() => {
+                const problem = filteredProblems[currentIndex]
+                const isCorrect = checked && selectedOpt === problem.correctAnswer
+                const isWrong = checked && selectedOpt !== null && selectedOpt !== problem.correctAnswer
+
+                return (
+                  <div
+                    className={cn(
+                      'rounded-2xl border p-4 md:p-5 mb-4',
+                      checked
+                        ? isCorrect
+                          ? 'border-success/40 bg-success/5'
+                          : 'border-danger/40 bg-danger/5'
+                        : 'border-border bg-white'
+                    )}
+                  >
+                    <div className="flex gap-3 mb-4">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
+                        {currentIndex + 1}
+                      </span>
+                      <p className="text-sm md:text-base font-semibold text-text leading-relaxed">
+                        <MathText text={problem.question} mathJaxReady={mathJaxReady} />
+                      </p>
+                    </div>
 
                     {problem.type === 'multiple_choice' && problem.options && (
-                      <div className="space-y-2 mb-4">
+                      <div className="space-y-2 pl-9">
                         {Object.entries(problem.options).map(([label, value]) => {
-                          const isCorrect = isOpen && value === problem.correctAnswer
+                          const isSelected = selectedOpt === value
+                          const isCorrectOpt = value === problem.correctAnswer
+
+                          let optStyle = 'border-border bg-gray-50 text-text hover:border-primary/40 hover:bg-primary/5'
+                          if (checked) {
+                            if (isCorrectOpt) {
+                              optStyle = 'border-success bg-success/10 text-success font-semibold'
+                            } else if (isSelected && !isCorrectOpt) {
+                              optStyle = 'border-danger bg-danger/10 text-danger'
+                            } else {
+                              optStyle = 'border-border bg-gray-50 text-text-muted'
+                            }
+                          } else if (isSelected) {
+                            optStyle = 'border-primary bg-primary/10 text-primary font-semibold'
+                          }
+
                           return (
-                            <div
+                            <button
                               key={label}
+                              type="button"
+                              onClick={() => handleSelect(value)}
+                              disabled={checked}
                               className={cn(
-                                'rounded-xl border px-3 py-2.5 text-sm',
-                                isCorrect
-                                  ? 'border-success bg-success/10 text-success font-semibold'
-                                  : 'border-border bg-gray-50 text-text'
+                                'w-full text-left rounded-xl border px-3 py-2.5 text-sm transition-colors flex items-start gap-2.5',
+                                optStyle,
+                                checked && 'cursor-default'
                               )}
                             >
-                              <span className="font-bold mr-2">{label}.</span>
-                              <MathText text={value} mathJaxReady={mathJaxReady} />
-                            </div>
+                              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-[10px] font-bold flex items-center justify-center mt-0.5">
+                                {label}
+                              </span>
+                              <span className="leading-relaxed">
+                                <MathText text={value} mathJaxReady={mathJaxReady} />
+                              </span>
+                            </button>
                           )
                         })}
                       </div>
                     )}
 
-                    <button
-                      type="button"
-                      onClick={() => toggleAnswer(problem.id)}
-                      className="rounded-xl border border-primary/40 bg-primary-light px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/15 transition-colors"
-                    >
-                      {isOpen ? 'Скрий отговора' : 'Покажи отговора'}
-                    </button>
-
-                    {isOpen && (
+                    {problem.type === 'short_answer' && checked && (
                       <div className="mt-4 rounded-xl border border-[#D7E7F7] bg-[#F8FBFF] p-4 text-sm text-text">
-                        <p className="mb-2"><strong>Отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
-                        <p className="mb-2 leading-relaxed"><strong>Решение:</strong> <MathText text={problem.explanation} mathJaxReady={mathJaxReady} /></p>
-                        <p className="text-xs text-text-muted">
-                          <strong>Умения:</strong> {problem.skills.join(', ')}
-                        </p>
+                        <p><strong>Отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
                       </div>
                     )}
-                  </article>
-                )
-              })}
 
-              {filteredProblems.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-border bg-white p-8 text-center text-text-muted">
-                  Няма задачи за избраните филтри.
-                </div>
-              )}
+                    {checked && isWrong && (
+                      <p className="mt-3 pl-9 text-xs text-text-muted italic leading-relaxed">
+                        <MathText text={problem.explanation} mathJaxReady={mathJaxReady} />
+                      </p>
+                    )}
+                  </div>
+                )
+              })()}
+
+              {/* Action buttons */}
+              <div className="flex flex-col gap-2">
+                {!checked ? (
+                  <button
+                    type="button"
+                    disabled={selectedOpt === null}
+                    onClick={handleCheck}
+                    className={cn(
+                      'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+                      selectedOpt !== null
+                        ? 'bg-primary text-white hover:bg-primary-dark'
+                        : 'bg-border text-text-muted cursor-not-allowed'
+                    )}
+                  >
+                    Провери отговора
+                  </button>
+                ) : selectedOpt === filteredProblems[currentIndex].correctAnswer ? (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="w-full rounded-xl py-3 text-sm font-semibold bg-success text-white hover:bg-success/90 transition-colors"
+                  >
+                    {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleRetryQuestion}
+                      className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+                    >
+                      Опитай пак
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNext}
+                      className="w-full rounded-xl py-3 text-sm font-semibold bg-white border border-border text-text-muted hover:border-primary/40 transition-colors"
+                    >
+                      {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
+
+          {filteredProblems.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-border bg-white p-8 text-center text-text-muted">
+              Няма задачи за избраните филтри.
             </div>
-          </section>
+          )}
+
+          {finished && (
+            <div className="flex flex-col items-center justify-center min-h-[40vh] text-center py-8">
+              <div
+                className={cn(
+                  'w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold mb-6 border-4',
+                  filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.8
+                    ? 'bg-success/10 text-success border-success'
+                    : filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.5
+                      ? 'bg-amber-100 text-amber-600 border-amber-400'
+                      : 'bg-danger/10 text-danger border-danger'
+                )}
+              >
+                {filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length}/{filteredProblems.length}
+              </div>
+              <h2 className="text-2xl font-bold text-text mb-2">
+                {filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.8
+                  ? 'Отлично!'
+                  : filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.5
+                    ? 'Добре!'
+                    : 'Опитай пак!'}
+              </h2>
+              <p className="text-text-muted mb-8">
+                Верни отговори:{' '}
+                <strong className="text-text">
+                  {filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length}
+                </strong>{' '}
+                от <strong className="text-text">{filteredProblems.length}</strong>
+              </p>
+              <button
+                type="button"
+                onClick={handleRestart}
+                className="w-full max-w-xs rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+              >
+                Опитай отново
+              </button>
+            </div>
+          )}
+        </section>
         )}
       </div>
     </div>
@@ -380,20 +546,4 @@ function formatTitleText(text: string) {
     .replace(/\\le/g, '≤')
     .replace(/\\ge/g, '≥')
     .replace(/\\neq/g, '≠')
-}
-
-function Badge({ children, tone }: { children: React.ReactNode; tone?: Difficulty }) {
-  const toneClass = tone === 'easy'
-    ? 'bg-success-light text-success'
-    : tone === 'medium'
-      ? 'bg-amber-light text-amber'
-      : tone === 'exam_ready'
-        ? 'bg-danger-light text-danger'
-        : 'bg-gray-100 text-text-muted'
-
-  return (
-    <span className={cn('rounded-full px-2.5 py-1 text-xs font-semibold', toneClass)}>
-      {children}
-    </span>
-  )
 }
