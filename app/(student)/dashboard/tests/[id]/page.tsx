@@ -18,6 +18,10 @@ import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
 import mockMathPracticeDataset from '@/data/mock_math_exam_practice.json'
 import { beronExamPayload, beronTests } from '@/data/beron-tests'
+import {
+  generatedEnglishMaterialSections,
+  type GeneratedEnglishQuestion,
+} from '@/lib/english-generated-materials'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 
 // ---------------------------------------------------------------------------
@@ -50,7 +54,7 @@ interface NvoExam {
     labels: string[]
     values: number[]
   }
-  exam_type?: 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math'
+  exam_type?: 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math' | 'dzi_english'
 }
 
 interface MockPracticeExam {
@@ -392,6 +396,62 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
   }
 }
 
+function normalizeGeneratedEnglishQuestion(question: GeneratedEnglishQuestion): NvoQuestion {
+  if (question.type === 'single_choice') {
+    return {
+      number: question.id,
+      type: 'single_choice',
+      question: question.prompt,
+      options: question.options,
+      correct_option: question.correctOption,
+      official_answer: question.correctOption,
+      answer_guide: question.skill,
+      section: 'reading',
+    }
+  }
+
+  const promptParts = [
+    question.prompt,
+    `Препоръчителен обем: ${question.wordLimit}`,
+    'Включи в текста си:',
+    ...question.bullets.map((bullet) => `- ${bullet}`),
+  ]
+
+  const reviewChecklist = [
+    'Насоки за самопроверка:',
+    ...question.checklist.map((item) => `- ${item}`),
+  ].join('\n')
+
+  return {
+    number: question.id,
+    type: 'open_response',
+    question: promptParts.join('\n\n'),
+    official_answer: reviewChecklist,
+    answer_guide: reviewChecklist,
+    section: 'writing',
+  }
+}
+
+function normalizeGeneratedEnglishSection(
+  section: (typeof generatedEnglishMaterialSections)[number],
+): NvoExam {
+  const readingContext = [section.sourceNote, ...(section.passage || [])]
+    .filter(Boolean)
+    .join('\n\n')
+
+  return {
+    id: `english-generated-${section.id}`,
+    year: '',
+    subject: 'Английски език',
+    published_at: '',
+    context_text: section.mode === 'reading' ? readingContext : '',
+    context_images: [],
+    source_title: section.title,
+    exam_type: 'dzi_english',
+    questions: section.questions.map(normalizeGeneratedEnglishQuestion),
+  }
+}
+
 function normalizeBeronExam(test: BeronDifficultyTest): NvoExam {
   const optionLabels = ['А', 'Б', 'В', 'Г', 'Д', 'Е']
   const isGrade7 = test.bank === 'g7'
@@ -441,6 +501,8 @@ const OFFICIAL_EXAMS: NvoExam[] = [
   ...(officialEnglishMockExams as unknown as NvoExam[]),
 ]
 
+const GENERATED_ENGLISH_EXAMS: NvoExam[] = generatedEnglishMaterialSections.map(normalizeGeneratedEnglishSection)
+
 const MOCK_EXAMS: NvoExam[] = [
   ...(mockPracticeDataset as { exams: MockPracticeExam[] }).exams,
   ...(mockMathPracticeDataset as { exams: MockPracticeExam[] }).exams,
@@ -473,7 +535,7 @@ export default function TestPage() {
   }
 
   const datasetId = mapTestId(test.id)
-  const exam = [...OFFICIAL_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
+  const exam = [...OFFICIAL_EXAMS, ...GENERATED_ENGLISH_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
   const storageKey = `izpiti-pro:test:${test.id}:state:v1`
 
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
@@ -553,42 +615,46 @@ export default function TestPage() {
     const correctCount = choiceQuestions.filter((q) => answers[q.number] === q.correct_option).length
     const percent = choiceQuestions.length ? Math.round((correctCount / choiceQuestions.length) * 100) : 0
 
-    if (percent >= 80) {
+    if (choiceQuestions.length > 0 && percent >= 80) {
       fireCelebrationConfetti()
-    } else if (percent >= 70) {
+    } else if (choiceQuestions.length > 0 && percent >= 70) {
       setShowLottieConfetti(false)
       requestAnimationFrame(() => setShowLottieConfetti(true))
     }
 
     // Save DZI attempt to Supabase so it appears in the progress chart
-    try {
-      const catalogEntry = allTests.find((t) => t.id === testId)
-      if (catalogEntry?.examType === 'dzi12') {
-        void saveDziAttempt({
-          testId,
-          testName: catalogEntry.title,
-          score: percent,
-          subject: catalogEntry.subjectName,
-        })
+    if (choiceQuestions.length > 0) {
+      try {
+        const catalogEntry = allTests.find((t) => t.id === testId)
+        if (catalogEntry?.examType === 'dzi12') {
+          void saveDziAttempt({
+            testId,
+            testName: catalogEntry.title,
+            score: percent,
+            subject: catalogEntry.subjectName,
+          })
+        }
+      } catch (err) {
+        console.error('Failed to record DZI attempt', err)
       }
-    } catch (err) {
-      console.error('Failed to record DZI attempt', err)
     }
 
     // Log this test submission to the local activity feed (Progress page).
-    try {
-      const catalogEntry = allTests.find((t) => t.id === testId)
-      logActivity({
-        type: 'test',
-        refId: testId,
-        title: catalogEntry?.title || exam.source_title || `Тест ${testId}`,
-        meta: catalogEntry?.subjectName,
-        score: correctCount,
-        maxScore: choiceQuestions.length,
-        href: `/dashboard/tests/${testId}`,
-      })
-    } catch (err) {
-      console.error('Failed to log test activity', err)
+    if (choiceQuestions.length > 0) {
+      try {
+        const catalogEntry = allTests.find((t) => t.id === testId)
+        logActivity({
+          type: 'test',
+          refId: testId,
+          title: catalogEntry?.title || exam.source_title || `Тест ${testId}`,
+          meta: catalogEntry?.subjectName,
+          score: correctCount,
+          maxScore: choiceQuestions.length,
+          href: `/dashboard/tests/${testId}`,
+        })
+      } catch (err) {
+        console.error('Failed to log test activity', err)
+      }
     }
 
     const MISTAKES_KEY = 'nvo_mistakes'
@@ -655,6 +721,13 @@ export default function TestPage() {
   const selectableQuestions = exam.questions.filter((q) => q.type === 'single_choice')
   const answeredCount = Object.keys(answers).filter((k) => answers[Number(k)]).length
   const totalSelectable = selectableQuestions.length
+  const totalQuestions = exam.questions.length
+  const openResponseCount = Math.max(totalQuestions - totalSelectable, 0)
+  const answeredOpenCount = Object.values(openResponses).filter((responseSet) =>
+    Object.values(responseSet || {}).some((value) => value.trim().length > 0)
+  ).length
+  const progressAnswered = totalSelectable > 0 ? answeredCount : answeredOpenCount
+  const progressTotal = totalSelectable > 0 ? totalSelectable : Math.max(openResponseCount, 1)
 
   const score = (() => {
     const correct = selectableQuestions.filter((q) => answers[q.number] === q.correct_option).length
@@ -669,8 +742,6 @@ export default function TestPage() {
   const hasContext = Boolean(exam.context_text)
   const hasMedia = Boolean(exam.context_images?.length)
   const hasChart = Boolean(exam.chart?.labels?.length)
-  const totalQuestions = exam.questions.length
-  const openResponseCount = Math.max(totalQuestions - totalSelectable, 0)
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -682,7 +753,7 @@ export default function TestPage() {
           <div className="flex items-center gap-4">
             <div className={cn(
               'w-14 h-14 rounded-full flex items-center justify-center text-sm font-bold border-4',
-              !submitted && !revealAnswers
+              (!submitted && !revealAnswers) || totalSelectable === 0
                 ? 'border-gray-200 text-text-muted'
                 : score.percent >= 80
                 ? 'border-green-400 text-green-700'
@@ -690,17 +761,21 @@ export default function TestPage() {
                 ? 'border-amber-400 text-amber-700'
                 : 'border-red-400 text-red-700'
             )}>
-              {submitted || revealAnswers ? `${score.percent}%` : '—'}
+              {submitted || revealAnswers ? (totalSelectable > 0 ? `${score.percent}%` : '—') : '—'}
             </div>
             <div>
               <p className="text-xs text-text-muted font-semibold uppercase tracking-wide">Напредък</p>
-              <p className="text-sm font-semibold text-text">{answeredCount} / {totalSelectable} тестови отговорени</p>
+              <p className="text-sm font-semibold text-text">
+                {totalSelectable > 0
+                  ? `${answeredCount} / ${totalSelectable} тестови отговорени`
+                  : `${answeredOpenCount} / ${openResponseCount} свободни отговорени`}
+              </p>
               <p className="text-xs text-text-muted">
                 {openResponseCount > 0
                   ? `${totalQuestions} задачи общо · ${openResponseCount} със свободен отговор`
                   : `${totalQuestions} въпроса общо`}
               </p>
-              {(submitted || revealAnswers) && (
+              {(submitted || revealAnswers) && totalSelectable > 0 && (
                 <p className="text-xs text-text-muted">{score.correct} верни от {score.total}</p>
               )}
             </div>
@@ -710,7 +785,7 @@ export default function TestPage() {
               onClick={handleSubmit}
               className="btn-primary text-sm px-4 py-2"
             >
-              Провери отговорите
+              {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
             </button>
             <button
               onClick={() => setRevealAnswers((v) => !v)}
@@ -729,7 +804,7 @@ export default function TestPage() {
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full bg-primary transition-all duration-200"
-              style={{ width: totalSelectable ? `${Math.round((answeredCount / totalSelectable) * 100)}%` : '0%' }}
+              style={{ width: `${Math.round((progressAnswered / progressTotal) * 100)}%` }}
             />
           </div>
         </div>
