@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { signIn } from '@/lib/auth'
+import { loginAction } from './actions'
 
 // Only allow same-origin redirects (must start with "/" and not with "//" to prevent protocol-relative open redirects).
 function safeRedirectTo(raw: string | null): string {
@@ -27,24 +27,24 @@ function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
-  async function handleSubmit(e: React.FormEvent) {
+  const loading = isPending
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     if (!email || !password) { setError('Попълни всички полета.'); return }
-    setLoading(true)
-    const { user, error } = await signIn(email, password)
-    setLoading(false)
-    if (error || !user) {
-      const msg = error?.message?.includes('Email not confirmed')
-        ? 'Имейлът не е потвърден. Провери пощата си и кликни линка за потвърждение.'
-        : error?.message || 'Грешен имейл или парола.'
-      setError(msg)
-      return
-    }
-    window.location.href = redirectTo
+    const formData = new FormData()
+    formData.set('email', email)
+    formData.set('password', password)
+    formData.set('redirectTo', redirectTo)
+    startTransition(async () => {
+      const result = await loginAction(formData)
+      if (result?.error) setError(result.error)
+      // success: server action calls redirect(); navigation handled by Next.
+    })
   }
 
   return (
