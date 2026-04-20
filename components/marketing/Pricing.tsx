@@ -106,13 +106,22 @@ const familyFeatures = [
 ]
 
 async function startCheckout(plan: PlanKey) {
-  const res = await fetch('/api/checkout', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ plan }),
-  })
-  const data = await res.json()
-  if (data.url) window.location.href = data.url
+  try {
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan }),
+    })
+    const data = await res.json()
+    if (data.url) {
+      window.location.href = data.url
+    } else {
+      alert('Грешка: ' + (data.error ?? 'Неизвестна грешка'))
+    }
+  } catch (err) {
+    alert('Проблем при свързване с плащане. Опитай отново.')
+    console.error(err)
+  }
 }
 
 export function Pricing() {

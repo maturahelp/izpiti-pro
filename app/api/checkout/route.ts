@@ -39,7 +39,11 @@ const PLANS: Record<PlanKey, { name: string; amount: number; currency: string; m
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://izpiti.pro'
 
 export async function POST(req: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
   const { plan } = (await req.json()) as { plan: PlanKey }
 
@@ -48,6 +52,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unknown plan' }, { status: 400 })
   }
 
+  try {
   const session = await stripe.checkout.sessions.create({
     mode: config.mode,
     line_items: [
@@ -66,4 +71,8 @@ export async function POST(req: NextRequest) {
   })
 
   return NextResponse.json({ url: session.url })
+  } catch (err) {
+    console.error('Stripe error:', err)
+    return NextResponse.json({ error: String(err) }, { status: 500 })
+  }
 }
