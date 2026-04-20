@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getUser } from '@/lib/auth'
 import { useGrade } from '@/lib/grade-context'
@@ -198,7 +197,7 @@ export function TopBar({ title }: TopBarProps) {
               <div className="p-2">
                 {notificationItems.length > 0 ? (
                   notificationItems.map((item) => (
-                    <Link
+                    <a
                       key={item.id}
                       href={item.href}
                       onClick={() => setIsNotificationsOpen(false)}
@@ -206,7 +205,7 @@ export function TopBar({ title }: TopBarProps) {
                     >
                       <p className="text-sm font-medium text-text">{item.title}</p>
                       <p className="mt-1 text-xs leading-5 text-text-muted">{item.description}</p>
-                    </Link>
+                    </a>
                   ))
                 ) : (
                   <div className="px-3 py-6 text-center">
@@ -219,26 +218,26 @@ export function TopBar({ title }: TopBarProps) {
               </div>
 
               <div className="border-t border-border p-2">
-                <Link
+                <a
                   href="/dashboard/settings"
                   onClick={() => setIsNotificationsOpen(false)}
                   className="block rounded-xl px-3 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary-light/40"
                 >
                   Управлявай известията
-                </Link>
+                </a>
               </div>
             </div>
           )}
         </div>
 
-        <Link href="/dashboard/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <a href="/dashboard/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center">
             <span className="text-xs font-bold text-primary">{initials || '?'}</span>
           </div>
           <span className="hidden sm:block text-sm font-medium text-text">
             {userName.split(' ')[0] || ''}
           </span>
-        </Link>
+        </a>
       </div>
     </header>
   )

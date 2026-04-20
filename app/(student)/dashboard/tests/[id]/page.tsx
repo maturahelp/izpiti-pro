@@ -903,9 +903,9 @@ export default function TestPage() {
         </div>
 
         <div className="flex flex-wrap gap-3 pt-2">
-          <Link href="/dashboard/tests" className="btn-secondary">
+          <a href="/dashboard/tests" className="btn-secondary">
             Обратно към тестовете
-          </Link>
+          </a>
           <button onClick={handleReset} className="btn-primary">
             Опитай отново
           </button>

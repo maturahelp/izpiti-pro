@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
 import { PremiumLock } from '@/components/shared/PremiumLock'
@@ -306,7 +305,7 @@ export function TestsPageContent({
                   >
                     Writing
                   </span>
-                  <Link
+                  <a
                     href="/dashboard/tests/english-generated-writing"
                     style={{ backgroundColor: activeTheme.accent }}
                     onMouseEnter={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accentHover }}
@@ -314,7 +313,7 @@ export function TestsPageContent({
                     className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
                   >
                     Отвори
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -385,7 +384,7 @@ export function TestsPageContent({
                 </div>
 
                 <div className="flex justify-end">
-                  <Link
+                  <a
                     href={getTestHref(test)}
                     style={
                       test.isPremium
@@ -402,7 +401,7 @@ export function TestsPageContent({
                     )}
                   >
                     {test.status === 'completed' ? 'Повтори' : test.status === 'in_progress' ? 'Продължи' : 'Започни'}
-                  </Link>
+                  </a>
                 </div>
               </div>
             ))}

@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
@@ -106,7 +105,7 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-full w-56 bg-white border-r border-slate-200 flex flex-col z-40">
       {/* Logo */}
-      <Link href="/" className="flex items-center gap-2.5 px-4 py-4 border-b border-slate-100 hover:opacity-80 transition-opacity">
+      <a href="/" className="flex items-center gap-2.5 px-4 py-4 border-b border-slate-100 hover:opacity-80 transition-opacity">
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
           <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#5899E2" strokeWidth="1.6" strokeLinejoin="round"/>
           <path d="M14 8V23" stroke="#5899E2" strokeWidth="1.6" strokeLinecap="round"/>
@@ -116,32 +115,32 @@ export function Sidebar() {
           <path d="M15.5 12.8C17 12.6 18.5 12.7 20 13" stroke="#5899E2" strokeWidth="1.3" strokeLinecap="round"/>
         </svg>
         <span className="font-bold text-[#1B2845] text-base font-serif tracking-[-0.02em]">MaturaHelp</span>
-      </Link>
+      </a>
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-thin">
         {navItems.map((item) => (
-          <Link
+          <a
             key={item.href}
             href={item.href}
             className={cn(isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')}
           >
             {item.icon}
             {item.label}
-          </Link>
+          </a>
         ))}
       </nav>
 
       <div className="flex-shrink-0 border-t border-slate-100 px-3 py-4 space-y-1">
         {secondaryNavItems.map((item) => (
-          <Link
+          <a
             key={item.href}
             href={item.href}
             className={cn(isActive(item.href) ? 'sidebar-item-active' : 'sidebar-item')}
           >
             {item.icon}
             {item.label}
-          </Link>
+          </a>
         ))}
       </div>
     </aside>
