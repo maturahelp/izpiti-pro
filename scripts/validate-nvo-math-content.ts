@@ -148,6 +148,17 @@ function validateOfficialMathNvo() {
       }
     }
 
+    if (exam.id === '2022_math') {
+      const q7 = getQuestion(exam, 7)
+      assertOptions(q7, ['А', 'Б', 'В', 'Г'], '2022_math q7')
+      const expectedOptions: OptionMap = { А: '2018', Б: '2019', В: '2020', Г: '2021' }
+      for (const [label, expectedText] of Object.entries(expectedOptions)) {
+        if (q7.options?.[label] !== expectedText) {
+          fail(`2022_math q7 option ${label} should be ${expectedText}; got ${q7.options?.[label] || 'missing'}`)
+        }
+      }
+    }
+
     const expected = EXPECTED_OPEN_RESPONSE[exam.id] || {}
     for (const number of [18, 19, 20] as const) {
       const expectedLabels = expected[number]
@@ -174,6 +185,14 @@ function validateOfficialMathNvo() {
         fail(`${exam.id} q19 should carry the extracted q19/q20 task_condition`)
       }
     }
+  }
+}
+
+function validateTestPageFigureRendering() {
+  const pagePath = path.join(process.cwd(), 'app', '(student)', 'dashboard', 'tests', '[id]', 'page.tsx')
+  const pageSource = fs.readFileSync(pagePath, 'utf8')
+  if (pageSource.includes('Отвори фигурата')) {
+    fail('SVG figures should render inline without an "Отвори фигурата" new-window link')
   }
 }
 
@@ -242,4 +261,5 @@ function validateMockMathFigures() {
 
 validateOfficialMathNvo()
 validateMockMathFigures()
+validateTestPageFigureRendering()
 console.log('NVO math content validation passed.')
