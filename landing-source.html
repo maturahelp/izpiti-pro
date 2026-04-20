@@ -783,7 +783,7 @@
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>AI помощник за въпроси, обяснения и насоки</li>
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Проследяване на напредъка ти в платформата</li>
             </ul>
-            <a href="/register" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Започни сега</a>
+            <button type="button" data-checkout-plan="dzi-monthly" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Започни сега</button>
           </div>
           <!-- ДЗИ До края на матурите -->
           <div class="bg-white rounded-2xl card-shadow-lg p-8 border-2 border-primary-500 relative">
@@ -803,7 +803,7 @@
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Практически тестове в реален формат</li>
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Удобен вариант за интензивна финална подготовка</li>
             </ul>
-            <a href="/register" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Вземи достъп до 22 май</a>
+            <button type="button" data-checkout-plan="dzi-full" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Вземи достъп до 22 май</button>
           </div>
         </div>
       </div>
@@ -827,7 +827,7 @@
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>AI помощник за въпроси и допълнителна помощ</li>
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Напредък и по-добра организация на ученето</li>
             </ul>
-            <a href="/register" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Започни подготовка</a>
+            <button type="button" data-checkout-plan="nvo-monthly" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Започни подготовка</button>
           </div>
           <!-- НВО До края на изпитите -->
           <div class="bg-white rounded-2xl card-shadow-lg p-8 border-2 border-primary-500 relative">
@@ -847,7 +847,7 @@
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Упражнения и тестове в изпитен формат</li>
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Подходящо за цялостна подготовка без прекъсване</li>
             </ul>
-            <a href="/register" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Вземи достъп до 19 юни</a>
+            <button type="button" data-checkout-plan="nvo-full" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Вземи достъп до 19 юни</button>
           </div>
         </div>
       </div>
@@ -875,7 +875,7 @@
                 <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Подходящ за семейства с ученик в 7. и 12. клас</li>
                 <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Един по-изгоден план вместо два отделни абонамента</li>
               </ul>
-              <a href="/register" class="block w-full text-center bg-accent-navy text-white font-semibold py-3 rounded-full text-sm hover:bg-indigo-900 hover:shadow-lg transition-all">Избери семеен план</a>
+              <button type="button" data-checkout-plan="family" class="block w-full text-center bg-accent-navy text-white font-semibold py-3 rounded-full text-sm hover:bg-indigo-900 hover:shadow-lg transition-all">Избери семеен план</button>
             </div>
           </div>
         </div>
@@ -1458,6 +1458,39 @@
       } catch (e) {
         // fail silently — landing still works with default CTAs
       }
+    })();
+  </script>
+
+  <!-- Stripe checkout wiring -->
+  <script>
+    (function () {
+      document.querySelectorAll('button[data-checkout-plan]').forEach(function (btn) {
+        btn.addEventListener('click', async function () {
+          var plan = btn.getAttribute('data-checkout-plan');
+          var originalText = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = 'Зареждане…';
+          try {
+            var res = await fetch('/api/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ plan: plan })
+            });
+            var data = await res.json();
+            if (data.url) {
+              window.location.href = data.url;
+            } else {
+              alert('Грешка: ' + (data.error || 'Неуспешно зареждане на плащане'));
+              btn.disabled = false;
+              btn.textContent = originalText;
+            }
+          } catch (err) {
+            alert('Проблем при свързване с плащане. Опитай отново.');
+            btn.disabled = false;
+            btn.textContent = originalText;
+          }
+        });
+      });
     })();
   </script>
 
