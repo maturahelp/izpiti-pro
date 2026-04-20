@@ -6,7 +6,6 @@ import { Badge } from '@/components/shared/Badge'
 import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import {
-  generatedEnglishReadingQuestionCount,
   generatedEnglishWritingQuestionCount,
 } from '@/lib/english-generated-materials'
 import { useGrade } from '@/lib/grade-context'
@@ -246,42 +245,7 @@ export function TestsPageContent({
           )}
 
           {isEnglishSampleView && (
-            <div className="mb-4 grid sm:grid-cols-2 gap-4">
-              <div className="card-hover p-5 flex flex-col gap-4">
-                <div>
-                  <span
-                    className="mb-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
-                    style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
-                  >
-                    {generatedEnglishReadingQuestionCount} въпроса
-                  </span>
-                  <h3 className="font-semibold text-text text-sm leading-snug">Reading банк</h3>
-                  <p className="text-xs text-text-muted mt-1">45 примерни reading теста с текст и по 10 ABCD въпроса</p>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-text-muted">
-                  <span>45 текста за четене</span>
-                  <span>·</span>
-                  <span>ABCD формат</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span
-                    className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
-                    style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
-                  >
-                    Reading
-                  </span>
-                  <a
-                    href="#english-generated-tests"
-                    style={{ backgroundColor: activeTheme.accent }}
-                    onMouseEnter={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accentHover }}
-                    onMouseLeave={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accent }}
-                    className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
-                  >
-                    Към тестовете
-                  </a>
-                </div>
-              </div>
-
+            <div className="mb-4 max-w-md">
               <div className="card-hover p-5 flex flex-col gap-4">
                 <div>
                   <span
