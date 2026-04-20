@@ -179,6 +179,10 @@ export default function Math7TopicsPage() {
     }
   }
 
+  function handleRevealShortAnswer() {
+    setChecked(true)
+  }
+
   function handleRetryQuestion() {
     const problem = filteredProblems[currentIndex]
     setAnswers((prev) => {
@@ -208,6 +212,8 @@ export default function Math7TopicsPage() {
     setFinished(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const correctCount = filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -431,18 +437,36 @@ export default function Math7TopicsPage() {
               {/* Action buttons */}
               <div className="flex flex-col gap-2">
                 {!checked ? (
+                  filteredProblems[currentIndex].type === 'short_answer' ? (
+                    <button
+                      type="button"
+                      onClick={handleRevealShortAnswer}
+                      className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+                    >
+                      Виж отговора
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={selectedOpt === null}
+                      onClick={handleCheck}
+                      className={cn(
+                        'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+                        selectedOpt !== null
+                          ? 'bg-primary text-white hover:bg-primary-dark'
+                          : 'bg-border text-text-muted cursor-not-allowed'
+                      )}
+                    >
+                      Провери отговора
+                    </button>
+                  )
+                ) : filteredProblems[currentIndex].type === 'short_answer' ? (
                   <button
                     type="button"
-                    disabled={selectedOpt === null}
-                    onClick={handleCheck}
-                    className={cn(
-                      'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
-                      selectedOpt !== null
-                        ? 'bg-primary text-white hover:bg-primary-dark'
-                        : 'bg-border text-text-muted cursor-not-allowed'
-                    )}
+                    onClick={handleNext}
+                    className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
                   >
-                    Провери отговора
+                    {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
                   </button>
                 ) : selectedOpt === filteredProblems[currentIndex].correctAnswer ? (
                   <button
@@ -485,26 +509,26 @@ export default function Math7TopicsPage() {
               <div
                 className={cn(
                   'w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold mb-6 border-4',
-                  filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.8
+                  correctCount >= filteredProblems.length * 0.8
                     ? 'bg-success/10 text-success border-success'
-                    : filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.5
+                    : correctCount >= filteredProblems.length * 0.5
                       ? 'bg-amber-100 text-amber-600 border-amber-400'
                       : 'bg-danger/10 text-danger border-danger'
                 )}
               >
-                {filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length}/{filteredProblems.length}
+                {correctCount}/{filteredProblems.length}
               </div>
               <h2 className="text-2xl font-bold text-text mb-2">
-                {filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.8
+                {correctCount >= filteredProblems.length * 0.8
                   ? 'Отлично!'
-                  : filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length >= filteredProblems.length * 0.5
+                  : correctCount >= filteredProblems.length * 0.5
                     ? 'Добре!'
                     : 'Опитай пак!'}
               </h2>
               <p className="text-text-muted mb-8">
                 Верни отговори:{' '}
                 <strong className="text-text">
-                  {filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length}
+                  {correctCount}
                 </strong>{' '}
                 от <strong className="text-text">{filteredProblems.length}</strong>
               </p>
