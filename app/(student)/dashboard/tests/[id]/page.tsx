@@ -14,6 +14,11 @@ import { saveDziAttempt } from '@/lib/progress'
 import { logActivity } from '@/lib/activity-log'
 import { allTests } from '@/data/tests'
 import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
+import {
+  buildDziMatchingAnswerGuide,
+  buildDziMatchingQuestionModel,
+  evaluateDziMatchingQuestion,
+} from '@/lib/dzi-matching-question'
 import nvoDataset from '@/data/official_quiz_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
@@ -33,6 +38,7 @@ interface NvoQuestion {
   type: 'single_choice' | 'open_response'
   question: string
   options?: Record<string, string>
+  pairs?: Record<string, string>
   correct_option?: string
   official_answer?: string
   answer_guide?: string
@@ -83,6 +89,7 @@ interface MockPracticeExam {
     type: 'single_choice' | 'open_response'
     question: string
     options?: Record<string, string>
+    pairs?: Record<string, string>
     table_rows?: Record<string, string>
     correct_option?: string
     answer_guide?: string | Record<string, string>
@@ -403,9 +410,14 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
     chart: exam.chart,
     exam_type: exam.exam_type,
     questions: exam.questions.map((question) => {
+      const matchingGuide = question.pairs
+        ? buildDziMatchingAnswerGuide(buildDziMatchingQuestionModel(question.pairs))
+        : undefined
       const rawGuide = question.answer_guide
       const guideStr =
-        rawGuide == null
+        matchingGuide
+          ? matchingGuide
+          : rawGuide == null
           ? undefined
           : typeof rawGuide === 'string'
             ? rawGuide
@@ -417,6 +429,7 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
         type: question.type,
         question: question.question,
         options: question.options ?? question.table_rows,
+        pairs: question.pairs,
         correct_option: question.correct_option,
         official_answer: guideStr,
         answer_guide: guideStr,
@@ -972,6 +985,10 @@ function QuestionCard({
   const override = MATH_TEXT_OVERRIDES[exam.id]?.[question.number]
   const figureHref = FIGURE_HELPERS[exam.id]?.[question.number] ?? getMockNvoMathFigure(question.source_tags?.source_id)
   const questionImageSrc = QUESTION_IMAGES[exam.id]?.[question.number]
+  const matchingModel =
+    question.type === 'open_response' && question.pairs
+      ? buildDziMatchingQuestionModel(question.pairs)
+      : null
 
   const showFeedback = submitted || revealAnswers
   const chosen = answers[question.number]
@@ -992,6 +1009,13 @@ function QuestionCard({
   let questionContent: React.ReactNode
   if (override?.questionHtml) {
     questionContent = <span dangerouslySetInnerHTML={{ __html: override.questionHtml }} />
+  } else if (matchingModel) {
+    questionContent = (
+      <p>
+        Свържете заглавието на всяка от творбите с нейния автор, като в листа за отговори срещу
+        съответната буква запишете номера, под който е записано името на автора.
+      </p>
+    )
   } else if (isMath && question.type === 'open_response') {
     const formatted = stripExamBoilerplate(collapseQuestionText(normalizeMathText(question.question || '')))
       .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n\n$2)')
@@ -1014,13 +1038,23 @@ function QuestionCard({
   }
 
   const openState = openResponses[question.number] || {}
-  const openConfig = getOpenResponseConfig(exam, question)
+  const openConfig = matchingModel
+    ? {
+        labels: matchingModel.prompts.map((prompt) => prompt.label),
+        input: 'textarea' as const,
+        rows: 2,
+        placeholder: 'Запиши номера на автора',
+      }
+    : getOpenResponseConfig(exam, question)
   const labels = openConfig.labels
   const effectiveLabels = labels
 
   const openEval = (() => {
     if (question.type !== 'open_response') return null
     const cleaned = cleanOfficialAnswer(question.official_answer, question.type)
+    if (matchingModel) {
+      return { mode: evaluateDziMatchingQuestion(matchingModel, openState), cleaned }
+    }
     const filledEntries = effectiveLabels.filter((l) => (openState[l] || '').trim())
     if (!filledEntries.length) return { mode: 'empty' as const, cleaned }
     if (isManualCheck(cleaned)) return { mode: 'manual' as const, cleaned }
@@ -1152,7 +1186,40 @@ function QuestionCard({
       {/* Open response fields */}
       {question.type === 'open_response' && (
         <div className="space-y-3">
-          {question.options && Object.entries(question.options).map(([label, text]) => (
+          {matchingModel ? (
+            <>
+              <div className="space-y-3">
+                {matchingModel.prompts.map((prompt) => (
+                  <div
+                    key={prompt.label}
+                    className="flex items-start gap-4 rounded-[24px] bg-slate-50 px-5 py-4 text-sm leading-relaxed text-slate-500"
+                  >
+                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 text-base font-bold text-amber-700">
+                      {prompt.label}
+                    </span>
+                    <span className="pt-1 text-[15px] font-medium text-slate-500">{prompt.title}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-[24px] border border-amber-100 bg-amber-50/70 px-5 py-4">
+                <p className="text-xs font-bold uppercase tracking-[0.08em] text-amber-700">Автори</p>
+                <div className="mt-3 grid gap-2 md:grid-cols-2">
+                  {matchingModel.authors.map((author) => (
+                    <div
+                      key={author.number}
+                      className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-text shadow-sm"
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 text-xs font-bold text-amber-700">
+                        {author.number}
+                      </span>
+                      <span className="font-medium">{author.author}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : question.options && Object.entries(question.options).map(([label, text]) => (
             <div key={label} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-gray-50 text-sm text-text-muted">
               <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold flex-shrink-0">{label}</span>
               <span>{cleanMathChoiceText(text)}</span>
