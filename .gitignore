@@ -9,6 +9,8 @@ npm-debug.log*
 # Env
 .env
 .env.local
+.env.production
+.env*.local
 .env.*.local
 
 # OS
