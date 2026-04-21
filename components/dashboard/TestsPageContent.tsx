@@ -245,7 +245,7 @@ export function TestsPageContent({
           )}
 
           {isEnglishSampleView && (
-            <div className="mb-4 max-w-md">
+            <div className="mb-4">
               <div className="card-hover p-5 flex flex-col gap-4">
                 <div>
                   <span
