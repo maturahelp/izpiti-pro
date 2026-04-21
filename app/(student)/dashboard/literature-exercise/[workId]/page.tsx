@@ -3,8 +3,8 @@
 import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { getExerciseForWork, type LiteratureQuestion } from '@/data/nvoLiteratureExercises'
-import { nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
+import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
+import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
 import { fireConfetti } from '@/lib/confetti'
 import { logActivity } from '@/lib/activity-log'
@@ -211,8 +211,10 @@ export default function LiteratureExercisePage({
   const { workId } = use(params)
   const router = useRouter()
 
-  const work = nvoLiteratureWorks.find((w) => w.id === workId)
-  const exercise = getExerciseForWork(workId)
+  const resolved = resolveLiteratureExercisePage(workId)
+  const work = resolved?.work
+  const exercise = resolved?.exercise
+  const grade = resolved?.grade
 
   const [shuffledQuestions, setShuffledQuestions] = useState<LiteratureQuestion[]>(
     () => exercise?.questions.map(shuffleLiteratureQuestion) ?? []
@@ -230,25 +232,7 @@ export default function LiteratureExercisePage({
     setFinished(false)
   }, [exercise])
 
-  if (!exercise || !work) {
-    return (
-      <div className="min-h-screen pb-20 md:pb-0">
-        <TopBar title="Упражнение" />
-        <div className="p-6 max-w-2xl mx-auto text-center py-20 text-text-muted">
-          <p className="font-semibold mb-2">Упражнението не е намерено.</p>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="btn-secondary mt-4 px-6 py-2 rounded-xl text-sm font-semibold"
-          >
-            Назад
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  const questions = shuffledQuestions.length ? shuffledQuestions : exercise.questions
+  const questions = shuffledQuestions.length ? shuffledQuestions : exercise?.questions ?? []
   const total = questions.length
   const question = questions[currentIndex]
   const selected = answers[currentIndex] ?? null
@@ -308,6 +292,24 @@ export default function LiteratureExercisePage({
     })
   }, [finished, work, score, total])
 
+  if (!exercise || !work || !question) {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Упражнение" />
+        <div className="p-6 max-w-2xl mx-auto text-center py-20 text-text-muted">
+          <p className="font-semibold mb-2">Упражнението не е намерено.</p>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="btn-secondary mt-4 px-6 py-2 rounded-xl text-sm font-semibold"
+          >
+            Назад
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <TopBar title="Упражнение" />
@@ -334,7 +336,7 @@ export default function LiteratureExercisePage({
             />
             <div>
               <p className="text-xs font-semibold text-primary uppercase tracking-wide">
-                Литература — 7. клас
+                Литература — {grade}. клас
               </p>
               <h1 className="text-lg font-bold text-text leading-snug">{work.title}</h1>
               <p className="text-sm text-text-muted">{work.author}</p>
