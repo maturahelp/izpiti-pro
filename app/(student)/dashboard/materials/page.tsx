@@ -1693,11 +1693,11 @@ export default function MaterialsPage() {
                       type="button"
                       onClick={() => {
                         setActiveWorkId(null)
-                        router.push('/dashboard/tests')
+                        router.push(`/dashboard/literature-exercise/${activeWork.id}`)
                       }}
                       className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                     >
-                      Към секция Тестове
+                      Отвори упражнението
                     </button>
                   )}
                 </div>

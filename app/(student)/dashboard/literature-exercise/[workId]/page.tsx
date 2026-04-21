@@ -3,7 +3,9 @@
 import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { getExerciseForWork, type LiteratureQuestion } from '@/data/nvoLiteratureExercises'
+import { getDziExerciseForWork } from '@/data/dziLiteratureExercises'
+import { getExerciseForWork as getNvoExerciseForWork, type LiteratureQuestion } from '@/data/nvoLiteratureExercises'
+import { literatureWorks } from '@/data/literatureWorks'
 import { nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { cn } from '@/lib/utils'
 import { fireConfetti } from '@/lib/confetti'
@@ -211,8 +213,11 @@ export default function LiteratureExercisePage({
   const { workId } = use(params)
   const router = useRouter()
 
-  const work = nvoLiteratureWorks.find((w) => w.id === workId)
-  const exercise = getExerciseForWork(workId)
+  const nvoWork = nvoLiteratureWorks.find((w) => w.id === workId)
+  const dziWork = literatureWorks.find((w) => w.id === workId)
+  const work = nvoWork ?? dziWork
+  const exercise = getNvoExerciseForWork(workId) ?? getDziExerciseForWork(workId)
+  const gradeLabel = nvoWork ? 'Литература — 7. клас' : 'Литература — 12. клас'
 
   const [shuffledQuestions, setShuffledQuestions] = useState<LiteratureQuestion[]>(
     () => exercise?.questions.map(shuffleLiteratureQuestion) ?? []
@@ -334,7 +339,7 @@ export default function LiteratureExercisePage({
             />
             <div>
               <p className="text-xs font-semibold text-primary uppercase tracking-wide">
-                Литература — 7. клас
+                {gradeLabel}
               </p>
               <h1 className="text-lg font-bold text-text leading-snug">{work.title}</h1>
               <p className="text-sm text-text-muted">{work.author}</p>
