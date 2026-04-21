@@ -96,7 +96,6 @@ function QuestionCard({
   revealed,
   onSelect,
   onCheck,
-  onRetry,
 }: {
   question: LiteratureQuestion
   index: number
@@ -105,7 +104,6 @@ function QuestionCard({
   revealed: boolean
   onSelect: (key: OptionKey) => void
   onCheck: () => void
-  onRetry: () => void
 }) {
   return (
     <div className="card p-5 md:p-7 max-w-2xl mx-auto w-full">
@@ -173,32 +171,21 @@ function QuestionCard({
         </div>
       )}
 
-      {/* Action buttons */}
-      {(!revealed || selected !== question.correct_answer) && (
+      {!revealed && (
         <div className="mt-4 flex flex-col gap-2">
-          {!revealed ? (
-            <button
-              type="button"
-              disabled={!selected}
-              onClick={onCheck}
-              className={cn(
-                'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
-                selected
-                  ? 'bg-primary text-white hover:bg-primary-dark'
-                  : 'bg-border text-text-muted cursor-not-allowed'
-              )}
-            >
-              Провери отговора
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={onRetry}
-              className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
-            >
-              Опитай пак
-            </button>
-          )}
+          <button
+            type="button"
+            disabled={!selected}
+            onClick={onCheck}
+            className={cn(
+              'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+              selected
+                ? 'bg-primary text-white hover:bg-primary-dark'
+                : 'bg-border text-text-muted cursor-not-allowed'
+            )}
+          >
+            Провери отговора
+          </button>
         </div>
       )}
     </div>
@@ -272,19 +259,6 @@ export default function LiteratureExercisePage({
     if (selected === question.correct_answer) {
       fireConfetti()
     }
-  }
-
-  const handleRetryQuestion = () => {
-    setAnswers((prev) => {
-      const next = { ...prev }
-      delete next[currentIndex]
-      return next
-    })
-    setRevealed((prev) => {
-      const next = { ...prev }
-      delete next[currentIndex]
-      return next
-    })
   }
 
   const handleNext = () => {
@@ -364,7 +338,6 @@ export default function LiteratureExercisePage({
               revealed={isRevealed}
               onSelect={handleSelect}
               onCheck={handleCheck}
-              onRetry={handleRetryQuestion}
             />
 
             <div className="flex items-center justify-between gap-3 mt-5 max-w-2xl mx-auto">
@@ -391,17 +364,16 @@ export default function LiteratureExercisePage({
 
               {isRevealed ? (() => {
                 const isLast = currentIndex + 1 >= total
-                const isCorrect = selected === question.correct_answer
-                const label = isLast ? 'Резултат' : isCorrect ? 'Следващ' : 'Пропусни'
+                const label = isLast ? 'Резултат' : 'Продължи'
                 return (
                   <button
                     type="button"
                     onClick={handleNext}
                     className={cn(
                       'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors',
-                      !isLast && !isCorrect
-                        ? 'border border-border text-text-muted hover:border-primary/40 bg-white'
-                        : 'bg-primary text-white hover:bg-primary-dark'
+                      isLast
+                        ? 'bg-primary text-white hover:bg-primary-dark'
+                        : 'border border-border text-text-muted hover:border-primary/40 bg-white'
                     )}
                   >
                     {label}

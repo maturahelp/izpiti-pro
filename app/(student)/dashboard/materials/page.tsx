@@ -1085,8 +1085,9 @@ export default function MaterialsPage() {
                       <button
                         type="button"
                         onClick={() => {
+                          const targetHref = `/dashboard/literature-exercise/${activeNvoWork.id}`
                           setActiveNvoWorkId(null)
-                          router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)
+                          window.location.href = targetHref
                         }}
                         className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                       >
@@ -1692,8 +1693,9 @@ export default function MaterialsPage() {
                     <button
                       type="button"
                       onClick={() => {
+                        const targetHref = `/dashboard/literature-exercise/${activeWork.id}`
                         setActiveWorkId(null)
-                        router.push(`/dashboard/literature-exercise/${activeWork.id}`)
+                        window.location.href = targetHref
                       }}
                       className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                     >
