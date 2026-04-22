@@ -5,13 +5,14 @@ import type { ReactNode } from 'react'
 import { FadeIn } from '@/components/ui/fade-in'
 
 type ExamTab = 'nvo' | 'dzi'
-type PlanKey = 'nvo-monthly' | 'nvo-full' | 'dzi-monthly' | 'dzi-full' | 'family'
+type PlanKey = 'nvo-monthly' | 'nvo-full' | 'dzi-monthly' | 'dzi-full'
 
 type Plan = {
   label: string
   price: string
   period: string
   access?: string
+  savings?: string
   desc: string
   features: string[]
   cta: string
@@ -23,7 +24,7 @@ type Plan = {
 const nvoPlans: Plan[] = [
   {
     label: 'НВО Месечен план',
-    price: '19.99 €',
+    price: '30 €',
     period: '/ месец',
     desc: 'Подходящ за ученици, които искат стабилна подготовка с ясен план и упражнения.',
     features: [
@@ -39,9 +40,10 @@ const nvoPlans: Plan[] = [
   },
   {
     label: 'НВО до края на изпитите',
-    price: '29.99 €',
+    price: '30 €',
     period: 'еднократно',
     access: 'Достъп до 19 юни 2026 г.',
+    savings: 'Спестяваш 50% за оставащите 2 месеца.',
     desc: 'За ученици, които искат спокойствие и достъп до самите изпити.',
     features: [
       'Всичко от месечния план',
@@ -53,7 +55,7 @@ const nvoPlans: Plan[] = [
     ],
     cta: 'Вземи достъп до 19 юни',
     featured: true,
-    badge: 'Най-изгоден за целия период',
+    badge: 'Спестяваш 50%',
     planKey: 'nvo-full',
   },
 ]
@@ -61,7 +63,7 @@ const nvoPlans: Plan[] = [
 const dziPlans: Plan[] = [
   {
     label: 'ДЗИ Месечен план',
-    price: '19.99 €',
+    price: '30 €',
     period: '/ месец',
     desc: 'Подходящ за ученици, които искат да започнат сега и да учат в собствен ритъм.',
     features: [
@@ -77,9 +79,10 @@ const dziPlans: Plan[] = [
   },
   {
     label: 'ДЗИ до края на матурите',
-    price: '22.99 €',
+    price: '19.99 €',
     period: 'еднократно',
     access: 'Достъп до 22 май 2026 г.',
+    savings: 'Спестяваш 33% спрямо месечния план.',
     desc: 'Подходящ за ученици, които искат пълен достъп до края на изпитния период.',
     features: [
       'Всичко от месечния план',
@@ -91,18 +94,9 @@ const dziPlans: Plan[] = [
     ],
     cta: 'Вземи достъп до 22 май',
     featured: true,
-    badge: 'Най-подходящ за финална подготовка',
+    badge: 'Спестяваш 33%',
     planKey: 'dzi-full',
   },
-]
-
-const familyFeatures = [
-  'Достъп до цялата НВО подготовка',
-  'Достъп до цялата ДЗИ подготовка',
-  'Видео уроци, теория, тестове и упражнения',
-  'AI помощник за въпроси и обяснения',
-  'Подходящ за семейства с ученик в 7. и 12. клас',
-  'Един по-изгоден план вместо два отделни абонамента',
 ]
 
 async function startCheckout(plan: PlanKey) {
@@ -158,42 +152,6 @@ export function Pricing() {
           ))}
         </div>
 
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-8 border border-indigo-100 relative">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1e2a4a] text-white text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap">
-              Най-добра стойност за семейства
-            </span>
-            <div className="md:flex md:items-start md:gap-10">
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-[#1e2a4a] uppercase tracking-wide mb-2">
-                  Семеен план — НВО + ДЗИ
-                </p>
-                <div className="mb-1">
-                  <span className="text-4xl font-extrabold text-[#1e2a4a]">39.99 €</span>
-                  <span className="text-gray-400 text-sm"> еднократно</span>
-                </div>
-                <p className="text-xs text-[#3b82f6] font-medium mb-1">Достъп до 19 юни 2026 г.</p>
-                <p className="text-gray-500 text-sm leading-relaxed mb-5 md:mb-4">
-                  Подходящ за семейства с повече от един ученик или за домакинства с подготовка и за НВО, и за ДЗИ.
-                </p>
-              </div>
-              <div className="flex-1">
-                <ul className="space-y-3 mb-6">
-                  {familyFeatures.map((feature) => (
-                    <CheckItem key={feature}>{feature}</CheckItem>
-                  ))}
-                </ul>
-                <button
-                  type="button"
-                  onClick={() => startCheckout('family')}
-                  className="block w-full bg-[#1e2a4a] text-white text-center font-semibold py-3 rounded-full text-sm hover:bg-indigo-900 hover:shadow-lg transition-all"
-                >
-                  Избери семеен план
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )
@@ -241,6 +199,7 @@ function PlanCard({ plan, onCheckout }: { plan: Plan; onCheckout: (key: PlanKey)
         <span className="text-gray-400 text-sm"> {plan.period}</span>
       </div>
       {plan.access && <p className="text-xs text-[#3b82f6] font-medium mb-1">{plan.access}</p>}
+      {plan.savings && <p className="text-xs font-semibold text-[#1e2a4a] mb-2">{plan.savings}</p>}
       <p className="text-gray-500 text-sm leading-relaxed mb-6">{plan.desc}</p>
       <ul className="space-y-3 mb-8">
         {plan.features.map((feature) => (
