@@ -29,6 +29,7 @@ import {
   type GeneratedEnglishQuestion,
 } from '@/lib/english-generated-materials'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
+import { EnglishDziTestView } from '@/components/dashboard/EnglishDziTestView'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -762,6 +763,12 @@ export default function TestPage() {
     )
   }
 
+  const isOfficialEnglish =
+    exam.exam_type === 'dzi_english' && !datasetId.startsWith('english-generated-')
+  const officialEnglishExam = isOfficialEnglish
+    ? officialEnglishMockExams.find((e) => e.id === datasetId) ?? null
+    : null
+
   const selectableQuestions = exam.questions.filter((q) => q.type === 'single_choice')
   const answeredCount = Object.keys(answers).filter((k) => answers[Number(k)]).length
   const totalSelectable = selectableQuestions.length
@@ -853,8 +860,8 @@ export default function TestPage() {
           </div>
         </div>
 
-        {/* Context panel */}
-        {hasContext && (
+        {/* Context panel — hidden for official English exams (passages are inline with questions) */}
+        {hasContext && !isOfficialEnglish && (
           <div className="card overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border">
               <p className="text-xs text-text-muted uppercase tracking-wide font-semibold">
@@ -925,26 +932,43 @@ export default function TestPage() {
             </p>
           </div>
         )}
-        <div className="space-y-5">
-          {exam.questions.map((q) => (
-            <QuestionCard
-              key={q.number}
-              exam={exam}
-              question={q}
-              answers={answers}
-              openResponses={openResponses}
-              submitted={submitted}
-              revealAnswers={revealAnswers}
-              onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
-              onOpenResponse={(num, label, val) =>
-                setOpenResponses((prev) => ({
-                  ...prev,
-                  [num]: { ...(prev[num] || {}), [label]: val },
-                }))
-              }
-            />
-          ))}
-        </div>
+        {isOfficialEnglish && officialEnglishExam ? (
+          <EnglishDziTestView
+            exam={officialEnglishExam}
+            answers={answers}
+            openResponses={openResponses}
+            submitted={submitted}
+            revealAnswers={revealAnswers}
+            onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
+            onOpenResponse={(num, label, val) =>
+              setOpenResponses((prev) => ({
+                ...prev,
+                [num]: { ...(prev[num] || {}), [label]: val },
+              }))
+            }
+          />
+        ) : (
+          <div className="space-y-5">
+            {exam.questions.map((q) => (
+              <QuestionCard
+                key={q.number}
+                exam={exam}
+                question={q}
+                answers={answers}
+                openResponses={openResponses}
+                submitted={submitted}
+                revealAnswers={revealAnswers}
+                onAnswer={(num, val) => setAnswers((prev) => ({ ...prev, [num]: val }))}
+                onOpenResponse={(num, label, val) =>
+                  setOpenResponses((prev) => ({
+                    ...prev,
+                    [num]: { ...(prev[num] || {}), [label]: val },
+                  }))
+                }
+              />
+            ))}
+          </div>
+        )}
 
         <div className="flex flex-wrap gap-3 pt-2">
           <a href="/dashboard/tests" className="btn-secondary">
