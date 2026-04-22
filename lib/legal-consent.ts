@@ -1,6 +1,6 @@
 export const LEGAL_VERSION = '2026-04-18'
 export const LEGAL_PROVIDER = 'MaturaHelp'
-export const LEGAL_SUPPORT_EMAIL = 'support@maturahelp.bg'
+export const LEGAL_SUPPORT_EMAIL = 'maturahelpbg@gmail.com'
 export const LEGAL_UPDATED_AT_BG = '18.04.2026'
 
 export type BillingPeriod = 'monthly' | 'yearly'
