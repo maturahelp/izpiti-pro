@@ -19,6 +19,10 @@ export default async function TestAccessLayout({
   }
 
   const supabase = await createClient()
+  if (!supabase) {
+    redirect(`/login?redirectTo=/dashboard/tests/${id}`)
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
