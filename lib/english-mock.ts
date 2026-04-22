@@ -21,7 +21,7 @@ const READING_START_RE = /(?:^|\n)\s*(?:PART\s+(?:TWO|THREE):\s*)?READING COMPRE
 const PART_HEADING_RE = /(?:^|\n)\s*PART\s+[A-ZА-Я]+:\s*[^\n]*/gim
 const WRITING_HEADING_RE = /(?:^|\n)\s*(?:PART\s+(?:THREE|FOUR|FIVE):\s*WRITING|WRITING)\s*$/im
 const TASK_MARKER_RE =
-  /(?:^|\n)\s*(Task\s+(?:One|Two|Three|Four|Five|Six|Seven)|Directions:\s*Read the texts?\s+below\.|Read the texts?\s+below\.)/gi
+  /(?:^|\n)\s*(Task\s+(?:One|Two|Three|Four|Five|Six|Seven)|Directions:\s*Read the texts?\s+below\.)/gi
 const QUESTION_START_RE = /(?:^|\n)\s*\d{1,2}\.\s+/
 const OPTION_START_RE = /(?:^|\n)\s*[A-D]\)\s+/
 const TEACHER_SHEET_RE = /(?:^|\n)\s*МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО|\bЛист за учителя\b|\bПолзва се само от учителя-консултант\b/im
