@@ -83,11 +83,35 @@ function normalizeWrappedText(text: string): string {
     .join('\n\n')
 }
 
+const READ_TEXT_BELOW_RE = /^Read the texts? below\./i
+const INSTRUCTION_TERMINAL_RE = /(?:answer sheet\.|0 points\.)\s*$/i
+
 function splitInstructionAndBody(text: string): { instruction?: string; paragraphs: string[] } {
   const cleaned = text.trim()
   if (!cleaned) return { instruction: undefined, paragraphs: [] }
 
   const blockLines = cleaned.split('\n')
+
+  // Newer exams: "Read the text below. Then…" spans 1-2 raw lines and has no blank
+  // line before the passage starts, so normalizeWrappedText would merge them.
+  // Detect on raw lines before any normalization.
+  if (READ_TEXT_BELOW_RE.test(blockLines[0]?.trim() ?? '')) {
+    const endIdx = blockLines.findIndex((line) => INSTRUCTION_TERMINAL_RE.test(line.trim()))
+    if (endIdx >= 0) {
+      const instruction = blockLines
+        .slice(0, endIdx + 1)
+        .map((l) => l.trim())
+        .join(' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+      const rest = blockLines.slice(endIdx + 1).join('\n').trim()
+      const paragraphs = rest
+        ? normalizeWrappedText(rest).split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+        : []
+      return { instruction, paragraphs }
+    }
+  }
+
   const proseStart = blockLines.findIndex((line) => {
     const trimmed = line.trim()
     return (
