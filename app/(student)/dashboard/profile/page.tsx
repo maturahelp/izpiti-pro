@@ -234,10 +234,10 @@ export default function ProfilePage() {
               </select>
             </div>
           </div>
-          <div className="flex items-center gap-3 mt-4">
+          <div className="mt-4 flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
             <button
               type="submit"
-              className="btn-primary text-sm"
+              className="btn-primary w-full text-sm sm:w-auto"
               disabled={profileStatus === 'saving' || !loaded}
             >
               {profileStatus === 'saving' ? 'Записване...' : 'Запази промените'}
@@ -289,10 +289,10 @@ export default function ProfilePage() {
               />
             </div>
           </div>
-          <div className="flex items-center gap-3 mt-4">
+          <div className="mt-4 flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
             <button
               type="submit"
-              className="btn-secondary text-sm"
+              className="btn-secondary w-full text-sm sm:w-auto"
               disabled={pwStatus === 'saving'}
             >
               {pwStatus === 'saving' ? 'Смяна...' : 'Смени паролата'}
@@ -309,7 +309,7 @@ export default function ProfilePage() {
         {/* Sign out */}
         <div className="card p-5">
           <h2 className="font-semibold text-text mb-3 text-sm">Изход</h2>
-          <button onClick={handleLogout} className="btn-secondary text-sm justify-center">
+          <button onClick={handleLogout} className="btn-secondary w-full justify-center text-sm sm:w-auto">
             Изход от профила
           </button>
         </div>

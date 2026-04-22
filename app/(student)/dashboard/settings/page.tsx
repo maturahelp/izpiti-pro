@@ -70,7 +70,7 @@ export default function SettingsPage() {
             type="button"
             onClick={handlePasswordReset}
             disabled={loading}
-            className="btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+            className="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed sm:w-auto"
           >
             {loading ? 'Изпращане...' : 'Изпрати линк за смяна'}
           </button>
