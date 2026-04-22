@@ -12,7 +12,7 @@ const PLANS: Record<PlanKey, { name: string; amount: number; currency: string; m
   },
   'nvo-full': {
     name: 'НВО до края на изпитите',
-    amount: 2799,
+    amount: 3000,
     currency: 'eur',
     mode: 'payment',
   },
@@ -24,7 +24,7 @@ const PLANS: Record<PlanKey, { name: string; amount: number; currency: string; m
   },
   'dzi-full': {
     name: 'ДЗИ до края на матурите',
-    amount: 1799,
+    amount: 1999,
     currency: 'eur',
     mode: 'payment',
   },
