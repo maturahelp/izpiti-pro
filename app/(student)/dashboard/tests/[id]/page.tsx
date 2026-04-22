@@ -763,11 +763,8 @@ export default function TestPage() {
     )
   }
 
-  const isOfficialEnglish =
-    exam.exam_type === 'dzi_english' && !datasetId.startsWith('english-generated-')
-  const officialEnglishExam = isOfficialEnglish
-    ? officialEnglishMockExams.find((e) => e.id === datasetId) ?? null
-    : null
+  const officialEnglishExam = officialEnglishMockExams.find((e) => e.id === datasetId) ?? null
+  const isOfficialEnglish = officialEnglishExam !== null
 
   const selectableQuestions = exam.questions.filter((q) => q.type === 'single_choice')
   const answeredCount = Object.keys(answers).filter((k) => answers[Number(k)]).length
