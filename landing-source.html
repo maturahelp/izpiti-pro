@@ -1484,19 +1484,15 @@
 
         var APP_HREF = '/dashboard/materials';
 
-        // Rewrite any /login anchor → "Продължи" → app
+        // Hide login CTAs for signed-in users so the landing keeps a single app action.
         document.querySelectorAll('a[href="/login"]').forEach(function (el) {
-          el.setAttribute('href', APP_HREF);
-          if ((el.textContent || '').trim() === 'Вход') el.textContent = 'Продължи';
+          el.remove();
         });
 
-        // Rewrite any /register anchor → link to app, keep CTA copy
+        // Rewrite all sign-up CTAs to a single app action.
         document.querySelectorAll('a[href="/register"]').forEach(function (el) {
           el.setAttribute('href', APP_HREF);
-          var t = (el.textContent || '').trim();
-          if (t === 'Регистрация' || t === 'Регистрирай се') {
-            el.textContent = 'Към приложението';
-          }
+          el.textContent = 'Към приложението';
         });
       } catch (e) {
         // fail silently — landing still works with default CTAs
