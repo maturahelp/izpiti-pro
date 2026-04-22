@@ -48,6 +48,8 @@ export function EnglishDziTestView({
   )
 }
 
+const READ_INSTRUCTION_RE = /^Read the texts? below\./i
+
 function EnglishGroup({
   group,
   examId,
@@ -70,6 +72,15 @@ function EnglishGroup({
   const isWriting = group.questions.every((q) => q.section === 'writing')
   const sectionLabel = isWriting ? 'WRITING' : 'READING COMPREHENSION'
 
+  // "Read the text below. Then..." ends up in paragraphs as prose.
+  // Pull it out so it shows as a directive above the passage card, not inside it.
+  let directive = group.instruction
+  let passageParagraphs = group.paragraphs
+  if (!directive && group.paragraphs.length > 0 && READ_INSTRUCTION_RE.test(group.paragraphs[0])) {
+    directive = group.paragraphs[0]
+    passageParagraphs = group.paragraphs.slice(1)
+  }
+
   return (
     <div className="space-y-4">
       {/* Section label */}
@@ -80,15 +91,15 @@ function EnglishGroup({
       {/* Group title */}
       <h2 className="text-xl font-bold text-text leading-tight">{group.title}</h2>
 
-      {/* Instruction (task directive, "BOTH tasks" note, etc.) */}
-      {group.instruction && (
-        <p className="text-sm text-text leading-relaxed">{group.instruction}</p>
+      {/* Directive — "Read the text below…" or writing instruction, shown separately */}
+      {directive && (
+        <p className="text-sm text-text-muted leading-relaxed italic">{directive}</p>
       )}
 
       {/* Passage card */}
-      {group.paragraphs.length > 0 && (
+      {passageParagraphs.length > 0 && (
         <div className="card p-5 space-y-3">
-          {group.paragraphs.map((para, i) => (
+          {passageParagraphs.map((para, i) => (
             <p key={i} className="text-sm text-text leading-relaxed whitespace-pre-wrap">
               {para}
             </p>
