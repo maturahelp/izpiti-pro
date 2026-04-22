@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { LEGAL_SUPPORT_EMAIL } from '@/lib/legal-consent'
 import { createClient } from '@/lib/supabase/client'
 
 type PlanState =
@@ -111,8 +112,8 @@ export default function SubscriptionPage() {
               <h2 className="font-semibold text-text mb-2 text-sm">Въпроси за абонамента?</h2>
               <p className="text-sm text-text-muted">
                 Пиши ни на{' '}
-                <a href="mailto:support@maturahelp.bg" className="text-primary font-semibold hover:underline">
-                  support@maturahelp.bg
+                <a href={`mailto:${LEGAL_SUPPORT_EMAIL}`} className="text-primary font-semibold hover:underline">
+                  {LEGAL_SUPPORT_EMAIL}
                 </a>{' '}
                 и ще ти помогнем.
               </p>
