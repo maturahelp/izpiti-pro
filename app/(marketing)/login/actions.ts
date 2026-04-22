@@ -21,6 +21,10 @@ export async function loginAction(formData: FormData): Promise<LoginActionResult
   }
 
   const supabase = await createClient()
+  if (!supabase) {
+    return { error: 'Входът временно не е наличен в preview средата.' }
+  }
+
   const { error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {

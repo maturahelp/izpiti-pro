@@ -19,7 +19,14 @@ export default function ResetPasswordPage() {
   // a recovery token. The browser client auto-handles the hash, then fires
   // a PASSWORD_RECOVERY event. We listen for it to allow password update.
   useEffect(() => {
-    const supabase = createClient()
+    let supabase
+    try {
+      supabase = createClient()
+    } catch {
+      setError('Смяната на парола временно не е налична в preview средата.')
+      return
+    }
+
     const { data: listener } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') {
         setCanReset(true)
@@ -41,7 +48,14 @@ export default function ResetPasswordPage() {
     if (password.length < 8) { setError('Паролата трябва да е поне 8 знака.'); return }
     if (password !== confirmPassword) { setError('Паролите не съвпадат.'); return }
     setLoading(true)
-    const supabase = createClient()
+    let supabase
+    try {
+      supabase = createClient()
+    } catch {
+      setLoading(false)
+      setError('Смяната на парола временно не е налична в preview средата.')
+      return
+    }
     const { error: updateError } = await supabase.auth.updateUser({ password })
     setLoading(false)
     if (updateError) {

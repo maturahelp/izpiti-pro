@@ -15,7 +15,14 @@ export default function ForgotPasswordPage() {
     setError(null)
     if (!email) { setError('Въведи имейл адрес.'); return }
     setLoading(true)
-    const supabase = createClient()
+    let supabase
+    try {
+      supabase = createClient()
+    } catch {
+      setLoading(false)
+      setError('Възстановяването на парола временно не е налично в preview средата.')
+      return
+    }
     const redirectTo = typeof window !== 'undefined'
       ? `${window.location.origin}/reset-password`
       : undefined

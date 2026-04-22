@@ -20,7 +20,6 @@ type Status = 'idle' | 'saving' | 'saved' | 'error'
 
 export default function ProfilePage() {
   const router = useRouter()
-  const supabase = createClient()
 
   const [loaded, setLoaded] = useState(false)
   const [userId, setUserId] = useState<string | null>(null)
@@ -43,6 +42,17 @@ export default function ProfilePage() {
   useEffect(() => {
     let cancelled = false
     async function load() {
+      let supabase
+      try {
+        supabase = createClient()
+      } catch {
+        if (!cancelled) {
+          setProfileError('Профилът временно не е наличен в preview средата.')
+          setLoaded(true)
+        }
+        return
+      }
+
       const { data: userData } = await supabase.auth.getUser()
       const user = userData.user
       if (!user) return
@@ -79,6 +89,15 @@ export default function ProfilePage() {
     if (!userId) return
     setProfileStatus('saving')
     setProfileError(null)
+
+    let supabase
+    try {
+      supabase = createClient()
+    } catch {
+      setProfileStatus('error')
+      setProfileError('Профилът временно не е наличен в preview средата.')
+      return
+    }
 
     const trimmedName = name.trim()
     if (!trimmedName) {
@@ -119,6 +138,15 @@ export default function ProfilePage() {
     e.preventDefault()
     setPwStatus('saving')
     setPwError(null)
+
+    let supabase
+    try {
+      supabase = createClient()
+    } catch {
+      setPwStatus('error')
+      setPwError('Смяната на парола временно не е налична в preview средата.')
+      return
+    }
 
     if (!newPassword || newPassword.length < 8) {
       setPwStatus('error')

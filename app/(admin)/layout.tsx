@@ -8,6 +8,10 @@ export default async function AdminLayout({
   children: React.ReactNode
 }) {
   const supabase = await createClient()
+  if (!supabase) {
+    redirect('/login?redirectTo=/admin')
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
