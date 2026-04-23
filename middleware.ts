@@ -1,11 +1,26 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
+import { hasActivePremium, requiresActiveSubscription } from '@/lib/subscription-access'
 import { getSupabaseEnv } from '@/lib/supabase/env'
 
 function redirectToLogin(request: NextRequest) {
   const url = request.nextUrl.clone()
   url.pathname = '/login'
   url.searchParams.set('redirectTo', request.nextUrl.pathname)
+  return NextResponse.redirect(url)
+}
+
+function redirectToDashboard(request: NextRequest) {
+  const url = request.nextUrl.clone()
+  url.pathname = '/dashboard'
+  url.search = ''
+  return NextResponse.redirect(url)
+}
+
+function redirectToSubscription(request: NextRequest) {
+  const url = request.nextUrl.clone()
+  url.pathname = '/dashboard/subscription'
+  url.search = ''
   return NextResponse.redirect(url)
 }
 
@@ -47,26 +62,40 @@ export async function middleware(request: NextRequest) {
     return redirectToLogin(request)
   }
 
-  if (pathname.startsWith('/admin')) {
-    try {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
-
-      if (profile?.role !== 'admin') {
-        const url = request.nextUrl.clone()
-        url.pathname = '/dashboard'
-        url.search = ''
-        return NextResponse.redirect(url)
+  let profile:
+    | {
+        role: string | null
+        plan: string | null
+        is_active: boolean | null
+        plan_expires_at: string | null
       }
-    } catch (err) {
-      console.error('[middleware] profiles role lookup failed', err)
-      const url = request.nextUrl.clone()
-      url.pathname = '/dashboard'
-      url.search = ''
-      return NextResponse.redirect(url)
+    | null = null
+
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('role, plan, is_active, plan_expires_at')
+      .eq('id', user.id)
+      .single()
+
+    if (error) {
+      console.error('[middleware] profiles lookup failed', error)
+    }
+
+    profile = data
+  } catch (err) {
+    console.error('[middleware] profiles lookup failed', err)
+  }
+
+  if (pathname.startsWith('/admin')) {
+    if (profile?.role !== 'admin') {
+      return redirectToDashboard(request)
+    }
+  }
+
+  if (pathname.startsWith('/dashboard') && requiresActiveSubscription(pathname)) {
+    if (!hasActivePremium(profile)) {
+      return redirectToSubscription(request)
     }
   }
 

@@ -33,6 +33,7 @@ export default async function TestsPage({
 
   return (
     <TestsPageContent
+      key={`${getInitialGrade(grade)}-${getInitialSection7(section)}-${getInitialSection12(section)}-${getInitialMode(mode)}`}
       initialGrade={getInitialGrade(grade)}
       initialSection7={getInitialSection7(section)}
       initialSection12={getInitialSection12(section)}

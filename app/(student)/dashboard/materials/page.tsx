@@ -17,6 +17,8 @@ import { belTheory } from '@/data/bel-theory'
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { useGrade } from '@/lib/grade-context'
+import { hasActivePremium } from '@/lib/subscription-access'
+import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import { logActivity } from '@/lib/activity-log'
 
@@ -321,6 +323,7 @@ export default function MaterialsPage() {
   const [fullscreenImageGallery, setFullscreenImageGallery] = useState<string[] | null>(null)
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0)
   const [fullscreenImageTitle, setFullscreenImageTitle] = useState<string>('')
+  const [isPremiumUser, setIsPremiumUser] = useState(false)
   const workWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
@@ -383,6 +386,7 @@ export default function MaterialsPage() {
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
   const activeNvoMarkedWordIndex = activeNvoWorkId ? nvoReadingProgressByWork[activeNvoWorkId] : undefined
   const activeNvoTextTokens = useMemo(() => activeNvoWorkText.split(/(\s+)/), [activeNvoWorkText])
+  const hasPremiumAccess = isPremiumUser
 
   const nvoLiteratureGroups = nvoLiteratureThemeOrder
     .map((theme) => ({
@@ -418,6 +422,39 @@ export default function MaterialsPage() {
     .filter((group) => group.items.length > 0)
 
   const englishMaterialsCount = filteredEnglishMaterialGroups.reduce((acc, group) => acc + group.items.length, 0)
+
+  const redirectToSubscription = () => {
+    router.push('/dashboard/subscription')
+  }
+
+  const handlePremiumAction = (action: () => void) => {
+    if (!hasPremiumAccess) {
+      redirectToSubscription()
+      return
+    }
+
+    action()
+  }
+
+  const handleWorkPanelChange = (panel: WorkPanel) => {
+    if (panel !== 'text' && !hasPremiumAccess) {
+      redirectToSubscription()
+      return
+    }
+
+    setActiveWorkPanel(panel)
+    setIsActiveWorkVideoPlaying(false)
+  }
+
+  const handleNvoWorkPanelChange = (panel: WorkPanel) => {
+    if (panel !== 'text' && !hasPremiumAccess) {
+      redirectToSubscription()
+      return
+    }
+
+    setActiveNvoWorkPanel(panel)
+    setIsActiveNvoVideoPlaying(false)
+  }
 
   const handleWorkWordMark = (wordIndex: number) => {
     if (!activeWorkId || !isWorkReadingMarkerEnabled) return
@@ -471,6 +508,11 @@ export default function MaterialsPage() {
   }
 
   const openEnglishMaterial = async (material: EnglishMaterial) => {
+    if (!hasPremiumAccess) {
+      redirectToSubscription()
+      return
+    }
+
     setActiveEnglishMaterial(material)
     setEnglishMaterialText('')
     setEnglishMaterialError(null)
@@ -493,6 +535,33 @@ export default function MaterialsPage() {
       setEnglishMaterialLoading(false)
     }
   }
+
+  useEffect(() => {
+    let cancelled = false
+    const supabase = createClient()
+
+    ;(async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (!user) return
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('plan, is_active, plan_expires_at')
+        .eq('id', user.id)
+        .single()
+
+      if (cancelled) return
+
+      setIsPremiumUser(hasActivePremium(profile))
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     if (!activeWorkId) {
@@ -667,6 +736,20 @@ export default function MaterialsPage() {
   }, [activeNvoWorkId])
 
   useEffect(() => {
+    if (hasPremiumAccess) return
+    if (activeWorkPanel === 'text' || activeWorkPanel === 'cover') return
+    setActiveWorkPanel('text')
+    setIsActiveWorkVideoPlaying(false)
+  }, [activeWorkPanel, hasPremiumAccess])
+
+  useEffect(() => {
+    if (hasPremiumAccess) return
+    if (activeNvoWorkPanel === 'text' || activeNvoWorkPanel === 'cover') return
+    setActiveNvoWorkPanel('text')
+    setIsActiveNvoVideoPlaying(false)
+  }, [activeNvoWorkPanel, hasPremiumAccess])
+
+  useEffect(() => {
     const allowedSections = grade === '7'
       ? (grade7Sections as readonly MaterialSection[])
       : grade12Sections
@@ -773,7 +856,11 @@ export default function MaterialsPage() {
                       <div className="flex gap-2 mt-auto">
                         <button
                           type="button"
-                          onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)}
+                          onClick={() =>
+                            handlePremiumAction(() =>
+                              router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=theory`)
+                            )
+                          }
                           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
                           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
                           className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
@@ -786,7 +873,11 @@ export default function MaterialsPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)}
+                          onClick={() =>
+                            handlePremiumAction(() =>
+                              router.push(`/dashboard/materials/curriculum-topic/${topicIndex}?view=exercise`)
+                            )
+                          }
                           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
                           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
                           className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
@@ -877,7 +968,11 @@ export default function MaterialsPage() {
                         <button
                           key={subtopic.id}
                           type="button"
-                          onClick={() => router.push(`/dashboard/materials/math-7-topics?subtopic=${subtopic.id}`)}
+                          onClick={() =>
+                            handlePremiumAction(() =>
+                              router.push(`/dashboard/materials/math-7-topics?subtopic=${subtopic.id}`)
+                            )
+                          }
                           className="rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
                           style={{ borderColor: subjectTheme.math.cardBorder }}
                         >
@@ -1074,20 +1169,22 @@ export default function MaterialsPage() {
                     )}
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('text'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('summary'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('video'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                    <button type="button" onClick={() => { setActiveNvoWorkPanel('exercise'); setIsActiveNvoVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                    <button type="button" onClick={() => handleNvoWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                    <button type="button" onClick={() => handleNvoWorkPanelChange('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess ? 'Резюме' : 'Резюме • Премиум'}</button>
+                    <button type="button" onClick={() => handleNvoWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess ? 'Видео урок' : 'Видео урок • Премиум'}</button>
+                    <button type="button" onClick={() => handleNvoWorkPanelChange('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess ? 'Упражнение' : 'Упражнение • Премиум'}</button>
                     {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
                       <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                     )}
                     {activeNvoWorkPanel === 'exercise' && (
                       <button
                         type="button"
-                        onClick={() => {
-                          setActiveNvoWorkId(null)
-                          router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)
-                        }}
+                        onClick={() =>
+                          handlePremiumAction(() => {
+                            setActiveNvoWorkId(null)
+                            router.push(`/dashboard/literature-exercise/${activeNvoWork.id}`)
+                          })
+                        }
                         className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                       >
                         Отвори упражнението
@@ -1259,7 +1356,7 @@ export default function MaterialsPage() {
                           <div className="flex gap-2 mt-auto">
                             <button
                               type="button"
-                              onClick={() => setTheoryIndex(globalIdx)}
+                              onClick={() => handlePremiumAction(() => setTheoryIndex(globalIdx))}
                               onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
                               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
                               className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
@@ -1272,7 +1369,11 @@ export default function MaterialsPage() {
                             </button>
                             <button
                               type="button"
-                              onClick={() => router.push(`/dashboard/materials/rule/${globalIdx}`)}
+                              onClick={() =>
+                                handlePremiumAction(() =>
+                                  router.push(`/dashboard/materials/rule/${globalIdx}`)
+                                )
+                              }
                               onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = subjectTheme.bulgarian.outlineHoverBg }}
                               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
                               className="flex-1 rounded-lg border bg-white text-sm font-bold py-3 transition-colors"
@@ -1356,7 +1457,11 @@ export default function MaterialsPage() {
                               {item.imageSrcs && item.imageSrcs.length > 0 && (
                                 <button
                                   type="button"
-                                  onClick={() => openImageGallery(item.imageSrcs!, item.title)}
+                                  onClick={() =>
+                                    handlePremiumAction(() =>
+                                      openImageGallery(item.imageSrcs!, item.title)
+                                    )
+                                  }
                                   className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border transition-colors px-3"
                                   style={{
                                     borderColor: grade12SectionTheme.english.outlineBorder,
@@ -1424,14 +1529,20 @@ export default function MaterialsPage() {
                   </div>
 
                   <button
+                    type="button"
+                    onClick={() => {
+                      if (!hasPremiumAccess || material.access === 'premium') {
+                        redirectToSubscription()
+                      }
+                    }}
                     className={cn(
                       'w-full text-xs font-semibold py-2 rounded-lg transition-colors',
-                      material.access === 'premium'
+                      !hasPremiumAccess || material.access === 'premium'
                         ? 'bg-amber-light text-amber border border-amber/20 hover:bg-amber/20'
                         : 'bg-primary text-white hover:bg-primary-dark'
                     )}
                   >
-                    {material.access === 'premium' ? 'Отключи с Премиум' : 'Отвори материала'}
+                    {!hasPremiumAccess || material.access === 'premium' ? 'Отключи с Премиум' : 'Отвори материала'}
                   </button>
                 </div>
               ))}
@@ -1681,20 +1792,22 @@ export default function MaterialsPage() {
                   )}
                 </div>
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
-                  <button type="button" onClick={() => { setActiveWorkPanel('text'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('summary'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">Резюме</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('video'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">Видео урок</button>
-                  <button type="button" onClick={() => { setActiveWorkPanel('exercise'); setIsActiveWorkVideoPlaying(false) }} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">Упражнение</button>
+                  <button type="button" onClick={() => handleWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
+                  <button type="button" onClick={() => handleWorkPanelChange('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess ? 'Резюме' : 'Резюме • Премиум'}</button>
+                  <button type="button" onClick={() => handleWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess ? 'Видео урок' : 'Видео урок • Премиум'}</button>
+                  <button type="button" onClick={() => handleWorkPanelChange('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess ? 'Упражнение' : 'Упражнение • Премиум'}</button>
                   {activeWorkPanel === 'video' && !activeWorkVideoPath && (
                     <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
                   )}
                   {activeWorkPanel === 'exercise' && (
                     <button
                       type="button"
-                      onClick={() => {
-                        setActiveWorkId(null)
-                        router.push(`/dashboard/literature-exercise/${activeWork.id}`)
-                      }}
+                      onClick={() =>
+                        handlePremiumAction(() => {
+                          setActiveWorkId(null)
+                          router.push(`/dashboard/literature-exercise/${activeWork.id}`)
+                        })
+                      }
                       className="w-full rounded-xl border border-border bg-white text-text text-sm font-semibold py-2.5 px-4 hover:bg-[#F8FBFF] transition-colors"
                     >
                       Отвори упражнението
@@ -1753,10 +1866,12 @@ export default function MaterialsPage() {
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setTheoryIndex(null)
-                    router.push(`/dashboard/materials/rule/${theoryIndex}`)
-                  }}
+                  onClick={() =>
+                    handlePremiumAction(() => {
+                      setTheoryIndex(null)
+                      router.push(`/dashboard/materials/rule/${theoryIndex}`)
+                    })
+                  }
                   className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 hover:bg-primary-dark transition-colors"
                 >
                   Направи теста →

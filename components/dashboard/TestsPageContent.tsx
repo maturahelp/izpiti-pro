@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { TopBar } from '@/components/dashboard/TopBar'
@@ -10,6 +11,7 @@ import {
   generatedEnglishWritingQuestionCount,
 } from '@/lib/english-generated-materials'
 import { useGrade } from '@/lib/grade-context'
+import { hasActivePremium } from '@/lib/subscription-access'
 import { cn } from '@/lib/utils'
 
 export type TestSection7 = 'bel' | 'math'
@@ -123,12 +125,6 @@ export function TestsPageContent({
   }, [initialGrade, setGrade])
 
   useEffect(() => {
-    setSelectedSection7(initialSection7)
-    setSelectedSection12(initialSection12)
-    setSelectedMode(initialMode)
-  }, [initialSection7, initialSection12, initialMode])
-
-  useEffect(() => {
     let cancelled = false
     const supabase = createClient()
 
@@ -141,17 +137,13 @@ export function TestsPageContent({
 
       const { data: profile } = await supabase
         .from('profiles')
-        .select('plan, plan_expires_at')
+        .select('plan, is_active, plan_expires_at')
         .eq('id', user.id)
         .single()
 
       if (cancelled) return
 
-      const active =
-        profile?.plan === 'premium' &&
-        (!profile?.plan_expires_at || new Date(profile.plan_expires_at) > new Date())
-
-      setIsPremiumUser(Boolean(active))
+      setIsPremiumUser(hasActivePremium(profile))
     })()
 
     return () => {
@@ -163,6 +155,7 @@ export function TestsPageContent({
     grade === '7' ? selectedSection7 : selectedSection12
   const activeTheme = sectionTheme[activeSectionKey]
   const isEnglishSampleView = grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample'
+  const isLocked = !isPremiumUser
 
   const filtered = tests.filter((test) => {
     if (grade === '7') {
@@ -302,15 +295,24 @@ export function TestsPageContent({
                   >
                     Writing
                   </span>
-                  <a
-                    href="/dashboard/tests/english-generated-writing"
-                    style={{ backgroundColor: activeTheme.accent }}
-                    onMouseEnter={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accentHover }}
-                    onMouseLeave={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accent }}
-                    className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
-                  >
-                    Отвори
-                  </a>
+                  {isLocked ? (
+                    <Link
+                      href="/dashboard/subscription"
+                      className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-gray-100 text-text-muted hover:bg-gray-200"
+                    >
+                      Отключи с премиум
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/dashboard/tests/english-generated-writing"
+                      style={{ backgroundColor: activeTheme.accent }}
+                      onMouseEnter={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accentHover }}
+                      onMouseLeave={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accent }}
+                      className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
+                    >
+                      Отвори
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -318,7 +320,7 @@ export function TestsPageContent({
 
           <div id={isEnglishSampleView ? 'english-generated-tests' : undefined} className="grid sm:grid-cols-2 gap-4">
             {filtered.map((test) => (
-              <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', test.isPremium && 'premium-lock')}>
+              <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', isLocked && 'premium-lock')}>
                 {(() => {
                   const isMock =
                     test.id.startsWith('mock_') ||
@@ -340,7 +342,7 @@ export function TestsPageContent({
                     </div>
                   ) : null
                 })()}
-                {test.isPremium && <PremiumLock compact />}
+                {isLocked && <PremiumLock compact />}
 
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
@@ -381,15 +383,15 @@ export function TestsPageContent({
                 </div>
 
                 <div className="flex justify-end">
-                  {test.isPremium && !isPremiumUser ? (
-                    <a
+                  {isLocked ? (
+                    <Link
                       href="/dashboard/subscription"
                       className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-gray-100 text-text-muted hover:bg-gray-200"
                     >
                       Отключи с премиум
-                    </a>
+                    </Link>
                   ) : (
-                    <a
+                    <Link
                       href={getTestHref(test)}
                       style={{ backgroundColor: activeTheme.accent }}
                       onMouseEnter={(event) => { event.currentTarget.style.backgroundColor = activeTheme.accentHover }}
@@ -397,7 +399,7 @@ export function TestsPageContent({
                       className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors text-white"
                     >
                       {test.status === 'completed' ? 'Повтори' : test.status === 'in_progress' ? 'Продължи' : 'Започни'}
-                    </a>
+                    </Link>
                   )}
                 </div>
               </div>
