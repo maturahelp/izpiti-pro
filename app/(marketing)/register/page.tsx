@@ -1,12 +1,30 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { signUp, signIn } from '@/lib/auth'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
 import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
 
+function safeRedirectTo(raw: string | null): string {
+  if (!raw) return '/dashboard/materials'
+  if (!raw.startsWith('/') || raw.startsWith('//')) return '/dashboard/materials'
+  return raw
+}
+
 export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterForm />
+    </Suspense>
+  )
+}
+
+function RegisterForm() {
+  const searchParams = useSearchParams()
+  const redirectTo = safeRedirectTo(searchParams.get('redirectTo'))
+  const loginHref = `/login?redirectTo=${encodeURIComponent(redirectTo)}`
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -41,7 +59,7 @@ export default function RegisterPage() {
     const { session, error } = await signUp(email, password, name, consentMetadata)
     if (error) { setLoading(false); setError(error.message); return }
     if (session) {
-      window.location.href = '/dashboard/materials'
+      window.location.href = redirectTo
       return
     }
     // Email confirmation is enabled — try signing in anyway (works if confirmation is optional)
@@ -52,7 +70,7 @@ export default function RegisterPage() {
       setConfirmation(true)
       return
     }
-    window.location.href = '/dashboard/materials'
+    window.location.href = redirectTo
   }
 
   return (
@@ -89,7 +107,7 @@ export default function RegisterPage() {
               </div>
               <p className="text-[15px] font-semibold text-text">Провери имейла си</p>
               <p className="text-[13px] text-text-muted">Изпратихме линк за потвърждение на <strong>{email}</strong>. Кликни го, за да активираш акаунта си.</p>
-              <Link href="/login" className="inline-block mt-2 text-[13px] text-primary font-semibold hover:underline">Към страницата за вход</Link>
+              <Link href={loginHref} className="inline-block mt-2 text-[13px] text-primary font-semibold hover:underline">Към страницата за вход</Link>
             </div>
           ) : (
             <>
@@ -164,7 +182,7 @@ export default function RegisterPage() {
 
               <p className="text-center text-[12.5px] text-text-muted mt-4">
                 Вече имаш акаунт?{' '}
-                <Link href="/login" className="text-primary font-semibold hover:underline">
+                <Link href={loginHref} className="text-primary font-semibold hover:underline">
                   Влез
                 </Link>
               </p>

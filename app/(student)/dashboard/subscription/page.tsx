@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { LEGAL_SUPPORT_EMAIL } from '@/lib/legal-consent'
 import {
@@ -25,44 +25,105 @@ function formatBgDate(iso: string | null): string | null {
 
 export default function SubscriptionPage() {
   const [state, setState] = useState<PlanState>({ status: 'loading' })
+  const [hasRecentCheckout] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false
+    }
+
+    return new URLSearchParams(window.location.search).get('checkout') === 'success'
+  })
+
+  const loadProfile = useCallback(async () => {
+    const supabase = createClient()
+    const { data: userData } = await supabase.auth.getUser()
+    const user = userData.user
+
+    if (!user) {
+      setState({ status: 'error' })
+      return null
+    }
+
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('plan, is_active, plan_expires_at')
+      .eq('id', user.id)
+      .single()
+
+    if (error) {
+      setState({ status: 'error' })
+      return null
+    }
+
+    const readyProfile = profile ?? null
+    setState({ status: 'ready', profile: readyProfile })
+    return readyProfile
+  }, [])
 
   useEffect(() => {
-    let cancelled = false
+    const timeoutId = window.setTimeout(() => {
+      void loadProfile()
+    }, 0)
 
-    async function load() {
-      const supabase = createClient()
-      const { data: userData } = await supabase.auth.getUser()
-      const user = userData.user
-      if (!user) {
-        if (!cancelled) setState({ status: 'error' })
-        return
-      }
-
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('plan, is_active, plan_expires_at')
-        .eq('id', user.id)
-        .single()
-
-      if (cancelled) return
-      if (error) {
-        setState({ status: 'error' })
-        return
-      }
-      setState({ status: 'ready', profile: profile ?? null })
-    }
-
-    load()
     return () => {
-      cancelled = true
+      window.clearTimeout(timeoutId)
     }
-  }, [])
+  }, [loadProfile])
 
   const readyProfile = state.status === 'ready' ? state.profile : null
   const subscriptionStatus = getSubscriptionStatus(readyProfile)
   const isActivePremium = hasActivePremium(readyProfile)
   const planExpiresAt = readyProfile?.plan_expires_at ?? null
   const formattedExpiryDate = formatBgDate(planExpiresAt)
+  const isCheckoutSyncing = hasRecentCheckout && !isActivePremium
+
+  useEffect(() => {
+    if (!isCheckoutSyncing) {
+      return
+    }
+
+    let isCancelled = false
+    let attempts = 0
+
+    const intervalId = window.setInterval(() => {
+      attempts += 1
+
+      void loadProfile().then((profile) => {
+        if (isCancelled) return
+
+        if (hasActivePremium(profile)) {
+          window.clearInterval(intervalId)
+          return
+        }
+
+        if (attempts >= 8) {
+          window.clearInterval(intervalId)
+        }
+      })
+    }, 2000)
+
+    return () => {
+      isCancelled = true
+      window.clearInterval(intervalId)
+    }
+  }, [isCheckoutSyncing, loadProfile])
+
+  const checkoutNotice = useMemo(() => {
+    if (!hasRecentCheckout) return null
+
+    if (isActivePremium) {
+      return {
+        className: 'card p-5 border-success/30 bg-success-light/20',
+        title: 'Плащането е потвърдено',
+        description: 'Премиум достъпът е активиран успешно и вече можеш да влизаш във всички premium секции.',
+      }
+    }
+
+    return {
+      className: 'card p-5 border-primary/20 bg-primary-light/20',
+      title: 'Обработваме плащането',
+      description: 'Stripe потвърди checkout-а. Изчакваме системата да активира premium достъпа ти.',
+    }
+  }, [hasRecentCheckout, isActivePremium])
 
   const summaryConfig = {
     active: {
@@ -104,6 +165,13 @@ export default function SubscriptionPage() {
     <div className="min-h-screen pb-20 md:pb-0">
       <TopBar title="Абонамент" />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-6">
+        {checkoutNotice && (
+          <div className={checkoutNotice.className}>
+            <h2 className="font-semibold text-text mb-1 text-sm">{checkoutNotice.title}</h2>
+            <p className="text-sm text-text-muted">{checkoutNotice.description}</p>
+          </div>
+        )}
+
         {state.status === 'loading' && (
           <div className="card p-5">
             <p className="text-sm text-text-muted">Зареждане...</p>
