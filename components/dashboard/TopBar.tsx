@@ -16,10 +16,11 @@ export function TopBar({ title }: TopBarProps) {
   const [userName, setUserName] = useState('')
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false)
-  const { grade, setGrade } = useGrade()
+  const { grade, setGrade, lockedGrade, availableGrades } = useGrade()
   const { preferences, isHydrated } = useNotificationPreferences()
   const notificationButtonRef = useRef<HTMLButtonElement>(null)
   const notificationsPanelRef = useRef<HTMLDivElement>(null)
+  const effectiveGrade = lockedGrade ?? grade
 
   const notificationItems = useMemo(() => {
     const items: Array<{
@@ -68,12 +69,19 @@ export function TopBar({ title }: TopBarProps) {
   useEffect(() => {
     if (!isHydrated) return
 
-    try {
-      const lastSeen = Number(window.localStorage.getItem(NOTIFICATIONS_SEEN_KEY) || '0')
-      const shouldShowUnread = notificationItems.length > 0 && (!lastSeen || Date.now() - lastSeen > 12 * 60 * 60 * 1000)
-      setHasUnreadNotifications(shouldShowUnread)
-    } catch {
-      setHasUnreadNotifications(notificationItems.length > 0)
+    const timeoutId = window.setTimeout(() => {
+      try {
+        const lastSeen = Number(window.localStorage.getItem(NOTIFICATIONS_SEEN_KEY) || '0')
+        const shouldShowUnread =
+          notificationItems.length > 0 && (!lastSeen || Date.now() - lastSeen > 12 * 60 * 60 * 1000)
+        setHasUnreadNotifications(shouldShowUnread)
+      } catch {
+        setHasUnreadNotifications(notificationItems.length > 0)
+      }
+    }, 0)
+
+    return () => {
+      window.clearTimeout(timeoutId)
     }
   }, [isHydrated, notificationItems.length])
 
@@ -139,28 +147,20 @@ export function TopBar({ title }: TopBarProps) {
       </h1>
 
       <div className="absolute left-1/2 -translate-x-1/2 flex items-center bg-gray-100 rounded-full p-0.5">
-        <button
-          type="button"
-          onClick={() => setGrade('7')}
-          className={`px-4 py-1 rounded-full text-sm font-semibold transition-all duration-200 ${
-            grade === '7'
-              ? 'bg-white text-primary shadow-sm'
-              : 'text-text-muted hover:text-text'
-          }`}
-        >
-          7 клас
-        </button>
-        <button
-          type="button"
-          onClick={() => setGrade('12')}
-          className={`px-4 py-1 rounded-full text-sm font-semibold transition-all duration-200 ${
-            grade === '12'
-              ? 'bg-white text-primary shadow-sm'
-              : 'text-text-muted hover:text-text'
-          }`}
-        >
-          12 клас
-        </button>
+        {availableGrades.map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => setGrade(option)}
+            className={`px-4 py-1 rounded-full text-sm font-semibold transition-all duration-200 ${
+              effectiveGrade === option
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-text-muted hover:text-text'
+            }`}
+          >
+            {option} клас
+          </button>
+        ))}
       </div>
 
       <div className="flex items-center gap-3">
