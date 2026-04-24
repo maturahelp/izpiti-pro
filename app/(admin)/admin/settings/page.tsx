@@ -41,7 +41,7 @@ export default function AdminSettingsPage() {
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">Имейл за поддръжка</label>
-              <input type="email" defaultValue="support@izpitipro.bg" className="input-field" />
+              <input type="email" defaultValue="support@maturahelp.com" className="input-field" />
             </div>
             <div>
               <label className="block text-xs font-medium text-text-muted mb-1.5">URL адрес</label>
