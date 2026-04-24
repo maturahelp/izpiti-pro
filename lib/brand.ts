@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const BRAND_LOGO_SRC = '/brand/maturahelp-logo.png'
+export const BRAND_LOGO_SRC = '/brand/logo10.png'
 export const BRAND_LOGO_ALT = 'MaturaHelp logo'
 
 export const brandMetadataIcons: Metadata['icons'] = {
