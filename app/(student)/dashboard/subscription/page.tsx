@@ -54,18 +54,32 @@ export default function SubscriptionPage() {
       return null
     }
 
-    const { data: profile, error } = await supabase
+    // Опитваме extended select; ако миграцията не е приложена и част от
+    // новите колони липсват, пада-ме обратно на legacy полетата, за да не
+    // чупим страницата.
+    let readyProfile: SubscriptionAccessProfile | null = null
+    const extended = await supabase
       .from('profiles')
       .select(PROFILE_SELECT)
       .eq('id', user.id)
       .single()
 
-    if (error) {
-      setState({ status: 'error' })
-      return null
+    if (!extended.error) {
+      readyProfile = (extended.data as SubscriptionAccessProfile | null) ?? null
+    } else {
+      const legacy = await supabase
+        .from('profiles')
+        .select('plan, is_active, plan_expires_at')
+        .eq('id', user.id)
+        .single()
+
+      if (legacy.error) {
+        setState({ status: 'error' })
+        return null
+      }
+      readyProfile = (legacy.data as SubscriptionAccessProfile | null) ?? null
     }
 
-    const readyProfile = (profile as SubscriptionAccessProfile | null) ?? null
     setState({ status: 'ready', profile: readyProfile })
     return readyProfile
   }, [])
