@@ -36,9 +36,11 @@ function metadataString(
 }
 
 /**
- * Инициализира запис в stripe_events. Ако събитието вече е обработено,
- * връща false и пропускаме хендлъра. Реализирано чрез unique PK +
- * insert-or-ignore семантика.
+ * Решава дали да обработим това събитие. Връща false САМО когато събитието
+ * вече е било изцяло обработено (processed_at IS NOT NULL). Ако row-ът
+ * съществува, но processed_at е null (предишен handler е хвърлил между
+ * insert и update), позволяваме reprocess, за да не се губят events на
+ * Stripe retry.
  */
 async function markEventReceived(eventId: string, eventType: string): Promise<boolean> {
   const admin = createAdminClient()
@@ -48,11 +50,19 @@ async function markEventReceived(eventId: string, eventType: string): Promise<bo
 
   if (!error) return true
 
-  // 23505 = unique_violation — вече сме обработили това събитие.
   const code = (error as { code?: string }).code
-  if (code === '23505') return false
+  if (code === '23505') {
+    // Row-ът съществува — провери дали вече е напълно обработен.
+    const { data } = await admin
+      .from('stripe_events')
+      .select('processed_at')
+      .eq('id', eventId)
+      .maybeSingle<{ processed_at: string | null }>()
 
-  // Друга грешка — позволяваме retry, но пишем в лог.
+    if (data?.processed_at) return false
+    return true
+  }
+
   console.error('[stripe webhook] failed to record event', { eventId, error })
   return true
 }

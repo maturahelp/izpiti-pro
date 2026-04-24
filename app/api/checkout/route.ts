@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { BILLING_PLANS, isPlanKey } from '@/lib/billing/plans'
+import { hasActivePremium } from '@/lib/subscription-access'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient as createSupabaseServerClient } from '@/lib/supabase/server'
 
@@ -97,8 +98,9 @@ export async function POST(req: NextRequest) {
   const existingSubscriptionId = profileSnapshot?.stripe_subscription_id ?? null
   const existingPlanKey = profileSnapshot?.billing_plan_key ?? null
   const existingStatus = profileSnapshot?.billing_status ?? null
-  const currentlyActive =
-    profileSnapshot?.plan === 'premium' && profileSnapshot?.is_active === true
+  // hasActivePremium включва и проверка на plan_expires_at, така че
+  // изтекъл one-time план не блокира повторна покупка.
+  const currentlyActive = hasActivePremium(profileSnapshot)
 
   // Защита срещу double-charge: recurring → recurring за същия план,
   // докато абонаментът е активен и не е cancel_at_period_end.

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { hasActivePremium, requiresActiveSubscription } from '@/lib/subscription-access'
 import { getSupabaseEnv } from '@/lib/supabase/env'
 
@@ -85,6 +86,30 @@ export async function middleware(request: NextRequest) {
     profile = data
   } catch (err) {
     console.error('[middleware] profiles lookup failed', err)
+  }
+
+  // Lazy-flip за изтекли one-time планове (и recurring, чиито webhook не е
+  // дошъл): когато plan_expires_at е в миналото, но row-ът още е
+  // is_active=true, го сваляме веднъж. За recurring следващият успешен
+  // invoice webhook ще го върне обратно.
+  if (
+    profile?.plan === 'premium' &&
+    profile.is_active === true &&
+    profile.plan_expires_at
+  ) {
+    const expires = new Date(profile.plan_expires_at)
+    if (!Number.isNaN(expires.getTime()) && expires <= new Date()) {
+      try {
+        const admin = createAdminClient()
+        await admin
+          .from('profiles')
+          .update({ is_active: false, updated_at: new Date().toISOString() })
+          .eq('id', user.id)
+      } catch (err) {
+        console.error('[middleware] lazy-flip is_active failed', err)
+      }
+      profile.is_active = false
+    }
   }
 
   if (pathname.startsWith('/admin')) {
