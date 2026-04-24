@@ -114,21 +114,12 @@ export function TestsPageContent({
   initialSection12,
   initialMode,
 }: TestsPageContentProps) {
-  const { grade, setGrade, lockedGrade, isGradeLocked } = useGrade()
+  const { grade, lockedGrade } = useGrade()
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>(initialSection7)
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>(initialSection12)
   const [selectedMode, setSelectedMode] = useState<TestMode>(initialMode)
   const [isPremiumUser, setIsPremiumUser] = useState(false)
   const effectiveGrade = lockedGrade ?? grade
-
-  useEffect(() => {
-    if (isGradeLocked && lockedGrade) {
-      setGrade(lockedGrade)
-      return
-    }
-
-    setGrade(initialGrade)
-  }, [initialGrade, isGradeLocked, lockedGrade, setGrade])
 
   useEffect(() => {
     let cancelled = false
