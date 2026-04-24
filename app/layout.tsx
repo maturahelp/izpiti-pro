@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Manrope, Montserrat } from 'next/font/google'
 import './globals.css'
 import Preloader from '@/components/shared/Preloader'
+import { brandMetadataIcons } from '@/lib/brand'
 
 const manrope = Manrope({
   subsets: ['latin', 'cyrillic'],
@@ -20,6 +21,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
   description: 'Интерактивна платформа за подготовка за НВО и ДЗИ с тестове, аудио уроци, учебни материали и AI помощник.',
+  icons: brandMetadataIcons,
 }
 
 export default function RootLayout({

@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { NavDrawerButton } from '@/components/marketing/NavDrawer'
+import { BrandLogo } from '@/components/shared/BrandLogo'
 
 const navLinks = [
   { href: '#kak-raboti', label: 'Как работи' },
@@ -37,14 +38,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <NavDrawerButton />
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#2563EB" strokeWidth="1.8" strokeLinejoin="round" fill="none"/>
-                <path d="M14 8V23" stroke="#2563EB" strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M8 11C9.5 10.7 11 10.6 12.5 10.8" stroke="#2563EB" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M8 13.5C9.5 13.2 11 13.1 12.5 13.3" stroke="#2563EB" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M15.5 10.8C17 10.6 18.5 10.7 20 11" stroke="#2563EB" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M15.5 13.3C17 13.1 18.5 13.2 20 13.5" stroke="#2563EB" strokeWidth="1.3" strokeLinecap="round"/>
-              </svg>
+              <BrandLogo className="h-9 w-9" />
               <span className="font-extrabold text-white text-[16px] tracking-[-0.03em]">MaturaHelp</span>
             </Link>
           </div>
