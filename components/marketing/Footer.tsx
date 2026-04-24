@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { LEGAL_SUPPORT_EMAIL } from '@/lib/legal-consent'
+import { BrandLogo } from '@/components/shared/BrandLogo'
 
 const footerLinks = {
   Платформа: [
@@ -37,14 +38,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-5 group">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-                <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#60A5FA" strokeWidth="1.6" strokeLinejoin="round" fill="none"/>
-                <path d="M14 8V23" stroke="#60A5FA" strokeWidth="1.6" strokeLinecap="round"/>
-                <path d="M8 10.5C9.5 10.2 11 10.1 12.5 10.3" stroke="#60A5FA" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M8 13C9.5 12.7 11 12.6 12.5 12.8" stroke="#60A5FA" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M15.5 10.3C17 10.1 18.5 10.2 20 10.5" stroke="#60A5FA" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M15.5 12.8C17 12.6 18.5 12.7 20 13" stroke="#60A5FA" strokeWidth="1.3" strokeLinecap="round"/>
-              </svg>
+              <BrandLogo className="h-7 w-7 shrink-0" />
               <span className="font-black text-white text-[17px] tracking-[-0.03em] group-hover:text-blue-200 transition-colors duration-200">MaturaHelp</span>
             </Link>
             <p className="text-[13px] text-white/30 leading-relaxed mb-5">
