@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Suspense, useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { loginAction } from './actions'
+import { BrandLogo } from '@/components/shared/BrandLogo'
 
 // Only allow same-origin redirects (must start with "/" and not with "//" to prevent protocol-relative open redirects).
 function safeRedirectTo(raw: string | null): string {
@@ -54,16 +55,7 @@ function LoginForm() {
 
           {/* Logo */}
           <div className="flex items-center gap-2.5 justify-center mb-6">
-            <div className="w-9 h-9 rounded-xl bg-primary/[0.08] border border-primary/15 flex items-center justify-center shadow-sm flex-shrink-0">
-              <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 8C14 8 10.5 6 5 6.5V21.5C10.5 21 14 23 14 23C14 23 17.5 21 23 21.5V6.5C17.5 6 14 8 14 8Z" stroke="#2F4E85" strokeWidth="1.6" strokeLinejoin="round" fill="white"/>
-                <path d="M14 8V23" stroke="#2F4E85" strokeWidth="1.6" strokeLinecap="round"/>
-                <path d="M8 10.5C9.5 10.2 11 10.1 12.5 10.3" stroke="#2F4E85" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M8 13C9.5 12.7 11 12.6 12.5 12.8" stroke="#2F4E85" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M15.5 10.3C17 10.1 18.5 10.2 20 10.5" stroke="#2F4E85" strokeWidth="1.3" strokeLinecap="round"/>
-                <path d="M15.5 12.8C17 12.6 18.5 12.7 20 13" stroke="#2F4E85" strokeWidth="1.3" strokeLinecap="round"/>
-              </svg>
-            </div>
+            <BrandLogo className="h-9 w-9" />
             <span className="font-serif font-bold text-text text-[18px] tracking-[-0.02em]">MaturaHelp</span>
           </div>
 

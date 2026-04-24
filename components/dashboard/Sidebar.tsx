@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { BrandWordmark } from '@/components/shared/BrandWordmark'
+import { BrandLogo } from '@/components/shared/BrandLogo'
 import { cn } from '@/lib/utils'
 
 type NavItem = {
@@ -103,6 +104,7 @@ export function Sidebar() {
         aria-label="MaturaHelp"
         className="flex items-center px-4 py-4 border-b border-slate-100 hover:opacity-80 transition-opacity"
       >
+        <BrandLogo className="h-8 w-8 mr-2" />
         <BrandWordmark className="text-xl" />
       </Link>
 

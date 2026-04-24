@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { BrandLogo } from '@/components/shared/BrandLogo'
 
 const navItems = [
   {
@@ -121,9 +122,7 @@ export function AdminSidebar() {
   return (
     <aside className="fixed left-0 top-0 h-full w-56 bg-sidebar flex flex-col z-40">
       <div className="flex items-center gap-2.5 px-4 py-4 border-b border-white/10">
-        <span className="w-7 h-7 bg-primary rounded-md flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-bold text-sm font-serif">И</span>
-        </span>
+        <BrandLogo className="h-8 w-8 shrink-0" />
         <div>
           <span className="font-bold text-white text-sm font-serif block">MaturaHelp</span>
           <span className="text-[10px] text-slate-400">Администратор</span>
