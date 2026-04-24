@@ -16,7 +16,17 @@ type PlanState =
   | { status: 'error' }
   | { status: 'ready'; profile: SubscriptionAccessProfile | null }
 
-function formatBgDate(iso: string | null): string | null {
+const PROFILE_SELECT =
+  'plan, is_active, plan_expires_at, billing_status, billing_plan_key, cancel_at_period_end, cancel_at, current_period_end, stripe_customer_id, stripe_subscription_id, last_payment_status'
+
+const PLAN_LABELS: Record<string, string> = {
+  'nvo-monthly': 'НВО — месечен план',
+  'nvo-full': 'НВО — до края на изпитите',
+  'dzi-monthly': 'ДЗИ — месечен план',
+  'dzi-full': 'ДЗИ — до края на матурите',
+}
+
+function formatBgDate(iso: string | null | undefined): string | null {
   if (!iso) return null
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return null
@@ -25,11 +35,13 @@ function formatBgDate(iso: string | null): string | null {
 
 export default function SubscriptionPage() {
   const [state, setState] = useState<PlanState>({ status: 'loading' })
+  const [isCancelling, setIsCancelling] = useState(false)
+  const [isResuming, setIsResuming] = useState(false)
+  const [isOpeningPortal, setIsOpeningPortal] = useState(false)
+  const [actionError, setActionError] = useState<string | null>(null)
+  const [actionNotice, setActionNotice] = useState<string | null>(null)
   const [hasRecentCheckout] = useState(() => {
-    if (typeof window === 'undefined') {
-      return false
-    }
-
+    if (typeof window === 'undefined') return false
     return new URLSearchParams(window.location.search).get('checkout') === 'success'
   })
 
@@ -37,7 +49,6 @@ export default function SubscriptionPage() {
     const supabase = createClient()
     const { data: userData } = await supabase.auth.getUser()
     const user = userData.user
-
     if (!user) {
       setState({ status: 'error' })
       return null
@@ -45,7 +56,7 @@ export default function SubscriptionPage() {
 
     const { data: profile, error } = await supabase
       .from('profiles')
-      .select('plan, is_active, plan_expires_at')
+      .select(PROFILE_SELECT)
       .eq('id', user.id)
       .single()
 
@@ -54,7 +65,7 @@ export default function SubscriptionPage() {
       return null
     }
 
-    const readyProfile = profile ?? null
+    const readyProfile = (profile as SubscriptionAccessProfile | null) ?? null
     setState({ status: 'ready', profile: readyProfile })
     return readyProfile
   }, [])
@@ -63,44 +74,38 @@ export default function SubscriptionPage() {
     const timeoutId = window.setTimeout(() => {
       void loadProfile()
     }, 0)
-
-    return () => {
-      window.clearTimeout(timeoutId)
-    }
+    return () => window.clearTimeout(timeoutId)
   }, [loadProfile])
 
   const readyProfile = state.status === 'ready' ? state.profile : null
   const subscriptionStatus = getSubscriptionStatus(readyProfile)
   const isActivePremium = hasActivePremium(readyProfile)
-  const planExpiresAt = readyProfile?.plan_expires_at ?? null
-  const formattedExpiryDate = formatBgDate(planExpiresAt)
+  const periodEnd = readyProfile?.current_period_end ?? readyProfile?.plan_expires_at ?? null
+  const cancelAt = readyProfile?.cancel_at ?? null
+  const formattedPeriodEnd = formatBgDate(periodEnd)
+  const formattedCancelAt = formatBgDate(cancelAt)
   const isCheckoutSyncing = hasRecentCheckout && !isActivePremium
+  const hasRecurringSubscription =
+    !!readyProfile?.stripe_subscription_id &&
+    (readyProfile?.billing_status === 'active' ||
+      readyProfile?.billing_status === 'trialing' ||
+      readyProfile?.billing_status === 'past_due')
 
   useEffect(() => {
-    if (!isCheckoutSyncing) {
-      return
-    }
-
+    if (!isCheckoutSyncing) return
     let isCancelled = false
     let attempts = 0
-
     const intervalId = window.setInterval(() => {
       attempts += 1
-
       void loadProfile().then((profile) => {
         if (isCancelled) return
-
         if (hasActivePremium(profile)) {
           window.clearInterval(intervalId)
           return
         }
-
-        if (attempts >= 8) {
-          window.clearInterval(intervalId)
-        }
+        if (attempts >= 8) window.clearInterval(intervalId)
       })
     }, 2000)
-
     return () => {
       isCancelled = true
       window.clearInterval(intervalId)
@@ -109,19 +114,19 @@ export default function SubscriptionPage() {
 
   const checkoutNotice = useMemo(() => {
     if (!hasRecentCheckout) return null
-
     if (isActivePremium) {
       return {
         className: 'card p-5 border-success/30 bg-success-light/20',
         title: 'Плащането е потвърдено',
-        description: 'Премиум достъпът е активиран успешно и вече можеш да влизаш във всички premium секции.',
+        description:
+          'Премиум достъпът е активиран успешно и вече можеш да влизаш във всички premium секции.',
       }
     }
-
     return {
       className: 'card p-5 border-primary/20 bg-primary-light/20',
       title: 'Обработваме плащането',
-      description: 'Stripe потвърди checkout-а. Изчакваме системата да активира premium достъпа ти.',
+      description:
+        'Stripe потвърди checkout-а. Изчакваме системата да активира premium достъпа ти.',
     }
   }, [hasRecentCheckout, isActivePremium])
 
@@ -134,10 +139,30 @@ export default function SubscriptionPage() {
       badgeLabel: 'Активен',
       containerClassName: 'card p-5 border-success/30 bg-success-light/20',
     },
+    canceling: {
+      eyebrow: 'Премиум',
+      title: 'Абонаментът ще бъде прекратен',
+      description: formattedCancelAt
+        ? `Имаш пълен достъп до ${formattedCancelAt}. След тази дата абонаментът ще спре.`
+        : 'Имаш пълен достъп до края на текущия период. След това абонаментът ще спре.',
+      badgeClassName: 'badge-amber px-3 py-1',
+      badgeLabel: 'Активен (ще спре)',
+      containerClassName: 'card p-5 border-amber/30 bg-amber-light/25',
+    },
+    past_due: {
+      eyebrow: 'Премиум',
+      title: 'Плащането не премина',
+      description:
+        'Последното плащане не е успешно. Достъпът ти остава до края на вече платения период. Моля, обнови метода за плащане.',
+      badgeClassName: 'badge-amber px-3 py-1',
+      badgeLabel: 'Проблем с плащане',
+      containerClassName: 'card p-5 border-amber/30 bg-amber-light/25',
+    },
     expired: {
       eyebrow: 'Премиум',
       title: 'Абонаментът ти е изтекъл',
-      description: 'Влезе успешно в акаунта си, но premium достъпът е спрян, докато не подновиш плана.',
+      description:
+        'Влезе успешно в акаунта си, но premium достъпът е спрян, докато не подновиш плана.',
       badgeClassName: 'badge-amber px-3 py-1',
       badgeLabel: 'Изтекъл',
       containerClassName: 'card p-5 border-amber/30 bg-amber-light/25',
@@ -145,21 +170,88 @@ export default function SubscriptionPage() {
     inactive: {
       eyebrow: 'Без активен план',
       title: 'Нямаш активен абонамент',
-      description: 'Можеш да управляваш профила си, но платеното съдържание остава заключено, докато не избереш план.',
+      description:
+        'Можеш да управляваш профила си, но платеното съдържание остава заключено, докато не избереш план.',
       badgeClassName: 'badge px-3 py-1 bg-slate-100 text-text-muted',
       badgeLabel: 'Неактивен',
       containerClassName: 'card p-5 border-slate-200 bg-slate-50/80',
     },
   }[subscriptionStatus]
 
-  const statusLabel =
-    subscriptionStatus === 'active'
-      ? 'Активен'
-      : subscriptionStatus === 'expired'
-      ? 'Изтекъл'
-      : 'Без активен план'
+  const statusLabel = {
+    active: 'Активен',
+    canceling: 'Активен до края на периода',
+    past_due: 'Проблем с плащане',
+    expired: 'Изтекъл',
+    inactive: 'Без активен план',
+  }[subscriptionStatus]
 
-  const planLabel = readyProfile?.plan === 'premium' ? 'Премиум' : 'Безплатен'
+  const planLabel =
+    (readyProfile?.billing_plan_key && PLAN_LABELS[readyProfile.billing_plan_key]) ??
+    (readyProfile?.plan === 'premium' ? 'Премиум' : 'Безплатен')
+
+  async function handleCancel() {
+    if (!confirm('Сигурен ли си, че искаш да прекратиш абонамента? Достъпът ще остане до края на текущия период.')) {
+      return
+    }
+    setIsCancelling(true)
+    setActionError(null)
+    setActionNotice(null)
+    try {
+      const res = await fetch('/api/stripe/cancel', { method: 'POST' })
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => ({}))) as { message?: string; error?: string }
+        throw new Error(payload.message ?? payload.error ?? 'Грешка при прекратяване.')
+      }
+      setActionNotice('Абонаментът ще спре в края на текущия период.')
+      await loadProfile()
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Грешка при прекратяване.')
+    } finally {
+      setIsCancelling(false)
+    }
+  }
+
+  async function handleResume() {
+    setIsResuming(true)
+    setActionError(null)
+    setActionNotice(null)
+    try {
+      const res = await fetch('/api/stripe/resume', { method: 'POST' })
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => ({}))) as { message?: string; error?: string }
+        throw new Error(payload.message ?? payload.error ?? 'Грешка при възстановяване.')
+      }
+      setActionNotice('Абонаментът е възстановен.')
+      await loadProfile()
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Грешка при възстановяване.')
+    } finally {
+      setIsResuming(false)
+    }
+  }
+
+  async function handlePortal() {
+    setIsOpeningPortal(true)
+    setActionError(null)
+    try {
+      const res = await fetch('/api/stripe/portal', { method: 'POST' })
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => ({}))) as { message?: string; error?: string }
+        throw new Error(payload.message ?? payload.error ?? 'Грешка при отварянето.')
+      }
+      const payload = (await res.json()) as { url?: string }
+      if (payload.url) {
+        window.location.href = payload.url
+        return
+      }
+      throw new Error('Липсва URL от Stripe.')
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Грешка при отварянето.')
+    } finally {
+      setIsOpeningPortal(false)
+    }
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -169,6 +261,18 @@ export default function SubscriptionPage() {
           <div className={checkoutNotice.className}>
             <h2 className="font-semibold text-text mb-1 text-sm">{checkoutNotice.title}</h2>
             <p className="text-sm text-text-muted">{checkoutNotice.description}</p>
+          </div>
+        )}
+
+        {actionNotice && (
+          <div className="card p-4 border-success/30 bg-success-light/20">
+            <p className="text-sm text-text">{actionNotice}</p>
+          </div>
+        )}
+
+        {actionError && (
+          <div className="card p-4 border-error/30 bg-error-light/20">
+            <p className="text-sm text-text">{actionError}</p>
           </div>
         )}
 
@@ -200,9 +304,7 @@ export default function SubscriptionPage() {
                     </span>
                   </div>
                   <p className="font-bold text-text text-lg font-serif">{summaryConfig.title}</p>
-                  <p className="text-sm text-text-muted mt-0.5">
-                    {summaryConfig.description}
-                  </p>
+                  <p className="text-sm text-text-muted mt-0.5">{summaryConfig.description}</p>
                 </div>
                 <span className={summaryConfig.badgeClassName}>{summaryConfig.badgeLabel}</span>
               </div>
@@ -220,17 +322,61 @@ export default function SubscriptionPage() {
                   <span className="font-medium text-text text-right">{statusLabel}</span>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <span className="text-text-muted">Валиден до</span>
-                  <span className="font-medium text-text text-right">{formattedExpiryDate ?? '—'}</span>
+                  <span className="text-text-muted">
+                    {subscriptionStatus === 'canceling' ? 'Прекратява се на' : 'Валиден до'}
+                  </span>
+                  <span className="font-medium text-text text-right">
+                    {formattedCancelAt ?? formattedPeriodEnd ?? '—'}
+                  </span>
                 </div>
               </div>
             </div>
+
+            {isActivePremium && hasRecurringSubscription && (
+              <div className="card p-5 space-y-3">
+                <h2 className="font-semibold text-text text-sm">Управление</h2>
+                <p className="text-sm text-text-muted">
+                  Можеш да управляваш начина си на плащане, фактурите и абонамента през Stripe. Ако
+                  прекратиш, достъпът остава до края на вече платения период.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={handlePortal}
+                    disabled={isOpeningPortal}
+                    className="btn-secondary"
+                  >
+                    {isOpeningPortal ? 'Отваряне…' : 'Управление на плащането'}
+                  </button>
+                  {readyProfile?.cancel_at_period_end ? (
+                    <button
+                      type="button"
+                      onClick={handleResume}
+                      disabled={isResuming}
+                      className="btn-primary"
+                    >
+                      {isResuming ? 'Възстановяване…' : 'Възстанови абонамента'}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      disabled={isCancelling}
+                      className="btn-secondary text-error border-error/30"
+                    >
+                      {isCancelling ? 'Прекратяване…' : 'Прекрати абонамента'}
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
 
             {!isActivePremium && (
               <div className="card p-5">
                 <h2 className="font-semibold text-text mb-2 text-sm">Поднови достъпа</h2>
                 <p className="text-sm text-text-muted">
-                  Избери план, за да отключиш отново всички premium материали, тестове и пълния достъп в платформата.
+                  Избери план, за да отключиш отново всички premium материали, тестове и пълния достъп
+                  в платформата.
                 </p>
                 <Link href="/#pricing" className="btn-primary mt-4">
                   Избери план
@@ -242,7 +388,10 @@ export default function SubscriptionPage() {
               <h2 className="font-semibold text-text mb-2 text-sm">Въпроси за абонамента?</h2>
               <p className="text-sm text-text-muted">
                 Пиши ни на{' '}
-                <a href={`mailto:${LEGAL_SUPPORT_EMAIL}`} className="text-primary font-semibold hover:underline">
+                <a
+                  href={`mailto:${LEGAL_SUPPORT_EMAIL}`}
+                  className="text-primary font-semibold hover:underline"
+                >
                   {LEGAL_SUPPORT_EMAIL}
                 </a>{' '}
                 и ще ти помогнем.

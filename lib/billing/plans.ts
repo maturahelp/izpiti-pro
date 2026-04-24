@@ -55,6 +55,19 @@ export function getOneTimePlanExpiry(planKey: PlanKey) {
   return BILLING_PLANS[planKey].accessEndsAt ?? null
 }
 
+export function isOneTimePlan(planKey: PlanKey) {
+  return BILLING_PLANS[planKey].mode === 'payment'
+}
+
+export function isRecurringPlan(planKey: PlanKey) {
+  return BILLING_PLANS[planKey].mode === 'subscription'
+}
+
+/**
+ * Profile patch, приложен след успешно плащане или актуален subscription
+ * update. При деактивация (isActive=false) пак презаписваме class/exam_path,
+ * за да останат сензорите консистентни със closely-coupled grade lock логиката.
+ */
 export function buildPremiumProfilePatch(
   planKey: PlanKey,
   expiresAt: string | null,
@@ -68,6 +81,7 @@ export function buildPremiumProfilePatch(
     plan_expires_at: expiresAt,
     class: config.class,
     exam_path: config.examPath,
+    billing_plan_key: planKey,
     updated_at: new Date().toISOString(),
   }
 }
