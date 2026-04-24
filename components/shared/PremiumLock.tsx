@@ -36,7 +36,7 @@ export function PremiumLock({
         <p className="text-xs text-text-muted">{message}</p>
       </div>
       <Link
-        href="/subscription"
+        href="/dashboard/subscription"
         className="btn-primary text-xs px-4 py-2"
       >
         Виж плановете

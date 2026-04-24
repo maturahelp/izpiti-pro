@@ -23,6 +23,7 @@ export default function LoginPage() {
 function LoginForm() {
   const searchParams = useSearchParams()
   const redirectTo = safeRedirectTo(searchParams.get('redirectTo'))
+  const registerHref = `/register?redirectTo=${encodeURIComponent(redirectTo)}`
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -126,7 +127,7 @@ function LoginForm() {
 
           <p className="text-center text-[12.5px] text-text-muted mt-4">
             Нямаш акаунт?{' '}
-            <Link href="/register" className="text-primary font-semibold hover:underline">
+            <Link href={registerHref} className="text-primary font-semibold hover:underline">
               Регистрирай се
             </Link>
           </p>

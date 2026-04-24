@@ -106,6 +106,12 @@ async function startCheckout(plan: PlanKey) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ plan }),
     })
+
+    if (res.status === 401) {
+      window.location.href = `/login?redirectTo=${encodeURIComponent('/#pricing')}`
+      return
+    }
+
     const data = await res.json()
     if (data.url) {
       window.location.href = data.url
