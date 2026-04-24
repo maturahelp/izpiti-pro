@@ -114,15 +114,21 @@ export function TestsPageContent({
   initialSection12,
   initialMode,
 }: TestsPageContentProps) {
-  const { grade, setGrade } = useGrade()
+  const { grade, setGrade, lockedGrade, isGradeLocked } = useGrade()
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>(initialSection7)
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>(initialSection12)
   const [selectedMode, setSelectedMode] = useState<TestMode>(initialMode)
   const [isPremiumUser, setIsPremiumUser] = useState(false)
+  const effectiveGrade = lockedGrade ?? grade
 
   useEffect(() => {
+    if (isGradeLocked && lockedGrade) {
+      setGrade(lockedGrade)
+      return
+    }
+
     setGrade(initialGrade)
-  }, [initialGrade, setGrade])
+  }, [initialGrade, isGradeLocked, lockedGrade, setGrade])
 
   useEffect(() => {
     let cancelled = false
@@ -152,13 +158,14 @@ export function TestsPageContent({
   }, [])
 
   const activeSectionKey: 'bel' | 'math' | 'english' =
-    grade === '7' ? selectedSection7 : selectedSection12
+    effectiveGrade === '7' ? selectedSection7 : selectedSection12
   const activeTheme = sectionTheme[activeSectionKey]
-  const isEnglishSampleView = grade === '12' && selectedSection12 === 'english' && selectedMode === 'sample'
+  const isEnglishSampleView =
+    effectiveGrade === '12' && selectedSection12 === 'english' && selectedMode === 'sample'
   const isLocked = !isPremiumUser
 
   const filtered = tests.filter((test) => {
-    if (grade === '7') {
+    if (effectiveGrade === '7') {
       if (test.examType !== 'nvo7') return false
       if (getTestSection(test) !== selectedSection7) return false
       if (getTestMode(test) !== selectedMode) return false
@@ -176,7 +183,7 @@ export function TestsPageContent({
       <TopBar title="Тестове" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
         <div className="mb-6 -mt-4 space-y-3">
-          {grade === '7' && (
+          {effectiveGrade === '7' && (
             <div className="flex flex-wrap justify-center gap-3">
               {(Object.keys(sectionLabels7) as TestSection7[]).map((section) => {
                 const theme = sectionTheme[section]
@@ -207,7 +214,7 @@ export function TestsPageContent({
             </div>
           )}
 
-          {grade === '12' && (
+          {effectiveGrade === '12' && (
             <div className="flex flex-wrap justify-center gap-3">
               {(Object.keys(sectionLabels12) as TestSection12[]).map((section) => {
                 const theme = sectionTheme[section]
@@ -240,7 +247,7 @@ export function TestsPageContent({
 
           <div className="flex justify-center">
             <div className="inline-flex items-center rounded-xl bg-gray-100 p-1">
-              {(Object.keys(modeLabelsByGrade[grade]) as TestMode[]).map((mode) => (
+              {(Object.keys(modeLabelsByGrade[effectiveGrade]) as TestMode[]).map((mode) => (
                 <button
                   key={mode}
                   type="button"
@@ -253,7 +260,7 @@ export function TestsPageContent({
                   )}
                   style={selectedMode === mode ? { color: activeTheme.onSoft } : undefined}
                 >
-                  {modeLabelsByGrade[grade][mode]}
+                  {modeLabelsByGrade[effectiveGrade][mode]}
                 </button>
               ))}
             </div>

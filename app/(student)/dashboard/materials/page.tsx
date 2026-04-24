@@ -292,7 +292,7 @@ const grade7SectionLabels: Record<Grade7Section, string> = {
 }
 
 export default function MaterialsPage() {
-  const { grade } = useGrade()
+  const { grade, lockedGrade } = useGrade()
   const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
@@ -328,6 +328,7 @@ export default function MaterialsPage() {
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
+  const effectiveGrade = lockedGrade ?? grade
 
   const filtered = materials.filter((m) => {
     if (getMaterialSection(m) !== selectedSection) return false
@@ -750,16 +751,16 @@ export default function MaterialsPage() {
   }, [activeNvoWorkPanel, hasPremiumAccess])
 
   useEffect(() => {
-    const allowedSections = grade === '7'
+    const allowedSections = effectiveGrade === '7'
       ? (grade7Sections as readonly MaterialSection[])
       : grade12Sections
 
     if (!allowedSections.includes(selectedSection)) {
       setSelectedSection('bulgarian')
     }
-  }, [grade, selectedSection])
+  }, [effectiveGrade, selectedSection])
 
-  if (grade === '7') {
+  if (effectiveGrade === '7') {
     return (
       <div className="min-h-screen pb-20 md:pb-0">
         <TopBar title="Материали" />
