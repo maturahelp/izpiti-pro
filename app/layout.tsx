@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
 import { Manrope, Montserrat } from 'next/font/google'
 import Script from 'next/script'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 import Preloader from '@/components/shared/Preloader'
 import { brandMetadataIcons } from '@/lib/brand'
+
+const GOOGLE_ANALYTICS_ID = 'G-9J2B53ZH5P'
 
 const manrope = Manrope({
   subsets: ['latin', 'cyrillic'],
@@ -37,6 +40,7 @@ export default function RootLayout({
         {children}
         <Script src="/cookie-consent.js" strategy="afterInteractive" />
       </body>
+      <GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />
     </html>
   )
 }
