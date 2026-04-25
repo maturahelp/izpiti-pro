@@ -94,6 +94,13 @@ export function Footer() {
             <Link href="/cookies" className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
               Бисквитки
             </Link>
+            <button
+              type="button"
+              data-cookie-settings-trigger
+              className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium"
+            >
+              Настройки за бисквитки
+            </button>
             <a href={`mailto:${LEGAL_SUPPORT_EMAIL}`} className="text-[12px] text-white/20 hover:text-white/50 transition-colors duration-200 font-medium">
               Контакти
             </a>
