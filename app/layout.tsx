@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Manrope, Montserrat } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Preloader from '@/components/shared/Preloader'
 import { brandMetadataIcons } from '@/lib/brand'
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body>
         <Preloader />
         {children}
+        <Script src="/cookie-consent.js" strategy="afterInteractive" />
       </body>
     </html>
   )
