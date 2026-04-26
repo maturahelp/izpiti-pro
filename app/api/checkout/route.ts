@@ -75,13 +75,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'AUTH_REQUIRED' }, { status: 401 })
   }
 
-  const payload = (await req.json()) as { plan?: string }
+  const payload = (await req.json()) as { plan?: string; promoCode?: string }
 
   if (!payload.plan || !isPlanKey(payload.plan)) {
     return NextResponse.json({ error: 'Unknown plan' }, { status: 400 })
   }
 
   const plan = payload.plan
+  const rawPromoCode = typeof payload.promoCode === 'string' ? payload.promoCode.trim() : undefined
   const config = BILLING_PLANS[plan]
 
   // Зареждаме current billing snapshot, за да приложим safety checks.
@@ -149,13 +150,26 @@ export async function POST(req: NextRequest) {
     userEmail: user.email,
   }
 
+  // Resolve promo code to a Stripe promotion_code ID if provided.
+  let resolvedPromoCodeId: string | undefined
+  if (rawPromoCode) {
+    const promos = await stripe.promotionCodes.list({ code: rawPromoCode, active: true, limit: 1 })
+    if (promos.data.length === 0) {
+      return NextResponse.json({ error: 'INVALID_PROMO_CODE', message: 'Промо кодът не е валиден или е изтекъл.' }, { status: 400 })
+    }
+    resolvedPromoCodeId = promos.data[0].id
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: config.mode,
       client_reference_id: user.id,
       customer: customerId,
       metadata,
-      allow_promotion_codes: true,
+      // When a discount is pre-applied we must omit allow_promotion_codes (mutually exclusive).
+      ...(resolvedPromoCodeId
+        ? { discounts: [{ promotion_code: resolvedPromoCodeId }] }
+        : { allow_promotion_codes: true }),
       line_items: [
         {
           price_data: {

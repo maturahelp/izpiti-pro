@@ -99,12 +99,12 @@ const dziPlans: Plan[] = [
   },
 ]
 
-async function startCheckout(plan: PlanKey) {
+async function startCheckout(plan: PlanKey, promoCode?: string) {
   try {
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan }),
+      body: JSON.stringify({ plan, promoCode: promoCode?.trim() || undefined }),
     })
 
     if (res.status === 401) {
@@ -115,6 +115,8 @@ async function startCheckout(plan: PlanKey) {
     const data = await res.json()
     if (data.url) {
       window.location.href = data.url
+    } else if (data.error === 'INVALID_PROMO_CODE') {
+      alert(data.message ?? 'Промо кодът не е валиден или е изтекъл.')
     } else {
       alert('Грешка: ' + (data.error ?? 'Неизвестна грешка'))
     }
@@ -126,6 +128,7 @@ async function startCheckout(plan: PlanKey) {
 
 export function Pricing() {
   const [tab, setTab] = useState<ExamTab>('nvo')
+  const [promoCode, setPromoCode] = useState('')
   const plans = tab === 'nvo' ? nvoPlans : dziPlans
 
   return (
@@ -152,9 +155,21 @@ export function Pricing() {
           </div>
         </div>
 
+        <div className="flex justify-center mb-6">
+          <div className="flex items-center gap-2 w-full max-w-sm">
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              placeholder="Промо код (по избор)"
+              className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 placeholder-gray-400"
+            />
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-7 max-w-3xl mx-auto mb-8">
           {plans.map((plan) => (
-            <PlanCard key={plan.label} plan={plan} onCheckout={startCheckout} />
+            <PlanCard key={plan.label} plan={plan} promoCode={promoCode} onCheckout={startCheckout} />
           ))}
         </div>
 
@@ -187,7 +202,7 @@ function PricingTabButton({
   )
 }
 
-function PlanCard({ plan, onCheckout }: { plan: Plan; onCheckout: (key: PlanKey) => void }) {
+function PlanCard({ plan, promoCode, onCheckout }: { plan: Plan; promoCode: string; onCheckout: (key: PlanKey, promoCode?: string) => void }) {
   return (
     <div
       className={`bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-8 relative ${
@@ -214,7 +229,7 @@ function PlanCard({ plan, onCheckout }: { plan: Plan; onCheckout: (key: PlanKey)
       </ul>
       <button
         type="button"
-        onClick={() => onCheckout(plan.planKey)}
+        onClick={() => onCheckout(plan.planKey, promoCode)}
         className="block w-full text-center text-white font-semibold py-3 rounded-full text-sm bg-[#3b82f6] hover:shadow-lg hover:shadow-blue-200 transition-all"
       >
         {plan.cta}
