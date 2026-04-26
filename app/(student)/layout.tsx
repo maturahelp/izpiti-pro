@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import { Sidebar } from '@/components/dashboard/Sidebar'
 import { MobileNav } from '@/components/dashboard/MobileNav'
 import { GradeProvider } from '@/lib/grade-context'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default function StudentLayout({
   children,

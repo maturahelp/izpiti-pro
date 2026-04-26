@@ -5,6 +5,8 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 import Preloader from '@/components/shared/Preloader'
 import { brandMetadataIcons } from '@/lib/brand'
+import { JsonLd } from '@/components/shared/JsonLd'
+import { organizationSchema, websiteSchema } from '@/lib/schema'
 
 const GOOGLE_ANALYTICS_ID = 'G-9J2B53ZH5P'
 
@@ -23,8 +25,25 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
+  metadataBase: new URL('https://www.maturahelp.com'),
+  title: { default: 'MaturaHelp — Подготовка за НВО и ДЗИ', template: '%s | MaturaHelp' },
   description: 'Интерактивна платформа за подготовка за НВО и ДЗИ с тестове, аудио уроци, учебни материали и AI помощник.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'bg_BG',
+    url: 'https://www.maturahelp.com/',
+    siteName: 'MaturaHelp',
+    title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
+    description: 'Видео уроци, тестове и AI помощник за НВО 7 клас и ДЗИ 12 клас.',
+    images: [{ url: '/brand/maturahelp-logo.png', width: 512, height: 512, alt: 'MaturaHelp' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
+    description: 'Видео уроци, тестове и AI помощник за НВО 7 клас и ДЗИ 12 клас.',
+    images: ['/brand/maturahelp-logo.png'],
+  },
   icons: brandMetadataIcons,
 }
 
@@ -36,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="bg" className={`${manrope.variable} ${montserrat.variable}`}>
       <body>
+        <JsonLd data={[organizationSchema, websiteSchema]} />
         <Preloader />
         {children}
         <Script src="/cookie-consent.js" strategy="afterInteractive" />
