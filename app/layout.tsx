@@ -8,7 +8,7 @@ import { brandMetadataIcons } from '@/lib/brand'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { organizationSchema, websiteSchema } from '@/lib/schema'
 
-const GOOGLE_ANALYTICS_ID = 'G-9J2B53ZH5P'
+const GOOGLE_ANALYTICS_ID = 'G-9LX2CPVD1T'
 
 const manrope = Manrope({
   subsets: ['latin', 'cyrillic'],
