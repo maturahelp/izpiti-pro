@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import { LegalBulletList, LegalPageShell, LegalSection } from '@/components/marketing/LegalPageShell'
 import { LEGAL_SUPPORT_EMAIL } from '@/lib/legal-consent'
+
+export const metadata: Metadata = {
+  title: 'Политика за поверителност',
+  description: 'Политика за поверителност на MaturaHelp — как събираме, използваме и защитаваме личните ви данни.',
+  alternates: { canonical: '/privacy' },
+}
 
 export default function PrivacyPage() {
   return (

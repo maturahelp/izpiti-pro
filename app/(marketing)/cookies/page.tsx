@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
 import { LegalBulletList, LegalPageShell, LegalSection } from '@/components/marketing/LegalPageShell'
+
+export const metadata: Metadata = {
+  title: 'Политика за бисквитки',
+  description: 'Политика за бисквитки на MaturaHelp — какви бисквитки използваме и как ги управлявате.',
+  alternates: { canonical: '/cookies' },
+}
 
 export default function CookiesPage() {
   return (
