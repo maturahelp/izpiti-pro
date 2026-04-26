@@ -830,12 +830,6 @@ export default function TestPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={handleSubmit}
-              className="btn-primary text-sm px-4 py-2"
-            >
-              {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
-            </button>
-            <button
               onClick={() => setRevealAnswers((v) => !v)}
               className="btn-secondary text-sm px-4 py-2"
             >
@@ -968,6 +962,9 @@ export default function TestPage() {
         )}
 
         <div className="flex flex-wrap gap-3 pt-2">
+          <button onClick={handleSubmit} className="btn-primary">
+            {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
+          </button>
           <a href="/dashboard/tests" className="btn-secondary">
             Обратно към тестовете
           </a>
