@@ -6,12 +6,37 @@ const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+  {
+    key: 'Content-Security-Policy-Report-Only',
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://widget.trustpilot.com https://js.stripe.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https:",
+      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.supabase.co wss://*.supabase.co https://api.stripe.com",
+      "frame-src https://js.stripe.com https://hooks.stripe.com",
+      "worker-src 'self' blob:",
+    ].join('; '),
+  },
 ]
 
 const nextConfig: NextConfig = {
   typedRoutes: false,
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }]
+  },
+  async redirects() {
+    return [
+      // Permanent apex → www redirect (308). Vercel domain settings should also have this;
+      // this is a belt-and-suspenders code-level fallback for any path that slips through.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'maturahelp.com' }],
+        destination: 'https://www.maturahelp.com/:path*',
+        permanent: true,
+      },
+    ]
   },
 }
 

@@ -61,6 +61,9 @@ export function Hero() {
                     key={book.alt}
                     src={book.src}
                     alt={book.alt}
+                    width={240}
+                    height={208}
+                    loading={i === 0 ? 'eager' : 'lazy'}
                     className={`w-full h-44 md:h-52 object-cover rounded-2xl ${i === 1 || i === 3 ? 'mt-6' : ''}`}
                     style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
                   />

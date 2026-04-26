@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import { LegalBulletList, LegalPageShell, LegalSection } from '@/components/marketing/LegalPageShell'
 import { LEGAL_SUPPORT_EMAIL } from '@/lib/legal-consent'
+
+export const metadata: Metadata = {
+  title: 'Общи условия',
+  description: 'Общи условия за ползване на платформата MaturaHelp за подготовка за НВО и ДЗИ.',
+  alternates: { canonical: '/terms' },
+}
 
 export default function TermsPage() {
   return (
