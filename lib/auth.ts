@@ -30,6 +30,30 @@ export async function signUp(email: string, password: string, name?: string, con
   }
 }
 
+export async function verifySignupOtp(email: string, token: string) {
+  try {
+    const supabase = createClient()
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: 'signup',
+    })
+    return { user: data?.user ?? null, session: data?.session ?? null, error }
+  } catch {
+    return { user: null, session: null, error: previewAuthUnavailableError() }
+  }
+}
+
+export async function resendSignupOtp(email: string) {
+  try {
+    const supabase = createClient()
+    const { error } = await supabase.auth.resend({ type: 'signup', email })
+    return { error }
+  } catch {
+    return { error: previewAuthUnavailableError() }
+  }
+}
+
 export async function signOut() {
   try {
     const supabase = createClient()

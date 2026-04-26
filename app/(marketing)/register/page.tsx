@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Suspense, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { signUp, signIn } from '@/lib/auth'
+import { signUp, signIn, verifySignupOtp, resendSignupOtp } from '@/lib/auth'
 import { BrandLogo } from '@/components/shared/BrandLogo'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
 import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
@@ -39,6 +39,10 @@ function RegisterForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [confirmation, setConfirmation] = useState(false)
+  const [otp, setOtp] = useState('')
+  const [verifying, setVerifying] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [resendInfo, setResendInfo] = useState<string | null>(null)
 
   function updateConsent(key: keyof RegistrationConsentValues, checked: boolean) {
     setConsents((current) => ({ ...current, [key]: checked }))
@@ -74,6 +78,43 @@ function RegisterForm() {
     window.location.href = redirectTo
   }
 
+  async function handleVerify(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setResendInfo(null)
+    const code = otp.trim()
+    if (code.length < 6) { setError('Въведи 6-цифрения код от имейла.'); return }
+    setVerifying(true)
+    const { session, error } = await verifySignupOtp(email, code)
+    if (error) {
+      setVerifying(false)
+      setError(error.message || 'Невалиден или изтекъл код.')
+      return
+    }
+    if (session) {
+      window.location.href = redirectTo
+      return
+    }
+    // Fallback — try password sign-in if confirmation was already done
+    const { error: signInError } = await signIn(email, password)
+    setVerifying(false)
+    if (signInError) {
+      setError('Кодът е приет, но входът не успя. Опитай от страницата за вход.')
+      return
+    }
+    window.location.href = redirectTo
+  }
+
+  async function handleResend() {
+    setError(null)
+    setResendInfo(null)
+    setResending(true)
+    const { error } = await resendSignupOtp(email)
+    setResending(false)
+    if (error) { setError(error.message || 'Неуспешно повторно изпращане.'); return }
+    setResendInfo('Изпратихме нов код на имейла ти.')
+  }
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center px-4 py-8 sm:py-12">
       <div className="w-full max-w-[400px]">
@@ -93,13 +134,59 @@ function RegisterForm() {
           </p>
 
           {confirmation ? (
-            <div className="py-6 text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+            <div className="py-2">
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round"><path d="M20 6L9 17l-5-5"/></svg>
               </div>
-              <p className="text-[15px] font-semibold text-text">Провери имейла си</p>
-              <p className="text-[13px] text-text-muted">Изпратихме линк за потвърждение на <strong>{email}</strong>. Кликни го, за да активираш акаунта си.</p>
-              <Link href={loginHref} className="inline-block mt-2 text-[13px] text-primary font-semibold hover:underline">Към страницата за вход</Link>
+              <p className="text-[15px] font-semibold text-text text-center">Провери имейла си</p>
+              <p className="text-[13px] text-text-muted text-center mb-4">
+                Изпратихме 6-цифрен код на <strong>{email}</strong>. Въведи го по-долу.
+              </p>
+
+              {error && (
+                <div className="mb-3 px-4 py-2.5 rounded-xl bg-red-50 border border-red-200 text-[13px] text-red-600">
+                  {error}
+                </div>
+              )}
+              {resendInfo && (
+                <div className="mb-3 px-4 py-2.5 rounded-xl bg-green-50 border border-green-200 text-[13px] text-green-700">
+                  {resendInfo}
+                </div>
+              )}
+
+              <form onSubmit={handleVerify}>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={6}
+                  value={otp}
+                  onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  placeholder="123456"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] text-center text-[18px] tracking-[0.5em] font-mono text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                />
+                <button
+                  type="submit"
+                  disabled={verifying || otp.length < 6}
+                  className="w-full mt-3 py-3 rounded-xl font-semibold text-[14px] text-white bg-gradient-to-r from-primary to-[#2563EB] hover:from-[#1741b8] hover:to-[#1d4ed8] shadow-[0_4px_14px_rgba(27,79,216,0.35)] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  {verifying ? 'Проверка...' : 'Потвърди'}
+                </button>
+              </form>
+
+              <div className="flex items-center justify-between mt-4 text-[12.5px]">
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  disabled={resending}
+                  className="text-primary font-semibold hover:underline disabled:opacity-40"
+                >
+                  {resending ? 'Изпращане...' : 'Изпрати нов код'}
+                </button>
+                <Link href={loginHref} className="text-text-muted hover:text-text">
+                  Към страницата за вход
+                </Link>
+              </div>
             </div>
           ) : (
             <>
