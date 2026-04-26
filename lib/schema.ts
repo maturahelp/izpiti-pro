@@ -1,6 +1,6 @@
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'EducationalOrganization',
   '@id': 'https://www.maturahelp.com/#organization',
   name: 'MaturaHelp',
   url: 'https://www.maturahelp.com',
@@ -8,12 +8,17 @@ export const organizationSchema = {
     '@type': 'ImageObject',
     url: 'https://www.maturahelp.com/brand/maturahelp-logo.png',
   },
-  description: 'Интерактивна платформа за подготовка за НВО и ДЗИ.',
+  description: 'Образователна платформа за подготовка за НВО (7 клас) и ДЗИ (12 клас) в България. 500+ теста, видео уроци и AI помощник.',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
     email: 'support@maturahelp.com',
   },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Абонаментни планове за НВО и ДЗИ',
+  },
+  // sameAs: add social profile URLs here once created (Facebook, Instagram, YouTube, LinkedIn)
 }
 
 export const websiteSchema = {
@@ -24,6 +29,14 @@ export const websiteSchema = {
   url: 'https://www.maturahelp.com',
   inLanguage: 'bg',
   publisher: { '@id': 'https://www.maturahelp.com/#organization' },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://www.maturahelp.com/dashboard/tests?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
 }
 
 export const softwareApplicationSchema = {
@@ -41,57 +54,5 @@ export const softwareApplicationSchema = {
   ],
 }
 
-export const faqPageSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'За кого е платформата?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Платформата е създадена за ученици, които се подготвят за НВО след 7. клас и ДЗИ след 12. клас. Съдържанието е организирано така, че да помага ясно, подредено и по изпитен формат.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Какво включва абонаментът?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Според избрания план получаваш достъп до видео уроци, учебни материали, тестове, задачи и AI помощник, който помага с обяснения и насоки по време на подготовката.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Колко време важи достъпът?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Това зависи от избрания план. Някои планове са с достъп за 1 месец, а други са валидни до края на изпитния период.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Как помага AI помощникът?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'AI помощникът може да ти обяснява трудни теми, да ти помага при грешки и да те насочва какво да преговориш.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Подходяща ли е платформата за последна подготовка преди изпита?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Да. Платформата е полезна както за дългосрочна подготовка, така и за интензивно преговаряне преди изпита.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Как да избера правилния план?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Ако се готвиш за НВО, избери НВО план. Ако се готвиш за ДЗИ, избери ДЗИ план. Ако искаш достъп само за кратък период, избери месечен план, а ако искаш спокойствие до самия изпит, избери плана до края на изпитите.',
-      },
-    },
-  ],
-}
+// FAQPage schema intentionally removed — restricted to government/healthcare sites since Aug 2023.
+// MaturaHelp is a commercial educational platform; this schema produces no Google rich results here.
