@@ -70,7 +70,7 @@ export function ForWhom() {
               ))}
             </div>
             <a
-              href="#how-it-works"
+              href="#kak-raboti"
               className="inline-block text-white font-semibold px-8 py-3 rounded-full text-sm transition-all hover:shadow-lg hover:shadow-blue-200"
               style={{ background: '#5899E2' }}
             >

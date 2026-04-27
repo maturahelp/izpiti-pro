@@ -62,8 +62,8 @@ export function HowItWorks() {
         </div>
 
         <FadeIn delay={0.2} className="mt-8">
-          <Link href="/dashboard" className="btn-secondary px-6 py-2.5 text-[14px]">
-            Разгледай как работи
+          <Link href="/register" className="btn-secondary px-6 py-2.5 text-[14px]">
+            Започни сега
           </Link>
         </FadeIn>
       </div>
