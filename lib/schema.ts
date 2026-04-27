@@ -4,9 +4,12 @@ export const organizationSchema = {
   '@id': 'https://www.maturahelp.com/#organization',
   name: 'MaturaHelp',
   url: 'https://www.maturahelp.com',
+  foundingDate: '2024',
   logo: {
     '@type': 'ImageObject',
     url: 'https://www.maturahelp.com/brand/maturahelp-logo.png',
+    width: 1254,
+    height: 1254,
   },
   description: 'Образователна платформа за подготовка за НВО (7 клас) и ДЗИ (12 клас) в България. 500+ теста, видео уроци и AI помощник.',
   contactPoint: {
@@ -18,7 +21,7 @@ export const organizationSchema = {
     '@type': 'OfferCatalog',
     name: 'Абонаментни планове за НВО и ДЗИ',
   },
-  // sameAs: add social profile URLs here once created (Facebook, Instagram, YouTube, LinkedIn)
+  // sameAs: add social profile URLs here once created (Facebook, Instagram, YouTube)
 }
 
 export const websiteSchema = {
@@ -33,6 +36,7 @@ export const websiteSchema = {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
+      // /dashboard/tests is explicitly allowed in robots.ts so bots can follow this action
       urlTemplate: 'https://www.maturahelp.com/dashboard/tests?q={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
@@ -43,14 +47,47 @@ export const softwareApplicationSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'MaturaHelp',
+  url: 'https://www.maturahelp.com',
   applicationCategory: 'EducationalApplication',
   operatingSystem: 'Web',
   inLanguage: 'bg',
+  // aggregateRating: add once Trustpilot review count is known
+  // { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '50', bestRating: '5', worstRating: '1' }
   offers: [
-    { '@type': 'Offer', name: 'НВО Месечен', price: '30.00', priceCurrency: 'EUR' },
-    { '@type': 'Offer', name: 'НВО до края на изпитите', price: '30.00', priceCurrency: 'EUR', priceValidUntil: '2026-06-19' },
-    { '@type': 'Offer', name: 'ДЗИ Месечен', price: '30.00', priceCurrency: 'EUR' },
-    { '@type': 'Offer', name: 'ДЗИ до края на матурите', price: '19.99', priceCurrency: 'EUR', priceValidUntil: '2026-05-22' },
+    {
+      '@type': 'Offer',
+      name: 'НВО Месечен',
+      price: '30.00',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: 'https://www.maturahelp.com/#pricing',
+    },
+    {
+      '@type': 'Offer',
+      name: 'НВО до края на изпитите',
+      price: '30.00',
+      priceCurrency: 'EUR',
+      priceValidUntil: '2026-06-19',
+      availability: 'https://schema.org/InStock',
+      url: 'https://www.maturahelp.com/#pricing',
+    },
+    {
+      '@type': 'Offer',
+      name: 'ДЗИ Месечен',
+      price: '30.00',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: 'https://www.maturahelp.com/#pricing',
+    },
+    {
+      '@type': 'Offer',
+      name: 'ДЗИ до края на матурите',
+      price: '19.99',
+      priceCurrency: 'EUR',
+      priceValidUntil: '2026-05-22',
+      availability: 'https://schema.org/InStock',
+      url: 'https://www.maturahelp.com/#pricing',
+    },
   ],
 }
 
