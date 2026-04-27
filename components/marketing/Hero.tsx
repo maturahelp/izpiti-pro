@@ -35,7 +35,7 @@ export function Hero() {
                 Започни
               </Link>
               <a
-                href="#how-it-works"
+                href="#kak-raboti"
                 className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-blue-600 transition"
               >
                 <span
