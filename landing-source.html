@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MaturaHelp — Подготовка за НВО и ДЗИ</title>
+  <title>MaturaHelp — Подготовка за НВО и ДЗИ | Тестове, видео уроци и AI помощник</title>
   <link rel="icon" href="/brand/logo14.png" type="image/png">
   <link rel="shortcut icon" href="/brand/logo14.png" type="image/png">
   <link rel="apple-touch-icon" href="/brand/logo14.png">
@@ -282,6 +282,10 @@
     }
 
     /* Decorative soft-blobs – hide on small screens to avoid overflow / visual noise */
+    .soft-blob {
+      pointer-events: none;
+    }
+
     @media (max-width: 767px) {
       .soft-blob { display: none; }
     }
@@ -289,6 +293,9 @@
 
   <!-- SEO: core meta -->
   <meta name="description" content="MaturaHelp е образователна платформа за подготовка за НВО (7 клас) и ДЗИ (12 клас). 500+ теста, видео уроци и AI помощник. Използвана от 4 800+ ученици в България.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="author" content="MaturaHelp">
+  <meta name="keywords" content="MaturaHelp, матурахелп, матура хелп, матура, НВО, ДЗИ, подготовка матура, тестове НВО, ДЗИ БЕЛ, матура английски, матура математика, 7 клас НВО, 12 клас матура">
   <link rel="canonical" href="https://www.maturahelp.com/">
 
   <!-- SEO: Open Graph -->
@@ -299,6 +306,9 @@
   <meta property="og:title" content="MaturaHelp — Подготовка за НВО и ДЗИ">
   <meta property="og:description" content="Видео уроци, тестове и AI помощник за НВО 7 клас и ДЗИ 12 клас.">
   <meta property="og:image" content="https://www.maturahelp.com/brand/maturahelp-logo.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="MaturaHelp лого">
 
   <!-- SEO: Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -314,9 +324,13 @@
       "@type": "EducationalOrganization",
       "@id": "https://www.maturahelp.com/#organization",
       "name": "MaturaHelp",
+      "alternateName": ["МатураХелп", "Матура Хелп", "Matura Help", "maturahelp"],
       "url": "https://www.maturahelp.com",
       "logo": { "@type": "ImageObject", "url": "https://www.maturahelp.com/brand/maturahelp-logo.png" },
+      "image": "https://www.maturahelp.com/brand/maturahelp-logo.png",
       "description": "Образователна платформа за подготовка за НВО (7 клас) и ДЗИ (12 клас) в България. 500+ теста, видео уроци и AI помощник.",
+      "areaServed": "BG",
+      "inLanguage": "bg",
       "contactPoint": { "@type": "ContactPoint", "contactType": "customer support", "email": "support@maturahelp.com" },
       "hasOfferCatalog": { "@type": "OfferCatalog", "name": "Абонаментни планове за НВО и ДЗИ" }
     },
