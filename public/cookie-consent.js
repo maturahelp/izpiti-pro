@@ -493,7 +493,7 @@
       <section class="mh-cookie-consent__banner${showBanner ? ' is-visible' : ''}" aria-hidden="${showBanner ? 'false' : 'true'}">
         <div class="mh-cookie-consent__banner-grid">
           <div class="mh-cookie-consent__copy">
-            <div class="mh-cookie-consent__eyebrow">Поверителност</div>
+            <div class="mh-cookie-consent__eyebrow">Бисквитки</div>
             <h2 class="mh-cookie-consent__title">Използваме бисквитки за по-добро изживяване</h2>
             <p class="mh-cookie-consent__text">
               Задължителните бисквитки поддържат входа и сигурността. Аналитичните и маркетинговите бисквитки се включват само след твой избор.
