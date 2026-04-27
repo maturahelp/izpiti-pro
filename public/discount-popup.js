@@ -20,6 +20,8 @@
     phone: '',
     emailError: '',
     phoneError: '',
+    consent: false,
+    consentError: '',
     submitting: false,
     copied: false,
     firstOpen: true,
@@ -286,6 +288,35 @@
         text-align: center;
       }
 
+      .mh-dp__consent {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin: 12px 0 0;
+        font-size: 12px;
+        color: #475569;
+        line-height: 1.45;
+        cursor: pointer;
+      }
+      .mh-dp__consent-checkbox {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        margin: 1px 0 0;
+        accent-color: #5899E2;
+        cursor: pointer;
+      }
+      .mh-dp__consent.has-error .mh-dp__consent-checkbox {
+        outline: 2px solid #DC2626;
+        outline-offset: 1px;
+        border-radius: 3px;
+      }
+      .mh-dp__consent-link {
+        color: #335C81;
+        text-decoration: underline;
+      }
+      .mh-dp__consent-link:hover { color: #1B2845; }
+
       .mh-dp__btn-primary {
         display: block;
         width: 100%;
@@ -489,6 +520,17 @@
       />
       <p class="mh-dp__error"${state.emailError ? ' role="alert"' : ''}>${state.emailError ? escHtml(state.emailError) : ''}</p>
       <p class="mh-dp__disclaimer">Кодът се прилага в чекаута. Без спам.</p>
+      <label class="mh-dp__consent${state.consentError ? ' has-error' : ''}">
+        <input
+          type="checkbox"
+          class="mh-dp__consent-checkbox"
+          data-dp-field="consent"
+          ${state.consent ? 'checked' : ''}
+          ${state.submitting ? 'disabled' : ''}
+        />
+        <span>Съгласен съм с <a href="/privacy" target="_blank" rel="noopener" class="mh-dp__consent-link">Политиката за поверителност</a> и <a href="/terms" target="_blank" rel="noopener" class="mh-dp__consent-link">Общите условия</a>.</span>
+      </label>
+      <p class="mh-dp__error"${state.consentError ? ' role="alert"' : ''}>${state.consentError ? escHtml(state.consentError) : ''}</p>
       <button
         type="button"
         class="mh-dp__btn-primary"
@@ -721,6 +763,13 @@
         if (errEl) { errEl.textContent = ''; errEl.removeAttribute('role') }
       }
     }
+    if (field === 'consent') {
+      state.consent = target.checked
+      if (state.consent && state.consentError) {
+        state.consentError = ''
+        render()
+      }
+    }
   }
 
   function handleKeydown(event) {
@@ -745,13 +794,29 @@
     const email = (inputEl instanceof HTMLInputElement ? inputEl.value : state.email).trim()
     state.email = email
 
+    const consentEl = document.querySelector('[data-dp-field="consent"]')
+    if (consentEl instanceof HTMLInputElement) {
+      state.consent = consentEl.checked
+    }
+
+    let hasError = false
     if (!isValidEmail(email)) {
       state.emailError = 'Моля, въведи валиден имейл адрес.'
+      hasError = true
+    } else {
+      state.emailError = ''
+    }
+    if (!state.consent) {
+      state.consentError = 'Моля, приеми Политиката за поверителност и Общите условия.'
+      hasError = true
+    } else {
+      state.consentError = ''
+    }
+    if (hasError) {
       render()
       return
     }
 
-    state.emailError = ''
     state.submitting = true
     render()
     await submitDiscountLead({ email })
