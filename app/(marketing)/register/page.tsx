@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { signUp, signIn, verifySignupOtp, resendSignupOtp } from '@/lib/auth'
 import { BrandLogo } from '@/components/shared/BrandLogo'
@@ -13,6 +13,8 @@ function safeRedirectTo(raw: string | null): string {
   if (!raw.startsWith('/') || raw.startsWith('//')) return '/dashboard/materials'
   return raw
 }
+
+const PENDING_VERIFY_KEY = 'pendingVerifyEmail'
 
 export default function RegisterPage() {
   return (
@@ -44,6 +46,18 @@ function RegisterForm() {
   const [resending, setResending] = useState(false)
   const [resendInfo, setResendInfo] = useState<string | null>(null)
 
+  // Restore pending verification state if the user closed the tab after signup
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const pending = window.localStorage.getItem(PENDING_VERIFY_KEY)
+      if (pending) {
+        setEmail(pending)
+        setConfirmation(true)
+      }
+    } catch {}
+  }, [])
+
   function updateConsent(key: keyof RegistrationConsentValues, checked: boolean) {
     setConsents((current) => ({ ...current, [key]: checked }))
   }
@@ -72,9 +86,11 @@ function RegisterForm() {
     setLoading(false)
     if (signInError) {
       // Confirmation required — show the check-your-email screen
+      try { window.localStorage.setItem(PENDING_VERIFY_KEY, email) } catch {}
       setConfirmation(true)
       return
     }
+    try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
     window.location.href = redirectTo
   }
 
@@ -92,6 +108,7 @@ function RegisterForm() {
       return
     }
     if (session) {
+      try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
       window.location.href = redirectTo
       return
     }
@@ -102,6 +119,7 @@ function RegisterForm() {
       setError('Кодът е приет, но входът не успя. Опитай от страницата за вход.')
       return
     }
+    try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
     window.location.href = redirectTo
   }
 

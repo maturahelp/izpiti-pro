@@ -123,6 +123,12 @@ function LoginForm() {
               Регистрирай се
             </Link>
           </p>
+          <p className="text-center text-[12px] text-text-muted mt-2">
+            Не си потвърдил имейла си?{' '}
+            <Link href="/verify-email" className="text-primary font-semibold hover:underline">
+              Въведи код за потвърждение
+            </Link>
+          </p>
         </div>
       </div>
     </div>
