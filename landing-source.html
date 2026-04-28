@@ -1514,6 +1514,11 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ plan: plan })
             });
+            if (res.status === 401) {
+              var checkoutRedirect = encodeURIComponent('/api/checkout/redirect?plan=' + plan);
+              window.location.href = '/register?redirectTo=' + checkoutRedirect;
+              return;
+            }
             var data = await res.json();
             if (data.url) {
               window.location.href = data.url;
