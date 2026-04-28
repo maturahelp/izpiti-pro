@@ -108,7 +108,8 @@ async function startCheckout(plan: PlanKey) {
     })
 
     if (res.status === 401) {
-      window.location.href = `/login?redirectTo=${encodeURIComponent('/#pricing')}`
+      const checkoutRedirect = encodeURIComponent(`/api/checkout/redirect?plan=${plan}`)
+      window.location.href = `/register?redirectTo=${checkoutRedirect}`
       return
     }
 
