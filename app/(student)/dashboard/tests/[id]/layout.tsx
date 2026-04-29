@@ -2,6 +2,15 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { hasActivePremium } from '@/lib/subscription-access'
 
+// Past DZI/NVO exams are part of the free plan. Sample/mock tests stay premium.
+function isPastExamId(id: string) {
+  if (id.startsWith('mock_')) return false
+  if (id.startsWith('selected_mock_')) return false
+  if (id.startsWith('english-generated-')) return false
+  if (/^q\d+$/i.test(id)) return false
+  return true
+}
+
 export default async function TestAccessLayout({
   children,
   params,
@@ -22,6 +31,10 @@ export default async function TestAccessLayout({
 
   if (!user) {
     redirect(`/login?redirectTo=/dashboard/tests/${id}`)
+  }
+
+  if (isPastExamId(id)) {
+    return <>{children}</>
   }
 
   const { data: profile } = await supabase
