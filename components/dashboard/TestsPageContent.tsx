@@ -153,7 +153,8 @@ export function TestsPageContent({
   const activeTheme = sectionTheme[activeSectionKey]
   const isEnglishSampleView =
     effectiveGrade === '12' && selectedSection12 === 'english' && selectedMode === 'sample'
-  const isLocked = !isPremiumUser
+  // Past DZI/NVO tests are part of the free plan; only sample/premium content stays gated.
+  const isLocked = !isPremiumUser && selectedMode !== 'past'
 
   const filtered = tests.filter((test) => {
     if (effectiveGrade === '7') {
