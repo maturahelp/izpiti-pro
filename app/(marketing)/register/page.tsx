@@ -123,6 +123,14 @@ function RegisterForm() {
     window.location.href = redirectTo
   }
 
+  function handleChangeEmail() {
+    try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
+    setOtp('')
+    setError(null)
+    setResendInfo(null)
+    setConfirmation(false)
+  }
+
   async function handleResend() {
     setError(null)
     setResendInfo(null)
@@ -157,9 +165,18 @@ function RegisterForm() {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round"><path d="M20 6L9 17l-5-5"/></svg>
               </div>
               <p className="text-[15px] font-semibold text-text text-center">Провери имейла си</p>
-              <p className="text-[13px] text-text-muted text-center mb-4">
+              <p className="text-[13px] text-text-muted text-center mb-1">
                 Изпратихме 6-цифрен код на <strong>{email}</strong>. Въведи го по-долу.
               </p>
+              <div className="text-center mb-4">
+                <button
+                  type="button"
+                  onClick={handleChangeEmail}
+                  className="text-[12px] text-primary hover:underline"
+                >
+                  Сгрешен имейл? Промени го
+                </button>
+              </div>
 
               {error && (
                 <div className="mb-3 px-4 py-2.5 rounded-xl bg-red-50 border border-red-200 text-[13px] text-red-600">
