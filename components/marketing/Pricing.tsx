@@ -126,7 +126,7 @@ async function startCheckout(plan: PlanKey) {
 }
 
 export function Pricing() {
-  const [tab, setTab] = useState<ExamTab>('nvo')
+  const [tab, setTab] = useState<ExamTab>('dzi')
   const plans = tab === 'nvo' ? nvoPlans : dziPlans
 
   return (
