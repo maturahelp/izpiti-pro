@@ -94,6 +94,45 @@ export default function SubscriptionPage() {
     return () => window.clearTimeout(timeoutId)
   }, [loadProfile])
 
+  // Fire Meta Pixel Purchase event once after a successful checkout. We wait
+  // until profile is loaded so we have planKey + value; fall back to plan-less
+  // event after 6s if the webhook hasn't synced yet (still gives Meta a signal).
+  useEffect(() => {
+    if (!hasRecentCheckout) return
+    if (typeof window === 'undefined') return
+    const PLAN_VALUES: Record<string, number> = {
+      'nvo-monthly': 30,
+      'nvo-full': 30,
+      'dzi-monthly': 30,
+      'dzi-full': 19.99,
+    }
+    const STORAGE_KEY = 'mh_purchase_pixel_fired'
+    let sessionId: string | null = null
+    try {
+      sessionId = new URLSearchParams(window.location.search).get('session_id')
+    } catch {}
+    const dedupeKey = sessionId || 'no-session'
+    let alreadyFired = false
+    try { alreadyFired = window.sessionStorage.getItem(STORAGE_KEY) === dedupeKey } catch {}
+    if (alreadyFired) return
+
+    const planKey = state.status === 'ready' ? state.profile?.billing_plan_key ?? null : null
+    if (!planKey && state.status === 'loading') return // wait for profile
+    const value = (planKey && PLAN_VALUES[planKey]) || 0
+    const fbq = (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq
+    if (typeof fbq === 'function') {
+      try {
+        fbq('track', 'Purchase', {
+          value,
+          currency: 'EUR',
+          content_name: planKey || 'unknown-plan',
+          content_category: planKey?.startsWith('nvo') ? 'НВО' : planKey?.startsWith('dzi') ? 'ДЗИ' : undefined,
+        })
+        try { window.sessionStorage.setItem(STORAGE_KEY, dedupeKey) } catch {}
+      } catch {}
+    }
+  }, [hasRecentCheckout, state])
+
   const readyProfile = state.status === 'ready' ? state.profile : null
   const subscriptionStatus = getSubscriptionStatus(readyProfile)
   const isActivePremium = hasActivePremium(readyProfile)

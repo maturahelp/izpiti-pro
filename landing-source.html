@@ -384,6 +384,24 @@
     gtag('js', new Date());
     gtag('config', 'G-9LX2CPVD1T');
   </script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1883126002400773');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1883126002400773&ev=PageView&noscript=1"
+    alt="" /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 
 <body class="overflow-x-hidden font-sans text-gray-800 bg-white antialiased">
@@ -1518,12 +1536,30 @@
   <!-- Stripe checkout wiring -->
   <script>
     (function () {
+      // Plan → price mapping (in EUR, kept in sync with lib/billing/plans.ts)
+      var PLAN_VALUES = {
+        'nvo-monthly': 30,
+        'nvo-full': 30,
+        'dzi-monthly': 30,
+        'dzi-full': 19.99,
+      };
       document.querySelectorAll('button[data-checkout-plan]').forEach(function (btn) {
         btn.addEventListener('click', async function () {
           var plan = btn.getAttribute('data-checkout-plan');
           var originalText = btn.textContent;
           btn.disabled = true;
           btn.textContent = 'Зареждане…';
+          // Meta Pixel: track InitiateCheckout for ad optimization
+          try {
+            if (typeof fbq === 'function') {
+              fbq('track', 'InitiateCheckout', {
+                content_name: plan,
+                content_category: plan.indexOf('nvo') === 0 ? 'НВО' : 'ДЗИ',
+                value: PLAN_VALUES[plan] || 0,
+                currency: 'EUR',
+              });
+            }
+          } catch (e) { /* pixel optional */ }
           try {
             var res = await fetch('/api/checkout', {
               method: 'POST',
