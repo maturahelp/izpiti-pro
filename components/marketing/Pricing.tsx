@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 import { FadeIn } from '@/components/ui/fade-in'
 
 type ExamTab = 'nvo' | 'dzi'
-type PlanKey = 'nvo-monthly' | 'nvo-full' | 'dzi-monthly' | 'dzi-full'
+type PlanKey = 'nvo-full' | 'dzi-full'
 
 type Plan = {
   label: string
@@ -18,83 +18,77 @@ type Plan = {
   cta: string
   featured?: boolean
   badge?: string
-  planKey: PlanKey
+  planKey: PlanKey | null
 }
 
 const nvoPlans: Plan[] = [
   {
-    label: 'НВО Месечен план',
-    price: '30 €',
-    period: '/ месец',
-    desc: 'Подходящ за ученици, които искат стабилна подготовка с ясен план и упражнения.',
+    label: 'Безплатен НВО',
+    price: '0 €',
+    period: 'безплатно',
+    desc: 'Започни подготовката за НВО без ангажимент — виж как работи платформата.',
     features: [
-      'Пълен достъп до материалите за НВО',
-      'Видео уроци по ключовите теми',
-      'Тестове и задачи след уроците',
-      'Обяснения на разбираем език за 7. клас',
-      'AI помощник за въпроси и допълнителна помощ',
-      'Напредък и по-добра организация на ученето',
+      'Литература: 1 видео урок с анализ + упражнение („Художник")',
+      'Литература: всички текстове (четивна компетентност)',
+      'НВО: всички изпити от минали години',
+      'Български: Тема 1 — теория + упражнение',
+      'Математика: Подтема 1 на Тема 1',
     ],
-    cta: 'Започни подготовка',
-    planKey: 'nvo-monthly',
+    cta: 'Регистрирай се безплатно',
+    planKey: null,
   },
   {
     label: 'НВО до края на изпитите',
     price: '30 €',
     period: 'еднократно',
     access: 'Достъп до 19 юни 2026 г.',
-    savings: 'Спестяваш 50% за оставащите 2 месеца.',
-    desc: 'За ученици, които искат спокойствие и достъп до самите изпити.',
+    desc: 'За ученици, които искат спокойствие и пълен достъп до самите изпити.',
     features: [
-      'Всичко от месечния план',
-      'Достъп до НВО подготовката до края на изпитите',
+      'Пълен достъп до материалите за НВО',
+      'Видео уроци по всички теми и произведения',
       'Подготовка за НВО БЕЛ — 17 юни 2026 г.',
       'Подготовка за НВО МАТ — 19 юни 2026 г.',
       'Упражнения и тестове в изпитен формат',
-      'Подходящо за цялостна подготовка без прекъсване',
+      'AI помощник за въпроси и обяснения',
     ],
     cta: 'Вземи достъп до 19 юни',
     featured: true,
-    badge: 'Спестяваш 50%',
     planKey: 'nvo-full',
   },
 ]
 
 const dziPlans: Plan[] = [
   {
-    label: 'ДЗИ Месечен план',
-    price: '30 €',
-    period: '/ месец',
-    desc: 'Подходящ за ученици, които искат да започнат сега и да учат в собствен ритъм.',
+    label: 'Безплатен ДЗИ',
+    price: '0 €',
+    period: 'безплатно',
+    desc: 'Започни подготовката за ДЗИ без ангажимент — виж как работи платформата.',
     features: [
-      'Пълен достъп до материалите за подготовка за ДЗИ',
-      'Видео уроци по най-важните теми и произведения',
-      'Тестове и упражнения след всеки урок',
-      'Подредена теория и обобщения на едно място',
-      'AI помощник за въпроси, обяснения и насоки',
-      'Проследяване на напредъка ти в платформата',
+      'Литература: 1 видео урок с анализ + упражнение („Потомка")',
+      'Литература: всички текстове',
+      'ДЗИ: всички изпити от минали години',
+      'Български: Правило 1 — теория + упражнение',
+      'Английски: Essay Structure Format',
     ],
-    cta: 'Започни сега',
-    planKey: 'dzi-monthly',
+    cta: 'Регистрирай се безплатно',
+    planKey: null,
   },
   {
     label: 'ДЗИ до края на матурите',
     price: '19.99 €',
     period: 'еднократно',
     access: 'Достъп до 22 май 2026 г.',
-    savings: 'Спестяваш 33% спрямо месечния план.',
-    desc: 'Подходящ за ученици, които искат пълен достъп до края на изпитния период.',
+    desc: 'За ученици, които искат пълен достъп до края на изпитния период.',
     features: [
-      'Всичко от месечния план',
-      'Достъп до платформата до края на матурите',
-      'Подготовка без притеснение от подновяване',
-      'Фокус върху най-важното до изпита',
+      'Пълен достъп до материалите за ДЗИ',
+      'Видео уроци по всички теми и произведения',
+      'Подредена теория и обобщения на едно място',
       'Практически тестове в реален формат',
-      'Удобен вариант за интензивна финална подготовка',
+      'AI помощник за въпроси и обяснения',
+      'Достъп до края на матурите без подновяване',
     ],
     cta: 'Вземи достъп до 22 май',
     featured: true,
-    badge: 'Спестяваш 33%',
     planKey: 'dzi-full',
   },
 ]
@@ -123,6 +117,10 @@ async function startCheckout(plan: PlanKey) {
     alert('Проблем при свързване с плащане. Опитай отново.')
     console.error(err)
   }
+}
+
+function handleFreeSignup() {
+  window.location.href = '/register'
 }
 
 export function Pricing() {
@@ -155,7 +153,7 @@ export function Pricing() {
 
         <div className="grid md:grid-cols-2 gap-7 max-w-3xl mx-auto mb-8">
           {plans.map((plan) => (
-            <PlanCard key={plan.label} plan={plan} onCheckout={startCheckout} />
+            <PlanCard key={plan.label} plan={plan} onCheckout={startCheckout} onFreeSignup={handleFreeSignup} />
           ))}
         </div>
 
@@ -188,7 +186,16 @@ function PricingTabButton({
   )
 }
 
-function PlanCard({ plan, onCheckout }: { plan: Plan; onCheckout: (key: PlanKey) => void }) {
+function PlanCard({
+  plan,
+  onCheckout,
+  onFreeSignup,
+}: {
+  plan: Plan
+  onCheckout: (key: PlanKey) => void
+  onFreeSignup: () => void
+}) {
+  const isFree = plan.planKey === null
   return (
     <div
       className={`bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-8 relative ${
@@ -215,8 +222,12 @@ function PlanCard({ plan, onCheckout }: { plan: Plan; onCheckout: (key: PlanKey)
       </ul>
       <button
         type="button"
-        onClick={() => onCheckout(plan.planKey)}
-        className="block w-full text-center text-white font-semibold py-3 rounded-full text-sm bg-[#3b82f6] hover:shadow-lg hover:shadow-blue-200 transition-all"
+        onClick={() => (isFree ? onFreeSignup() : onCheckout(plan.planKey as PlanKey))}
+        className={`block w-full text-center font-semibold py-3 rounded-full text-sm transition-all ${
+          isFree
+            ? 'bg-white text-[#3b82f6] border-2 border-[#3b82f6] hover:bg-[#3b82f6] hover:text-white'
+            : 'text-white bg-[#3b82f6] hover:shadow-lg hover:shadow-blue-200'
+        }`}
       >
         {plan.cta}
       </button>

@@ -20,9 +20,7 @@ const PROFILE_SELECT =
   'plan, is_active, plan_expires_at, billing_status, billing_plan_key, cancel_at_period_end, cancel_at, current_period_end, stripe_customer_id, stripe_subscription_id, last_payment_status'
 
 const PLAN_LABELS: Record<string, string> = {
-  'nvo-monthly': 'НВО — месечен план',
   'nvo-full': 'НВО — до края на изпитите',
-  'dzi-monthly': 'ДЗИ — месечен план',
   'dzi-full': 'ДЗИ — до края на матурите',
 }
 
@@ -101,9 +99,7 @@ export default function SubscriptionPage() {
     if (!hasRecentCheckout) return
     if (typeof window === 'undefined') return
     const PLAN_VALUES: Record<string, number> = {
-      'nvo-monthly': 30,
       'nvo-full': 30,
-      'dzi-monthly': 30,
       'dzi-full': 19.99,
     }
     const STORAGE_KEY = 'mh_purchase_pixel_fired'

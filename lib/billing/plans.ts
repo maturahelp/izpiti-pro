@@ -1,4 +1,4 @@
-export type PlanKey = 'nvo-monthly' | 'nvo-full' | 'dzi-monthly' | 'dzi-full'
+export type PlanKey = 'nvo-full' | 'dzi-full'
 
 export type BillingPlanConfig = {
   name: string
@@ -11,14 +11,6 @@ export type BillingPlanConfig = {
 }
 
 export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
-  'nvo-monthly': {
-    name: 'НВО Месечен план',
-    amount: 3000,
-    currency: 'eur',
-    mode: 'subscription',
-    class: '7',
-    examPath: 'НВО',
-  },
   'nvo-full': {
     name: 'НВО до края на изпитите',
     amount: 3000,
@@ -27,14 +19,6 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     class: '7',
     examPath: 'НВО',
     accessEndsAt: '2026-06-19T23:59:59.999+03:00',
-  },
-  'dzi-monthly': {
-    name: 'ДЗИ Месечен план',
-    amount: 3000,
-    currency: 'eur',
-    mode: 'subscription',
-    class: '12',
-    examPath: 'ДЗИ',
   },
   'dzi-full': {
     name: 'ДЗИ до края на матурите',
