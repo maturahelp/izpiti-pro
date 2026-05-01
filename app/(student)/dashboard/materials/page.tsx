@@ -27,6 +27,7 @@ import {
 } from '@/lib/free-content'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
+import { Badge } from '@/components/shared/Badge'
 import { logActivity } from '@/lib/activity-log'
 
 type Math7Topic = {
@@ -841,9 +842,17 @@ export default function MaterialsPage() {
                   return (
                     <div
                       key={topic.number}
-                      className="h-full min-h-[220px] rounded-xl border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                      className={cn('relative h-full min-h-[220px] rounded-xl border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col', !hasPremiumAccess && 'opacity-60')}
                       style={{ borderColor: subjectTheme.bulgarian.cardBorder }}
                     >
+                      {!hasPremiumAccess && (
+                        <div className="absolute top-2 right-2">
+                          <Badge variant="amber">
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                            Премиум
+                          </Badge>
+                        </div>
+                      )}
                       <div className="flex-1 min-w-0">
                         <h3
                           className="font-sans font-semibold text-text text-[15px] leading-snug tracking-normal mb-2 break-words line-clamp-2"
@@ -941,8 +950,16 @@ export default function MaterialsPage() {
                           key={work.id}
                           type="button"
                           onClick={() => setActiveNvoWorkId(work.id)}
-                          className="rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                          className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && 'opacity-60')}
                         >
+                          {!hasPremiumAccess && (
+                            <div className="absolute top-2 right-2">
+                              <Badge variant="amber">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                                Премиум
+                              </Badge>
+                            </div>
+                          )}
                           <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
                           <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
                           <img
@@ -989,9 +1006,17 @@ export default function MaterialsPage() {
                               isFreeMathNvoSubtopic(topic.id, subtopic.id)
                             )
                           }
-                          className="rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                          className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && 'opacity-60')}
                           style={{ borderColor: subjectTheme.math.cardBorder }}
                         >
+                          {!hasPremiumAccess && (
+                            <div className="absolute top-2 right-2">
+                              <Badge variant="amber">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                                Премиум
+                              </Badge>
+                            </div>
+                          )}
                           <p className="text-xs font-semibold text-text-muted mb-1">
                             Подтема #{subtopicIndex + 1}
                           </p>
@@ -1299,8 +1324,16 @@ export default function MaterialsPage() {
                         key={work.id}
                         type="button"
                         onClick={() => setActiveWorkId(work.id)}
-                        className="rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                        className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && 'opacity-60')}
                       >
+                        {!hasPremiumAccess && (
+                          <div className="absolute top-2 right-2">
+                            <Badge variant="amber">
+                              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                              Премиум
+                            </Badge>
+                          </div>
+                        )}
                         <p className="text-xs font-semibold text-text-muted mb-1">{work.author}</p>
                         <h3 className="font-semibold text-text text-sm leading-snug mb-3">{work.title}</h3>
                         <img
@@ -1355,9 +1388,17 @@ export default function MaterialsPage() {
                       return (
                         <div
                           key={key}
-                          className="h-full min-h-[220px] rounded-xl border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col"
+                          className={cn('relative h-full min-h-[220px] rounded-xl border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5 flex flex-col', !hasPremiumAccess && 'opacity-60')}
                           style={{ borderColor: subjectTheme.bulgarian.cardBorder }}
                         >
+                          {!hasPremiumAccess && (
+                            <div className="absolute top-2 right-2">
+                              <Badge variant="amber">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                                Премиум
+                              </Badge>
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-semibold text-text-muted mb-1">
                               {sectionLabel}
@@ -1452,9 +1493,17 @@ export default function MaterialsPage() {
                         {group.items.map((item) => (
                           <div
                             key={item.title}
-                            className="p-4 flex flex-col gap-3 rounded-xl bg-white border"
+                            className={cn('relative p-4 flex flex-col gap-3 rounded-xl bg-white border', !hasPremiumAccess && 'opacity-60')}
                             style={{ borderColor: grade12SectionTheme.english.cardBorder }}
                           >
+                            {!hasPremiumAccess && (
+                              <div className="absolute top-2 right-2">
+                                <Badge variant="amber">
+                                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                                  Премиум
+                                </Badge>
+                              </div>
+                            )}
                             <div>
                               <p
                                 className="text-xs font-semibold mb-1 uppercase tracking-wide"
