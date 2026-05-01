@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Badge } from '@/components/shared/Badge'
-import { PremiumLock } from '@/components/shared/PremiumLock'
 import { tests } from '@/data/tests'
 import {
   generatedEnglishWritingQuestionCount,
@@ -318,30 +317,35 @@ export function TestsPageContent({
           )}
 
           <div id={isEnglishSampleView ? 'english-generated-tests' : undefined} className="grid sm:grid-cols-2 gap-4">
-            {filtered.map((test) => (
-              <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', isLocked && 'premium-lock')}>
-                {(() => {
-                  const isMock =
-                    test.id.startsWith('mock_') ||
-                    test.id.startsWith('selected_mock_') ||
-                    test.id.startsWith('english-generated-')
-                  const isBeron = test.id.startsWith('beron_')
+            {filtered.map((test) => {
+              const isMock =
+                test.id.startsWith('mock_') ||
+                test.id.startsWith('selected_mock_') ||
+                test.id.startsWith('english-generated-')
+              const isBeron = test.id.startsWith('beron_')
 
-                  if (isBeron) {
-                    return (
-                      <div className="absolute top-3 right-3">
-                        <Badge variant="primary">BERON</Badge>
-                      </div>
-                    )
-                  }
-
-                  return isMock ? (
-                    <div className="absolute top-3 right-3">
-                      <Badge variant="neutral">Примерен</Badge>
-                    </div>
-                  ) : null
-                })()}
-                {isLocked && <PremiumLock compact />}
+              return (
+              <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', isLocked && 'opacity-60')}>
+                {isLocked ? (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="amber">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                      Премиум
+                    </Badge>
+                  </div>
+                ) : !isPremiumUser ? (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="success">Безплатно</Badge>
+                  </div>
+                ) : isBeron ? (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="primary">BERON</Badge>
+                  </div>
+                ) : isMock ? (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="neutral">Примерен</Badge>
+                  </div>
+                ) : null}
 
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
@@ -402,7 +406,8 @@ export function TestsPageContent({
                   )}
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
 
           {filtered.length === 0 && !isEnglishSampleView && (
