@@ -1058,7 +1058,7 @@ export default function MaterialsPage() {
 
         {activeNvoWork && (
           <div
-            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-start lg:items-center justify-center overflow-y-auto"
             onClick={() => setActiveNvoWorkId(null)}
           >
             <div
@@ -1084,10 +1084,10 @@ export default function MaterialsPage() {
                 </button>
               </div>
               <div className="p-4 md:p-6">
-                <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                  <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+                <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
+                  <div className="p-4 md:p-6 bg-[#F8FBFF] border-t lg:border-t-0 lg:border-r border-border">
                     {activeNvoWorkPanel === 'text' ? (
-                      <div className="flex h-[70vh] max-h-[70vh] flex-col gap-3">
+                      <div className="flex h-[60vh] max-h-[60vh] lg:h-[70vh] lg:max-h-[70vh] flex-col gap-3">
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
@@ -1150,7 +1150,7 @@ export default function MaterialsPage() {
                         </div>
                       </div>
                     ) : activeNvoWorkPanel === 'summary' ? (
-                      <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
+                      <div className="w-full max-h-[60vh] lg:max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
                         <h4 className="mb-3 text-sm font-semibold text-[#1E4D7B]">„{activeNvoWork.title}“</h4>
                         {activeNvoWorkSummary.length > 0 ? (
                           <div className="space-y-2 text-sm leading-7 text-text">
@@ -1721,7 +1721,7 @@ export default function MaterialsPage() {
 
       {activeWork && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-start lg:items-center justify-center overflow-y-auto"
           onClick={() => setActiveWorkId(null)}
         >
           <div
@@ -1748,10 +1748,10 @@ export default function MaterialsPage() {
             </div>
 
             <div className="p-4 md:p-6">
-              <div className="grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                <div className="p-4 md:p-6 bg-[#F8FBFF] border-b lg:border-b-0 lg:border-r border-border">
+              <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
+                <div className="p-4 md:p-6 bg-[#F8FBFF] border-t lg:border-t-0 lg:border-r border-border">
                   {activeWorkPanel === 'text' ? (
-                    <div className="flex h-[70vh] max-h-[70vh] flex-col gap-3">
+                    <div className="flex h-[60vh] max-h-[60vh] lg:h-[70vh] lg:max-h-[70vh] flex-col gap-3">
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
@@ -1814,7 +1814,7 @@ export default function MaterialsPage() {
                       </div>
                     </div>
                   ) : activeWorkPanel === 'summary' ? (
-                    <div className="w-full max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
+                    <div className="w-full max-h-[60vh] lg:max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
                       <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
                       {activeWorkSummary.length > 0 ? (
                         <div className="space-y-2 text-sm leading-7 text-text">
