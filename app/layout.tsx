@@ -37,13 +37,13 @@ export const metadata: Metadata = {
     siteName: 'MaturaHelp',
     title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
     description: 'Видео уроци, тестове и AI помощник за НВО 7 клас и ДЗИ 12 клас.',
-    images: [{ url: '/brand/maturahelp-logo.png', width: 512, height: 512, alt: 'MaturaHelp' }],
+    images: [{ url: '/brand/og-image.png', width: 1200, height: 630, alt: 'MaturaHelp — Подготовка за НВО и ДЗИ' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MaturaHelp — Подготовка за НВО и ДЗИ',
     description: 'Видео уроци, тестове и AI помощник за НВО 7 клас и ДЗИ 12 клас.',
-    images: ['/brand/maturahelp-logo.png'],
+    images: ['/brand/og-image.png'],
   },
   icons: brandMetadataIcons,
 }

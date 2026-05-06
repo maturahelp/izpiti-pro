@@ -7,14 +7,14 @@ const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
   {
-    key: 'Content-Security-Policy-Report-Only',
+    key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://widget.trustpilot.com https://js.stripe.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://widget.trustpilot.com https://js.stripe.com https://connect.facebook.net https://cdn.tailwindcss.com https://unpkg.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://api.stripe.com",
+      "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://api.stripe.com https://www.facebook.com https://connect.facebook.net https://stats.g.doubleclick.net",
       "frame-src https://js.stripe.com https://widget.trustpilot.com",
       "object-src 'none'",
       "base-uri 'self'",

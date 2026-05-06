@@ -32,8 +32,8 @@ const footerLinks = {
     { label: 'ДЗИ Математика', href: '/dashboard/tests' },
   ],
   Компания: [
-    { label: 'За нас', href: '#' },
-    { label: 'Контакти', href: '#' },
+    { label: 'За нас', href: '/about' },
+    { label: 'Контакти', href: 'mailto:support@maturahelp.com' },
     { label: 'Блог', href: '#' },
     { label: 'Новини', href: '#' },
   ],

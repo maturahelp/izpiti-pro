@@ -1,0 +1,54 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1B2845"/>
+  <!-- Subtle grid pattern -->
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.08"/>
+  <!-- Gradient overlay left -->
+  <rect width="600" height="630" fill="url(#leftGrad)"/>
+  <!-- Glow circle -->
+  <circle cx="200" cy="315" r="320" fill="#5899E2" opacity="0.12"/>
+  <!-- Logo area (scaled down version of the logo mark) -->
+  <g transform="translate(80, 195) scale(0.185)">
+    <circle cx="640" cy="627" r="382" fill="#EFF5FF" opacity="0.15"/>
+    <path d="M388 448C388 438 394 429 404 425L617 327C632 320 649 320 664 327L876 425C886 429 892 438 892 448C892 458 886 467 876 471L664 569C649 576 632 576 617 569L404 471C394 467 388 458 388 448Z" fill="#7D9FF7"/>
+    <path d="M409 468L617 564C632 571 649 571 664 564L871 468" stroke="white" stroke-width="18" stroke-linecap="round"/>
+    <path d="M470 512L470 621C521 594 578 581 640 581C702 581 759 594 810 621V512L640 626L470 512Z" fill="#7D9FF7"/>
+    <path d="M420 468V520" stroke="#7D9FF7" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="420" cy="519" r="21" fill="#7D9FF7"/>
+    <path d="M420 535C403 564 395 595 390 614C401 615 422 615 447 614C441 589 433 562 420 535Z" fill="#7D9FF7"/>
+    <path d="M404 626C494 617 574 637 640 684V845C575 784 495 770 356 816L404 626Z" fill="white" opacity="0.9"/>
+    <path d="M876 626C786 617 706 637 640 684V845C705 784 785 770 924 816L876 626Z" fill="white" opacity="0.9"/>
+    <path d="M359 816C447 773 550 780 640 867" stroke="#7D9FF7" stroke-width="18" stroke-linecap="round"/>
+    <path d="M921 816C833 773 730 780 640 867" stroke="#7D9FF7" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="359" cy="816" r="14" fill="#7D9FF7"/>
+    <circle cx="921" cy="816" r="14" fill="#7D9FF7"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="310" y="270" font-family="Georgia, serif" font-size="72" font-weight="700" letter-spacing="-2" fill="white">Matura</text>
+  <text x="553" y="270" font-family="Georgia, serif" font-size="72" font-weight="700" letter-spacing="-2" fill="#5899E2">Help</text>
+  <!-- Tagline -->
+  <text x="310" y="325" font-family="Arial, sans-serif" font-size="28" fill="#9AC2E8" letter-spacing="0.5">Подготовка за НВО и ДЗИ</text>
+  <!-- Divider -->
+  <rect x="310" y="355" width="580" height="2" fill="#5899E2" opacity="0.4"/>
+  <!-- Stats row -->
+  <text x="310" y="405" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="white">500+ теста</text>
+  <text x="310" y="433" font-family="Arial, sans-serif" font-size="16" fill="#9AC2E8">НВО 7 клас  •  ДЗИ 12 клас  •  4 800+ ученици</text>
+  <!-- CTA pill -->
+  <rect x="310" y="470" width="220" height="48" rx="24" fill="#5899E2"/>
+  <text x="420" y="500" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="white" text-anchor="middle">Започни сега →</text>
+  <!-- Right decorative element -->
+  <circle cx="980" cy="315" r="220" fill="#5899E2" opacity="0.06"/>
+  <circle cx="980" cy="315" r="160" fill="#5899E2" opacity="0.08"/>
+  <text x="980" y="295" font-family="Arial, sans-serif" font-size="90" text-anchor="middle" fill="white" opacity="0.15">📚</text>
+  <text x="980" y="350" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#9AC2E8">maturahelp.com</text>
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="leftGrad" x1="0" y1="0" x2="600" y2="0">
+      <stop offset="0%" stop-color="#1B2845" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#1B2845" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+</svg>
