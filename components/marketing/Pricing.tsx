@@ -123,8 +123,8 @@ function handleFreeSignup() {
   window.location.href = '/register'
 }
 
-export function Pricing() {
-  const [tab, setTab] = useState<ExamTab>('dzi')
+export function Pricing({ lockedTab }: { lockedTab?: ExamTab } = {}) {
+  const [tab, setTab] = useState<ExamTab>(lockedTab ?? 'dzi')
   const plans = tab === 'nvo' ? nvoPlans : dziPlans
 
   return (
@@ -140,16 +140,18 @@ export function Pricing() {
           </p>
         </FadeIn>
 
-        <div className="flex justify-center mb-10">
-          <div className="bg-gray-100 rounded-full p-1 flex gap-1" role="tablist" aria-label="Избор на изпит за ценови план">
-            <PricingTabButton active={tab === 'nvo'} onClick={() => setTab('nvo')}>
-              НВО
-            </PricingTabButton>
-            <PricingTabButton active={tab === 'dzi'} onClick={() => setTab('dzi')}>
-              ДЗИ
-            </PricingTabButton>
+        {!lockedTab && (
+          <div className="flex justify-center mb-10">
+            <div className="bg-gray-100 rounded-full p-1 flex gap-1" role="tablist" aria-label="Избор на изпит за ценови план">
+              <PricingTabButton active={tab === 'nvo'} onClick={() => setTab('nvo')}>
+                НВО
+              </PricingTabButton>
+              <PricingTabButton active={tab === 'dzi'} onClick={() => setTab('dzi')}>
+                ДЗИ
+              </PricingTabButton>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="grid md:grid-cols-2 gap-7 max-w-3xl mx-auto mb-8">
           {plans.map((plan) => (

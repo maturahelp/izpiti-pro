@@ -81,8 +81,8 @@ const subjectMeta: Record<string, { description: string; formats: string[] }> = 
   },
 }
 
-export function ExamsSection() {
-  const [activeTab, setActiveTab] = useState<'nvo7' | 'dzi12'>('nvo7')
+export function ExamsSection({ lockedTab }: { lockedTab?: 'nvo7' | 'dzi12' } = {}) {
+  const [activeTab, setActiveTab] = useState<'nvo7' | 'dzi12'>(lockedTab ?? 'nvo7')
   const filtered = activeTab === 'nvo7' ? nvoSubjects : dziSubjects
 
   return (
@@ -98,34 +98,36 @@ export function ExamsSection() {
           </p>
         </FadeIn>
 
-        <FadeIn delay={0.1} className="flex justify-center mb-10">
-          <div className="inline-flex bg-[#F8FAFC] border border-[#E2E8F0] p-1.5">
-            {[
-              { key: 'nvo7', label: '7. клас - НВО' },
-              { key: 'dzi12', label: '12. клас - ДЗИ' },
-            ].map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as 'nvo7' | 'dzi12')}
-                className={cn(
-                  'relative px-5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 tracking-[-0.01em]',
-                  activeTab === tab.key
-                    ? 'text-text'
-                    : 'text-text-muted hover:text-text'
-                )}
-              >
-                {activeTab === tab.key && (
-                  <motion.div
-                    layoutId="tab-pill"
-                    className="absolute inset-0 bg-white border border-[#E2E8F0]"
-                    transition={{ duration: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-                  />
-                )}
-                <span className="relative z-10">{tab.label}</span>
-              </button>
-            ))}
-          </div>
-        </FadeIn>
+        {!lockedTab && (
+          <FadeIn delay={0.1} className="flex justify-center mb-10">
+            <div className="inline-flex bg-[#F8FAFC] border border-[#E2E8F0] p-1.5">
+              {[
+                { key: 'nvo7', label: '7. клас - НВО' },
+                { key: 'dzi12', label: '12. клас - ДЗИ' },
+              ].map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key as 'nvo7' | 'dzi12')}
+                  className={cn(
+                    'relative px-5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 tracking-[-0.01em]',
+                    activeTab === tab.key
+                      ? 'text-text'
+                      : 'text-text-muted hover:text-text'
+                  )}
+                >
+                  {activeTab === tab.key && (
+                    <motion.div
+                      layoutId="tab-pill"
+                      className="absolute inset-0 bg-white border border-[#E2E8F0]"
+                      transition={{ duration: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+                    />
+                  )}
+                  <span className="relative z-10">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </FadeIn>
+        )}
 
         <AnimatePresence mode="wait">
           <motion.div
