@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { signUp, signIn, verifySignupOtp, resendSignupOtp } from '@/lib/auth'
+import { signUp, signIn, verifySignupOtp, resendSignupOtp, type SignUpClass } from '@/lib/auth'
+import { createClient } from '@/lib/supabase/client'
 import { BrandLogo } from '@/components/shared/BrandLogo'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
 import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
@@ -15,6 +16,21 @@ function safeRedirectTo(raw: string | null): string {
 }
 
 const PENDING_VERIFY_KEY = 'pendingVerifyEmail'
+const PENDING_CLASS_KEY = 'pendingVerifyClass'
+
+async function persistSelectedClass(selected: SignUpClass) {
+  try {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    await supabase
+      .from('profiles')
+      .update({ class: selected, updated_at: new Date().toISOString() })
+      .eq('id', user.id)
+  } catch {
+    // ignore — trigger should have set it from metadata anyway
+  }
+}
 
 export default function RegisterPage() {
   return (
@@ -33,6 +49,7 @@ function RegisterForm() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [selectedClass, setSelectedClass] = useState<SignUpClass | null>(null)
   const [consents, setConsents] = useState<RegistrationConsentValues>({
     acceptedTermsPrivacy: false,
     confirmedAge14: false,
@@ -55,6 +72,10 @@ function RegisterForm() {
         setEmail(pending)
         setConfirmation(true)
       }
+      const pendingClass = window.localStorage.getItem(PENDING_CLASS_KEY)
+      if (pendingClass === '7' || pendingClass === '12') {
+        setSelectedClass(pendingClass)
+      }
     } catch {}
   }, [])
 
@@ -65,6 +86,7 @@ function RegisterForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
+    if (!selectedClass) { setError('Избери за какъв изпит се подготвяш.'); return }
     if (!email || !password) { setError('Попълни всички полета.'); return }
     if (password.length < 8) { setError('Паролата трябва да е поне 8 знака.'); return }
     if (password !== confirmPassword) { setError('Паролите не съвпадат.'); return }
@@ -75,9 +97,11 @@ function RegisterForm() {
       ...consents,
       userAgent: getBrowserUserAgent(),
     })
-    const { session, error } = await signUp(email, password, name, consentMetadata)
+    const { session, error } = await signUp(email, password, name, consentMetadata, selectedClass)
     if (error) { setLoading(false); setError(error.message); return }
     if (session) {
+      await persistSelectedClass(selectedClass)
+      try { window.localStorage.removeItem(PENDING_CLASS_KEY) } catch {}
       window.location.href = redirectTo
       return
     }
@@ -86,11 +110,18 @@ function RegisterForm() {
     setLoading(false)
     if (signInError) {
       // Confirmation required — show the check-your-email screen
-      try { window.localStorage.setItem(PENDING_VERIFY_KEY, email) } catch {}
+      try {
+        window.localStorage.setItem(PENDING_VERIFY_KEY, email)
+        window.localStorage.setItem(PENDING_CLASS_KEY, selectedClass)
+      } catch {}
       setConfirmation(true)
       return
     }
-    try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
+    await persistSelectedClass(selectedClass)
+    try {
+      window.localStorage.removeItem(PENDING_VERIFY_KEY)
+      window.localStorage.removeItem(PENDING_CLASS_KEY)
+    } catch {}
     window.location.href = redirectTo
   }
 
@@ -108,7 +139,11 @@ function RegisterForm() {
       return
     }
     if (session) {
-      try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
+      if (selectedClass) await persistSelectedClass(selectedClass)
+      try {
+        window.localStorage.removeItem(PENDING_VERIFY_KEY)
+        window.localStorage.removeItem(PENDING_CLASS_KEY)
+      } catch {}
       window.location.href = redirectTo
       return
     }
@@ -119,7 +154,11 @@ function RegisterForm() {
       setError('Кодът е приет, но входът не успя. Опитай от страницата за вход.')
       return
     }
-    try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
+    if (selectedClass) await persistSelectedClass(selectedClass)
+    try {
+      window.localStorage.removeItem(PENDING_VERIFY_KEY)
+      window.localStorage.removeItem(PENDING_CLASS_KEY)
+    } catch {}
     window.location.href = redirectTo
   }
 
@@ -232,6 +271,37 @@ function RegisterForm() {
               )}
 
               <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  <label className="block text-[12.5px] font-semibold text-text mb-1.5">За какъв изпит се подготвяш?</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedClass('7')}
+                      aria-pressed={selectedClass === '7'}
+                      className={`px-3 py-3 rounded-xl border text-left transition ${
+                        selectedClass === '7'
+                          ? 'border-primary bg-primary/[0.06] ring-2 ring-primary/15'
+                          : 'border-[#E2E8F0] hover:border-[#CBD5E1] bg-white'
+                      }`}
+                    >
+                      <div className="text-[13px] font-bold text-text">НВО</div>
+                      <div className="text-[11.5px] text-text-muted leading-tight">7. клас</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedClass('12')}
+                      aria-pressed={selectedClass === '12'}
+                      className={`px-3 py-3 rounded-xl border text-left transition ${
+                        selectedClass === '12'
+                          ? 'border-primary bg-primary/[0.06] ring-2 ring-primary/15'
+                          : 'border-[#E2E8F0] hover:border-[#CBD5E1] bg-white'
+                      }`}
+                    >
+                      <div className="text-[13px] font-bold text-text">ДЗИ</div>
+                      <div className="text-[11.5px] text-text-muted leading-tight">12. клас</div>
+                    </button>
+                  </div>
+                </div>
                 <div className="mb-3">
                   <label className="block text-[12.5px] font-semibold text-text mb-1.5">Имe (по избор)</label>
                   <input

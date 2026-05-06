@@ -25,6 +25,13 @@ function redirectToSubscription(request: NextRequest) {
   return NextResponse.redirect(url)
 }
 
+function redirectToSelectClass(request: NextRequest) {
+  const url = request.nextUrl.clone()
+  url.pathname = '/dashboard/select-class'
+  url.searchParams.set('redirectTo', request.nextUrl.pathname + request.nextUrl.search)
+  return NextResponse.redirect(url)
+}
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const env = getSupabaseEnv()
@@ -69,13 +76,14 @@ export async function middleware(request: NextRequest) {
         plan: string | null
         is_active: boolean | null
         plan_expires_at: string | null
+        class: string | null
       }
     | null = null
 
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .select('role, plan, is_active, plan_expires_at')
+      .select('role, plan, is_active, plan_expires_at, class')
       .eq('id', user.id)
       .single()
 
@@ -116,6 +124,19 @@ export async function middleware(request: NextRequest) {
     if (profile?.role !== 'admin') {
       return redirectToDashboard(request)
     }
+  }
+
+  // Force class selection for accounts that don't have one yet (legacy users
+  // and any signup that bypassed the trigger). Skip the select-class page
+  // itself so we don't loop. Admins are exempt.
+  if (
+    pathname.startsWith('/dashboard') &&
+    pathname !== '/dashboard/select-class' &&
+    profile?.role !== 'admin' &&
+    profile?.class !== '7' &&
+    profile?.class !== '12'
+  ) {
+    return redirectToSelectClass(request)
   }
 
   if (pathname.startsWith('/dashboard') && requiresActiveSubscription(pathname)) {

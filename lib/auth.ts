@@ -15,14 +15,28 @@ export async function signIn(email: string, password: string) {
   }
 }
 
-export async function signUp(email: string, password: string, name?: string, consent?: RegistrationConsentMetadata) {
+export type SignUpClass = '7' | '12'
+
+export async function signUp(
+  email: string,
+  password: string,
+  name?: string,
+  consent?: RegistrationConsentMetadata,
+  selectedClass?: SignUpClass,
+) {
   try {
     const supabase = createClient()
     const displayName = name?.trim() || email.split('@')[0]
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name: displayName, ...(consent ?? {}) } },
+      options: {
+        data: {
+          name: displayName,
+          ...(consent ?? {}),
+          ...(selectedClass ? { class: selectedClass } : {}),
+        },
+      },
     })
     return { user: data?.user ?? null, session: data?.session ?? null, error }
   } catch {

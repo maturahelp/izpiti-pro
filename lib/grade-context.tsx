@@ -1,7 +1,6 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { hasActivePremium } from '@/lib/subscription-access'
 import { createClient } from '@/lib/supabase/client'
 
 type Grade = '7' | '12'
@@ -71,15 +70,14 @@ export function GradeProvider({ children }: { children: React.ReactNode }) {
 
       const { data: profile } = await supabase
         .from('profiles')
-        .select('plan, is_active, plan_expires_at, class')
+        .select('class')
         .eq('id', user.id)
         .single()
 
       if (cancelled) return
 
       const profileClass = profile?.class ?? null
-      const nextLockedGrade =
-        hasActivePremium(profile) && isValidGrade(profileClass) ? profileClass : null
+      const nextLockedGrade = isValidGrade(profileClass) ? profileClass : null
 
       setLockedGrade(nextLockedGrade)
 
