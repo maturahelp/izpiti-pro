@@ -128,13 +128,15 @@ export async function middleware(request: NextRequest) {
 
   // Force class selection for accounts that don't have one yet (legacy users
   // and any signup that bypassed the trigger). Skip the select-class page
-  // itself so we don't loop. Admins are exempt.
+  // itself so we don't loop. Admins are exempt. If the profile lookup
+  // failed transiently we let the request through instead of looping.
   if (
+    profile &&
     pathname.startsWith('/dashboard') &&
     pathname !== '/dashboard/select-class' &&
-    profile?.role !== 'admin' &&
-    profile?.class !== '7' &&
-    profile?.class !== '12'
+    profile.role !== 'admin' &&
+    profile.class !== '7' &&
+    profile.class !== '12'
   ) {
     return redirectToSelectClass(request)
   }
