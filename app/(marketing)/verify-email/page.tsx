@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { verifySignupOtp, resendSignupOtp } from '@/lib/auth'
 import { BrandLogo } from '@/components/shared/BrandLogo'
+import { trackLead } from '@/lib/analytics/meta-pixel'
 
 function safeRedirectTo(raw: string | null): string {
   if (!raw) return '/dashboard/materials'
@@ -63,6 +64,7 @@ function VerifyEmailForm() {
     }
     try { window.localStorage.removeItem(PENDING_VERIFY_KEY) } catch {}
     if (session) {
+      trackLead()
       window.location.href = redirectTo
       return
     }
