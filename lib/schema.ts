@@ -91,5 +91,61 @@ export const softwareApplicationSchema = {
   ],
 }
 
-// FAQPage schema intentionally removed — restricted to government/healthcare sites since Aug 2023.
-// MaturaHelp is a commercial educational platform; this schema produces no Google rich results here.
+// FAQPage schema intentionally removed from homepage — restricted to government/healthcare sites since Aug 2023.
+// On subject pages FAQPage is still included for GEO/AI citation value (Perplexity, ChatGPT, AI Overviews).
+
+const BASE = 'https://www.maturahelp.com'
+
+export function makeCourseSchema(opts: {
+  url: string
+  name: string
+  description: string
+  educationalLevel: string
+  teaches: string[]
+  price?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    url: `${BASE}${opts.url}`,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: 'bg',
+    educationalLevel: opts.educationalLevel,
+    teaches: opts.teaches,
+    provider: { '@type': 'EducationalOrganization', '@id': `${BASE}/#organization` },
+    hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', inLanguage: 'bg' },
+    offers: {
+      '@type': 'Offer',
+      price: opts.price ?? '0',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: `${BASE}/register`,
+    },
+  }
+}
+
+export function makeBreadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `${BASE}${item.url}`,
+    })),
+  }
+}
+
+export function makeFaqSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  }
+}
