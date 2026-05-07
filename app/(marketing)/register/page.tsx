@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 import { BrandLogo } from '@/components/shared/BrandLogo'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
 import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
+import { trackLead } from '@/lib/analytics/meta-pixel'
 
 function safeRedirectTo(raw: string | null): string {
   if (!raw) return '/dashboard/materials'
@@ -100,6 +101,7 @@ function RegisterForm() {
     const { session, error } = await signUp(email, password, name, consentMetadata, selectedClass)
     if (error) { setLoading(false); setError(error.message); return }
     if (session) {
+      trackLead()
       await persistSelectedClass(selectedClass)
       try { window.localStorage.removeItem(PENDING_CLASS_KEY) } catch {}
       window.location.href = redirectTo
@@ -117,6 +119,7 @@ function RegisterForm() {
       setConfirmation(true)
       return
     }
+    trackLead()
     await persistSelectedClass(selectedClass)
     try {
       window.localStorage.removeItem(PENDING_VERIFY_KEY)
@@ -139,6 +142,7 @@ function RegisterForm() {
       return
     }
     if (session) {
+      trackLead()
       if (selectedClass) await persistSelectedClass(selectedClass)
       try {
         window.localStorage.removeItem(PENDING_VERIFY_KEY)
@@ -154,6 +158,7 @@ function RegisterForm() {
       setError('Кодът е приет, но входът не успя. Опитай от страницата за вход.')
       return
     }
+    trackLead()
     if (selectedClass) await persistSelectedClass(selectedClass)
     try {
       window.localStorage.removeItem(PENDING_VERIFY_KEY)

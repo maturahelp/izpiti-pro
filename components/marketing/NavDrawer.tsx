@@ -8,6 +8,7 @@ import { signIn, signUp, signOut, getUser } from '@/lib/auth'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
 import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
 import { BrandLogo } from '@/components/shared/BrandLogo'
+import { trackLead } from '@/lib/analytics/meta-pixel'
 
 // ── Context ───────────────────────────────────────────────────────────────────
 interface DrawerCtxType {
@@ -234,6 +235,7 @@ export function LoginGateModal() {
     setLoading(false)
     if (error) { setError(error.message); return }
     if (session) {
+      trackLead()
       closeLoginGate()
       router.push(activeHref || '/dashboard/materials')
       router.refresh()
