@@ -5,7 +5,7 @@ import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
-import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
+import confetti from 'canvas-confetti'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
 type Difficulty = 'easy' | 'medium' | 'exam_ready'
@@ -175,7 +175,13 @@ export default function Math7TopicsPage() {
     setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
-      fireCelebrationConfetti()
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 },
+        startVelocity: 55,
+        scalar: 1.1,
+      })
     }
   }
 

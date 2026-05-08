@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
-import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
+import confetti from 'canvas-confetti'
 
 interface Question {
   number: number
@@ -102,7 +102,13 @@ export default function RuleQuizPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
-      fireCelebrationConfetti()
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 },
+        startVelocity: 55,
+        scalar: 1.1,
+      })
     }
   }
 
