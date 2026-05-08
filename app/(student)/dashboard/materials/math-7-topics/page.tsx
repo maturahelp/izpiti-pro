@@ -4,8 +4,10 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
-import confetti from 'canvas-confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
 type Difficulty = 'easy' | 'medium' | 'exam_ready'
@@ -68,6 +70,8 @@ export default function Math7TopicsPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [finished, setFinished] = useState(false)
   const [mathJaxReady, setMathJaxReady] = useState(false)
+  const [confettiKey, setConfettiKey] = useState(0)
+  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   const visibleSubtopics = useMemo(() => (
     mathTopics
@@ -136,6 +140,7 @@ export default function Math7TopicsPage() {
     setChecked(false)
     setAnswers({})
     setFinished(false)
+    setShowLottieConfetti(false)
   }, [subtopicId])
 
   function chooseSubtopic(nextTopicId: string, nextSubtopicId: string) {
@@ -175,13 +180,8 @@ export default function Math7TopicsPage() {
     setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
-      confetti({
-        particleCount: 150,
-        spread: 90,
-        origin: { y: 0.6 },
-        startVelocity: 55,
-        scalar: 1.1,
-      })
+      fireCelebrationConfetti()
+      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -205,6 +205,8 @@ export default function Math7TopicsPage() {
   function handleNext() {
     if (currentIndex + 1 >= filteredProblems.length) {
       setFinished(true)
+      setShowLottieConfetti(false)
+      requestAnimationFrame(() => setShowLottieConfetti(true))
     } else {
       setCurrentIndex((i) => i + 1)
       setSelectedOpt(null)
@@ -218,6 +220,7 @@ export default function Math7TopicsPage() {
     setChecked(false)
     setAnswers({})
     setFinished(false)
+    setShowLottieConfetti(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -225,6 +228,8 @@ export default function Math7TopicsPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst burstKey={confettiKey} />
+      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <Script
         id="mathjax-config"
         strategy="afterInteractive"
