@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import Confetti from '@/components/ui/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import { studentTests as tests } from '@/data/student-content'
 import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
@@ -479,6 +481,7 @@ export default function TestPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [confettiKey, setConfettiKey] = useState(0)
   const [celebratedQuestions, setCelebratedQuestions] = useState<Record<number, boolean>>({})
+  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   // Inject MathJax on mount, retrigger after state changes
   useEffect(() => {
@@ -548,6 +551,16 @@ export default function TestPage() {
   const handleSubmit = useCallback(() => {
     setSubmitted(true)
     if (typeof window === 'undefined' || !exam) return
+
+    const choiceQs = exam.questions.filter((q) => q.type === 'single_choice')
+    const correctCount = choiceQs.filter((q) => answers[q.number] === q.correct_option).length
+    const percent = choiceQs.length ? Math.round((correctCount / choiceQs.length) * 100) : 0
+    if (choiceQs.length > 0 && percent >= 80) {
+      fireCelebrationConfetti()
+    } else if (choiceQs.length > 0 && percent >= 70) {
+      setShowLottieConfetti(false)
+      requestAnimationFrame(() => setShowLottieConfetti(true))
+    }
     const MISTAKES_KEY = 'nvo_mistakes'
     let existing: Array<{
       id: string; examId: string; examYear: number | string; examSubject: string
@@ -592,6 +605,7 @@ export default function TestPage() {
     setContextMediaCollapsed(false)
     setCurrentQuestionIndex(0)
     setCelebratedQuestions({})
+    setShowLottieConfetti(false)
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(storageKey)
     }
@@ -699,6 +713,7 @@ export default function TestPage() {
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <ConfettiBurst burstKey={confettiKey} />
+      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title={test.title} />
       <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-5">
         {/* Score + actions bar */}
