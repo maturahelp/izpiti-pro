@@ -7,6 +7,7 @@ import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
 import { fireConfetti } from '@/lib/confetti'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import { logActivity } from '@/lib/activity-log'
 
 const OPTION_KEYS = ['A', 'B', 'C', 'D'] as const
@@ -216,6 +217,7 @@ export default function LiteratureExercisePage({
   const exercise = resolved?.exercise
   const grade = resolved?.grade
 
+  const [confettiKey, setConfettiKey] = useState(0)
   const [shuffledQuestions, setShuffledQuestions] = useState<LiteratureQuestion[]>(
     () => exercise?.questions.map(shuffleLiteratureQuestion) ?? []
   )
@@ -250,6 +252,7 @@ export default function LiteratureExercisePage({
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
       fireConfetti()
+      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -312,6 +315,7 @@ export default function LiteratureExercisePage({
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst burstKey={confettiKey} />
       <TopBar title="Упражнение" />
 
       <div className="p-4 md:p-6 max-w-2xl mx-auto">

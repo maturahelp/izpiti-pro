@@ -6,6 +6,7 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
 import { fireConfetti } from '@/lib/confetti'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 
 interface Question {
   number: number
@@ -64,6 +65,7 @@ export default function RuleQuizPage() {
   const [checked, setChecked] = useState(false)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
+  const [confettiKey, setConfettiKey] = useState(0)
 
   useEffect(() => {
     if (entry) {
@@ -103,6 +105,7 @@ export default function RuleQuizPage() {
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
       fireConfetti()
+      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -137,6 +140,7 @@ export default function RuleQuizPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst burstKey={confettiKey} />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">

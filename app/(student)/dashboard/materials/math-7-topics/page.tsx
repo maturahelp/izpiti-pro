@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import { fireConfetti } from '@/lib/confetti'
+import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
 type Difficulty = 'easy' | 'medium' | 'exam_ready'
@@ -68,6 +69,7 @@ export default function Math7TopicsPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [finished, setFinished] = useState(false)
   const [mathJaxReady, setMathJaxReady] = useState(false)
+  const [confettiKey, setConfettiKey] = useState(0)
 
   const visibleSubtopics = useMemo(() => (
     mathTopics
@@ -176,6 +178,7 @@ export default function Math7TopicsPage() {
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
       fireConfetti()
+      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -219,6 +222,7 @@ export default function Math7TopicsPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <ConfettiBurst burstKey={confettiKey} />
       <Script
         id="mathjax-config"
         strategy="afterInteractive"
