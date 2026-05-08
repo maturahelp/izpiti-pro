@@ -1,41 +1,30 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { useState, useTransition } from 'react'
 import { BrandLogo } from '@/components/shared/BrandLogo'
+import { requestPasswordReset } from './actions'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [sent, setSent] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
     if (!email) { setError('Въведи имейл адрес.'); return }
-    setLoading(true)
-    let supabase
-    try {
-      supabase = createClient()
-    } catch {
-      setLoading(false)
-      setError('Възстановяването на парола временно не е налично в preview средата.')
-      return
-    }
-    const redirectTo = typeof window !== 'undefined'
-      ? `${window.location.origin}/reset-password`
-      : undefined
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo,
+    const fd = new FormData()
+    fd.set('email', email)
+    startTransition(async () => {
+      try {
+        await requestPasswordReset(fd)
+        setSent(true)
+      } catch {
+        setError('Нещо се обърка. Опитай отново.')
+      }
     })
-    setLoading(false)
-    if (resetError) {
-      setError(resetError.message || 'Нещо се обърка. Опитай отново.')
-      return
-    }
-    setSent(true)
   }
 
   return (
@@ -91,10 +80,10 @@ export default function ForgotPasswordPage() {
                 </div>
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={isPending}
                   className="w-full py-3 rounded-xl font-semibold text-[14px] text-white bg-gradient-to-r from-primary to-[#2563EB] hover:from-[#1741b8] hover:to-[#1d4ed8] shadow-[0_4px_14px_rgba(27,79,216,0.35)] hover:shadow-[0_6px_20px_rgba(27,79,216,0.45)] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Изпращане...' : 'Изпрати линк за смяна'}
+                  {isPending ? 'Изпращане...' : 'Изпрати линк за смяна'}
                 </button>
               </form>
 

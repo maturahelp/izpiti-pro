@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { createClient } from '@/lib/supabase/client'
 import { getUser } from '@/lib/auth'
+import { requestPasswordReset } from '@/app/(marketing)/forgot-password/actions'
 import { notificationPreferenceOptions, useNotificationPreferences } from '@/lib/use-notification-preferences'
 
 export default function SettingsPage() {
@@ -23,17 +23,16 @@ export default function SettingsPage() {
     setError(null)
     setMessage(null)
     setLoading(true)
-    const supabase = createClient()
-    const redirectTo = typeof window !== 'undefined'
-      ? `${window.location.origin}/reset-password`
-      : undefined
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
-    setLoading(false)
-    if (resetError) {
-      setError(resetError.message || 'Нещо се обърка.')
-      return
+    try {
+      const fd = new FormData()
+      fd.set('email', email)
+      await requestPasswordReset(fd)
+      setMessage(`Изпратихме линк за смяна на паролата на ${email}.`)
+    } catch {
+      setError('Нещо се обърка.')
+    } finally {
+      setLoading(false)
     }
-    setMessage(`Изпратихме линк за смяна на паролата на ${email}.`)
   }
 
   return (
