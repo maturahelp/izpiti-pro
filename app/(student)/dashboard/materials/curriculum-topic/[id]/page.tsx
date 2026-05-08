@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
 import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
@@ -67,7 +66,6 @@ export default function CurriculumTopicPage() {
   const [checked, setChecked] = useState(false)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
-  const [confettiKey, setConfettiKey] = useState(0)
   const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   useEffect(() => {
@@ -109,7 +107,6 @@ export default function CurriculumTopicPage() {
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
       fireCelebrationConfetti()
-      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -147,7 +144,6 @@ export default function CurriculumTopicPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} />
       <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title={displayTitle} />
 

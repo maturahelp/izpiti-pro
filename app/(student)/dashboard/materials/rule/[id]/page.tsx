@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
 import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
@@ -66,7 +65,6 @@ export default function RuleQuizPage() {
   const [checked, setChecked] = useState(false)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
-  const [confettiKey, setConfettiKey] = useState(0)
   const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   useEffect(() => {
@@ -108,7 +106,6 @@ export default function RuleQuizPage() {
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
       fireCelebrationConfetti()
-      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -146,7 +143,6 @@ export default function RuleQuizPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} />
       <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title={topic.title} />
 

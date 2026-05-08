@@ -3,7 +3,6 @@
 import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import Confetti from '@/components/ui/confetti'
 import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
@@ -218,7 +217,6 @@ export default function LiteratureExercisePage({
   const exercise = resolved?.exercise
   const grade = resolved?.grade
 
-  const [confettiKey, setConfettiKey] = useState(0)
   const [showLottieConfetti, setShowLottieConfetti] = useState(false)
   const [shuffledQuestions, setShuffledQuestions] = useState<LiteratureQuestion[]>(
     () => exercise?.questions.map(shuffleLiteratureQuestion) ?? []
@@ -255,7 +253,6 @@ export default function LiteratureExercisePage({
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
       fireCelebrationConfetti()
-      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -320,7 +317,6 @@ export default function LiteratureExercisePage({
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} />
       <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title="Упражнение" />
 

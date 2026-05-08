@@ -13,21 +13,26 @@ const quizPages = [
 
 assert.equal(
   existsSync(join(root, 'components/shared/ConfettiBurst.tsx')),
+  false,
+  'CSS ConfettiBurst is not part of the original deployment confetti and must not be used'
+)
+
+assert.equal(
+  existsSync(join(root, 'components/ui/confetti.tsx')),
   true,
-  'shared ConfettiBurst overlay must exist for visible quiz answer feedback'
+  'original deployment Lottie Confetti component must exist'
 )
 
 for (const page of quizPages) {
   const source = readFileSync(join(root, page), 'utf8')
 
-  assert.match(source, /ConfettiBurst/, `${page} must render the visible CSS confetti burst`)
-  assert.match(source, /burstKey/, `${page} must keep a burst key so repeated correct answers re-trigger`)
-  assert.match(source, /setConfettiKey\(\(k\) => k \+ 1\)/, `${page} must re-trigger the burst on correct answers`)
   assert.match(source, /fireCelebrationConfetti/, `${page} must use the shared celebration confetti helper`)
   assert.match(source, /Confetti isActive=\{showLottieConfetti\}/, `${page} must render the full-screen finish confetti`)
+  assert.doesNotMatch(source, /ConfettiBurst/, `${page} must not use the later CSS burst overlay`)
   assert.doesNotMatch(source, /import confetti from 'canvas-confetti'/, `${page} must not use direct canvas-confetti imports`)
 }
 
 const helper = readFileSync(join(root, 'lib/fireCelebrationConfetti.ts'), 'utf8')
-assert.match(helper, /import\('canvas-confetti'\)/, 'celebration helper must load canvas-confetti on the client')
-assert.match(helper, /zIndex:\s*2147483647/, 'celebration helper must render above dashboard chrome')
+assert.match(helper, /import confetti from 'canvas-confetti'/, 'celebration helper must match the original deployment import')
+assert.doesNotMatch(helper, /zIndex:/, 'original deployment helper did not override canvas z-index')
+assert.doesNotMatch(helper, /colors\s*=/, 'original deployment helper did not override canvas colors')

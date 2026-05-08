@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
 import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
 import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
@@ -70,7 +69,6 @@ export default function Math7TopicsPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [finished, setFinished] = useState(false)
   const [mathJaxReady, setMathJaxReady] = useState(false)
-  const [confettiKey, setConfettiKey] = useState(0)
   const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   const visibleSubtopics = useMemo(() => (
@@ -181,7 +179,6 @@ export default function Math7TopicsPage() {
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
       fireCelebrationConfetti()
-      setConfettiKey((k) => k + 1)
     }
   }
 
@@ -228,7 +225,6 @@ export default function Math7TopicsPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <ConfettiBurst burstKey={confettiKey} />
       <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <Script
         id="mathjax-config"
