@@ -5,8 +5,9 @@ import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
-import { fireConfetti } from '@/lib/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import Confetti from '@/components/ui/confetti'
 
 interface Question {
   number: number
@@ -66,6 +67,7 @@ export default function RuleQuizPage() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
   const [confettiKey, setConfettiKey] = useState(0)
+  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   useEffect(() => {
     if (entry) {
@@ -104,7 +106,7 @@ export default function RuleQuizPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
-      fireConfetti()
+      fireCelebrationConfetti()
       setConfettiKey((k) => k + 1)
     }
   }
@@ -122,6 +124,8 @@ export default function RuleQuizPage() {
   function handleNext() {
     if (currentIndex + 1 >= questions.length) {
       setFinished(true)
+      setShowLottieConfetti(false)
+      requestAnimationFrame(() => setShowLottieConfetti(true))
     } else {
       setCurrentIndex((i) => i + 1)
       setSelectedOpt(null)
@@ -141,6 +145,7 @@ export default function RuleQuizPage() {
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <ConfettiBurst burstKey={confettiKey} />
+      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">

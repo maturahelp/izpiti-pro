@@ -5,8 +5,9 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
-import { fireConfetti } from '@/lib/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import Confetti from '@/components/ui/confetti'
 
 interface Exercise {
   number: number
@@ -67,6 +68,7 @@ export default function CurriculumTopicPage() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
   const [confettiKey, setConfettiKey] = useState(0)
+  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
 
   useEffect(() => {
     if (topic) {
@@ -105,7 +107,7 @@ export default function CurriculumTopicPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
-      fireConfetti()
+      fireCelebrationConfetti()
       setConfettiKey((k) => k + 1)
     }
   }
@@ -123,6 +125,8 @@ export default function CurriculumTopicPage() {
   function handleNext() {
     if (currentIndex + 1 >= exercises.length) {
       setFinished(true)
+      setShowLottieConfetti(false)
+      requestAnimationFrame(() => setShowLottieConfetti(true))
     } else {
       setCurrentIndex((i) => i + 1)
       setSelectedOpt(null)
@@ -142,6 +146,7 @@ export default function CurriculumTopicPage() {
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <ConfettiBurst burstKey={confettiKey} />
+      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title={displayTitle} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">

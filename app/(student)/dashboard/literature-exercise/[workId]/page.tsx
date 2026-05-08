@@ -6,8 +6,9 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
-import { fireConfetti } from '@/lib/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import { ConfettiBurst } from '@/components/shared/ConfettiBurst'
+import Confetti from '@/components/ui/confetti'
 import { logActivity } from '@/lib/activity-log'
 
 const OPTION_KEYS = ['A', 'B', 'C', 'D'] as const
@@ -218,6 +219,7 @@ export default function LiteratureExercisePage({
   const grade = resolved?.grade
 
   const [confettiKey, setConfettiKey] = useState(0)
+  const [showLottieConfetti, setShowLottieConfetti] = useState(false)
   const [shuffledQuestions, setShuffledQuestions] = useState<LiteratureQuestion[]>(
     () => exercise?.questions.map(shuffleLiteratureQuestion) ?? []
   )
@@ -251,7 +253,7 @@ export default function LiteratureExercisePage({
     if (!selected) return
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
-      fireConfetti()
+      fireCelebrationConfetti()
       setConfettiKey((k) => k + 1)
     }
   }
@@ -272,6 +274,8 @@ export default function LiteratureExercisePage({
   const handleNext = () => {
     if (currentIndex + 1 >= total) {
       setFinished(true)
+      setShowLottieConfetti(false)
+      requestAnimationFrame(() => setShowLottieConfetti(true))
     } else {
       setCurrentIndex((i) => i + 1)
     }
@@ -316,6 +320,7 @@ export default function LiteratureExercisePage({
   return (
     <div className="min-h-screen pb-20 md:pb-0">
       <ConfettiBurst burstKey={confettiKey} />
+      <Confetti isActive={showLottieConfetti} duration={5000} loop={false} zIndex={100} />
       <TopBar title="Упражнение" />
 
       <div className="p-4 md:p-6 max-w-2xl mx-auto">
