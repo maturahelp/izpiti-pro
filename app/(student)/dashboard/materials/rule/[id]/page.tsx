@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
-import { fireConfetti } from '@/lib/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 
 interface Question {
   number: number
@@ -102,7 +102,7 @@ export default function RuleQuizPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
-      fireConfetti()
+      fireCelebrationConfetti()
     }
   }
 

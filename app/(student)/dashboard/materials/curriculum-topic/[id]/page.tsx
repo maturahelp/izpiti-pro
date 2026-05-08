@@ -5,7 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
-import { fireConfetti } from '@/lib/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 
 interface Exercise {
   number: number
@@ -103,7 +103,7 @@ export default function CurriculumTopicPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
-      fireConfetti()
+      fireCelebrationConfetti()
     }
   }
 

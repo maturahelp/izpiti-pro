@@ -6,7 +6,7 @@ import { TopBar } from '@/components/dashboard/TopBar'
 import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
-import { fireConfetti } from '@/lib/confetti'
+import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
 import { logActivity } from '@/lib/activity-log'
 
 const OPTION_KEYS = ['A', 'B', 'C', 'D'] as const
@@ -249,7 +249,7 @@ export default function LiteratureExercisePage({
     if (!selected) return
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
-      fireConfetti()
+      fireCelebrationConfetti()
     }
   }
 
