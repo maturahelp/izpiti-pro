@@ -33,6 +33,10 @@ for (const page of quizPages) {
 }
 
 const helper = readFileSync(join(root, 'lib/fireCelebrationConfetti.ts'), 'utf8')
-assert.match(helper, /import confetti from 'canvas-confetti'/, 'celebration helper must match the original deployment import')
+assert.match(helper, /import\('canvas-confetti'\)/, 'celebration helper must load canvas-confetti at click time')
+assert.match(helper, /particleCount:\s*4/, 'celebration helper must keep the original deployment first burst size')
+assert.match(helper, /particleCount:\s*3/, 'celebration helper must keep the original deployment second burst size')
+assert.match(helper, /spread:\s*60/, 'celebration helper must keep the original deployment first spread')
+assert.match(helper, /spread:\s*80/, 'celebration helper must keep the original deployment second spread')
 assert.doesNotMatch(helper, /zIndex:/, 'original deployment helper did not override canvas z-index')
 assert.doesNotMatch(helper, /colors\s*=/, 'original deployment helper did not override canvas colors')
