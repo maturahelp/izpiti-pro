@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import { fireConfetti } from '@/lib/confetti'
+import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
 type Difficulty = 'easy' | 'medium' | 'exam_ready'
@@ -552,24 +553,18 @@ export default function Math7TopicsPage() {
 
 function MathText({ text, mathJaxReady }: { text: string; mathJaxReady: boolean }) {
   const ref = useRef<HTMLSpanElement>(null)
+  const fallbackText = useMemo(() => formatMathFallbackText(text), [text])
+  const mathText = useMemo(() => normalizeInlineMathDelimiters(text), [text])
 
   useEffect(() => {
     if (!mathJaxReady || !window.MathJax?.typesetPromise || !ref.current) return
     window.MathJax.typesetClear?.([ref.current])
     window.MathJax.typesetPromise([ref.current]).catch(() => {})
-  }, [text, mathJaxReady])
+  }, [mathText, mathJaxReady])
 
-  return <span ref={ref}>{text}</span>
+  return <span ref={ref}>{mathJaxReady ? mathText : fallbackText}</span>
 }
 
 function formatTitleText(text: string) {
-  return text
-    .replace(/\$([^$]+)\$/g, '$1')
-    .replace(/\^\\circ/g, '°')
-    .replace(/\\circ/g, '°')
-    .replace(/\\cdot/g, '·')
-    .replace(/\\times/g, '×')
-    .replace(/\\le/g, '≤')
-    .replace(/\\ge/g, '≥')
-    .replace(/\\neq/g, '≠')
+  return formatMathFallbackText(text)
 }
