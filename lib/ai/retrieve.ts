@@ -2,7 +2,7 @@ import { google } from '@ai-sdk/google'
 import { embed } from 'ai'
 import type { SupabaseClient } from '@supabase/supabase-js'
 
-export const EMBEDDING_MODEL = 'text-embedding-004'
+export const EMBEDDING_MODEL = 'gemini-embedding-001'
 export const EMBEDDING_DIMS = 768
 
 export type RetrievedChunk = {
@@ -40,7 +40,10 @@ export function labelForSource(source: string): string {
 
 export async function embedQuery(text: string): Promise<number[]> {
   const { embedding } = await embed({
-    model: google.textEmbeddingModel(EMBEDDING_MODEL),
+    model: google.textEmbeddingModel(EMBEDDING_MODEL, {
+      outputDimensionality: EMBEDDING_DIMS,
+      taskType: 'RETRIEVAL_QUERY',
+    }),
     value: text,
   })
   return embedding

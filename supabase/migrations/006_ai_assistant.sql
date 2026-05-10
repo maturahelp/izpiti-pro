@@ -1,7 +1,7 @@
 -- ============================================================
 -- 006_ai_assistant.sql
 -- AI помощник: pgvector RAG корпус, разговори, съобщения и квота.
--- Векторите идват от Gemini text-embedding-004 (768 dims).
+-- Векторите идват от Gemini gemini-embedding-001 (outputDimensionality=768).
 -- ============================================================
 
 create extension if not exists vector;

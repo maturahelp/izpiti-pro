@@ -45,9 +45,12 @@ import { literatureWorks } from '../data/literatureWorks'
 import { belTheory } from '../data/bel-theory'
 import { lessons } from '../data/lessons'
 
-const EMBEDDING_MODEL = 'text-embedding-004'
+const EMBEDDING_MODEL = 'gemini-embedding-001'
+const EMBEDDING_DIMS = 768
 const EMBEDDING_BATCH = 50
 const MAX_CHARS_PER_CHUNK = 2000
+// Light throttle as a safety net; paid tier handles 10k RPM easily.
+const BATCH_DELAY_MS = 500
 
 type ChunkRow = {
   source: string
@@ -328,12 +331,27 @@ async function embedAndUpsert(rows: ChunkRow[]) {
     const { error } = await supabase.from('content_chunks').delete().not('id', 'is', null)
     if (error) throw error
   } else {
-    const { data: existing, error } = await supabase
-      .from('content_chunks')
-      .select('source, source_id, section')
-    if (error) throw error
+    // PostgREST caps responses at max-rows server-side (1000 on Supabase).
+    // Paginate to read the whole corpus.
+    const PAGE = 1000
+    const existing: { source: string; source_id: string; section: string; embedding_model: string }[] = []
+    for (let offset = 0; ; offset += PAGE) {
+      const { data, error } = await supabase
+        .from('content_chunks')
+        .select('source, source_id, section, embedding_model')
+        .order('id', { ascending: true })
+        .range(offset, offset + PAGE - 1)
+      if (error) throw error
+      if (!data || data.length === 0) break
+      existing.push(...data)
+      if (data.length < PAGE) break
+    }
+    // Skip only when the row exists AND was embedded with the current model.
+    // A model swap naturally falls through to upsert (re-embedding) on the same key.
     const existingKeys = new Set(
-      (existing ?? []).map((r) => `${r.source}::${r.source_id}::${r.section ?? ''}`)
+      (existing ?? [])
+        .filter((r) => r.embedding_model === EMBEDDING_MODEL)
+        .map((r) => `${r.source}::${r.source_id}::${r.section ?? ''}`)
     )
     const before = rows.length
     rows = rows.filter(
@@ -346,13 +364,18 @@ async function embedAndUpsert(rows: ChunkRow[]) {
   for (let i = 0; i < rows.length; i += EMBEDDING_BATCH) {
     const batch = rows.slice(i, i + EMBEDDING_BATCH)
     const { embeddings } = await embedMany({
-      model: google.textEmbeddingModel(EMBEDDING_MODEL),
+      model: google.textEmbeddingModel(EMBEDDING_MODEL, {
+        outputDimensionality: EMBEDDING_DIMS,
+        taskType: 'RETRIEVAL_DOCUMENT',
+      }),
       values: batch.map((r) => r.content),
+      maxRetries: 8,
     })
 
     const records = batch.map((row, j) => ({
       ...row,
       embedding: embeddings[j],
+      embedding_model: EMBEDDING_MODEL,
     }))
 
     const { error } = await supabase
@@ -366,6 +389,10 @@ async function embedAndUpsert(rows: ChunkRow[]) {
 
     written += batch.length
     console.log(`[indexer] embedded + upserted ${written}/${rows.length}`)
+
+    if (i + EMBEDDING_BATCH < rows.length) {
+      await new Promise((r) => setTimeout(r, BATCH_DELAY_MS))
+    }
   }
 }
 
