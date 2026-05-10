@@ -28,6 +28,8 @@ for (const page of quizPages) {
 
   assert.match(source, /fireCelebrationConfetti/, `${page} must use the shared celebration confetti helper`)
   assert.match(source, /Confetti isActive=\{showLottieConfetti\}/, `${page} must render the full-screen finish confetti`)
+  assert.match(source, /function triggerOriginalConfetti\(\)/, `${page} must expose one original confetti trigger for correct clicks`)
+  assert.match(source, /setShowLottieConfetti\(false\)[\s\S]*requestAnimationFrame\(\(\) => setShowLottieConfetti\(true\)\)/, `${page} must trigger original Lottie confetti visibly`)
   assert.doesNotMatch(source, /ConfettiBurst/, `${page} must not use the later CSS burst overlay`)
   assert.doesNotMatch(source, /import confetti from 'canvas-confetti'/, `${page} must not use direct canvas-confetti imports`)
 }

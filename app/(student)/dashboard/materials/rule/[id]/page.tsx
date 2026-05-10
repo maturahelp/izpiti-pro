@@ -95,6 +95,12 @@ export default function RuleQuizPage() {
 
   const score = questions.filter((q, idx) => answers[idx] === q.correct_index).length
 
+  function triggerOriginalConfetti() {
+    fireCelebrationConfetti()
+    setShowLottieConfetti(false)
+    requestAnimationFrame(() => setShowLottieConfetti(true))
+  }
+
   function handleSelect(optIdx: number) {
     if (checked) return
     setSelectedOpt(optIdx)
@@ -105,7 +111,7 @@ export default function RuleQuizPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
-      fireCelebrationConfetti()
+      triggerOriginalConfetti()
     }
   }
 

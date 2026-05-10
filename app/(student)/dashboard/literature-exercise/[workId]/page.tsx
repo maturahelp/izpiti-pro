@@ -243,6 +243,12 @@ export default function LiteratureExercisePage({
 
   const score = questions.filter((q, i) => answers[i] === q.correct_answer).length
 
+  function triggerOriginalConfetti() {
+    fireCelebrationConfetti()
+    setShowLottieConfetti(false)
+    requestAnimationFrame(() => setShowLottieConfetti(true))
+  }
+
   const handleSelect = (key: OptionKey) => {
     if (isRevealed) return
     setAnswers((prev) => ({ ...prev, [currentIndex]: key }))
@@ -252,7 +258,7 @@ export default function LiteratureExercisePage({
     if (!selected) return
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
-      fireCelebrationConfetti()
+      triggerOriginalConfetti()
     }
   }
 

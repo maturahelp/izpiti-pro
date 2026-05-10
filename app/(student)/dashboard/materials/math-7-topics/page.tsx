@@ -159,6 +159,12 @@ export default function Math7TopicsPage() {
     })
   }
 
+  function triggerOriginalConfetti() {
+    fireCelebrationConfetti()
+    setShowLottieConfetti(false)
+    requestAnimationFrame(() => setShowLottieConfetti(true))
+  }
+
   useEffect(() => {
     if (!window.MathJax?.typesetPromise) return
     const root = document.getElementById('math-workspace')
@@ -178,7 +184,7 @@ export default function Math7TopicsPage() {
     setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
-      fireCelebrationConfetti()
+      triggerOriginalConfetti()
     }
   }
 

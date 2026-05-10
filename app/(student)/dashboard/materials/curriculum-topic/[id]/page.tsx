@@ -96,6 +96,12 @@ export default function CurriculumTopicPage() {
 
   const score = exercises.filter((ex, idx) => answers[idx] === ex.correct_index).length
 
+  function triggerOriginalConfetti() {
+    fireCelebrationConfetti()
+    setShowLottieConfetti(false)
+    requestAnimationFrame(() => setShowLottieConfetti(true))
+  }
+
   function handleSelect(optIdx: number) {
     if (checked) return
     setSelectedOpt(optIdx)
@@ -106,7 +112,7 @@ export default function CurriculumTopicPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
-      fireCelebrationConfetti()
+      triggerOriginalConfetti()
     }
   }
 
