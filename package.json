@@ -11,12 +11,15 @@
     "lint:all": "eslint .",
     "review:english-mock:validate": "tsx scripts/validate-english-mock-parser.ts",
     "review:english-mock:screenshots": "tsx scripts/capture-english-mock-screenshots.ts",
-    "review:english-mock": "tsx scripts/run-english-mock-review.ts"
+    "review:english-mock": "tsx scripts/run-english-mock-review.ts",
+    "index:rag": "tsx scripts/build-rag-index.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.0",
     "@next/third-parties": "^16.2.4",
     "@supabase/ssr": "^0.10.0",
     "@supabase/supabase-js": "^2.101.1",
+    "ai": "^4.3.0",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
@@ -25,7 +28,8 @@
     "react-dom": "^18",
     "react-lottie": "^1.2.10",
     "stripe": "^22.0.2",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "zod": "^3.23.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

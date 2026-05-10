@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 
 interface Message {
@@ -21,11 +21,11 @@ const suggestedPrompts = [
   'Какви теми излизат на НВО по БЕЛ?',
 ]
 
-const recentQuestions = [
+const fallbackRecentQuestions = [
   'Кога се поставя запетая пред "и"?',
   'Каква е разликата между пряка и косвена реч?',
-  'Как намирам корените на квадратно уравнение?',
   'Какво е метафора и как я разпознавам?',
+  'Какви теми излизат на ДЗИ по литература?',
 ]
 
 const initialMessages: Message[] = [
@@ -37,10 +37,20 @@ const initialMessages: Message[] = [
   },
 ]
 
+type UsageInfo = {
+  plan: 'free' | 'premium'
+  remaining: number | null
+  recentQuestions: string[]
+}
+
 export default function AIPage() {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [input, setInput] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
+  const [isStreaming, setIsStreaming] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [usage, setUsage] = useState<UsageInfo | null>(null)
+  const [authRequired, setAuthRequired] = useState(false)
+  const conversationIdRef = useRef<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -51,55 +61,145 @@ export default function AIPage() {
     scrollToBottom()
   }, [messages])
 
-  const sendMessage = (text: string) => {
-    if (!text.trim()) return
-
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      text: text.trim(),
-      time: 'сега',
+  const fetchUsage = useCallback(async () => {
+    try {
+      const res = await fetch('/api/ai/usage', { cache: 'no-store' })
+      if (res.status === 401) {
+        setAuthRequired(true)
+        return
+      }
+      if (!res.ok) return
+      const data = (await res.json()) as UsageInfo
+      setUsage(data)
+    } catch {
+      // network — игнорираме, банерът просто остава празен
     }
-    setMessages((prev) => [...prev, userMsg])
+  }, [])
+
+  useEffect(() => {
+    fetchUsage()
+  }, [fetchUsage])
+
+  const sendMessage = async (text: string) => {
+    const trimmed = text.trim()
+    if (!trimmed || isStreaming) return
+
+    setError(null)
+    const userMsgId = Date.now().toString()
+    const assistantMsgId = (Date.now() + 1).toString()
+
+    setMessages((prev) => [
+      ...prev,
+      { id: userMsgId, role: 'user', text: trimmed, time: 'сега' },
+      { id: assistantMsgId, role: 'assistant', text: '', time: 'сега' },
+    ])
     setInput('')
-    setIsTyping(true)
+    setIsStreaming(true)
 
-    setTimeout(() => {
-      const assistantResponses: Record<string, string> = {
-        'запетая': 'Запетаята се поставя в няколко основни случая: 1) Пред подчинителни изречения (напр. "Знаех, че ще закъснееш."), 2) При вметнати изречения от двете страни, 3) При изброявания без "и". НЕ се поставя пред "и", когато то свързва два еднородни члена.',
-        'тема': 'За да разберем по-добре темата, нека я разбием на части. Коя конкретна тема те интересува — правопис, пунктуация, литературен анализ или нещо друго?',
-        'грешен': 'Разбирам! За да ти обясня защо отговорът е грешен, трябва да знам конкретния въпрос и отговора. Можеш ли да ми разкажеш повече за задачата?',
+    try {
+      const res = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: trimmed,
+          conversationId: conversationIdRef.current ?? undefined,
+        }),
+      })
+
+      if (res.status === 401) {
+        setAuthRequired(true)
+        setMessages((prev) =>
+          prev.filter((m) => m.id !== assistantMsgId && m.id !== userMsgId)
+        )
+        return
       }
 
-      const lowerText = text.toLowerCase()
-      let responseText = 'Много добър въпрос! Ще ти обясня тази тема стъпка по стъпка. '
-
-      for (const [key, response] of Object.entries(assistantResponses)) {
-        if (lowerText.includes(key)) {
-          responseText = response
-          break
-        }
+      if (res.status === 429) {
+        const data = (await res.json().catch(() => null)) as { message?: string } | null
+        setError(
+          data?.message ??
+            'Достигна седмичния лимит. Надгради за неограничен достъп.'
+        )
+        setMessages((prev) =>
+          prev.filter((m) => m.id !== assistantMsgId && m.id !== userMsgId)
+        )
+        return
       }
 
-      if (responseText.startsWith('Много добър')) {
-        responseText += 'Тази тема е важна за изпита и включва няколко ключови правила. Нека започнем с основите — кое е конкретното нещо, което е неясно?'
+      if (!res.ok || !res.body) {
+        setError('Възникна грешка. Моля, опитай отново.')
+        setMessages((prev) =>
+          prev.filter((m) => m.id !== assistantMsgId && m.id !== userMsgId)
+        )
+        return
       }
 
-      const assistantMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        text: responseText,
-        time: 'сега',
+      const conversationId = res.headers.get('x-conversation-id')
+      if (conversationId) conversationIdRef.current = conversationId
+
+      const remainingHeader = res.headers.get('x-quota-remaining')
+      const planHeader = res.headers.get('x-plan') as 'free' | 'premium' | null
+      if (planHeader) {
+        const remaining =
+          remainingHeader === 'unlimited' || remainingHeader === null
+            ? null
+            : Number.parseInt(remainingHeader, 10)
+        setUsage((prev) => ({
+          plan: planHeader,
+          remaining: Number.isFinite(remaining) ? (remaining as number) : null,
+          recentQuestions: prev?.recentQuestions ?? [],
+        }))
       }
-      setMessages((prev) => [...prev, assistantMsg])
-      setIsTyping(false)
-    }, 1200)
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let assistantText = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+        assistantText += chunk
+        setMessages((prev) =>
+          prev.map((m) => (m.id === assistantMsgId ? { ...m, text: assistantText } : m))
+        )
+      }
+
+      if (assistantText.trim().length === 0) {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMsgId
+              ? {
+                  ...m,
+                  text: 'Извинявай, нещо се обърка с отговора. Опитай пак след малко.',
+                }
+              : m
+          )
+        )
+      }
+
+      // Refresh quota + recent questions in background.
+      fetchUsage()
+    } catch (err) {
+      console.error('[ai] chat error', err)
+      setError('Възникна грешка. Моля, опитай отново.')
+      setMessages((prev) =>
+        prev.filter((m) => m.id !== assistantMsgId && m.id !== userMsgId)
+      )
+    } finally {
+      setIsStreaming(false)
+    }
   }
+
+  const recentQuestions =
+    usage?.recentQuestions && usage.recentQuestions.length > 0
+      ? usage.recentQuestions
+      : fallbackRecentQuestions
 
   return (
     <div className="min-h-screen pb-20 md:pb-0 flex flex-col relative">
       <TopBar title="AI помощник" />
-      <div className="flex-1 flex overflow-hidden pointer-events-none select-none" aria-hidden="true">
+      <div className="flex-1 flex overflow-hidden">
 
         {/* Chat area */}
         <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full">
@@ -129,34 +229,19 @@ export default function AIPage() {
                     </svg>
                   </div>
                 )}
-                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
                   msg.role === 'user'
                     ? 'bg-primary text-white rounded-tr-sm'
                     : 'bg-white border border-border text-text rounded-tl-sm shadow-card'
                 }`}>
-                  {msg.text}
+                  {msg.text || (msg.role === 'assistant' && isStreaming ? '…' : '')}
                 </div>
               </div>
             ))}
 
-            {isTyping && (
-              <div className="flex justify-start gap-3">
-                <div className="w-8 h-8 rounded-xl bg-primary-light flex items-center justify-center flex-shrink-0">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2">
-                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-                  </svg>
-                </div>
-                <div className="bg-white border border-border rounded-2xl rounded-tl-sm px-4 py-3 shadow-card">
-                  <div className="flex gap-1 items-center h-4">
-                    {[0, 1, 2].map((i) => (
-                      <div
-                        key={i}
-                        className="w-1.5 h-1.5 rounded-full bg-text-muted animate-bounce"
-                        style={{ animationDelay: `${i * 0.15}s` }}
-                      />
-                    ))}
-                  </div>
-                </div>
+            {error && (
+              <div className="max-w-md mx-auto rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs px-3 py-2 text-center">
+                {error}
               </div>
             )}
 
@@ -172,7 +257,8 @@ export default function AIPage() {
                   <button
                     key={prompt}
                     onClick={() => sendMessage(prompt)}
-                    className="text-xs px-3 py-1.5 rounded-full border border-border bg-white text-text hover:bg-gray-50 hover:border-primary/30 transition-colors"
+                    disabled={isStreaming || authRequired}
+                    className="text-xs px-3 py-1.5 rounded-full border border-border bg-white text-text hover:bg-gray-50 hover:border-primary/30 transition-colors disabled:opacity-40"
                   >
                     {prompt}
                   </button>
@@ -190,11 +276,12 @@ export default function AIPage() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
                 placeholder="Задай въпрос по темата..."
-                className="input-field flex-1"
+                disabled={isStreaming || authRequired}
+                className="input-field flex-1 disabled:opacity-60"
               />
               <button
                 onClick={() => sendMessage(input)}
-                disabled={!input.trim() || isTyping}
+                disabled={!input.trim() || isStreaming || authRequired}
                 className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white hover:bg-primary-dark transition-colors disabled:opacity-40 flex-shrink-0"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -215,11 +302,12 @@ export default function AIPage() {
               Последни въпроси
             </h3>
             <div className="space-y-2">
-              {recentQuestions.map((q) => (
+              {recentQuestions.slice(0, 4).map((q) => (
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="w-full text-left text-xs text-text hover:text-primary transition-colors py-1.5 border-b border-border last:border-0"
+                  disabled={isStreaming || authRequired}
+                  className="w-full text-left text-xs text-text hover:text-primary transition-colors py-1.5 border-b border-border last:border-0 disabled:opacity-50"
                 >
                   {q}
                 </button>
@@ -236,7 +324,8 @@ export default function AIPage() {
                 <button
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
-                  className="w-full text-left text-xs bg-gray-50 hover:bg-primary-light text-text hover:text-primary px-3 py-2 rounded-lg transition-colors"
+                  disabled={isStreaming || authRequired}
+                  className="w-full text-left text-xs bg-gray-50 hover:bg-primary-light text-text hover:text-primary px-3 py-2 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {prompt}
                 </button>
@@ -246,36 +335,50 @@ export default function AIPage() {
 
           <div className="mt-auto">
             <div className="card p-3 bg-primary-light border-primary/20">
-              <p className="text-xs font-semibold text-primary mb-1">Безплатен план</p>
-              <p className="text-[11px] text-primary/70 mb-2">5 въпроса оставени тази седмица</p>
-              <a href="/dashboard/subscription" className="text-[11px] text-primary font-semibold hover:underline">
-                Надгради за неограничено
-              </a>
+              {usage?.plan === 'premium' ? (
+                <>
+                  <p className="text-xs font-semibold text-primary mb-1">Премиум план</p>
+                  <p className="text-[11px] text-primary/70">Неограничени въпроси.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs font-semibold text-primary mb-1">Безплатен план</p>
+                  <p className="text-[11px] text-primary/70 mb-2">
+                    {usage
+                      ? `Остават ${usage.remaining ?? 0} въпроса тази седмица`
+                      : '5 въпроса на седмица'}
+                  </p>
+                  <a
+                    href="/dashboard/subscription"
+                    className="text-[11px] text-primary font-semibold hover:underline"
+                  >
+                    Надгради за неограничено
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Coming soon overlay */}
-      <div className="absolute inset-0 top-[56px] md:top-[64px] z-30 flex items-center justify-center bg-white/55 backdrop-blur-sm pointer-events-auto p-4">
-        <div className="max-w-md w-full rounded-2xl border border-border bg-white shadow-2xl p-6 md:p-8 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-primary-light mx-auto mb-4 flex items-center justify-center">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B6CB0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0110 0v4" />
-            </svg>
+      {authRequired && (
+        <div className="absolute inset-0 top-[56px] md:top-[64px] z-30 flex items-center justify-center bg-white/55 backdrop-blur-sm p-4">
+          <div className="max-w-md w-full rounded-2xl border border-border bg-white shadow-2xl p-6 md:p-8 text-center">
+            <h2 className="font-serif font-bold text-text text-xl md:text-2xl mb-2">
+              Необходимо е влизане
+            </h2>
+            <p className="text-sm text-text-muted leading-relaxed mb-4">
+              Влез в профила си, за да разговаряш с AI помощника.
+            </p>
+            <a
+              href="/login?redirectTo=/dashboard/ai"
+              className="btn-primary inline-block"
+            >
+              Влез
+            </a>
           </div>
-          <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-primary bg-primary-light px-2.5 py-1 rounded-full mb-3">
-            Очаквайте скоро
-          </span>
-          <h2 className="font-serif font-bold text-text text-xl md:text-2xl mb-2">
-            AI помощникът идва скоро
-          </h2>
-          <p className="text-sm text-text-muted leading-relaxed">
-            Работим върху твоя личен AI учител по НВО и ДЗИ. Ще обяснява теми, ще анализира грешки и ще задава упражнения според нивото ти.
-          </p>
         </div>
-      </div>
+      )}
     </div>
   )
 }

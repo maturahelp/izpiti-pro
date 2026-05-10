@@ -33,6 +33,7 @@ const DASHBOARD_ROUTES_OPEN_WITHOUT_SUBSCRIPTION = new Set([
   '/dashboard/materials',
   '/dashboard/tests',
   '/dashboard/select-class',
+  '/dashboard/ai',
 ])
 
 function normalizePathname(pathname: string) {
