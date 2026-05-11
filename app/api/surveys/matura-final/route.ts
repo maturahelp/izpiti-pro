@@ -14,6 +14,7 @@ import {
 export const runtime = 'nodejs'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MISSING_TABLE_ERROR_CODE = 'PGRST205'
 
 export async function POST(req: NextRequest) {
   let body: {
@@ -99,8 +100,14 @@ export async function POST(req: NextRequest) {
     )
 
     if (error) {
-      console.error('[matura-final-survey] upsert failed', error)
-      return NextResponse.json({ error: 'SAVE_FAILED' }, { status: 500 })
+      if (error.code === MISSING_TABLE_ERROR_CODE) {
+        console.warn(
+          '[matura-final-survey] survey table missing in production, continuing without persistence'
+        )
+      } else {
+        console.error('[matura-final-survey] upsert failed', error)
+        return NextResponse.json({ error: 'SAVE_FAILED' }, { status: 500 })
+      }
     }
 
     return NextResponse.json({
