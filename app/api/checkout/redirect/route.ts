@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { BILLING_PLANS, isPlanKey } from '@/lib/billing/plans'
+import {
+  PROMO_CODE_UNAVAILABLE_ERROR,
+  resolveCheckoutDiscounts,
+} from '@/lib/billing/promotion-codes'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient as createSupabaseServerClient } from '@/lib/supabase/server'
 
@@ -21,6 +25,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://izpiti.pro'
  */
 export async function GET(req: NextRequest) {
   const plan = req.nextUrl.searchParams.get('plan') ?? ''
+  const promoCode = req.nextUrl.searchParams.get('promoCode')
 
   if (!isPlanKey(plan)) {
     return NextResponse.redirect(new URL('/#pricing', BASE_URL))
@@ -40,7 +45,10 @@ export async function GET(req: NextRequest) {
   } = await supabase.auth.getUser()
 
   if (!user?.id || !user.email) {
-    const redirectTo = encodeURIComponent(`/api/checkout/redirect?plan=${plan}`)
+    const redirectTarget = promoCode
+      ? `/api/checkout/redirect?plan=${plan}&promoCode=${encodeURIComponent(promoCode)}`
+      : `/api/checkout/redirect?plan=${plan}`
+    const redirectTo = encodeURIComponent(redirectTarget)
     return NextResponse.redirect(new URL(`/register?redirectTo=${redirectTo}`, BASE_URL))
   }
 
@@ -75,12 +83,15 @@ export async function GET(req: NextRequest) {
   const metadata = { planKey: plan, userId: user.id, userEmail: user.email }
 
   try {
+    const discounts = await resolveCheckoutDiscounts(stripe, promoCode)
+
     const session = await stripe.checkout.sessions.create({
       mode: config.mode,
       client_reference_id: user.id,
       customer: customerId,
       metadata,
       allow_promotion_codes: true,
+      ...(discounts ? { discounts } : {}),
       line_items: [
         {
           price_data: {
@@ -105,6 +116,10 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.redirect(session.url)
   } catch (err) {
+    if (err instanceof Error && err.message === PROMO_CODE_UNAVAILABLE_ERROR) {
+      return NextResponse.redirect(new URL('/matura-9-dni?promo=unavailable', BASE_URL))
+    }
+
     console.error('[checkout/redirect] Stripe error:', err)
     return NextResponse.redirect(new URL('/#pricing', BASE_URL))
   }

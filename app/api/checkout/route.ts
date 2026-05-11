@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { BILLING_PLANS, isPlanKey } from '@/lib/billing/plans'
+import {
+  PROMO_CODE_UNAVAILABLE_ERROR,
+  resolveCheckoutDiscounts,
+} from '@/lib/billing/promotion-codes'
 import { hasActivePremium } from '@/lib/subscription-access'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient as createSupabaseServerClient } from '@/lib/supabase/server'
@@ -75,7 +79,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'AUTH_REQUIRED' }, { status: 401 })
   }
 
-  const payload = (await req.json()) as { plan?: string }
+  const payload = (await req.json()) as { plan?: string; promoCode?: string }
 
   if (!payload.plan || !isPlanKey(payload.plan)) {
     return NextResponse.json({ error: 'Unknown plan' }, { status: 400 })
@@ -150,12 +154,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const discounts = await resolveCheckoutDiscounts(stripe, payload.promoCode)
+
     const session = await stripe.checkout.sessions.create({
       mode: config.mode,
       client_reference_id: user.id,
       customer: customerId,
       metadata,
       allow_promotion_codes: true,
+      ...(discounts ? { discounts } : {}),
       line_items: [
         {
           price_data: {
@@ -209,6 +216,16 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: session.url })
   } catch (err) {
+    if (err instanceof Error && err.message === PROMO_CODE_UNAVAILABLE_ERROR) {
+      return NextResponse.json(
+        {
+          error: PROMO_CODE_UNAVAILABLE_ERROR,
+          message: 'Отстъпката не е активна в момента. Опитай пак след малко.',
+        },
+        { status: 409 }
+      )
+    }
+
     console.error('Stripe error:', err)
     return NextResponse.json({ error: String(err) }, { status: 500 })
   }
