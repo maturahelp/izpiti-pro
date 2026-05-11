@@ -14,6 +14,7 @@ import { saveDziAttempt } from '@/lib/progress'
 import { logActivity } from '@/lib/activity-log'
 import { allTests } from '@/data/tests'
 import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
+import { buildUnderlinedWordQuestion } from '@/lib/underlined-word-question'
 import {
   buildDziMatchingAnswerGuide,
   buildDziMatchingQuestionModel,
@@ -724,10 +725,15 @@ export default function TestPage() {
         existingEntry.attempts.push(attempt)
         existingEntry.mastered = false
       } else {
+        const underlinedWordDisplay = buildUnderlinedWordQuestion(q)
         existing.push({
           id, examId: exam.id, examYear: exam.year, examSubject: exam.subject,
-          questionNumber: q.number, questionText: q.question,
-          options: q.options ?? {}, correctOption: q.correct_option ?? '',
+          questionNumber: q.number,
+          questionText: underlinedWordDisplay
+            ? `${underlinedWordDisplay.prompt} ${underlinedWordDisplay.sentenceText}`
+            : q.question,
+          options: underlinedWordDisplay?.choices ?? q.options ?? {},
+          correctOption: q.correct_option ?? '',
           questionImage: null, userAnswer,
           errorType: null, topics: [], firstSeen: now, lastSeen: now,
           attempts: [attempt], mastered: false,
@@ -1010,6 +1016,7 @@ function QuestionCard({
     question.type === 'open_response' && question.pairs
       ? buildDziMatchingQuestionModel(question.pairs)
       : null
+  const underlinedWordModel = buildUnderlinedWordQuestion(question)
 
   const showFeedback = submitted || revealAnswers
   const chosen = answers[question.number]
@@ -1030,6 +1037,13 @@ function QuestionCard({
   let questionContent: React.ReactNode
   if (override?.questionHtml) {
     questionContent = <span dangerouslySetInnerHTML={{ __html: override.questionHtml }} />
+  } else if (underlinedWordModel) {
+    questionContent = (
+      <>
+        <p>{underlinedWordModel.prompt}</p>
+        <p className="mt-2" dangerouslySetInnerHTML={{ __html: underlinedWordModel.sentenceHtml }} />
+      </>
+    )
   } else if (matchingModel) {
     questionContent = (
       <p>
@@ -1148,9 +1162,9 @@ function QuestionCard({
       )}
 
       {/* Single choice options */}
-      {question.type === 'single_choice' && question.options && (
+      {question.type === 'single_choice' && (underlinedWordModel?.choices || question.options) && (
         <div className="space-y-2 pl-0">
-          {Object.entries(question.options).map(([label, text]) => {
+          {Object.entries(underlinedWordModel?.choices || question.options || {}).map(([label, text]) => {
             const isSelected = chosen === label
             const isCorrect = label === question.correct_option
             const showCorrect = showFeedback && isCorrect
