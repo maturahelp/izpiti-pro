@@ -441,8 +441,13 @@ export function MaturaFinalSurveyPage() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(125,169,255,0.28),_transparent_30%),linear-gradient(180deg,_rgba(255,255,255,0.12)_0%,_rgba(255,255,255,0)_100%)]" />
 
               <div className="relative">
-                <h1 className="max-w-2xl text-[2.25rem] font-black leading-[0.98] tracking-[-0.07em] text-text sm:text-[3.45rem]">
-                  4 въпроса до {MATURA_FINAL_DISCOUNT_PERCENT}% отстъпка.
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#BFD3EF] bg-[#F8FBFF] px-4 py-2 text-[12px] font-semibold text-primary shadow-[0_10px_24px_rgba(37,99,235,0.10)]">
+                  <span className="inline-block h-2 w-2 rounded-full bg-[#F97316]" />
+                  {remainingDays > 0 ? `${remainingDays} дни до ДЗИ` : 'ДЗИ е съвсем близо'}
+                </div>
+
+                <h1 className="mt-5 max-w-2xl text-[2.25rem] font-black leading-[0.98] tracking-[-0.07em] text-text sm:text-[3.45rem]">
+                  Само 4 въпроса те делят от {MATURA_FINAL_DISCOUNT_PERCENT}% отстъпка от плана.
                 </h1>
 
                 <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-[#BFD3EF] bg-[#F8FBFF] px-4 py-2.5 text-[13px] font-semibold text-primary shadow-[0_10px_24px_rgba(37,99,235,0.10)] transition group-hover:border-[#9FBDE8] group-hover:translate-y-[-1px]">
