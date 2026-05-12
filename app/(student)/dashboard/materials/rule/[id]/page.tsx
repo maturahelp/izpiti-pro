@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import Confetti from '@/components/ui/confetti'
+import SimpleConfetti from '@/components/ui/SimpleConfetti'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
 
@@ -153,7 +153,7 @@ export default function RuleQuizPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
+      <SimpleConfetti active={showConfetti} />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">

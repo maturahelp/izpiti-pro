@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import Confetti from '@/components/ui/confetti'
+import SimpleConfetti from '@/components/ui/SimpleConfetti'
 import { cn } from '@/lib/utils'
 import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
@@ -263,7 +263,7 @@ export default function Math7TopicsPage() {
         }}
       />
 
-      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
+      <SimpleConfetti active={showConfetti} />
       <TopBar title="Математика по теми" />
 
       <div className="p-4 md:p-6 max-w-6xl mx-auto">

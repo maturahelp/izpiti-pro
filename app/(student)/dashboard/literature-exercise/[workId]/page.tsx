@@ -3,7 +3,7 @@
 import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import Confetti from '@/components/ui/confetti'
+import SimpleConfetti from '@/components/ui/SimpleConfetti'
 import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
@@ -328,7 +328,7 @@ export default function LiteratureExercisePage({
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
+      <SimpleConfetti active={showConfetti} />
       <TopBar title="Упражнение" />
 
       <div className="p-4 md:p-6 max-w-2xl mx-auto">
