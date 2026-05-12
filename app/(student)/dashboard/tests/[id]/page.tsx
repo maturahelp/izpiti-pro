@@ -706,19 +706,36 @@ export default function TestPage() {
     setSubmitted(true)
     if (typeof window === 'undefined' || !exam) return
 
-    const choiceQuestions = exam.questions.filter((q) => q.type === 'single_choice')
+    const isLockedNow =
+      isPastExamId(testId) &&
+      premiumStatusChecked &&
+      !isPremiumUser &&
+      exam.questions.length > FREE_PAST_EXAM_QUESTIONS
+    const questionsForScore = isLockedNow
+      ? exam.questions.slice(0, FREE_PAST_EXAM_QUESTIONS)
+      : exam.questions
+
+    const choiceQuestions = questionsForScore.filter((q) => q.type === 'single_choice')
     const correctCount = choiceQuestions.filter((q) => answers[q.number] === q.correct_option).length
     const percent = choiceQuestions.length ? Math.round((correctCount / choiceQuestions.length) * 100) : 0
 
-    if (choiceQuestions.length > 0 && percent >= 80) {
-      fireCelebrationConfetti()
-    } else if (choiceQuestions.length > 0 && percent >= 70) {
-      setShowLottieConfetti(false)
-      requestAnimationFrame(() => setShowLottieConfetti(true))
+    if (isLockedNow) {
+      // Freemium past exam: only celebrate a perfect 3/3 score on the preview.
+      if (choiceQuestions.length > 0 && percent === 100) {
+        fireCelebrationConfetti()
+      }
+    } else {
+      if (choiceQuestions.length > 0 && percent >= 80) {
+        fireCelebrationConfetti()
+      } else if (choiceQuestions.length > 0 && percent >= 70) {
+        setShowLottieConfetti(false)
+        requestAnimationFrame(() => setShowLottieConfetti(true))
+      }
     }
 
-    // Save DZI attempt to Supabase so it appears in the progress chart
-    if (choiceQuestions.length > 0) {
+    // Persist DZI attempt + activity log only on full submissions — a 3-question
+    // freemium preview score would be misleading on the progress chart.
+    if (!isLockedNow && choiceQuestions.length > 0) {
       try {
         const catalogEntry = allTests.find((t) => t.id === testId)
         if (catalogEntry?.examType === 'dzi12') {
@@ -732,10 +749,7 @@ export default function TestPage() {
       } catch (err) {
         console.error('Failed to record DZI attempt', err)
       }
-    }
 
-    // Log this test submission to the local activity feed (Progress page).
-    if (choiceQuestions.length > 0) {
       try {
         const catalogEntry = allTests.find((t) => t.id === testId)
         logActivity({
@@ -762,7 +776,7 @@ export default function TestPage() {
     }> = []
     try { existing = JSON.parse(window.localStorage.getItem(MISTAKES_KEY) || '[]') } catch { existing = [] }
     const now = new Date().toISOString()
-    exam.questions.filter((q) => q.type === 'single_choice').forEach((q) => {
+    questionsForScore.filter((q) => q.type === 'single_choice').forEach((q) => {
       const userAnswer = answers[q.number]
       if (!userAnswer || userAnswer === q.correct_option) return
       const id = `${exam.id}_q${q.number}`
@@ -790,7 +804,7 @@ export default function TestPage() {
       }
     })
     window.localStorage.setItem(MISTAKES_KEY, JSON.stringify(existing))
-  }, [exam, answers, testId])
+  }, [exam, answers, testId, isPremiumUser, premiumStatusChecked])
 
   const handleReset = useCallback(() => {
     setAnswers({})
@@ -903,22 +917,20 @@ export default function TestPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            {!isFreemiumLocked && !isPremiumPending && (
-              <>
-                <button
-                  onClick={handleSubmit}
-                  className="btn-primary text-sm px-4 py-2"
-                >
-                  {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
-                </button>
-                <button
-                  onClick={() => setRevealAnswers((v) => !v)}
-                  className="btn-secondary text-sm px-4 py-2"
-                >
-                  {revealAnswers ? 'Скрий ключа' : 'Покажи ключа'}
-                </button>
-              </>
-            )}
+            <button
+              onClick={handleSubmit}
+              disabled={isPremiumPending}
+              className="btn-primary text-sm px-4 py-2 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
+            </button>
+            <button
+              onClick={() => setRevealAnswers((v) => !v)}
+              disabled={isPremiumPending}
+              className="btn-secondary text-sm px-4 py-2 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {revealAnswers ? 'Скрий ключа' : 'Покажи ключа'}
+            </button>
             <button onClick={handleReset} className="btn-secondary text-sm px-4 py-2">
               Изчисти
             </button>
