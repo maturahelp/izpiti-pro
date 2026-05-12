@@ -13,7 +13,34 @@ import { cn } from '@/lib/utils'
 import { saveDziAttempt } from '@/lib/progress'
 import { logActivity } from '@/lib/activity-log'
 import { allTests } from '@/data/tests'
-import { fireCelebrationConfetti } from '@/lib/fireCelebrationConfetti'
+import confetti from 'canvas-confetti'
+
+function fireBurstConfetti() {
+  const duration = 1500
+  const end = Date.now() + duration
+  function frame() {
+    confetti({
+      particleCount: 4,
+      spread: 60,
+      startVelocity: 35,
+      scalar: 0.95,
+      zIndex: 9999,
+      origin: { x: 0.15 + Math.random() * 0.7, y: Math.random() * 0.2 + 0.15 },
+    })
+    confetti({
+      particleCount: 3,
+      spread: 80,
+      startVelocity: 28,
+      scalar: 0.8,
+      zIndex: 9999,
+      origin: { x: Math.random(), y: Math.random() * 0.15 + 0.05 },
+    })
+    if (Date.now() < end) {
+      requestAnimationFrame(frame)
+    }
+  }
+  frame()
+}
 import { buildUnderlinedWordQuestion } from '@/lib/underlined-word-question'
 import {
   buildDziMatchingAnswerGuide,
@@ -722,11 +749,11 @@ export default function TestPage() {
     if (isLockedNow) {
       // Freemium past exam: only celebrate a perfect 3/3 score on the preview.
       if (choiceQuestions.length > 0 && percent === 100) {
-        fireCelebrationConfetti()
+        fireBurstConfetti()
       }
     } else {
       if (choiceQuestions.length > 0 && percent >= 80) {
-        fireCelebrationConfetti()
+        fireBurstConfetti()
       } else if (choiceQuestions.length > 0 && percent >= 70) {
         setShowLottieConfetti(false)
         requestAnimationFrame(() => setShowLottieConfetti(true))
