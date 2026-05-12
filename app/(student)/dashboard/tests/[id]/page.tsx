@@ -31,6 +31,23 @@ import {
 } from '@/lib/english-generated-materials'
 import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { EnglishDziTestView } from '@/components/dashboard/EnglishDziTestView'
+import { createClient } from '@/lib/supabase/client'
+import { hasActivePremium } from '@/lib/subscription-access'
+
+// ---------------------------------------------------------------------------
+// Freemium past-exam gating
+// ---------------------------------------------------------------------------
+// Past DZI/NVO exams are freemium: the first FREE_PAST_EXAM_QUESTIONS questions
+// are visible to free users; the rest is blurred behind a premium upsell.
+const FREE_PAST_EXAM_QUESTIONS = 3
+
+function isPastExamId(id: string): boolean {
+  if (id.startsWith('mock_')) return false
+  if (id.startsWith('selected_mock_')) return false
+  if (id.startsWith('english-generated-')) return false
+  if (/^q\d+$/i.test(id)) return false
+  return true
+}
 
 // ---------------------------------------------------------------------------
 // Types
@@ -591,6 +608,38 @@ export default function TestPage() {
   const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
   const [showLottieConfetti, setShowLottieConfetti] = useState(false)
+  const [isPremiumUser, setIsPremiumUser] = useState(false)
+  const [premiumStatusChecked, setPremiumStatusChecked] = useState(false)
+
+  // Premium status — drives the past-exam freemium gate (first 3 questions free).
+  // While pending, we render the safe subset (first 3 only) without the locked
+  // preview, so neither premium users see a paywall flash nor free users see
+  // gated content leak.
+  useEffect(() => {
+    let cancelled = false
+    const supabase = createClient()
+    ;(async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser()
+        if (cancelled) return
+        if (!user) return
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('plan, is_active, plan_expires_at')
+          .eq('id', user.id)
+          .single()
+        if (cancelled) return
+        setIsPremiumUser(hasActivePremium(profile))
+      } finally {
+        if (!cancelled) setPremiumStatusChecked(true)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   // Inject MathJax on mount, retrigger after state changes
   useEffect(() => {
@@ -772,13 +821,32 @@ export default function TestPage() {
   const officialEnglishExam = officialEnglishMockExams.find((e) => e.id === datasetId) ?? null
   const isOfficialEnglish = officialEnglishExam !== null
 
-  const selectableQuestions = exam.questions.filter((q) => q.type === 'single_choice')
-  const answeredCount = Object.keys(answers).filter((k) => answers[Number(k)]).length
+  const shouldEvaluateLock =
+    isPastExamId(testId) && exam.questions.length > FREE_PAST_EXAM_QUESTIONS
+  const isPremiumPending = shouldEvaluateLock && !premiumStatusChecked
+  const isFreemiumLocked = shouldEvaluateLock && premiumStatusChecked && !isPremiumUser
+  const visibleQuestions =
+    isPremiumPending || isFreemiumLocked
+      ? exam.questions.slice(0, FREE_PAST_EXAM_QUESTIONS)
+      : exam.questions
+  const lockedQuestions = isFreemiumLocked
+    ? exam.questions.slice(FREE_PAST_EXAM_QUESTIONS)
+    : []
+  const visibleQuestionNumbers = new Set(visibleQuestions.map((q) => q.number))
+  const lockedExam: NvoExam | null = isFreemiumLocked || isPremiumPending
+    ? { ...exam, questions: visibleQuestions }
+    : null
+
+  const selectableQuestions = visibleQuestions.filter((q) => q.type === 'single_choice')
+  const answeredCount = Object.keys(answers).filter(
+    (k) => answers[Number(k)] && visibleQuestionNumbers.has(Number(k)),
+  ).length
   const totalSelectable = selectableQuestions.length
-  const totalQuestions = exam.questions.length
+  const totalQuestions = visibleQuestions.length
   const openResponseCount = Math.max(totalQuestions - totalSelectable, 0)
-  const answeredOpenCount = Object.values(openResponses).filter((responseSet) =>
-    Object.values(responseSet || {}).some((value) => value.trim().length > 0)
+  const answeredOpenCount = Object.entries(openResponses).filter(([num, responseSet]) =>
+    visibleQuestionNumbers.has(Number(num)) &&
+    Object.values(responseSet || {}).some((value) => value.trim().length > 0),
   ).length
   const progressAnswered = totalSelectable > 0 ? answeredCount : answeredOpenCount
   const progressTotal = totalSelectable > 0 ? totalSelectable : Math.max(openResponseCount, 1)
@@ -835,18 +903,22 @@ export default function TestPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={handleSubmit}
-              className="btn-primary text-sm px-4 py-2"
-            >
-              {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
-            </button>
-            <button
-              onClick={() => setRevealAnswers((v) => !v)}
-              className="btn-secondary text-sm px-4 py-2"
-            >
-              {revealAnswers ? 'Скрий ключа' : 'Покажи ключа'}
-            </button>
+            {!isFreemiumLocked && !isPremiumPending && (
+              <>
+                <button
+                  onClick={handleSubmit}
+                  className="btn-primary text-sm px-4 py-2"
+                >
+                  {totalSelectable > 0 ? 'Провери отговорите' : 'Маркирай за преглед'}
+                </button>
+                <button
+                  onClick={() => setRevealAnswers((v) => !v)}
+                  className="btn-secondary text-sm px-4 py-2"
+                >
+                  {revealAnswers ? 'Скрий ключа' : 'Покажи ключа'}
+                </button>
+              </>
+            )}
             <button onClick={handleReset} className="btn-secondary text-sm px-4 py-2">
               Изчисти
             </button>
@@ -937,7 +1009,11 @@ export default function TestPage() {
         )}
         {isOfficialEnglish && officialEnglishExam ? (
           <EnglishDziTestView
-            exam={officialEnglishExam}
+            exam={
+              isFreemiumLocked || isPremiumPending
+                ? { ...officialEnglishExam, questions: officialEnglishExam.questions.slice(0, FREE_PAST_EXAM_QUESTIONS) }
+                : officialEnglishExam
+            }
             answers={answers}
             openResponses={openResponses}
             submitted={submitted}
@@ -952,10 +1028,10 @@ export default function TestPage() {
           />
         ) : (
           <div className="space-y-5">
-            {exam.questions.map((q) => (
+            {visibleQuestions.map((q) => (
               <QuestionCard
                 key={q.number}
-                exam={exam}
+                exam={lockedExam ?? exam}
                 question={q}
                 answers={answers}
                 openResponses={openResponses}
@@ -970,6 +1046,26 @@ export default function TestPage() {
                 }
               />
             ))}
+          </div>
+        )}
+
+        {isFreemiumLocked && lockedQuestions.length > 0 && (
+          <FreemiumLockedPreview
+            lockedCount={lockedQuestions.length}
+            exam={exam}
+            lockedQuestions={lockedQuestions}
+            isOfficialEnglish={isOfficialEnglish}
+            officialEnglishExam={officialEnglishExam}
+          />
+        )}
+
+        {isPremiumPending && (
+          <div className="card p-6 flex items-center justify-center text-sm text-text-muted">
+            <span
+              className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-primary"
+              aria-hidden="true"
+            />
+            Зареждане на още въпроси...
           </div>
         )}
 
@@ -1431,4 +1527,90 @@ function formatStructuredAnswer(text: string): string {
   return text
     .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n$2)')
     .replace(/^([АБВГД])\)/gm, '$1)')
+}
+
+// ---------------------------------------------------------------------------
+// FreemiumLockedPreview — blurred questions 4+ with premium upsell overlay
+// ---------------------------------------------------------------------------
+function FreemiumLockedPreview({
+  lockedCount,
+  exam,
+  lockedQuestions,
+  isOfficialEnglish,
+  officialEnglishExam,
+}: {
+  lockedCount: number
+  exam: NvoExam
+  lockedQuestions: NvoQuestion[]
+  isOfficialEnglish: boolean
+  officialEnglishExam: { id: string; questions: { number: number }[] } | null
+}) {
+  const emptyAnswers: SingleChoiceAnswers = {}
+  const emptyOpen: OpenResponses = {}
+  const noop = () => {}
+
+  const englishPreviewExam =
+    isOfficialEnglish && officialEnglishExam
+      ? {
+          ...officialEnglishExam,
+          questions: officialEnglishExam.questions.slice(FREE_PAST_EXAM_QUESTIONS),
+        }
+      : null
+
+  return (
+    <div className="relative mt-2">
+      <div
+        className="space-y-5 blur-md pointer-events-none select-none max-h-[420px] overflow-hidden"
+        aria-hidden="true"
+      >
+        {englishPreviewExam ? (
+          <EnglishDziTestView
+            exam={englishPreviewExam as unknown as Parameters<typeof EnglishDziTestView>[0]['exam']}
+            answers={emptyAnswers}
+            openResponses={emptyOpen}
+            submitted={false}
+            revealAnswers={false}
+            onAnswer={noop}
+            onOpenResponse={noop}
+          />
+        ) : (
+          lockedQuestions.map((q) => (
+            <QuestionCard
+              key={q.number}
+              exam={exam}
+              question={q}
+              answers={emptyAnswers}
+              openResponses={emptyOpen}
+              submitted={false}
+              revealAnswers={false}
+              onAnswer={noop}
+              onOpenResponse={noop}
+            />
+          ))
+        )}
+      </div>
+      <div className="absolute inset-x-0 bottom-0 pt-32 pb-2 pointer-events-none bg-gradient-to-b from-transparent via-white/85 to-white">
+        <div className="pointer-events-auto mx-auto max-w-md rounded-2xl border border-amber-200 bg-white p-6 text-center shadow-xl">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
+          <h3 className="text-base font-bold text-text mb-1">
+            Останалите {lockedCount} въпроса са премиум
+          </h3>
+          <p className="text-sm text-text-muted mb-4">
+            Видя първите {FREE_PAST_EXAM_QUESTIONS} безплатно. Отключи целия изпит, ключа за отговори и AI помощника.
+          </p>
+          <Link
+            href="/dashboard/subscription"
+            className="btn-primary inline-flex justify-center"
+          >
+            Отключи с премиум
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
 }
