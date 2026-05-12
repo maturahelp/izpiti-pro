@@ -3,7 +3,6 @@
 import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import SimpleConfetti from '@/components/ui/SimpleConfetti'
 import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
@@ -223,7 +222,6 @@ export default function LiteratureExercisePage({
   const [answers, setAnswers] = useState<Record<number, OptionKey>>({})
   const [revealed, setRevealed] = useState<Record<number, boolean>>({})
   const [finished, setFinished] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
 
   const handleRetry = useCallback(() => {
     setShuffledQuestions(exercise?.questions.map(shuffleLiteratureQuestion) ?? [])
@@ -250,8 +248,6 @@ export default function LiteratureExercisePage({
     if (!selected) return
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
-      setShowConfetti(false)
-      requestAnimationFrame(() => setShowConfetti(true))
       try {
         const confetti = (await import('canvas-confetti')).default
         confetti({
@@ -279,7 +275,6 @@ export default function LiteratureExercisePage({
       delete next[currentIndex]
       return next
     })
-    setShowConfetti(false)
   }
 
   const handleNext = () => {
@@ -328,7 +323,6 @@ export default function LiteratureExercisePage({
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <SimpleConfetti active={showConfetti} />
       <TopBar title="Упражнение" />
 
       <div className="p-4 md:p-6 max-w-2xl mx-auto">

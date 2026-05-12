@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import SimpleConfetti from '@/components/ui/SimpleConfetti'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 
@@ -65,7 +64,6 @@ export default function CurriculumTopicPage() {
   const [checked, setChecked] = useState(false)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
 
   useEffect(() => {
     if (topic) {
@@ -104,8 +102,6 @@ export default function CurriculumTopicPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
-      setShowConfetti(false)
-      requestAnimationFrame(() => setShowConfetti(true))
       try {
         const confetti = (await import('canvas-confetti')).default
         confetti({
@@ -130,7 +126,6 @@ export default function CurriculumTopicPage() {
     })
     setSelectedOpt(null)
     setChecked(false)
-    setShowConfetti(false)
   }
 
   function handleNext() {
@@ -154,7 +149,6 @@ export default function CurriculumTopicPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <SimpleConfetti active={showConfetti} />
       <TopBar title={displayTitle} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
