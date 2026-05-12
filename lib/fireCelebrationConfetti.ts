@@ -12,6 +12,7 @@ export function fireCelebrationConfetti() {
       spread: 60,
       startVelocity: 35,
       scalar: 0.95,
+      zIndex: 9999,
       origin: { x: 0.15 + Math.random() * 0.7, y: Math.random() * 0.2 + 0.15 },
     })
 
@@ -20,6 +21,7 @@ export function fireCelebrationConfetti() {
       spread: 80,
       startVelocity: 28,
       scalar: 0.8,
+      zIndex: 9999,
       origin: { x: Math.random(), y: Math.random() * 0.15 + 0.05 },
     })
 
