@@ -152,7 +152,9 @@ export function TestsPageContent({
   const activeTheme = sectionTheme[activeSectionKey]
   const isEnglishSampleView =
     effectiveGrade === '12' && selectedSection12 === 'english' && selectedMode === 'sample'
-  // Past DZI/NVO tests are part of the free plan; only sample/premium content stays gated.
+  // Past DZI/NVO tests are partially free: the test detail page shows the first
+  // 3 questions and blurs the rest behind a premium upsell. The list card itself
+  // stays openable, so we only fully lock cards for sample/premium content.
   const isLocked = !isPremiumUser && selectedMode !== 'past'
 
   const filtered = tests.filter((test) => {
@@ -332,10 +334,6 @@ export function TestsPageContent({
                       <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
                       Премиум
                     </Badge>
-                  </div>
-                ) : !isPremiumUser ? (
-                  <div className="absolute top-3 right-3">
-                    <Badge variant="success">Безплатно</Badge>
                   </div>
                 ) : isBeron ? (
                   <div className="absolute top-3 right-3">
