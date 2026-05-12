@@ -5,9 +5,59 @@ import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
-import { fireConfetti } from '@/lib/confetti'
 import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
+
+function fireConfetti() {
+  if (typeof window === 'undefined') return
+  const COLORS = ['#1E4D7B', '#4CAF50', '#FFC107', '#FF5722', '#9C27B0', '#03A9F4', '#E91E63']
+  const container = document.createElement('div')
+  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;'
+  document.body.appendChild(container)
+  const cx = window.innerWidth / 2
+  const cy = window.innerHeight * 0.55
+  type P = { el: HTMLDivElement; x: number; y: number; vx: number; vy: number; rot: number; vr: number; life: number }
+  const particles: P[] = Array.from({ length: 70 }, () => {
+    const el = document.createElement('div')
+    const color = COLORS[Math.floor(Math.random() * COLORS.length)]
+    const size = 5 + Math.random() * 4
+    el.style.cssText = `position:absolute;left:${cx}px;top:${cy}px;width:${size}px;height:${size * 0.5}px;background:${color};border-radius:2px;will-change:transform,opacity;`
+    container.appendChild(el)
+    const angle = Math.random() * Math.PI * 2
+    const speed = 5 + Math.random() * 9
+    return {
+      el, x: 0, y: 0,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 4,
+      rot: Math.random() * 360,
+      vr: (Math.random() - 0.5) * 18,
+      life: 1,
+    }
+  })
+  const start = performance.now()
+  function tick(now: number) {
+    const elapsed = (now - start) / 1000
+    let alive = 0
+    for (const p of particles) {
+      if (p.life <= 0) continue
+      alive++
+      p.x += p.vx
+      p.y += p.vy
+      p.vy += 0.35
+      p.vx *= 0.99
+      p.rot += p.vr
+      p.life -= 0.016
+      p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${p.rot}deg)`
+      p.el.style.opacity = String(Math.max(0, p.life))
+    }
+    if (alive > 0 && elapsed < 4) {
+      requestAnimationFrame(tick)
+    } else {
+      container.remove()
+    }
+  }
+  requestAnimationFrame(tick)
+}
 
 type Difficulty = 'easy' | 'medium' | 'exam_ready'
 type ProblemType = 'multiple_choice' | 'short_answer'
