@@ -90,7 +90,7 @@ export async function GET(req: NextRequest) {
       client_reference_id: user.id,
       customer: customerId,
       metadata,
-      allow_promotion_codes: true,
+      ...(discounts ? {} : { allow_promotion_codes: true }),
       ...(discounts ? { discounts } : {}),
       line_items: [
         {
