@@ -149,6 +149,7 @@ export function MaturaFinalSurveyPage() {
   useEffect(() => {
     if (!searchEmail) return
     setEmail((current) => current || searchEmail)
+    setHasStarted(true)
   }, [searchEmail])
 
   useEffect(() => {
