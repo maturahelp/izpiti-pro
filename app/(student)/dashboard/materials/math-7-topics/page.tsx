@@ -5,7 +5,6 @@ import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
-import { fireConfetti } from '@/lib/confetti'
 import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 
@@ -170,13 +169,21 @@ export default function Math7TopicsPage() {
     setSelectedOpt(optValue)
   }
 
-  function handleCheck() {
+  async function handleCheck() {
     if (selectedOpt === null) return
     const problem = filteredProblems[currentIndex]
     setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
-      fireConfetti()
+      const confetti = (await import('canvas-confetti')).default
+      confetti({
+        particleCount: 54,
+        spread: 52,
+        scalar: 0.75,
+        startVelocity: 30,
+        origin: { x: 0.5, y: 0.6 },
+        zIndex: 9999,
+      })
     }
   }
 

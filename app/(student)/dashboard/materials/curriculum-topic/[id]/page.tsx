@@ -5,7 +5,6 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
-import { fireConfetti } from '@/lib/confetti'
 
 interface Exercise {
   number: number
@@ -98,12 +97,20 @@ export default function CurriculumTopicPage() {
     setSelectedOpt(optIdx)
   }
 
-  function handleCheck() {
+  async function handleCheck() {
     if (selectedOpt === null) return
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
-      fireConfetti()
+      const confetti = (await import('canvas-confetti')).default
+      confetti({
+        particleCount: 54,
+        spread: 52,
+        scalar: 0.75,
+        startVelocity: 30,
+        origin: { x: 0.5, y: 0.6 },
+        zIndex: 9999,
+      })
     }
   }
 
