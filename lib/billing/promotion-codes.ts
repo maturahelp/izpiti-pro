@@ -2,6 +2,9 @@ import Stripe from 'stripe'
 import { MATURA_FINAL_DISCOUNT_CODE } from '@/lib/campaigns/matura-final-survey'
 
 const SUPPORTED_PROMO_CODES = new Set([MATURA_FINAL_DISCOUNT_CODE])
+const DIRECT_PROMOTION_CODE_IDS: Partial<Record<string, string>> = {
+  [MATURA_FINAL_DISCOUNT_CODE]: 'promo_1TWBTIAKDTIvoVbGGmqKVx9G',
+}
 export const PROMO_CODE_UNAVAILABLE_ERROR = 'PROMO_CODE_UNAVAILABLE'
 
 function isMissingStripeResource(error: unknown) {
@@ -24,6 +27,11 @@ export async function resolveCheckoutDiscounts(
   const normalizedPromoCode = normalizePromoCode(promoCode)
   if (!normalizedPromoCode || !SUPPORTED_PROMO_CODES.has(normalizedPromoCode)) {
     return undefined
+  }
+
+  const directPromotionCodeId = DIRECT_PROMOTION_CODE_IDS[normalizedPromoCode]
+  if (directPromotionCodeId) {
+    return [{ promotion_code: directPromotionCodeId }]
   }
 
   // Stripe checkout accepts either a coupon id or a promotion code id.
