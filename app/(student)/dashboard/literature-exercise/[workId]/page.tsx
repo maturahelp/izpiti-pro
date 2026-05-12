@@ -3,6 +3,7 @@
 import { use, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import Confetti from '@/components/ui/confetti'
 import type { LiteratureQuestion } from '@/data/nvoLiteratureExercises'
 import { resolveLiteratureExercisePage } from '@/data/literatureExerciseResolver'
 import { cn } from '@/lib/utils'
@@ -222,6 +223,7 @@ export default function LiteratureExercisePage({
   const [answers, setAnswers] = useState<Record<number, OptionKey>>({})
   const [revealed, setRevealed] = useState<Record<number, boolean>>({})
   const [finished, setFinished] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const handleRetry = useCallback(() => {
     setShuffledQuestions(exercise?.questions.map(shuffleLiteratureQuestion) ?? [])
@@ -248,15 +250,21 @@ export default function LiteratureExercisePage({
     if (!selected) return
     setRevealed((prev) => ({ ...prev, [currentIndex]: true }))
     if (selected === question.correct_answer) {
-      const confetti = (await import('canvas-confetti')).default
-      confetti({
-        particleCount: 54,
-        spread: 52,
-        scalar: 0.75,
-        startVelocity: 30,
-        origin: { x: 0.5, y: 0.6 },
-        zIndex: 9999,
-      })
+      setShowConfetti(false)
+      requestAnimationFrame(() => setShowConfetti(true))
+      try {
+        const confetti = (await import('canvas-confetti')).default
+        confetti({
+          particleCount: 54,
+          spread: 52,
+          scalar: 0.75,
+          startVelocity: 30,
+          origin: { x: 0.5, y: 0.6 },
+          zIndex: 9999,
+        })
+      } catch (err) {
+        console.error('canvas-confetti failed', err)
+      }
     }
   }
 
@@ -271,6 +279,7 @@ export default function LiteratureExercisePage({
       delete next[currentIndex]
       return next
     })
+    setShowConfetti(false)
   }
 
   const handleNext = () => {
@@ -319,6 +328,7 @@ export default function LiteratureExercisePage({
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
       <TopBar title="Упражнение" />
 
       <div className="p-4 md:p-6 max-w-2xl mx-auto">

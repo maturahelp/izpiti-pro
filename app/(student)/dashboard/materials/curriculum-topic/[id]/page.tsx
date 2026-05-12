@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 
@@ -64,6 +65,7 @@ export default function CurriculumTopicPage() {
   const [checked, setChecked] = useState(false)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   useEffect(() => {
     if (topic) {
@@ -102,15 +104,21 @@ export default function CurriculumTopicPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === exercises[currentIndex].correct_index) {
-      const confetti = (await import('canvas-confetti')).default
-      confetti({
-        particleCount: 54,
-        spread: 52,
-        scalar: 0.75,
-        startVelocity: 30,
-        origin: { x: 0.5, y: 0.6 },
-        zIndex: 9999,
-      })
+      setShowConfetti(false)
+      requestAnimationFrame(() => setShowConfetti(true))
+      try {
+        const confetti = (await import('canvas-confetti')).default
+        confetti({
+          particleCount: 54,
+          spread: 52,
+          scalar: 0.75,
+          startVelocity: 30,
+          origin: { x: 0.5, y: 0.6 },
+          zIndex: 9999,
+        })
+      } catch (err) {
+        console.error('canvas-confetti failed', err)
+      }
     }
   }
 
@@ -122,6 +130,7 @@ export default function CurriculumTopicPage() {
     })
     setSelectedOpt(null)
     setChecked(false)
+    setShowConfetti(false)
   }
 
   function handleNext() {
@@ -145,6 +154,7 @@ export default function CurriculumTopicPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
       <TopBar title={displayTitle} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">

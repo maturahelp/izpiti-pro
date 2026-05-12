@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
 import questionBank from '@/data/bel_topics_question_bank.json'
 
@@ -63,6 +64,7 @@ export default function RuleQuizPage() {
   const [checked, setChecked] = useState(false)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [finished, setFinished] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   useEffect(() => {
     if (entry) {
@@ -101,15 +103,21 @@ export default function RuleQuizPage() {
     setAnswers((prev) => ({ ...prev, [currentIndex]: selectedOpt }))
     setChecked(true)
     if (selectedOpt === questions[currentIndex].correct_index) {
-      const confetti = (await import('canvas-confetti')).default
-      confetti({
-        particleCount: 54,
-        spread: 52,
-        scalar: 0.75,
-        startVelocity: 30,
-        origin: { x: 0.5, y: 0.6 },
-        zIndex: 9999,
-      })
+      setShowConfetti(false)
+      requestAnimationFrame(() => setShowConfetti(true))
+      try {
+        const confetti = (await import('canvas-confetti')).default
+        confetti({
+          particleCount: 54,
+          spread: 52,
+          scalar: 0.75,
+          startVelocity: 30,
+          origin: { x: 0.5, y: 0.6 },
+          zIndex: 9999,
+        })
+      } catch (err) {
+        console.error('canvas-confetti failed', err)
+      }
     }
   }
 
@@ -121,6 +129,7 @@ export default function RuleQuizPage() {
     })
     setSelectedOpt(null)
     setChecked(false)
+    setShowConfetti(false)
   }
 
   function handleNext() {
@@ -144,6 +153,7 @@ export default function RuleQuizPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
       <TopBar title={topic.title} />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">

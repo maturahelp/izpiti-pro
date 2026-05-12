@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
+import Confetti from '@/components/ui/confetti'
 import { cn } from '@/lib/utils'
 import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
 import problemBank from '@/data/nvo_7_math_generated_problem_bank.json'
@@ -68,6 +69,7 @@ export default function Math7TopicsPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [finished, setFinished] = useState(false)
   const [mathJaxReady, setMathJaxReady] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const visibleSubtopics = useMemo(() => (
     mathTopics
@@ -175,15 +177,21 @@ export default function Math7TopicsPage() {
     setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
     setChecked(true)
     if (selectedOpt === problem.correctAnswer) {
-      const confetti = (await import('canvas-confetti')).default
-      confetti({
-        particleCount: 54,
-        spread: 52,
-        scalar: 0.75,
-        startVelocity: 30,
-        origin: { x: 0.5, y: 0.6 },
-        zIndex: 9999,
-      })
+      setShowConfetti(false)
+      requestAnimationFrame(() => setShowConfetti(true))
+      try {
+        const confetti = (await import('canvas-confetti')).default
+        confetti({
+          particleCount: 54,
+          spread: 52,
+          scalar: 0.75,
+          startVelocity: 30,
+          origin: { x: 0.5, y: 0.6 },
+          zIndex: 9999,
+        })
+      } catch (err) {
+        console.error('canvas-confetti failed', err)
+      }
     }
   }
 
@@ -202,6 +210,7 @@ export default function Math7TopicsPage() {
     })
     setSelectedOpt(null)
     setChecked(false)
+    setShowConfetti(false)
   }
 
   function handleNext() {
@@ -254,6 +263,7 @@ export default function Math7TopicsPage() {
         }}
       />
 
+      <Confetti isActive={showConfetti} duration={3000} loop={false} zIndex={9999} />
       <TopBar title="Математика по теми" />
 
       <div className="p-4 md:p-6 max-w-6xl mx-auto">
