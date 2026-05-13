@@ -414,121 +414,6 @@ function DziEssayMaterialModal({
   )
 }
 
-function DziEssayQuizModal({
-  material,
-  answers,
-  submitted,
-  onAnswer,
-  onSubmit,
-  onClose,
-}: {
-  material: DziEssayMaterial
-  answers: Record<number, number>
-  submitted: boolean
-  onAnswer: (questionIndex: number, optionIndex: number) => void
-  onSubmit: () => void
-  onClose: () => void
-}) {
-  const answeredCount = Object.keys(answers).length
-  const score = material.quiz.reduce(
-    (total, question, questionIndex) =>
-      total + (answers[questionIndex] === question.correctOptionIndex ? 1 : 0),
-    0
-  )
-
-  return (
-    <div
-      className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
-      onClick={onClose}
-    >
-      <div
-        className="w-full max-w-4xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={`dzi-essay-test-title-${material.id}`}
-        aria-describedby={`dzi-essay-test-description-${material.id}`}
-      >
-        <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#115E59]">Тест</p>
-            <h3 id={`dzi-essay-test-title-${material.id}`} className="text-lg md:text-xl font-bold text-text">{material.title}</h3>
-            <p id={`dzi-essay-test-description-${material.id}`} className="mt-1 text-sm text-text-muted">
-              Отговори на 10 въпроса и предай теста, за да видиш резултата си.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
-            aria-label="Затвори"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="h-[calc(86vh-176px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
-          <div className="space-y-4">
-            {material.quiz.map((question, questionIndex) => (
-              <section key={`${material.id}-question-${questionIndex}`} className="rounded-xl border border-border bg-white p-4">
-                <p className="mb-3 text-sm font-semibold leading-6 text-text">
-                  {questionIndex + 1}. {question.prompt}
-                </p>
-                <div className="grid gap-2">
-                  {question.options.map((option, optionIndex) => {
-                    const isSelected = answers[questionIndex] === optionIndex
-                    const isCorrect = submitted && optionIndex === question.correctOptionIndex
-                    const isWrong = submitted && isSelected && !isCorrect
-
-                    return (
-                      <button
-                        key={`${material.id}-question-${questionIndex}-option-${optionIndex}`}
-                        type="button"
-                        onClick={() => !submitted && onAnswer(questionIndex, optionIndex)}
-                        className={cn(
-                          'w-full rounded-lg border px-3 py-2 text-left text-sm leading-6 transition-colors',
-                          !submitted && isSelected && 'border-[#14B8A6] bg-[#D4EFEA] text-[#115E59]',
-                          !submitted && !isSelected && 'border-border bg-white text-text hover:bg-[#F6FBFA]',
-                          isCorrect && 'border-success bg-success-light text-success',
-                          isWrong && 'border-danger bg-danger-light text-danger',
-                          submitted && !isCorrect && !isWrong && 'border-border bg-white text-text-muted'
-                        )}
-                      >
-                        {option}
-                      </button>
-                    )
-                  })}
-                </div>
-                {submitted && (
-                  <p className="mt-3 rounded-lg bg-[#F6FBFA] px-3 py-2 text-sm leading-6 text-text-muted">
-                    <span className="font-semibold text-text">Обяснение:</span> {question.explanation}
-                  </p>
-                )}
-              </section>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3 border-t border-border bg-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm font-semibold text-text">
-            {submitted ? `Резултат: ${score} / ${material.quiz.length}` : `Отговорени: ${answeredCount} / ${material.quiz.length}`}
-          </p>
-          <button
-            type="button"
-            onClick={onSubmit}
-            disabled={submitted || answeredCount < material.quiz.length}
-            className="rounded-lg bg-[#115E59] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#0F766E] disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {submitted ? 'Предаден тест' : 'Предай тест'}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
   'ПРАВОПИСНА НОРМА': [11, 18, 20], // 12, 19, 21 (1-based)
 }
@@ -593,9 +478,6 @@ export default function MaterialsPage() {
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
   const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
   const [activeDziEssayMaterial, setActiveDziEssayMaterial] = useState<DziEssayMaterial | null>(null)
-  const [activeDziEssayTestMaterial, setActiveDziEssayTestMaterial] = useState<DziEssayMaterial | null>(null)
-  const [dziEssayQuizAnswers, setDziEssayQuizAnswers] = useState<Record<number, number>>({})
-  const [isDziEssayQuizSubmitted, setIsDziEssayQuizSubmitted] = useState(false)
   const [englishMaterialText, setEnglishMaterialText] = useState('')
   const [englishMaterialLoading, setEnglishMaterialLoading] = useState(false)
   const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
@@ -850,15 +732,7 @@ export default function MaterialsPage() {
       return
     }
 
-    setActiveDziEssayTestMaterial(material)
-    setDziEssayQuizAnswers({})
-    setIsDziEssayQuizSubmitted(false)
-  }
-
-  const closeDziEssayTest = () => {
-    setActiveDziEssayTestMaterial(null)
-    setDziEssayQuizAnswers({})
-    setIsDziEssayQuizSubmitted(false)
+    router.push(`/dashboard/materials/dzi-essay-test/${material.id}`)
   }
 
   useEffect(() => {
@@ -2130,19 +2004,6 @@ export default function MaterialsPage() {
         <DziEssayMaterialModal
           material={activeDziEssayMaterial}
           onClose={() => setActiveDziEssayMaterial(null)}
-        />
-      )}
-
-      {activeDziEssayTestMaterial && (
-        <DziEssayQuizModal
-          material={activeDziEssayTestMaterial}
-          answers={dziEssayQuizAnswers}
-          submitted={isDziEssayQuizSubmitted}
-          onAnswer={(questionIndex, optionIndex) =>
-            setDziEssayQuizAnswers((prev) => ({ ...prev, [questionIndex]: optionIndex }))
-          }
-          onSubmit={() => setIsDziEssayQuizSubmitted(true)}
-          onClose={closeDziEssayTest}
         />
       )}
 

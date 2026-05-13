@@ -4,6 +4,8 @@ import {
   dziEssayMaterials,
 } from '../data/dziEssayMaterials'
 import { isFreeDziEssayMaterial } from '../lib/free-content'
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 const expectedSources = [
   '12_10 Поправка на съчинение I срок 12. клас.pdf',
@@ -53,5 +55,20 @@ const referencedSources = new Set(dziEssayMaterials.flatMap((material) => materi
 for (const source of expectedSources) {
   assert(referencedSources.has(source), `Missing source coverage: ${source}`)
 }
+
+const rootDir = join(__dirname, '..')
+const materialsPagePath = join(rootDir, 'app/(student)/dashboard/materials/page.tsx')
+const essayTestPagePath = join(rootDir, 'app/(student)/dashboard/materials/dzi-essay-test/[id]/page.tsx')
+const materialsPage = readFileSync(materialsPagePath, 'utf8')
+
+assert(existsSync(essayTestPagePath), 'Essay quizzes should open on a dedicated route page')
+assert(
+  materialsPage.includes('/dashboard/materials/dzi-essay-test/'),
+  'Essay material cards should navigate to the dedicated quiz route'
+)
+assert(
+  !materialsPage.includes('function DziEssayQuizModal'),
+  'Essay quizzes should not be implemented as a modal inside the materials page'
+)
 
 console.log('DZI essay materials validation passed')
