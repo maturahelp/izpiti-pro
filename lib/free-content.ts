@@ -11,7 +11,7 @@
  *
  * За ДЗИ (12 клас): едно литературно произведение (Потомка), първото
  * БЕЛ правило, един английски учебен материал (Essay Structure Format) и
- * първият материал от секцията за есе/интерпретативно съчинение.
+ * материалът "Интерпретативно съчинение върху няколко творби".
  */
 
 export const FREE_LITERATURE_WORK_IDS = {
@@ -26,7 +26,7 @@ export const FREE_MATH_NVO_TOPIC_ID = 'chisla-algebra'
 export const FREE_MATH_NVO_SUBTOPIC_ID = 'alg-natural'
 
 export const FREE_ENGLISH_DZI_MATERIAL_TITLE = 'Essay Structure Format'
-export const FREE_DZI_ESSAY_MATERIAL_ID = 'dzi-essay-assessment'
+export const FREE_DZI_ESSAY_MATERIAL_ID = 'dzi-essay-interpretative-multiple-works'
 
 export function isFreeLiteratureWork(workId: string | null | undefined): boolean {
   if (!workId) return false

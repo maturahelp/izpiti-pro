@@ -52,7 +52,7 @@ export interface DziEssayMaterialGroup {
   items: DziEssayMaterial[]
 }
 
-export const DZI_ESSAY_FREE_MATERIAL_ID = 'dzi-essay-assessment'
+export const DZI_ESSAY_FREE_MATERIAL_ID = 'dzi-essay-interpretative-multiple-works'
 
 function q(
   prompt: string,
@@ -65,7 +65,7 @@ function q(
 
 export const dziEssayMaterials: DziEssayMaterial[] = [
   {
-    id: DZI_ESSAY_FREE_MATERIAL_ID,
+    id: 'dzi-essay-assessment',
     group: 'Критерии и самооценка',
     title: 'Какво се оценява на ДЗИ',
     description: 'Критериите за есе и интерпретативно съчинение, превърнати в ясен ученически чеклист.',
@@ -132,7 +132,7 @@ export const dziEssayMaterials: DziEssayMaterial[] = [
     ],
   },
   {
-    id: 'dzi-essay-interpretative-multiple-works',
+    id: DZI_ESSAY_FREE_MATERIAL_ID,
     group: 'Интерпретативно съчинение',
     title: 'Интерпретативно съчинение върху няколко творби',
     description: 'Как се разчитат заглавието, проблемът и връзките между творбите, за да се изгради теза.',

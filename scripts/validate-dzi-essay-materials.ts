@@ -47,9 +47,15 @@ for (const material of dziEssayMaterials) {
 
 assert(dziEssayMaterials.length === 6, `Expected 6 essay materials, received ${dziEssayMaterials.length}`)
 assert(dziEssayMaterialGroups.length >= 3, 'Expected materials to be grouped for the UI')
-assert(dziEssayMaterials[0]?.id === DZI_ESSAY_FREE_MATERIAL_ID, 'The first material must be the free material')
+assert(
+  DZI_ESSAY_FREE_MATERIAL_ID === 'dzi-essay-interpretative-multiple-works',
+  'The interpretative essay material should be the free essay material'
+)
 assert(isFreeDziEssayMaterial(DZI_ESSAY_FREE_MATERIAL_ID), 'The free essay material id must pass the free-content whitelist')
-assert(!isFreeDziEssayMaterial(dziEssayMaterials[1]?.id), 'Only the first essay material should be free')
+assert(
+  dziEssayMaterials.filter((material) => isFreeDziEssayMaterial(material.id)).length === 1,
+  'Only one essay material should be free'
+)
 
 const referencedSources = new Set(dziEssayMaterials.flatMap((material) => material.sourceFiles))
 for (const source of expectedSources) {
