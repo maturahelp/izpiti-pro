@@ -14,6 +14,12 @@ import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
+import {
+  buildDziEssaySearchText,
+  dziEssayMaterialGroups,
+  type DziEssayMaterial,
+  type DziEssaySection,
+} from '@/data/dziEssayMaterials'
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { useGrade } from '@/lib/grade-context'
@@ -24,6 +30,7 @@ import {
   isFreeBelDziRule,
   isFreeMathNvoSubtopic,
   isFreeEnglishDziMaterial,
+  isFreeDziEssayMaterial,
 } from '@/lib/free-content'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
@@ -82,7 +89,7 @@ const typeIcons: Record<MaterialType, JSX.Element> = {
   ),
 }
 
-type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english'
+type MaterialSection = 'bulgarian' | 'literature' | 'math' | 'english' | 'essay'
 
 interface CurriculumTopic {
   number: number
@@ -184,9 +191,10 @@ const sectionLabels: Record<MaterialSection, string> = {
   literature: 'Литература',
   math: 'Математика',
   english: 'Английски',
+  essay: 'Есе/Интерпретативно съчинение',
 }
 
-const grade12Sections: MaterialSection[] = ['bulgarian', 'literature', 'english']
+const grade12Sections: MaterialSection[] = ['bulgarian', 'literature', 'essay', 'english']
 
 type SubjectTheme = {
   accent: string
@@ -200,7 +208,7 @@ type SubjectTheme = {
   outlineHoverBg: string
 }
 
-const subjectTheme: Record<'bulgarian' | 'literature' | 'english' | 'math', SubjectTheme> = {
+const subjectTheme: Record<'bulgarian' | 'literature' | 'english' | 'math' | 'essay', SubjectTheme> = {
   bulgarian: {
     accent: '#8B5CF6',
     accentHover: '#6D3FE0',
@@ -245,6 +253,17 @@ const subjectTheme: Record<'bulgarian' | 'literature' | 'english' | 'math', Subj
     outlineText: '#166534',
     outlineHoverBg: '#D2EFDB',
   },
+  essay: {
+    accent: '#0F766E',
+    accentHover: '#115E59',
+    sectionBg: '#E6F6F3',
+    sectionBorder: '#BFE5DD',
+    headerText: '#115E59',
+    cardBorder: '#BFE5DD',
+    outlineBorder: '#9FD8CE',
+    outlineText: '#115E59',
+    outlineHoverBg: '#D4EFEA',
+  },
 }
 
 // Backwards-compatible alias — existing references read via grade12SectionTheme.
@@ -258,6 +277,152 @@ function sentenceCase(label: string): string {
   if (!label) return label
   const lower = label.toLocaleLowerCase('bg-BG')
   return lower.charAt(0).toLocaleUpperCase('bg-BG') + lower.slice(1)
+}
+
+function DziEssaySectionView({ section }: { section: DziEssaySection }) {
+  return (
+    <section className="border-b border-border/70 pb-6 last:border-b-0 last:pb-0">
+      <h4 className="mb-3 text-base font-bold text-text">{section.title}</h4>
+      {section.lead && <p className="mb-3 text-sm leading-7 text-text-muted">{section.lead}</p>}
+      {section.paragraphs && (
+        <div className="space-y-3 text-sm leading-7 text-text">
+          {section.paragraphs.map((paragraph, index) => (
+            <p key={`${section.title}-paragraph-${index}`}>{paragraph}</p>
+          ))}
+        </div>
+      )}
+      {section.bullets && (
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-text">
+          {section.bullets.map((item, index) => (
+            <li key={`${section.title}-bullet-${index}`}>{item}</li>
+          ))}
+        </ul>
+      )}
+      {section.numbered && (
+        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-text">
+          {section.numbered.map((item, index) => (
+            <li key={`${section.title}-numbered-${index}`}>{item}</li>
+          ))}
+        </ol>
+      )}
+      {section.table && (
+        <div className="mt-4 overflow-x-auto rounded-xl border border-border bg-white">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <thead className="bg-[#F6FBFA] text-xs font-bold uppercase text-[#115E59]">
+              <tr>
+                {section.table.headers.map((header) => (
+                  <th key={header} className="px-4 py-3">{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {section.table.rows.map((row, rowIndex) => (
+                <tr key={`${section.title}-row-${rowIndex}`}>
+                  {row.map((cell, cellIndex) => (
+                    <td key={`${section.title}-cell-${rowIndex}-${cellIndex}`} className="px-4 py-3 align-top leading-6 text-text">
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {section.examples && (
+        <div className="mt-4 space-y-3">
+          {section.examples.map((example, index) => (
+            <div key={`${section.title}-example-${index}`} className="rounded-xl border border-[#BFE5DD] bg-[#F6FBFA] p-4">
+              <p className="mb-2 text-xs font-bold uppercase text-[#115E59]">{example.label}</p>
+              {example.text && <p className="text-sm leading-7 text-text">{example.text}</p>}
+              {example.before && (
+                <p className="text-sm leading-7 text-text-muted">
+                  <span className="font-semibold text-danger">Преди:</span> {example.before}
+                </p>
+              )}
+              {example.after && (
+                <p className="mt-1 text-sm leading-7 text-text">
+                  <span className="font-semibold text-success">След:</span> {example.after}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+      {section.task && (
+        <div className="mt-4 rounded-xl border border-amber/20 bg-amber-light p-4">
+          <p className="mb-1 text-xs font-bold uppercase text-amber">{section.task.title}</p>
+          <p className="text-sm leading-7 text-text">{section.task.prompt}</p>
+          <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-text">
+            {section.task.checklist.map((item, index) => (
+              <li key={`${section.title}-task-${index}`}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
+  )
+}
+
+function DziEssayMaterialModal({
+  material,
+  onClose,
+}: {
+  material: DziEssayMaterial
+  onClose: () => void
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-5xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`dzi-essay-title-${material.id}`}
+        aria-describedby={`dzi-essay-description-${material.id}`}
+      >
+        <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#115E59]">{material.group}</p>
+            <h3 id={`dzi-essay-title-${material.id}`} className="text-lg md:text-xl font-bold text-text">{material.title}</h3>
+            <p id={`dzi-essay-description-${material.id}`} className="mt-1 text-sm text-text-muted">{material.description}</p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
+            aria-label="Затвори"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="h-[calc(86vh-112px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
+          <div className="mb-5 flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-[#D4EFEA] px-3 py-1 text-xs font-bold text-[#115E59]">
+              {material.estimatedMinutes} мин.
+            </span>
+            {material.sourceFiles.map((source) => (
+              <span key={source} className="rounded-full border border-border bg-white px-3 py-1 text-xs font-semibold text-text-muted">
+                {source}
+              </span>
+            ))}
+          </div>
+
+          <div className="space-y-6 rounded-xl border border-border bg-white p-5 md:p-6">
+            {material.sections.map((section) => (
+              <DziEssaySectionView key={`${material.id}-${section.title}`} section={section} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 const hiddenBulgarianRulesByIndex: Record<string, number[]> = {
@@ -323,6 +488,7 @@ export default function MaterialsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
   const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
+  const [activeDziEssayMaterial, setActiveDziEssayMaterial] = useState<DziEssayMaterial | null>(null)
   const [englishMaterialText, setEnglishMaterialText] = useState('')
   const [englishMaterialLoading, setEnglishMaterialLoading] = useState(false)
   const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
@@ -431,6 +597,20 @@ export default function MaterialsPage() {
     .filter((group) => group.items.length > 0)
 
   const englishMaterialsCount = filteredEnglishMaterialGroups.reduce((acc, group) => acc + group.items.length, 0)
+
+  const filteredDziEssayMaterialGroups = dziEssayMaterialGroups
+    .map((group) => {
+      const groupMatches = `${group.title} ${group.description}`.toLowerCase().includes(normalizedQuery)
+      const items = group.items.filter((item) => {
+        if (!normalizedQuery) return true
+        if (groupMatches) return true
+        return buildDziEssaySearchText(item).includes(normalizedQuery)
+      })
+      return { ...group, items }
+    })
+    .filter((group) => group.items.length > 0)
+
+  const dziEssayMaterialsCount = filteredDziEssayMaterialGroups.reduce((acc, group) => acc + group.items.length, 0)
 
   const redirectToSubscription = () => {
     router.push('/dashboard/subscription')
@@ -546,6 +726,15 @@ export default function MaterialsPage() {
     } finally {
       setEnglishMaterialLoading(false)
     }
+  }
+
+  const openDziEssayMaterial = (material: DziEssayMaterial) => {
+    if (!hasPremiumAccess && !isFreeDziEssayMaterial(material.id)) {
+      redirectToSubscription()
+      return
+    }
+
+    setActiveDziEssayMaterial(material)
   }
 
   useEffect(() => {
@@ -1262,7 +1451,7 @@ export default function MaterialsPage() {
           <div className="flex flex-wrap justify-center gap-2">
             {grade12Sections.map((section) => {
               const isActive = selectedSection === section
-              const theme = grade12SectionTheme[section as 'bulgarian' | 'literature' | 'english']
+              const theme = grade12SectionTheme[section as keyof typeof grade12SectionTheme]
 
               return (
                 <button
@@ -1472,6 +1661,90 @@ export default function MaterialsPage() {
               {bulgarianRulesCount === 0 && (
                 <div className="text-center py-10 text-text-muted">
                   <p className="font-medium mb-1">Няма намерени правила</p>
+                  <p className="text-sm">Опитай с друга ключова дума.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : selectedSection === 'essay' ? (
+          <div
+            className="rounded-2xl border p-4 md:p-5"
+            style={{
+              backgroundColor: grade12SectionTheme.essay.sectionBg,
+              borderColor: grade12SectionTheme.essay.sectionBorder,
+            }}
+          >
+            <p className="text-sm text-text-muted mb-4">
+              Намерени: <strong className="text-text">{dziEssayMaterialsCount}</strong> материала
+            </p>
+            <div className="space-y-6">
+              {filteredDziEssayMaterialGroups.length > 0 ? (
+                <>
+                  {filteredDziEssayMaterialGroups.map((group, groupIndex) => (
+                    <section key={group.title}>
+                      <h3
+                        className="text-sm md:text-base font-semibold text-center mb-2"
+                        style={{ color: grade12SectionTheme.essay.headerText }}
+                      >
+                        {groupIndex + 1}. {group.title}
+                      </h3>
+                      <p className="text-xs text-text-muted text-center mb-3">{group.description}</p>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {group.items.map((item) => {
+                          const isFreeItem = isFreeDziEssayMaterial(item.id)
+                          return (
+                            <div
+                              key={item.id}
+                              className={cn('relative p-4 flex flex-col gap-3 rounded-xl bg-white border', !hasPremiumAccess && !isFreeItem && 'opacity-60')}
+                              style={{ borderColor: grade12SectionTheme.essay.cardBorder }}
+                            >
+                              {!hasPremiumAccess && !isFreeItem && (
+                                <div className="absolute top-2 right-2">
+                                  <Badge variant="amber">
+                                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                                    Премиум
+                                  </Badge>
+                                </div>
+                              )}
+                              {isFreeItem && (
+                                <div className="absolute top-2 right-2">
+                                  <Badge variant="success">Свободен</Badge>
+                                </div>
+                              )}
+                              <div className="pr-20">
+                                <p
+                                  className="text-xs font-semibold mb-1 uppercase tracking-wide"
+                                  style={{ color: grade12SectionTheme.essay.headerText, opacity: 0.75 }}
+                                >
+                                  {item.group}
+                                </p>
+                                <h3 className="font-semibold text-text text-sm leading-snug">{item.title}</h3>
+                              </div>
+                              <p className="text-xs text-text-muted leading-relaxed">{item.description}</p>
+                              <div className="mt-auto flex items-center justify-between gap-3 pt-1">
+                                <span className="text-xs font-semibold text-text-muted">{item.estimatedMinutes} мин.</span>
+                                <button
+                                  type="button"
+                                  onClick={() => openDziEssayMaterial(item)}
+                                  className="rounded-lg border bg-white px-3 py-2 text-xs font-semibold transition-colors hover:bg-[#D4EFEA]"
+                                  style={{
+                                    borderColor: grade12SectionTheme.essay.outlineBorder,
+                                    color: grade12SectionTheme.essay.outlineText,
+                                  }}
+                                >
+                                  Отвори
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </section>
+                  ))}
+                </>
+              ) : (
+                <div className="text-center py-10 text-text-muted">
+                  <p className="font-medium mb-1">Няма намерени материали</p>
                   <p className="text-sm">Опитай с друга ключова дума.</p>
                 </div>
               )}
@@ -1717,6 +1990,13 @@ export default function MaterialsPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {activeDziEssayMaterial && (
+        <DziEssayMaterialModal
+          material={activeDziEssayMaterial}
+          onClose={() => setActiveDziEssayMaterial(null)}
+        />
       )}
 
       {activeWork && (

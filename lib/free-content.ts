@@ -10,7 +10,8 @@
  * panel винаги е отворен; past exams минават през isPastExamId).
  *
  * За ДЗИ (12 клас): едно литературно произведение (Потомка), първото
- * БЕЛ правило, един английски учебен материал (Essay Structure Format).
+ * БЕЛ правило, един английски учебен материал (Essay Structure Format) и
+ * първият материал от секцията за есе/интерпретативно съчинение.
  */
 
 export const FREE_LITERATURE_WORK_IDS = {
@@ -25,6 +26,7 @@ export const FREE_MATH_NVO_TOPIC_ID = 'chisla-algebra'
 export const FREE_MATH_NVO_SUBTOPIC_ID = 'alg-natural'
 
 export const FREE_ENGLISH_DZI_MATERIAL_TITLE = 'Essay Structure Format'
+export const FREE_DZI_ESSAY_MATERIAL_ID = 'dzi-essay-assessment'
 
 export function isFreeLiteratureWork(workId: string | null | undefined): boolean {
   if (!workId) return false
@@ -45,4 +47,8 @@ export function isFreeMathNvoSubtopic(topicId: string, subtopicId: string): bool
 
 export function isFreeEnglishDziMaterial(title: string): boolean {
   return title === FREE_ENGLISH_DZI_MATERIAL_TITLE
+}
+
+export function isFreeDziEssayMaterial(materialId: string | null | undefined): boolean {
+  return materialId === FREE_DZI_ESSAY_MATERIAL_ID
 }
