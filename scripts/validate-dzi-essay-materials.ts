@@ -30,6 +30,17 @@ for (const material of dziEssayMaterials) {
   assert(material.description.trim().length > 0, `Missing description for ${material.id}`)
   assert(material.sections.length >= 3, `${material.id} should have at least 3 content sections`)
   assert(material.keywords.length >= 4, `${material.id} should have useful search keywords`)
+  assert(material.quiz.length === 10, `${material.id} should have exactly 10 quiz questions`)
+
+  for (const [questionIndex, question] of material.quiz.entries()) {
+    assert(question.prompt.trim().length > 0, `${material.id} question ${questionIndex + 1} is missing a prompt`)
+    assert(question.options.length === 4, `${material.id} question ${questionIndex + 1} should have 4 options`)
+    assert(
+      question.correctOptionIndex >= 0 && question.correctOptionIndex < question.options.length,
+      `${material.id} question ${questionIndex + 1} has an invalid correct option index`
+    )
+    assert(question.explanation.trim().length > 0, `${material.id} question ${questionIndex + 1} is missing an explanation`)
+  }
 }
 
 assert(dziEssayMaterials.length === 6, `Expected 6 essay materials, received ${dziEssayMaterials.length}`)
