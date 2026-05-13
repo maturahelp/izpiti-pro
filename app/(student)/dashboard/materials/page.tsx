@@ -935,18 +935,18 @@ export default function MaterialsPage() {
   }, [activeNvoWorkId])
 
   useEffect(() => {
-    if (hasPremiumAccess) return
+    if (hasPremiumAccess || isActiveWorkFree) return
     if (activeWorkPanel === 'text' || activeWorkPanel === 'cover') return
     setActiveWorkPanel('text')
     setIsActiveWorkVideoPlaying(false)
-  }, [activeWorkPanel, hasPremiumAccess])
+  }, [activeWorkPanel, hasPremiumAccess, isActiveWorkFree])
 
   useEffect(() => {
-    if (hasPremiumAccess) return
+    if (hasPremiumAccess || isActiveNvoWorkFree) return
     if (activeNvoWorkPanel === 'text' || activeNvoWorkPanel === 'cover') return
     setActiveNvoWorkPanel('text')
     setIsActiveNvoVideoPlaying(false)
-  }, [activeNvoWorkPanel, hasPremiumAccess])
+  }, [activeNvoWorkPanel, hasPremiumAccess, isActiveNvoWorkFree])
 
   useEffect(() => {
     const allowedSections = effectiveGrade === '7'
