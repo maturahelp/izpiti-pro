@@ -22,7 +22,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   },
   'dzi-full': {
     name: 'ДЗИ до края на матурите',
-    amount: 1999,
+    amount: 999,
     currency: 'eur',
     mode: 'payment',
     class: '12',

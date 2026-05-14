@@ -100,7 +100,7 @@ export default function SubscriptionPage() {
     if (typeof window === 'undefined') return
     const PLAN_VALUES: Record<string, number> = {
       'nvo-full': 30,
-      'dzi-full': 19.99,
+      'dzi-full': 9.99,
     }
     const STORAGE_KEY = 'mh_purchase_pixel_fired'
     let sessionId: string | null = null

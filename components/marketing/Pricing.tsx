@@ -10,6 +10,8 @@ type PlanKey = 'nvo-full' | 'dzi-full'
 type Plan = {
   label: string
   price: string
+  originalPrice?: string
+  discountBadge?: string
   period: string
   access?: string
   savings?: string
@@ -75,7 +77,9 @@ const dziPlans: Plan[] = [
   },
   {
     label: 'ДЗИ до края на матурите',
-    price: '19.99 €',
+    price: '9.99 €',
+    originalPrice: '19.99 €',
+    discountBadge: '−50%',
     period: 'еднократно',
     access: 'Достъп до 22 май 2026 г.',
     desc: 'За ученици, които искат пълен достъп до края на изпитния период.',
@@ -209,8 +213,20 @@ function PlanCard({
       )}
       <p className="text-xs font-semibold text-[#3b82f6] uppercase tracking-wide mb-2">{plan.label}</p>
       <div className="mb-1">
-        <span className="text-4xl font-extrabold text-[#1e2a4a]">{plan.price}</span>
-        <span className="text-gray-400 text-sm"> {plan.period}</span>
+        <div className="flex items-baseline gap-3 flex-wrap">
+          <span className="text-4xl font-extrabold text-[#1e2a4a]">{plan.price}</span>
+          {plan.originalPrice && (
+            <span className="text-xl font-semibold text-gray-400 line-through">
+              {plan.originalPrice}
+            </span>
+          )}
+          {plan.discountBadge && (
+            <span className="bg-[#DC2626] text-white text-xs font-extrabold px-2.5 py-1 rounded-full tabular-nums">
+              {plan.discountBadge}
+            </span>
+          )}
+        </div>
+        <span className="text-gray-400 text-sm">{plan.period}</span>
       </div>
       {plan.access && <p className="text-xs text-[#3b82f6] font-medium mb-1">{plan.access}</p>}
       {plan.savings && <p className="text-xs font-semibold text-[#1e2a4a] mb-2">{plan.savings}</p>}

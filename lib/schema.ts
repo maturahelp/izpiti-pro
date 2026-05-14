@@ -82,7 +82,7 @@ export const softwareApplicationSchema = {
     {
       '@type': 'Offer',
       name: 'ДЗИ до края на матурите',
-      price: '19.99',
+      price: '9.99',
       priceCurrency: 'EUR',
       priceValidUntil: '2026-05-22',
       availability: 'https://schema.org/InStock',

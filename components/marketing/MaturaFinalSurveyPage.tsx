@@ -10,7 +10,6 @@ import {
   MATURA_FINAL_HELP_NEEDS,
   MATURA_FINAL_START_TRIGGERS,
   MATURA_FINAL_CHECKOUT_PLAN,
-  MATURA_FINAL_DISCOUNT_CODE,
   MATURA_FINAL_DISCOUNT_PERCENT,
   MATURA_FINAL_EXAM_DATE_ISO,
   buildMaturaFinalLoginHref,
@@ -80,7 +79,6 @@ async function startCheckoutWithDziPlan(loginHref: string) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       plan: MATURA_FINAL_CHECKOUT_PLAN,
-      promoCode: MATURA_FINAL_DISCOUNT_CODE,
     }),
   })
 
