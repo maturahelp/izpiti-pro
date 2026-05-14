@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 
 interface Message {
@@ -8,6 +8,105 @@ interface Message {
   role: 'user' | 'assistant'
   text: string
   time: string
+}
+
+function renderInline(text: string): ReactNode[] {
+  const nodes: ReactNode[] = []
+  const pattern = /\*\*([^*]+)\*\*|\*([^*\n]+)\*|`([^`\n]+)`/g
+  let lastIndex = 0
+  let key = 0
+  let match: RegExpExecArray | null
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index))
+    }
+    if (match[1] !== undefined) {
+      nodes.push(<strong key={`b-${key++}`}>{match[1]}</strong>)
+    } else if (match[2] !== undefined) {
+      nodes.push(<em key={`i-${key++}`}>{match[2]}</em>)
+    } else if (match[3] !== undefined) {
+      nodes.push(
+        <code key={`c-${key++}`} className="px-1 py-0.5 rounded bg-gray-100 text-[0.85em]">
+          {match[3]}
+        </code>
+      )
+    }
+    lastIndex = pattern.lastIndex
+  }
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex))
+  }
+  return nodes
+}
+
+type Block =
+  | { type: 'p'; lines: string[] }
+  | { type: 'ul'; items: string[] }
+  | { type: 'ol'; items: string[] }
+
+function parseBlocks(text: string): Block[] {
+  const blocks: Block[] = []
+  const lines = text.split('\n')
+  for (const raw of lines) {
+    const line = raw.trimEnd()
+    const bullet = line.match(/^\s*[*\-•]\s+(.*)$/)
+    const numbered = line.match(/^\s*\d+\.\s+(.*)$/)
+    const last = blocks[blocks.length - 1]
+    if (bullet) {
+      if (last && last.type === 'ul') last.items.push(bullet[1])
+      else blocks.push({ type: 'ul', items: [bullet[1]] })
+    } else if (numbered) {
+      if (last && last.type === 'ol') last.items.push(numbered[1])
+      else blocks.push({ type: 'ol', items: [numbered[1]] })
+    } else if (line.trim() === '') {
+      if (last && last.type === 'p') blocks.push({ type: 'p', lines: [] })
+      // collapse blank lines between list/paragraph blocks
+    } else {
+      if (last && last.type === 'p') last.lines.push(line)
+      else blocks.push({ type: 'p', lines: [line] })
+    }
+  }
+  return blocks.filter((b) =>
+    b.type === 'p' ? b.lines.length > 0 : b.items.length > 0
+  )
+}
+
+function MarkdownText({ text }: { text: string }) {
+  const blocks = parseBlocks(text)
+  return (
+    <>
+      {blocks.map((block, idx) => {
+        if (block.type === 'ul') {
+          return (
+            <ul key={idx} className="list-disc pl-5 space-y-1 my-2">
+              {block.items.map((item, i) => (
+                <li key={i}>{renderInline(item)}</li>
+              ))}
+            </ul>
+          )
+        }
+        if (block.type === 'ol') {
+          return (
+            <ol key={idx} className="list-decimal pl-5 space-y-1 my-2">
+              {block.items.map((item, i) => (
+                <li key={i}>{renderInline(item)}</li>
+              ))}
+            </ol>
+          )
+        }
+        return (
+          <p key={idx} className="whitespace-pre-wrap [&:not(:first-child)]:mt-2">
+            {block.lines.map((line, i) => (
+              <Fragment key={i}>
+                {i > 0 && <br />}
+                {renderInline(line)}
+              </Fragment>
+            ))}
+          </p>
+        )
+      })}
+    </>
+  )
 }
 
 const suggestedPrompts = [
@@ -229,12 +328,20 @@ export default function AIPage() {
                     </svg>
                   </div>
                 )}
-                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
+                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                   msg.role === 'user'
-                    ? 'bg-primary text-white rounded-tr-sm'
+                    ? 'bg-primary text-white rounded-tr-sm whitespace-pre-wrap'
                     : 'bg-white border border-border text-text rounded-tl-sm shadow-card'
                 }`}>
-                  {msg.text || (msg.role === 'assistant' && isStreaming ? '…' : '')}
+                  {msg.role === 'assistant' ? (
+                    msg.text ? (
+                      <MarkdownText text={msg.text} />
+                    ) : (
+                      isStreaming ? '…' : ''
+                    )
+                  ) : (
+                    msg.text
+                  )}
                 </div>
               </div>
             ))}
