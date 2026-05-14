@@ -118,7 +118,7 @@ export default function AIPage() {
         const data = (await res.json().catch(() => null)) as { message?: string } | null
         setError(
           data?.message ??
-            'Достигна седмичния лимит. Надгради за неограничен достъп.'
+            'Достигна дневния лимит. Надгради за неограничен достъп.'
         )
         setMessages((prev) =>
           prev.filter((m) => m.id !== assistantMsgId && m.id !== userMsgId)
@@ -345,8 +345,8 @@ export default function AIPage() {
                   <p className="text-xs font-semibold text-primary mb-1">Безплатен план</p>
                   <p className="text-[11px] text-primary/70 mb-2">
                     {usage
-                      ? `Остават ${usage.remaining ?? 0} въпроса тази седмица`
-                      : '5 въпроса на седмица'}
+                      ? `Остават ${usage.remaining ?? 0} въпроса днес`
+                      : '1 въпрос на ден'}
                   </p>
                   <a
                     href="/dashboard/subscription"

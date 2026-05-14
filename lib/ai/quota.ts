@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { hasActivePremium, type SubscriptionAccessProfile } from '@/lib/subscription-access'
 
-export const FREE_WEEKLY_LIMIT = 5
+export const FREE_DAILY_LIMIT = 1
 
 export type StudentClass = 7 | 12 | null
 
@@ -26,7 +26,7 @@ function parseClass(value: unknown): StudentClass {
 }
 
 /**
- * Атомарна квота: премиум потребители не се лимитират; безплатни — 5 / седмица.
+ * Атомарна квота: премиум потребители не се лимитират; безплатни — 1 / ден.
  * Връща remaining=null когато достъпът е неограничен.
  *
  * IMPORTANT: трябва да се извика със service-role клиент, защото
@@ -48,7 +48,7 @@ export async function checkAndIncrementQuota(
   const isPremium = hasActivePremium(profile ?? null)
   const plan: 'free' | 'premium' = isPremium ? 'premium' : 'free'
   const studentClass = parseClass(profile?.class)
-  const limit = isPremium ? null : FREE_WEEKLY_LIMIT
+  const limit = isPremium ? null : FREE_DAILY_LIMIT
 
   const { data, error } = await admin.rpc('check_and_increment_ai_usage', {
     p_user_id: userId,
@@ -95,19 +95,15 @@ export async function readQuota(
 
   if (isPremium) return { remaining: null, plan }
 
-  // ISO Monday week start.
-  const now = new Date()
-  const day = now.getUTCDay() // 0=Sun..6=Sat
-  const diffToMonday = day === 0 ? 6 : day - 1
-  const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - diffToMonday))
-  const weekStart = monday.toISOString().slice(0, 10)
+  // UTC day boundary.
+  const today = new Date().toISOString().slice(0, 10)
 
   const { data: usage } = await admin
     .from('ai_usage')
-    .select('week_start, count')
+    .select('period_start, count')
     .eq('user_id', userId)
-    .maybeSingle<{ week_start: string; count: number }>()
+    .maybeSingle<{ period_start: string; count: number }>()
 
-  const used = usage && usage.week_start === weekStart ? usage.count : 0
-  return { remaining: Math.max(FREE_WEEKLY_LIMIT - used, 0), plan }
+  const used = usage && usage.period_start === today ? usage.count : 0
+  return { remaining: Math.max(FREE_DAILY_LIMIT - used, 0), plan }
 }
