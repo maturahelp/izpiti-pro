@@ -29,14 +29,9 @@ export async function resolveCheckoutDiscounts(
     return undefined
   }
 
-  const directPromotionCodeId = DIRECT_PROMOTION_CODE_IDS[normalizedPromoCode]
-  if (directPromotionCodeId) {
-    return [{ promotion_code: directPromotionCodeId }]
-  }
-
   // Stripe checkout accepts either a coupon id or a promotion code id.
-  // We resolve coupon ids first because this campaign currently uses
-  // a coupon named SPECIAL50 in the live Stripe dashboard.
+  // We resolve coupon ids first because this campaign may be configured
+  // as a coupon or a promotion code in the live Stripe dashboard.
   try {
     const coupon = await stripe.coupons.retrieve(normalizedPromoCode)
     if (!('deleted' in coupon) && coupon.valid) {
@@ -55,9 +50,14 @@ export async function resolveCheckoutDiscounts(
   })
 
   const promotionCodeId = promotionCodes.data[0]?.id ?? null
-  if (!promotionCodeId) {
-    throw new Error(PROMO_CODE_UNAVAILABLE_ERROR)
+  if (promotionCodeId) {
+    return [{ promotion_code: promotionCodeId }]
   }
 
-  return [{ promotion_code: promotionCodeId }]
+  const directPromotionCodeId = DIRECT_PROMOTION_CODE_IDS[normalizedPromoCode]
+  if (directPromotionCodeId) {
+    return [{ promotion_code: directPromotionCodeId }]
+  }
+
+  throw new Error(PROMO_CODE_UNAVAILABLE_ERROR)
 }
