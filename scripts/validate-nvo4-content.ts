@@ -3,7 +3,7 @@ import mockNvo4PracticeDataset from '../data/mock_nvo4_exam_practice.json'
 import extractionReport from '../data/nvo4_extraction_report.json'
 import { nvo4BulgarianMaterials, nvo4MathMaterials } from '../data/nvo4-generated-materials'
 import { nvo4Tests } from '../data/nvo4-tests'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 
 type Question = {
@@ -186,6 +186,31 @@ const catalogIds = new Set(nvo4Tests.map((test) => test.id))
 for (const year of expectedOfficialYears) {
   if (!catalogIds.has(`nvo4-bel-${year}`)) fail(`Catalog missing nvo4-bel-${year}`)
   if (!catalogIds.has(`nvo4-math-${year}`)) fail(`Catalog missing nvo4-math-${year}`)
+}
+
+const materialsPageSource = readFileSync(
+  path.join(process.cwd(), 'app/(student)/dashboard/materials/page.tsx'),
+  'utf8',
+)
+if (!materialsPageSource.includes('function fireGrade4MaterialConfetti()')) {
+  fail('Grade 4 materials must include the same burst-style confetti used by 7th/12th grade materials')
+}
+if (!materialsPageSource.includes('completeGrade4Lesson(lesson.id)')) {
+  fail('Grade 4 materials must trigger confetti from a student completion action')
+}
+
+const testDetailPageSource = readFileSync(
+  path.join(process.cwd(), 'app/(student)/dashboard/tests/[id]/page.tsx'),
+  'utf8',
+)
+if (!testDetailPageSource.includes("import Confetti from '@/components/ui/confetti'")) {
+  fail('Grade 4 tests must keep the shared test-result confetti overlay')
+}
+if (!testDetailPageSource.includes('mockNvo4PracticeDataset')) {
+  fail('Grade 4 tests must be rendered through the test detail page that owns test confetti')
+}
+if (!testDetailPageSource.includes('fireBurstConfetti()')) {
+  fail('Grade 4 tests must keep the burst confetti trigger on strong submissions')
 }
 
 console.log(`Validated ${official.length} official NVO 4 exams, ${mock.length} model/sample/generated exams, ${nvo4Tests.length} catalog entries.`)
