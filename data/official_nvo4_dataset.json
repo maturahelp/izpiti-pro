@@ -47,7 +47,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2025_bel_q02.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 3,
@@ -239,7 +243,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2025_bel_q14.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 15,
@@ -440,9 +448,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2025_bel_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_bel_q25.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -490,8 +498,8 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
+          "А": "9900",
+          "Б": "9990",
           "В": "10 000"
         },
         "correct_option": "В",
@@ -528,9 +536,9 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4206",
+          "Б": "4256",
+          "В": "4263"
         },
         "correct_option": "Б",
         "official_answer": "Б)",
@@ -547,7 +555,7 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
+          "А": "8160",
           "Б": "44 880",
           "В": "44 881"
         },
@@ -566,9 +574,9 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "177",
+          "Б": "1077",
+          "В": "5380"
         },
         "correct_option": "Б",
         "official_answer": "Б)",
@@ -585,9 +593,9 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "21",
+          "Б": "201",
+          "В": "2001"
         },
         "correct_option": "В",
         "official_answer": "В)",
@@ -615,7 +623,7 @@
       {
         "number": 9,
         "type": "single_choice",
-        "question": "Как се намира неизвестното число?\n4907 : = 7",
+        "question": "Как се намира неизвестното число?\n4907 : \\(\\square\\) = 7",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2025_math_q09",
@@ -661,9 +669,9 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "10",
+          "Б": "100",
+          "В": "1000"
         },
         "correct_option": "Б",
         "official_answer": "Б)",
@@ -672,7 +680,7 @@
       {
         "number": 12,
         "type": "single_choice",
-        "question": "Кое число трябва да се постави в празните квадратчета, за да е вярно\nравенството?\n(250 + 50 + 750) . =",
+        "question": "Кое число трябва да се постави в празните квадратчета, за да е вярно\nравенството?\n(250 + 50 + 750) \\(\\cdot\\) \\(\\square\\) = \\(\\square\\)",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2025_math_q12",
@@ -680,17 +688,13 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "1",
+          "В": "10"
         },
         "correct_option": "А",
         "official_answer": "А)",
-        "answer_guide": "А)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p2.png",
-        "formatting_flags": [
-          "visual_prompt_page_snapshot"
-        ]
+        "answer_guide": "А)"
       },
       {
         "number": 13,
@@ -710,9 +714,9 @@
         "correct_option": "А",
         "official_answer": "А)",
         "answer_guide": "А)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q13.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -726,16 +730,16 @@
           "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2",
+          "Б": "3",
+          "В": "5"
         },
         "correct_option": "Б",
         "official_answer": "Б)",
         "answer_guide": "Б)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -755,7 +759,11 @@
         },
         "correct_option": "А",
         "official_answer": "А)",
-        "answer_guide": "А)"
+        "answer_guide": "А)",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q15.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 16,
@@ -770,14 +778,14 @@
         "options": {
           "А": "500 кг",
           "Б": "1 т",
-          "В": "1т 500 кг\n⮚ Прочети внимателно задачите от № 17 до № 20 и на определеното място в\nбланката за отговори запиши само отговора си."
+          "В": "1т 500 кг"
         },
         "correct_option": "В",
         "official_answer": "В)",
         "answer_guide": "В)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q16.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -792,7 +800,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q17.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -824,9 +834,9 @@
         },
         "official_answer": "75 кв. дм",
         "answer_guide": "75 кв. дм",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q19.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -841,9 +851,9 @@
         },
         "official_answer": "421 (общо заети места)",
         "answer_guide": "421 (общо заети места)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q20.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -875,7 +885,7 @@
       {
         "number": 23,
         "type": "open_response",
-        "question": "С колко лева се оскъпява пералнята при плащане на вноски? Използвай\nинформацията от изображението и пресметни.\nНиво\nОбщо\nместа\nСвободни\nместа\nНиво 1\nНиво 2\nНиво 3",
+        "question": "С колко лева се оскъпява пералнята при плащане на вноски? Използвай\nинформацията от изображението и пресметни.\nНиво\nОбщо\nместа\nСвободни\nместа\nНиво 1\n100\n0\nНиво 2\n200\n27\nНиво 3\n200\n52",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2025_math_q23",
@@ -884,9 +894,9 @@
         },
         "official_answer": "120 (лв. оскъпяване)",
         "answer_guide": "120 (лв. оскъпяване)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q23.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -901,9 +911,9 @@
         },
         "official_answer": "1400 (кг зеленчуци)",
         "answer_guide": "1400 (кг зеленчуци)",
-        "question_image": "/nvo4-page-images/nvo4_2025_math_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q24.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -923,7 +933,11 @@
         },
         "correct_option": "В",
         "official_answer": "В 420 (лв. общо)",
-        "answer_guide": "В 420 (лв. общо)"
+        "answer_guide": "В 420 (лв. общо)",
+        "question_image": "/nvo4-page-images/nvo4_2025_math_q25.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       }
     ]
   },
@@ -1051,7 +1065,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2024_bel_q06.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 7,
@@ -1127,7 +1145,11 @@
         },
         "correct_option": "А",
         "official_answer": "А Ключ за задачите с избираем отговор към текст за четене с разбиране",
-        "answer_guide": "А Ключ за задачите с избираем отговор към текст за четене с разбиране"
+        "answer_guide": "А Ключ за задачите с избираем отговор към текст за четене с разбиране",
+        "question_image": "/nvo4-page-images/nvo4_2024_bel_q10.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 11,
@@ -1295,7 +1317,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2024_bel_q21.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -1362,9 +1386,9 @@
           "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "5314",
+          "Б": "4932",
+          "В": "3932"
         },
         "correct_option": "В",
         "official_answer": "В",
@@ -1400,9 +1424,9 @@
           "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "6765",
+          "Б": "6655",
+          "В": "1230"
         },
         "correct_option": "А",
         "official_answer": "А",
@@ -1419,9 +1443,9 @@
           "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "970",
+          "Б": "907",
+          "В": "97"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -1438,9 +1462,9 @@
           "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1320",
+          "Б": "1230",
+          "В": "123"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -1449,7 +1473,7 @@
       {
         "number": 8,
         "type": "single_choice",
-        "question": "Как се намира неизвестното число?\n: 9 = 7281",
+        "question": "Как се намира неизвестното число?\n\\(\\square\\) : 9 = 7281",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2024_math_q08",
@@ -1506,7 +1530,7 @@
       {
         "number": 11,
         "type": "single_choice",
-        "question": "На кое от изображенията е оцветена\n𝟒 от фигурите?",
+        "question": "На кое от изображенията е оцветена\n𝟏\n𝟒 от фигурите?",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2024_math_q11",
@@ -1520,9 +1544,9 @@
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q11.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1555,16 +1579,16 @@
           "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "6",
+          "Б": "7",
+          "В": "8"
         },
         "correct_option": "Б",
         "official_answer": "Б",
         "answer_guide": "Б",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q13.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1585,9 +1609,9 @@
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1601,16 +1625,16 @@
           "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "3",
+          "Б": "2",
+          "В": "1"
         },
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q15.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1631,9 +1655,9 @@
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q16.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1653,9 +1677,9 @@
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q17.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1670,11 +1694,15 @@
         },
         "options": {
           "А": "Б)",
-          "В": "⮚ Прочети внимателно следващите задачи и на определеното място в бланката за\nотговори запиши своя отговор."
+          "В": ""
         },
         "correct_option": "Б",
         "official_answer": "Б",
-        "answer_guide": "Б"
+        "answer_guide": "Б",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q18.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 19,
@@ -1692,7 +1720,7 @@
       {
         "number": 20,
         "type": "open_response",
-        "question": "Кое е неизвестното число?\n2382 – = 142",
+        "question": "Кое е неизвестното число?\n2382 – \\(\\square\\) = 142",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2024_math_q20",
@@ -1717,9 +1745,8 @@
         },
         "official_answer": "432 кв. см",
         "answer_guide": "432 кв. см",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p4.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
@@ -1747,9 +1774,9 @@
         },
         "official_answer": "6 лв.",
         "answer_guide": "6 лв.",
-        "question_image": "/nvo4-page-images/nvo4_2024_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q23.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -1782,7 +1809,11 @@
         },
         "correct_option": "В",
         "official_answer": "В 10 000 лв.",
-        "answer_guide": "В 10 000 лв."
+        "answer_guide": "В 10 000 лв.",
+        "question_image": "/nvo4-page-images/nvo4_2024_math_q25.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       }
     ]
   },
@@ -1910,7 +1941,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2023_bel_q06.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 7,
@@ -1929,7 +1964,11 @@
         },
         "correct_option": "Б",
         "official_answer": "Б",
-        "answer_guide": "Б"
+        "answer_guide": "Б",
+        "question_image": "/nvo4-page-images/nvo4_2023_bel_q07.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 8,
@@ -1982,7 +2021,7 @@
         "options": {
           "А": "Разкажи ми приказка!",
           "Б": "Ех, че весел рожден ден!",
-          "В": "Какъв силен дъжд вали!\n➢ Прочети внимателно текста и задачите към него. На задачи от № 11 до\n№ 14 в бланката за отговори отбележи с Х буквата на верния отговор."
+          "В": "Какъв силен дъжд вали!"
         },
         "correct_option": "А",
         "official_answer": "А",
@@ -2063,9 +2102,8 @@
         "correct_option": "В",
         "official_answer": "В Зад. № Критерии",
         "answer_guide": "В Зад. № Критерии",
-        "question_image": "/nvo4-page-images/nvo4_2023_bel_p4.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
@@ -2158,9 +2196,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2023_bel_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_bel_q21.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -2208,9 +2246,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4098",
+          "Б": "4998",
+          "В": "5008"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -2230,16 +2268,16 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2",
+          "Б": "3",
+          "В": "4"
         },
         "correct_option": "Б",
         "official_answer": "Б",
         "answer_guide": "Б",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p1.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q03.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2253,9 +2291,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "693",
+          "В": "700"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -2272,9 +2310,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4260",
+          "Б": "7240",
+          "В": "7260"
         },
         "correct_option": "В",
         "official_answer": "В",
@@ -2291,9 +2329,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": "+"
+          "А": "1456",
+          "Б": "4200",
+          "В": "5200\n2\n9\n3\n1\n9\n0\n8\n4\n3\n0\n1\n+"
         },
         "correct_option": "В",
         "official_answer": "В",
@@ -2310,9 +2348,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "908",
+          "Б": "980",
+          "В": "9080"
         },
         "correct_option": "В",
         "official_answer": "В",
@@ -2329,9 +2367,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "69",
+          "Б": "609",
+          "В": "9936"
         },
         "correct_option": "А",
         "official_answer": "A",
@@ -2348,9 +2386,9 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "3032",
+          "Б": "3430",
+          "В": "3530"
         },
         "correct_option": "В",
         "official_answer": "В",
@@ -2392,9 +2430,9 @@
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q11.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2408,16 +2446,16 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2",
+          "Б": "3",
+          "В": "4"
         },
         "correct_option": "Б",
         "official_answer": "Б",
         "answer_guide": "Б",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q12.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2431,16 +2469,16 @@
           "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "3",
+          "Б": "4",
+          "В": "5"
         },
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q13.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2460,7 +2498,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q14.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 15,
@@ -2480,9 +2522,8 @@
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p3.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
@@ -2502,7 +2543,11 @@
         },
         "correct_option": "Б",
         "official_answer": "Б",
-        "answer_guide": "Б"
+        "answer_guide": "Б",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q16.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 17,
@@ -2522,9 +2567,8 @@
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p3.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
@@ -2540,20 +2584,20 @@
         "options": {
           "А": "фигура А",
           "Б": "фигура Б",
-          "В": "фигура В\n⮚ Прочети внимателно следващите задачи и на определеното място в бланката\nза отговори запиши своя отговор."
+          "В": "фигура В"
         },
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q18.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
         "number": 19,
         "type": "open_response",
-        "question": "Кое е неизвестното число?\n792 : = 200 – 192",
+        "question": "Кое е неизвестното число?\n792 : \\(\\square\\) = 200 – 192",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2023_math_q19",
@@ -2610,9 +2654,9 @@
         },
         "official_answer": "7200 кв. см",
         "answer_guide": "7200 кв. см",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q22.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2627,9 +2671,9 @@
         },
         "official_answer": "350 г",
         "answer_guide": "350 г",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q23.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2644,9 +2688,9 @@
         },
         "official_answer": "94 см",
         "answer_guide": "94 см",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q24.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -2667,9 +2711,9 @@
         "correct_option": "В",
         "official_answer": "В 90 (лв. всички хризантеми)",
         "answer_guide": "В 90 (лв. всички хризантеми)",
-        "question_image": "/nvo4-page-images/nvo4_2023_math_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2023_math_q25.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       }
     ]
@@ -2817,7 +2861,11 @@
         },
         "correct_option": "А",
         "official_answer": "А",
-        "answer_guide": "А"
+        "answer_guide": "А",
+        "question_image": "/nvo4-page-images/nvo4_2022_bel_q07.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 8,
@@ -3057,9 +3105,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2022_bel_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_bel_q21.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -3088,7 +3136,7 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
+          "А": "7396",
           "Б": "73 096",
           "В": "73 906"
         },
@@ -3129,16 +3177,16 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "1",
+          "В": "9"
         },
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p1.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q03.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -3190,9 +3238,9 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": "+\n1 0 3 7 3\n9 9\n2 0 2 8 1"
+          "А": "1008",
+          "Б": "3932",
+          "В": "4032\n+\n1 0 3 7 3\n9 9\n8\n2 0 2 8 1"
         },
         "correct_option": "В",
         "official_answer": "В",
@@ -3209,7 +3257,7 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
+          "А": "2135",
           "Б": "21 035",
           "В": "21 350"
         },
@@ -3228,9 +3276,9 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "14",
+          "Б": "104",
+          "В": "140"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -3239,7 +3287,7 @@
       {
         "number": 9,
         "type": "single_choice",
-        "question": "Кое е неизвестното число?\n9068 – = 725",
+        "question": "Кое е неизвестното число?\n9068 – \\(\\square\\) = 725",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2022_math_q09",
@@ -3247,9 +3295,9 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "8343",
+          "Б": "9343",
+          "В": "9793"
         },
         "correct_option": "А",
         "official_answer": "А",
@@ -3291,9 +3339,9 @@
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q11.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -3307,16 +3355,16 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2",
+          "Б": "4",
+          "В": "6"
         },
         "correct_option": "А",
         "official_answer": "А",
         "answer_guide": "А",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q12.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -3335,7 +3383,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q13.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 14,
@@ -3348,16 +3400,16 @@
           "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1",
+          "Б": "4",
+          "В": "5"
         },
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -3396,7 +3448,11 @@
         },
         "correct_option": "А",
         "official_answer": "А",
-        "answer_guide": "А"
+        "answer_guide": "А",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q16.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 17,
@@ -3416,9 +3472,8 @@
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p3.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
@@ -3434,20 +3489,20 @@
         "options": {
           "А": "фигура А",
           "Б": "фигура Б",
-          "В": "фигура В\n⮚ Прочети внимателно следващите задачи и на определеното място в бланката\nза отговори запиши своя отговор."
+          "В": "фигура В"
         },
         "correct_option": "Б",
         "official_answer": "Б",
         "answer_guide": "Б",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q18.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
         "number": 19,
         "type": "open_response",
-        "question": "Кое е неизвестното число?\n: 9 = 460 + 44",
+        "question": "Кое е неизвестното число?\n\\(\\square\\) : 9 = 460 + 44",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2022_math_q19",
@@ -3488,9 +3543,9 @@
         },
         "official_answer": "31 см",
         "answer_guide": "31 см",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q21.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -3505,9 +3560,8 @@
         },
         "official_answer": "1500 кв. м",
         "answer_guide": "1500 кв. м",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p4.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
@@ -3522,9 +3576,9 @@
         },
         "official_answer": "30 м",
         "answer_guide": "30 м",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q23.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -3558,9 +3612,9 @@
         "correct_option": "В",
         "official_answer": "В 96 (деца използвали фитнеса)",
         "answer_guide": "В 96 (деца използвали фитнеса)",
-        "question_image": "/nvo4-page-images/nvo4_2022_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2022_math_q25.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       }
     ]
@@ -3914,9 +3968,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2021_bel_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_bel_q20.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -4059,8 +4113,8 @@
           "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
+          "А": "367",
+          "Б": "8190",
           "В": "16 902"
         },
         "correct_option": "В",
@@ -4078,9 +4132,9 @@
           "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "92",
+          "Б": "920",
+          "В": "9020"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -4097,9 +4151,9 @@
           "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "19",
+          "Б": "109",
+          "В": "119"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -4116,9 +4170,9 @@
           "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "100",
+          "В": "1000"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -4173,22 +4227,21 @@
           "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "1",
+          "В": "5"
         },
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_prompt_without_detected_asset"
         ]
       },
       {
         "number": 14,
         "type": "single_choice",
-        "question": "Кое е неизвестното число?\n21 033 :\n= 3",
+        "question": "Кое е неизвестното число?\n21 033 : \\(\\square\\) = 3",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2021_math_q14",
@@ -4196,9 +4249,9 @@
           "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "711",
+          "Б": "7011",
+          "В": "7001"
         },
         "correct_option": "Б",
         "official_answer": "Б",
@@ -4221,7 +4274,11 @@
         },
         "correct_option": "Б",
         "official_answer": "Б",
-        "answer_guide": "Б"
+        "answer_guide": "Б",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q15.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 16,
@@ -4240,7 +4297,11 @@
         },
         "correct_option": "В",
         "official_answer": "В",
-        "answer_guide": "В"
+        "answer_guide": "В",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q16.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 17,
@@ -4259,7 +4320,11 @@
         },
         "correct_option": "Б",
         "official_answer": "Б",
-        "answer_guide": "Б"
+        "answer_guide": "Б",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q17.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 18,
@@ -4273,14 +4338,14 @@
         },
         "options": {
           "А": "Б)",
-          "В": "¾ Прочети внимателно следващите задачи и на определеното място в бланката\nза отговори запиши своя отговор."
+          "В": ""
         },
         "correct_option": "В",
         "official_answer": "В",
         "answer_guide": "В",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p3.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q18.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -4296,6 +4361,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -4311,9 +4377,9 @@
         },
         "official_answer": "32 м",
         "answer_guide": "32 м",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q20.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -4328,9 +4394,9 @@
         },
         "official_answer": "400 кв. м",
         "answer_guide": "400 кв. м",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q21.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -4345,9 +4411,9 @@
         },
         "official_answer": "300 кв. см",
         "answer_guide": "300 кв. см",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q22.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf"
         ]
       },
       {
@@ -4362,9 +4428,10 @@
         },
         "official_answer": "6 бр.",
         "answer_guide": "6 бр.",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p4.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q23.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot"
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss"
         ]
       },
       {
@@ -4398,9 +4465,9 @@
         "correct_option": "В",
         "official_answer": "В 1000 кв. м – рози; 500 кв.м – лалета; 250 кв.м – нарциси",
         "answer_guide": "В 1000 кв. м – рози; 500 кв.м – лалета; 250 кв.м – нарциси",
-        "question_image": "/nvo4-page-images/nvo4_2021_math_p5.png",
+        "question_image": "/nvo4-page-images/nvo4_2021_math_q25.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "short_extracted_question_text"
         ]
       }
@@ -4609,7 +4676,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2019_bel_q11.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -4743,7 +4812,7 @@
           "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf"
         },
         "options": {
-          "А": "",
+          "А": "6576",
           "Б": "50 864",
           "В": "50 964"
         },
@@ -4764,9 +4833,9 @@
           "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "908",
+          "Б": "980",
+          "В": "9080"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -4785,9 +4854,9 @@
           "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2070",
+          "Б": "207",
+          "В": "270"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -4806,9 +4875,9 @@
           "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "15",
+          "В": "238"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -4827,9 +4896,9 @@
           "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1035",
+          "Б": "1138",
+          "В": "1550"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -4848,9 +4917,9 @@
           "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "237",
+          "Б": "474",
+          "В": "948"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -4896,9 +4965,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2019_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -4919,9 +4988,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2019_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -4942,7 +5011,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2019_math_q15.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -4963,7 +5034,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2019_math_q16.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -4979,7 +5052,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2019_math_q17.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
@@ -5346,6 +5421,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -5360,7 +5436,7 @@
           "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf"
         },
         "options": {
-          "А": "",
+          "А": "4390",
           "Б": "30 047",
           "В": "32 047"
         },
@@ -5381,13 +5457,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "6080",
+          "Б": "680",
+          "В": "608"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -5402,9 +5479,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "117",
+          "Б": "107",
+          "В": "17"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -5423,20 +5500,21 @@
           "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
+          "А": "350",
+          "Б": "3500",
           "В": "19 880"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
       {
         "number": 10,
         "type": "single_choice",
-        "question": "Неизвестното число в равенството\n4079 – = 299 е:",
+        "question": "Неизвестното число в равенството\n4079 – \\(\\square\\) = 299 е:",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2018_math_q10",
@@ -5444,9 +5522,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4780",
+          "Б": "3880",
+          "В": "3780"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -5465,13 +5543,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "8",
+          "Б": "93",
+          "В": "1488"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -5513,9 +5592,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2018_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -5536,9 +5614,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2018_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2018_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -5559,7 +5638,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2018_math_q15.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -5908,13 +5989,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "7343",
+          "Б": "7333",
+          "В": "6343"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -5929,9 +6011,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4692",
+          "Б": "4592",
+          "В": "533"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -5957,6 +6039,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -5971,9 +6054,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1730",
+          "Б": "6958",
+          "В": "7958"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -5992,13 +6075,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "3070",
+          "Б": "370",
+          "В": "307"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6013,13 +6097,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "106",
+          "Б": "160",
+          "В": "1060"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6034,20 +6119,21 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
+          "А": "0",
+          "Б": "100",
           "В": "39 184"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
       {
         "number": 10,
         "type": "single_choice",
-        "question": "Неизвестното число в равенството\n3040 – = 758 е:",
+        "question": "Неизвестното число в равенството\n3040 – \\(\\square\\) = 758 е:",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2017_math_q10",
@@ -6055,13 +6141,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2382",
+          "Б": "2282",
+          "В": "3798"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2017_math_q10.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -6076,13 +6164,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
+          "А": "2307",
+          "Б": "6921",
           "В": "20 763"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6124,9 +6213,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2017_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6147,9 +6236,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2017_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2017_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6191,7 +6281,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2017_math_q16.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6542,9 +6635,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4955",
+          "Б": "4965",
+          "В": "5055"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -6605,9 +6698,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "307",
+          "Б": "370",
+          "В": "3070"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -6626,9 +6719,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "204",
+          "Б": "240",
+          "В": "2040"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -6649,7 +6742,7 @@
         "options": {
           "А": "15 600",
           "Б": "15 912",
-          "В": ""
+          "В": "0"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -6668,9 +6761,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "267",
+          "Б": "733",
+          "В": "1000"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -6690,12 +6783,15 @@
         },
         "options": {
           "А": "72 981",
-          "Б": "",
-          "В": ""
+          "Б": "901",
+          "В": "91"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2016_math_q11.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6731,15 +6827,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "6",
+          "Б": "8",
+          "В": "10"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2016_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6754,15 +6850,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "6",
+          "Б": "8",
+          "В": "9"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2016_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -6804,7 +6900,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2016_math_q16.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -6836,9 +6934,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2016_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -7102,13 +7199,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "1",
+          "В": "6"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2015_math_q02.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -7130,6 +7229,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7151,6 +7251,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7171,7 +7272,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2015_math_q05.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7186,13 +7290,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "4693",
+          "Б": "4333",
+          "В": "2470"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7207,13 +7312,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "67",
+          "Б": "607",
+          "В": "6070"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7228,20 +7334,21 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "46",
+          "Б": "406",
+          "В": "460"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
       {
         "number": 9,
         "type": "single_choice",
-        "question": "След пресмятането на израза 428.30\n\nсе\nполучава:",
+        "question": "След пресмятането на израза 428.30\n70\n\nсе\nполучава:",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2015_math_q09",
@@ -7256,6 +7363,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7270,13 +7378,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "7338",
+          "Б": "7238",
+          "В": "7152"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7291,13 +7400,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "88",
+          "Б": "176",
+          "В": "352"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7319,6 +7429,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7339,9 +7450,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2015_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7362,9 +7473,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2015_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2015_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7386,6 +7498,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7406,7 +7519,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2015_math_q16.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7742,9 +7858,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "9101",
+          "Б": "9091",
+          "В": "9001"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7763,9 +7879,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "3868",
+          "Б": "3878",
+          "В": "3968"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7805,9 +7921,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1401",
+          "Б": "8707",
+          "В": "9807"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7826,9 +7942,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "7090",
+          "Б": "709",
+          "В": "79"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7847,9 +7963,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "305",
+          "Б": "3005",
+          "В": "3050"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7860,7 +7976,7 @@
       {
         "number": 9,
         "type": "single_choice",
-        "question": "След пресмятането на израза 750.20\n−\nсе\nполучава:",
+        "question": "След пресмятането на израза 750.20\n20\n−\nсе\nполучава:",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2014_math_q09",
@@ -7868,7 +7984,7 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
+          "А": "0",
           "Б": "14 980",
           "В": "15 000"
         },
@@ -7889,9 +8005,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "302",
+          "Б": "3",
+          "В": "305"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7910,9 +8026,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "87",
+          "Б": "261",
+          "В": "783"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -7958,9 +8074,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2014_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2014_math_q13.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -7981,9 +8098,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2014_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2014_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8004,9 +8121,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2014_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8027,14 +8144,16 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2014_math_q16.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
       {
         "number": 17,
         "type": "open_response",
-        "question": "Кое е неизвестното число в равенството 9162 : = 9?\n____________________________________________________________________________",
+        "question": "Кое е неизвестното число в равенството 9162 : \\(\\square\\) = 9?\n____________________________________________________________________________",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2014_math_q17",
@@ -8043,8 +8162,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2014_math_q17.png",
         "formatting_flags": [
-          "possible_formula_or_blank_loss",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8343,6 +8463,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8357,13 +8478,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "5081",
+          "Б": "4081",
+          "В": "5071"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8378,13 +8500,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "5908",
+          "Б": "5918",
+          "В": "6908"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8405,7 +8528,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2013_math_q05.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8420,13 +8546,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1112",
+          "Б": "8418",
+          "В": "8618"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8441,13 +8568,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "705",
+          "Б": "7005",
+          "В": "7050"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8462,20 +8590,21 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "307",
+          "Б": "3007",
+          "В": "3070"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
       {
         "number": 9,
         "type": "single_choice",
-        "question": "Резултатът от пресмятането на израза\n420.30\n−\nе:",
+        "question": "Резултатът от пресмятането на израза\n420.30\n30\n−\nе:",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2013_math_q09",
@@ -8483,13 +8612,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
+          "А": "0",
           "Б": "12 570",
           "В": "12 600"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8504,13 +8634,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "765",
+          "Б": "4041",
+          "В": "4051"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2013_math_q10.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8525,13 +8657,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "305",
+          "Б": "105",
+          "В": "945"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8574,6 +8707,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8594,9 +8728,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2013_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2013_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8618,6 +8752,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8632,12 +8767,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf"
         },
         "options": {
-          "А": "45.11\n+\n=",
-          "Б": "(\n)\n45 .11\n+\n+\n=\nВ (\n)\n45 .11\n+\n=\nПрочетете внимателно следните две задачи, пресметнете и запишете отговора си на\nопределеното място."
+          "А": "27\n45.11\n522\n+\n=",
+          "Б": "(\n)\n27\n27\n45 .11\n819\n+\n+\n=\nВ (\n)\n27\n45 .11\n792\n+\n=\nПрочетете внимателно следните две задачи, пресметнете и запишете отговора си на\nопределеното място."
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2013_math_q16.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -8817,7 +8955,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2012_bel_q06.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8922,7 +9062,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2012_bel_q11.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8943,7 +9085,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2012_bel_q12.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -8964,7 +9108,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2012_bel_q13.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9077,9 +9223,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "7080",
+          "Б": "7070",
+          "В": "6080"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9098,9 +9244,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "2469",
+          "Б": "2459",
+          "В": "3459"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9119,9 +9265,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "8056",
+          "Б": "9046",
+          "В": "9056"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9140,7 +9286,7 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
+          "А": "2534",
           "Б": "18 724",
           "В": "18 824"
         },
@@ -9161,9 +9307,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "306",
+          "Б": "360",
+          "В": "3060"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9182,9 +9328,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "403",
+          "Б": "4003",
+          "В": "40030"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9203,8 +9349,8 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
+          "А": "920",
+          "Б": "1200",
           "В": "13 800"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9224,9 +9370,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "0",
+          "Б": "2650",
+          "В": "2500"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9237,7 +9383,7 @@
       {
         "number": 11,
         "type": "single_choice",
-        "question": "Неизвестното число в равенството\n2700 – = 450 е:",
+        "question": "Неизвестното число в равенството\n2700 – \\(\\square\\) = 450 е:",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2012_math_q11",
@@ -9245,13 +9391,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "3150",
+          "Б": "2350",
+          "В": "2250"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2012_math_q11.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9266,9 +9414,9 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "38",
+          "Б": "308",
+          "В": "4928"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
@@ -9308,15 +9456,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1",
+          "Б": "2",
+          "В": "3"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2012_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2012_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9337,9 +9485,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2012_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2012_math_q15.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9360,9 +9508,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2012_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2012_math_q16.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9419,13 +9567,14 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "\n\n2.165\n\n\n",
-          "Б": "\n\n2.165\n\n\n",
-          "В": "2.165\n\n"
+          "А": "\n\n2.165\n165\n25\n520\n\n\n",
+          "Б": "\n\n2.165\n165\n25\n470\n\n\n",
+          "В": "2.165\n25\n305\n\n"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -9440,13 +9589,15 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf"
         },
         "options": {
-          "А": "",
-          "Б": "",
-          "В": ""
+          "А": "1150",
+          "Б": "2950",
+          "В": "3050"
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2012_math_q20.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -9540,7 +9691,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2011_bel_q05.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9620,7 +9773,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2011_bel_q10.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9684,7 +9839,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2011_bel_q14.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9826,7 +9983,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2011_math_q07.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -9875,6 +10034,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -9938,9 +10098,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2011_math_p1.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -9956,9 +10115,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2011_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2011_math_q15.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -9974,16 +10134,16 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2011_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2011_math_q16.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
       {
         "number": 17,
         "type": "open_response",
-        "question": "Основата на равнобедрен триъгълник\nе с 5 см по-дълга от бедрото му. Ако\nбедрото\nе\nсм,\nобиколката\nна\nтриъгълника е равна на:\nа) 31 см\nб) 41 см\nв) 46 см",
+        "question": "Основата на равнобедрен триъгълник\nе с 5 см по-дълга от бедрото му. Ако\nбедрото\nе\n12\nсм,\nобиколката\nна\nтриъгълника е равна на:\nа) 31 см\nб) 41 см\nв) 46 см",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2011_math_q17",
@@ -10186,7 +10346,11 @@
           "source_url": "https://www.mon.bg/nfs/2018/01/bel_4_kl_10_maj_2010_test_klyuchove.pdf"
         },
         "official_answer": "Условно писане: –буква а при членуване на съществителни имена от мъжки род, единствено число (извора, ловеца, гълъба, крака) 0,5 т. Забележки: • Всяка грешка се отчита еднократно. • Правилен отговор се отчита, ако не е допусната грешка по съответния критерий. • Максималният брой точки от диктовката е 5 точки! ТЕСТ ПО БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА ЗА IVV КЛАС Ключ за правилните отговори Номер на задачата Правилен отговор б в б б в в б в в б б в в б а",
-        "answer_guide": "Условно писане: –буква а при членуване на съществителни имена от мъжки род, единствено число (извора, ловеца, гълъба, крака) 0,5 т. Забележки: • Всяка грешка се отчита еднократно. • Правилен отговор се отчита, ако не е допусната грешка по съответния критерий. • Максималният брой точки от диктовката е 5 точки! ТЕСТ ПО БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА ЗА IVV КЛАС Ключ за правилните отговори Номер на задачата Правилен отговор б в б б в в б в в б б в в б а"
+        "answer_guide": "Условно писане: –буква а при членуване на съществителни имена от мъжки род, единствено число (извора, ловеца, гълъба, крака) 0,5 т. Забележки: • Всяка грешка се отчита еднократно. • Правилен отговор се отчита, ако не е допусната грешка по съответния критерий. • Максималният брой точки от диктовката е 5 точки! ТЕСТ ПО БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА ЗА IVV КЛАС Ключ за правилните отговори Номер на задачата Правилен отговор б в б б в в б в в б б в в б а",
+        "question_image": "/nvo4-page-images/nvo4_2010_bel_q10.png",
+        "formatting_flags": [
+          "visual_asset_crop_from_pdf"
+        ]
       },
       {
         "number": 11,
@@ -10264,7 +10428,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2010_bel_q15.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -10413,7 +10579,7 @@
       {
         "number": 9,
         "type": "open_response",
-        "question": "Резултатът от пресмятането на израза\n50.16\n−\nе:\nа) 950\nб) 800\nв) 27 200",
+        "question": "Резултатът от пресмятането на израза\n1750\n50.16\n−\nе:\nа) 950\nб) 800\nв) 27 200",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2010_math_q09",
@@ -10445,7 +10611,7 @@
       {
         "number": 11,
         "type": "open_response",
-        "question": "Неизвестното число в равенството\n3028 – = 39 е:\nа) 2989\nб) 2999\nв) 3067",
+        "question": "Неизвестното число в равенството\n3028 – \\(\\square\\) = 39 е:\nа) 2989\nб) 2999\nв) 3067",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2010_math_q11",
@@ -10502,7 +10668,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2010_math_q14.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -10518,9 +10686,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2010_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2010_math_q15.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -10552,7 +10720,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2010_math_q17.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -10600,7 +10770,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2010_math_q20.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -10726,7 +10898,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2009_bel_q07.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -11003,7 +11177,7 @@
       {
         "number": 9,
         "type": "open_response",
-        "question": "Резултатът от пресмятането на израза\nе:\n33.30\n+\nа) 16 500\nб) 1360\nв) 1460",
+        "question": "Резултатът от пресмятането на израза\nе:\n33.30\n470\n+\nа) 16 500\nб) 1360\nв) 1460",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2009_math_q09",
@@ -11051,7 +11225,7 @@
       {
         "number": 12,
         "type": "open_response",
-        "question": "Кое е неизвестното число в\n8436:\n=\n?\nа) 146\nб) 1406\nв) 50 616",
+        "question": "Кое е неизвестното число в\n8436:\n6\n=\n?\nа) 146\nб) 1406\nв) 50 616",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2009_math_q12",
@@ -11060,7 +11234,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2009_math_q12.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -11076,9 +11252,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2009_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -11094,9 +11269,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2009_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2009_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -11160,14 +11335,16 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2009_math_q18.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
       {
         "number": 19,
         "type": "open_response",
-        "question": "За рождения ден на три близначки ро-\nдителите им купили три компютърни иг-\nри по 32 лв. всяка и един фотоапарат –\nсъс 157 лв. по-скъп от една игра. Колко\nлева струват подаръците?\nРешението на задачата е:\nа) 3.32\n+\n=\nб) 3.32\n(32 157)\n+\n+\n=\nв)\n3.32\n(157\n32)\n+\n−\n=",
+        "question": "За рождения ден на три близначки ро-\nдителите им купили три компютърни иг-\nри по 32 лв. всяка и един фотоапарат –\nсъс 157 лв. по-скъп от една игра. Колко\nлева струват подаръците?\nРешението на задачата е:\nа) 3.32\n157\n253\n+\n=\nб) 3.32\n(32 157)\n285\n+\n+\n=\nв)\n3.32\n(157\n32)\n221\n+\n−\n=",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2009_math_q19",
@@ -11366,9 +11543,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2008_bel_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -11511,6 +11687,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -11559,6 +11736,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -11607,6 +11785,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -11655,6 +11834,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -11670,7 +11850,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2008_math_q13.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -11686,9 +11868,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2008_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2008_math_q14.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -11736,9 +11918,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2008_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -11777,7 +11959,7 @@
       {
         "number": 20,
         "type": "open_response",
-        "question": "Шофьор за една работна седмица\nизминал\nкм.\nПървият\nден\nизминал 1007 км, а през останалите 4\nдни – всеки ден едно и също\nразстояние. По колко километра е\nизминавал шофьорът през всеки от\nостаналите работните дни?\nа) 637 км\nб) 662 км\nв) 711 км",
+        "question": "Шофьор за една работна седмица\nизминал\n3555\nкм.\nПървият\nден\nизминал 1007 км, а през останалите 4\nдни – всеки ден едно и също\nразстояние. По колко километра е\nизминавал шофьорът през всеки от\nостаналите работните дни?\nа) 637 км\nб) 662 км\nв) 711 км",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2008_math_q20",
@@ -11786,7 +11968,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2008_math_q20.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       }
@@ -12038,6 +12222,7 @@
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "formatting_flags": [
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       },
@@ -12156,7 +12341,7 @@
       {
         "number": 9,
         "type": "open_response",
-        "question": "С кое действие се намира\nнеизвестното делимо от:\n: 4 = 7612?\nа) 7612 : 4\nб) 7612 . 4\nв) 7612 - 4",
+        "question": "С кое действие се намира\nнеизвестното делимо от:\n\\(\\square\\) : 4 = 7612?\nа) 7612 : 4\nб) 7612 . 4\nв) 7612 - 4",
         "section": "nvo4",
         "source_tags": {
           "source_id": "nvo4_2007_math_q09",
@@ -12214,9 +12399,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2007_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -12232,9 +12416,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2007_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -12250,9 +12433,8 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2007_math_p2.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_prompt_without_detected_asset",
           "missing_answer_key"
         ]
       },
@@ -12284,9 +12466,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "question_image": "/nvo4-page-images/nvo4_2007_math_p2.png",
+        "question_image": "/nvo4-page-images/nvo4_2007_math_q16.png",
         "formatting_flags": [
-          "visual_prompt_page_snapshot",
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -12302,7 +12484,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2007_math_q17.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -12334,7 +12518,9 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2007_math_q19.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
           "missing_answer_key"
         ]
       },
@@ -12350,7 +12536,10 @@
         },
         "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
         "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "question_image": "/nvo4-page-images/nvo4_2007_math_q20.png",
         "formatting_flags": [
+          "visual_asset_crop_from_pdf",
+          "possible_formula_or_blank_loss",
           "missing_answer_key"
         ]
       }

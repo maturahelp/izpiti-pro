@@ -441,6 +441,20 @@
       "question_count": 25,
       "flags": [
         {
+          "question": 2,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
           "question": 24,
           "flags": [
             "missing_answer_key"
@@ -450,7 +464,7 @@
         {
           "question": 25,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 5
@@ -473,36 +487,37 @@
       "question_count": 25,
       "flags": [
         {
-          "question": 12,
-          "flags": [
-            "visual_prompt_page_snapshot"
-          ],
-          "page": 2
-        },
-        {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 16,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 17,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 3
@@ -517,28 +532,35 @@
         {
           "question": 19,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 20,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 23,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 24,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 5
+        },
+        {
+          "question": 25,
+          "flags": [
+            "visual_asset_crop_from_pdf"
           ],
           "page": 5
         }
@@ -560,8 +582,23 @@
       "question_count": 21,
       "flags": [
         {
+          "question": 6,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
+        {
+          "question": 10,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
           "question": 21,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 5
@@ -586,42 +623,49 @@
         {
           "question": 11,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 16,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 17,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 4
+        },
+        {
+          "question": 18,
+          "flags": [
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
@@ -635,16 +679,23 @@
         {
           "question": 21,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
           ],
           "page": 4
         },
         {
           "question": 23,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
+        },
+        {
+          "question": 25,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 5
         }
       ]
     },
@@ -664,16 +715,30 @@
       "question_count": 21,
       "flags": [
         {
+          "question": 6,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
+        {
+          "question": 7,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
+        {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
           ],
           "page": 4
         },
         {
           "question": 21,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 5
@@ -705,49 +770,63 @@
         {
           "question": 3,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 1
         },
         {
           "question": 11,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
           "question": 12,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
+          "question": 14,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
+          ],
+          "page": 3
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 17,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
           ],
           "page": 3
         },
         {
           "question": 18,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
@@ -775,28 +854,28 @@
         {
           "question": 22,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 23,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 24,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 5
         },
         {
           "question": 25,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 5
         }
@@ -817,6 +896,13 @@
       "key_start_page": 7,
       "question_count": 21,
       "flags": [
+        {
+          "question": 7,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
         {
           "question": 15,
           "flags": [
@@ -855,7 +941,7 @@
         {
           "question": 21,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 5
@@ -887,42 +973,56 @@
         {
           "question": 3,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 1
         },
         {
           "question": 11,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
           "question": 12,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_asset_crop_from_pdf"
           ],
           "page": 2
         },
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 17,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
           ],
           "page": 3
         },
         {
           "question": 18,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
@@ -943,28 +1043,28 @@
         {
           "question": 21,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 22,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
           ],
           "page": 4
         },
         {
           "question": 23,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 25,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         }
@@ -988,7 +1088,7 @@
         {
           "question": 20,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 5
@@ -1013,20 +1113,42 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_prompt_without_detected_asset"
           ],
           "page": 2
         },
         {
+          "question": 15,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
+          "question": 17,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 3
+        },
+        {
           "question": 18,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 3
         },
         {
           "question": 19,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 3
@@ -1034,35 +1156,36 @@
         {
           "question": 20,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 21,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 22,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf"
           ],
           "page": 4
         },
         {
           "question": 23,
           "flags": [
-            "visual_prompt_page_snapshot"
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss"
           ],
           "page": 4
         },
         {
           "question": 25,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "short_extracted_question_text"
           ],
           "page": 5
@@ -1143,6 +1266,7 @@
         {
           "question": 11,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 4
@@ -1251,7 +1375,8 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1259,7 +1384,8 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1267,6 +1393,7 @@
         {
           "question": 15,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -1274,6 +1401,7 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -1281,6 +1409,7 @@
         {
           "question": 17,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
@@ -1437,6 +1566,7 @@
         {
           "question": 5,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1451,6 +1581,7 @@
         {
           "question": 7,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1465,6 +1596,7 @@
         {
           "question": 9,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1479,6 +1611,7 @@
         {
           "question": 11,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1493,7 +1626,7 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -1501,7 +1634,8 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1509,6 +1643,7 @@
         {
           "question": 15,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -1651,6 +1786,7 @@
         {
           "question": 3,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1665,6 +1801,7 @@
         {
           "question": 5,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1679,6 +1816,7 @@
         {
           "question": 7,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1686,6 +1824,7 @@
         {
           "question": 8,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1693,6 +1832,7 @@
         {
           "question": 9,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -1700,6 +1840,7 @@
         {
           "question": 10,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 1
@@ -1707,6 +1848,7 @@
         {
           "question": 11,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1721,7 +1863,8 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1729,7 +1872,8 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1744,6 +1888,8 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1941,6 +2087,8 @@
         {
           "question": 11,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1955,7 +2103,8 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1963,7 +2112,8 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -1978,6 +2128,7 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -1992,7 +2143,7 @@
         {
           "question": 18,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -2119,6 +2270,7 @@
         {
           "question": 2,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 1
@@ -2126,6 +2278,7 @@
         {
           "question": 3,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2133,6 +2286,7 @@
         {
           "question": 4,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2140,6 +2294,8 @@
         {
           "question": 5,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2147,6 +2303,7 @@
         {
           "question": 6,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2154,6 +2311,7 @@
         {
           "question": 7,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2161,6 +2319,7 @@
         {
           "question": 8,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2168,6 +2327,7 @@
         {
           "question": 9,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2175,6 +2335,7 @@
         {
           "question": 10,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2182,6 +2343,7 @@
         {
           "question": 11,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2189,6 +2351,7 @@
         {
           "question": 12,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2196,7 +2359,8 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2204,7 +2368,8 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2212,6 +2377,7 @@
         {
           "question": 15,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2219,6 +2385,8 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2444,7 +2612,8 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2452,7 +2621,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2460,7 +2629,8 @@
         {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2468,6 +2638,7 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2475,7 +2646,7 @@
         {
           "question": 17,
           "flags": [
-            "possible_formula_or_blank_loss",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2616,6 +2787,7 @@
         {
           "question": 2,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2623,6 +2795,7 @@
         {
           "question": 3,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2630,6 +2803,7 @@
         {
           "question": 4,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2637,6 +2811,8 @@
         {
           "question": 5,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2644,6 +2820,7 @@
         {
           "question": 6,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2651,6 +2828,7 @@
         {
           "question": 7,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2658,6 +2836,7 @@
         {
           "question": 8,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2665,6 +2844,7 @@
         {
           "question": 9,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -2672,6 +2852,7 @@
         {
           "question": 10,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 1
@@ -2679,6 +2860,7 @@
         {
           "question": 11,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2693,6 +2875,7 @@
         {
           "question": 13,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2700,7 +2883,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2708,6 +2891,7 @@
         {
           "question": 15,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2715,6 +2899,8 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -2797,6 +2983,7 @@
         {
           "question": 6,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2832,6 +3019,7 @@
         {
           "question": 11,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2839,6 +3027,7 @@
         {
           "question": 12,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2846,6 +3035,7 @@
         {
           "question": 13,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2954,6 +3144,7 @@
         {
           "question": 11,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 1
@@ -2975,7 +3166,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2983,7 +3174,7 @@
         {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -2991,7 +3182,7 @@
         {
           "question": 16,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3013,6 +3204,7 @@
         {
           "question": 19,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -3020,6 +3212,7 @@
         {
           "question": 20,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3072,6 +3265,7 @@
         {
           "question": 5,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3107,6 +3301,7 @@
         {
           "question": 10,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3135,6 +3330,7 @@
         {
           "question": 14,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3208,6 +3404,7 @@
         {
           "question": 7,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 1
@@ -3229,6 +3426,7 @@
         {
           "question": 10,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -3257,7 +3455,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 1
@@ -3265,7 +3463,8 @@
         {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -3273,7 +3472,7 @@
         {
           "question": 16,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3324,6 +3523,13 @@
       "question_count": 15,
       "flags": [
         {
+          "question": 10,
+          "flags": [
+            "visual_asset_crop_from_pdf"
+          ],
+          "page": 2
+        },
+        {
           "question": 11,
           "flags": [
             "missing_answer_key"
@@ -3354,6 +3560,7 @@
         {
           "question": 15,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3469,6 +3676,7 @@
         {
           "question": 14,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3476,7 +3684,7 @@
         {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3491,6 +3699,7 @@
         {
           "question": 17,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3512,6 +3721,7 @@
         {
           "question": 20,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3578,6 +3788,7 @@
         {
           "question": 7,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3735,6 +3946,7 @@
         {
           "question": 12,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3742,7 +3954,7 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -3750,7 +3962,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3779,6 +3991,7 @@
         {
           "question": 18,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -3880,7 +4093,7 @@
         {
           "question": 10,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -4029,6 +4242,7 @@
         {
           "question": 3,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4050,6 +4264,7 @@
         {
           "question": 6,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4071,6 +4286,7 @@
         {
           "question": 9,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4092,6 +4308,7 @@
         {
           "question": 12,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4099,6 +4316,7 @@
         {
           "question": 13,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4106,7 +4324,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4128,7 +4346,8 @@
         {
           "question": 17,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4150,6 +4369,7 @@
         {
           "question": 20,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4319,6 +4539,7 @@
         {
           "question": 1,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4397,7 +4618,7 @@
         {
           "question": 12,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -4405,7 +4626,7 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -4413,7 +4634,7 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -4428,7 +4649,7 @@
         {
           "question": 16,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4436,6 +4657,7 @@
         {
           "question": 17,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4450,6 +4672,7 @@
         {
           "question": 19,
           "flags": [
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4457,6 +4680,8 @@
         {
           "question": 20,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4516,7 +4741,7 @@
         {
           "question": 6,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 4
@@ -4541,7 +4766,7 @@
         {
           "question": 1,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 1
@@ -4556,7 +4781,7 @@
         {
           "question": 3,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2
@@ -4571,7 +4796,8 @@
         {
           "question": 5,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 3
@@ -4648,7 +4874,7 @@
         {
           "question": 1,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 1
@@ -4677,7 +4903,8 @@
         {
           "question": 5,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 4
@@ -4740,6 +4967,7 @@
         {
           "question": 3,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4747,6 +4975,7 @@
         {
           "question": 4,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4754,6 +4983,7 @@
         {
           "question": 5,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4768,6 +4998,7 @@
         {
           "question": 7,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4775,6 +5006,7 @@
         {
           "question": 8,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4782,6 +5014,7 @@
         {
           "question": 9,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4789,6 +5022,7 @@
         {
           "question": 10,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 1
@@ -4796,6 +5030,7 @@
         {
           "question": 11,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4803,6 +5038,7 @@
         {
           "question": 12,
           "flags": [
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4810,7 +5046,7 @@
         {
           "question": 13,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_prompt_without_detected_asset",
             "missing_answer_key"
           ],
           "page": 2
@@ -4818,7 +5054,8 @@
         {
           "question": 14,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4826,7 +5063,8 @@
         {
           "question": 15,
           "flags": [
-            "visual_prompt_page_snapshot",
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4834,6 +5072,8 @@
         {
           "question": 16,
           "flags": [
+            "visual_asset_crop_from_pdf",
+            "possible_formula_or_blank_loss",
             "missing_answer_key"
           ],
           "page": 2
@@ -4841,7 +5081,7 @@
         {
           "question": 17,
           "flags": [
-            "possible_formula_or_blank_loss",
+            "visual_asset_crop_from_pdf",
             "missing_answer_key"
           ],
           "page": 2

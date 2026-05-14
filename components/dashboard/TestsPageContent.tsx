@@ -75,7 +75,7 @@ const sectionTheme: Record<'bel' | 'math' | 'english', SubjectThemeColors> = {
 
 const modeLabelsByGrade: Record<'4' | '7' | '12', Record<TestMode, string>> = {
   '4': {
-    sample: 'Модели и примерни НВО',
+    sample: 'Модели, примерни и пробни НВО',
     past: 'НВО от минали години',
   },
   '7': {
@@ -97,6 +97,7 @@ function getTestSection(test: (typeof tests)[number]): string {
 function getTestMode(test: (typeof tests)[number]): TestMode {
   if (
     test.id.startsWith('mock_') ||
+    test.id.startsWith('generated_nvo4_') ||
     test.id.startsWith('selected_mock_') ||
     test.id.startsWith('english-generated-') ||
     /^q\d+$/i.test(test.id)

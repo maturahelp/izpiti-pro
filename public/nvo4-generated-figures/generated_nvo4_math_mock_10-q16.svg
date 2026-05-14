@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="140" viewBox="0 0 380 140" role="img"><rect width="100%" height="100%" fill="#fff"/>
+    <text x="22" y="38" font-size="18" font-family="Arial">ябълки</text>
+    <rect x="110" y="20" width="100" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+    <text x="134" y="39" font-size="16" font-family="Arial">600 кг</text>
+    <text x="22" y="90" font-size="18" font-family="Arial">круши</text>
+    <rect x="110" y="72" width="100" height="26" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+    <rect x="210" y="72" width="100" height="26" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+  </svg>

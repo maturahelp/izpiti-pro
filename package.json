@@ -12,6 +12,8 @@
     "review:english-mock:validate": "tsx scripts/validate-english-mock-parser.ts",
     "review:english-mock:screenshots": "tsx scripts/capture-english-mock-screenshots.ts",
     "review:english-mock": "tsx scripts/run-english-mock-review.ts",
+    "build:nvo4": "python3 scripts/build-nvo4-dataset.py && npm run generate:nvo4-mocks",
+    "generate:nvo4-mocks": "tsx scripts/generate-nvo4-mocks.ts",
     "validate:nvo4": "tsx scripts/validate-nvo4-content.ts",
     "index:rag": "tsx scripts/build-rag-index.ts"
   },

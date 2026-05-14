@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="110" viewBox="0 0 420 110" role="img"><rect width="100%" height="100%" fill="#fff"/>
+    <line x1="48" y1="56" x2="360" y2="56" stroke="#222" stroke-width="3"/>
+    <circle cx="48" cy="56" r="5" fill="#222"/><circle cx="238" cy="56" r="5" fill="#222"/><circle cx="360" cy="56" r="5" fill="#222"/>
+    <text x="26" y="35" font-size="18" font-family="Arial">София</text>
+    <text x="196" y="35" font-size="18" font-family="Arial">Самоков</text>
+    <text x="326" y="35" font-size="18" font-family="Arial">Боровец</text>
+    <text x="128" y="86" font-size="18" font-family="Arial">58 км</text>
+    <text x="270" y="86" font-size="18" font-family="Arial">70 км</text>
+  </svg>

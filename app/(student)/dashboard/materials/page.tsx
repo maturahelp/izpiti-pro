@@ -12,6 +12,12 @@ import { nvoLiteratureSummaries } from '@/data/nvoLiteratureSummaries'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
+import {
+  nvo4BulgarianMaterials,
+  nvo4MathMaterials,
+  type Nvo4MaterialItem,
+  type Nvo4MaterialTree,
+} from '@/data/nvo4-generated-materials'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
 import { belTheory } from '@/data/bel-theory'
 import {
@@ -452,6 +458,20 @@ const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
 const grade4SectionLabels: Record<Grade4Section, string> = {
   bulgarian: 'Български език',
   math: 'Математика',
+}
+
+const nvo4MaterialItemLabels: Record<Nvo4MaterialItem['type'], string> = {
+  theory: 'Теория',
+  worked_example: 'Пример',
+  practice: 'Упражнение',
+  quick_check: 'Проверка',
+  exam_tip: 'Съвет',
+}
+
+function formatNvo4MaterialText(text: string) {
+  return text
+    .replace(/\\\(\\square\\\)/g, '□')
+    .replace(/\\\(\\cdot\\\)/g, '·')
 }
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
@@ -970,7 +990,8 @@ export default function MaterialsPage() {
 
   if (effectiveGrade === '4') {
     const theme = subjectTheme[grade4Section]
-    const cards = grade4Section === 'bulgarian'
+    const materialTree: Nvo4MaterialTree = grade4Section === 'bulgarian' ? nvo4BulgarianMaterials : nvo4MathMaterials
+    const quickLinks = grade4Section === 'bulgarian'
       ? [
           {
             title: 'Официални НВО тестове по БЕЛ',
@@ -985,10 +1006,10 @@ export default function MaterialsPage() {
             action: 'Виж моделите',
           },
           {
-            title: 'Теория и упражнения',
-            description: 'TODO: теорията ще бъде добавена след одобрение на отделен източник.',
-            href: '',
-            action: 'Очаква се',
+            title: '10 пробни НВО по БЕЛ',
+            description: 'Оригинални пробни тестове по формата на официалното НВО.',
+            href: '/dashboard/tests?grade=4&section=bel&mode=sample',
+            action: 'Започни пробен тест',
           },
         ]
       : [
@@ -1005,10 +1026,10 @@ export default function MaterialsPage() {
             action: 'Виж моделите',
           },
           {
-            title: 'Теория и упражнения',
-            description: 'TODO: теорията ще бъде добавена след одобрение на отделен източник.',
-            href: '',
-            action: 'Очаква се',
+            title: '10 пробни НВО по математика',
+            description: 'Оригинални пробни тестове с генерирани фигури, схеми и графики.',
+            href: '/dashboard/tests?grade=4&section=math&mode=sample',
+            action: 'Започни пробен тест',
           },
         ]
 
@@ -1048,11 +1069,11 @@ export default function MaterialsPage() {
             <p className="text-sm text-text-muted mb-4">
               Материали за <strong className="text-text">{grade4SectionLabels[grade4Section]}</strong> (4. клас)
             </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {cards.map((card) => (
+            <div className="grid sm:grid-cols-3 gap-4">
+              {quickLinks.map((card) => (
                 <div
                   key={card.title}
-                  className="rounded-xl border bg-white p-5 flex min-h-[210px] flex-col"
+                  className="rounded-xl border bg-white p-5 flex min-h-[190px] flex-col"
                   style={{ borderColor: theme.cardBorder }}
                 >
                   <h3 className="text-sm font-bold text-text leading-snug">{card.title}</h3>
@@ -1068,6 +1089,56 @@ export default function MaterialsPage() {
                   </button>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-6 rounded-xl bg-white/70 p-4">
+              <div className="mb-4">
+                <h2 className="text-base font-bold text-text">{materialTree.title}</h2>
+                <p className="mt-1 text-sm text-text-muted leading-relaxed">{materialTree.description}</p>
+              </div>
+
+              <div className="space-y-4">
+                {materialTree.units.map((unit) => (
+                  <section key={unit.id} className="border-t border-white/80 pt-4 first:border-t-0 first:pt-0">
+                    <div className="mb-3">
+                      <h3 className="text-sm font-bold" style={{ color: theme.headerText }}>{unit.title}</h3>
+                      <p className="mt-1 text-sm text-text-muted leading-relaxed">{unit.description}</p>
+                    </div>
+                    <div className="divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
+                      {unit.lessons.map((lesson) => (
+                        <details key={lesson.id} className="group">
+                          <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-4 py-3 text-left">
+                            <span>
+                              <span className="block text-sm font-semibold text-text">{lesson.title}</span>
+                              <span className="mt-1 block text-xs leading-relaxed text-text-muted">{formatNvo4MaterialText(lesson.goal)}</span>
+                            </span>
+                            <span className="mt-1 text-xs font-bold text-text-muted transition-transform group-open:rotate-180">⌄</span>
+                          </summary>
+                          <div className="px-4 pb-4">
+                            <div className="space-y-3">
+                              {lesson.items.map((item) => (
+                                <div key={item.id} className="border-l-2 pl-3" style={{ borderColor: theme.outlineBorder }}>
+                                  <p className="text-xs font-bold uppercase tracking-wide" style={{ color: theme.headerText }}>
+                                    {nvo4MaterialItemLabels[item.type]} · {item.title}
+                                  </p>
+                                  <p className="mt-1 text-sm leading-relaxed text-text">{formatNvo4MaterialText(item.body)}</p>
+                                  {item.prompts?.length ? (
+                                    <ul className="mt-2 space-y-1 text-xs leading-relaxed text-text-muted">
+                                      {item.prompts.map((prompt) => (
+                                        <li key={prompt}>• {formatNvo4MaterialText(prompt)}</li>
+                                      ))}
+                                    </ul>
+                                  ) : null}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
             </div>
           </div>
         </div>

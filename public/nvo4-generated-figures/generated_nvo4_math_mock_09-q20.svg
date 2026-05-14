@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="170" viewBox="0 0 340 170" role="img"><rect width="100%" height="100%" fill="#fff"/>
+    <rect x="12" y="18" width="310" height="132" fill="none" stroke="#222" stroke-width="2"/>
+    <line x1="120" y1="18" x2="120" y2="150" stroke="#222" stroke-width="1.5"/>
+    <line x1="220" y1="18" x2="220" y2="150" stroke="#222" stroke-width="1.5"/>
+    <line x1="12" y1="42" x2="322" y2="42" stroke="#222" stroke-width="1.5"/>
+    <text x="28" y="36" font-size="14" font-family="Arial">Ниво</text><text x="140" y="36" font-size="14" font-family="Arial">Общо</text><text x="240" y="36" font-size="14" font-family="Arial">Свободни</text>
+    <text x="28" y="58" font-size="16" font-family="Arial">Ниво 1</text><text x="150" y="58" font-size="16" font-family="Arial">167</text><text x="250" y="58" font-size="16" font-family="Arial">31</text><text x="28" y="92" font-size="16" font-family="Arial">Ниво 2</text><text x="150" y="92" font-size="16" font-family="Arial">178</text><text x="250" y="92" font-size="16" font-family="Arial">27</text><text x="28" y="126" font-size="16" font-family="Arial">Ниво 3</text><text x="150" y="126" font-size="16" font-family="Arial">166</text><text x="250" y="126" font-size="16" font-family="Arial">40</text>
+  </svg>

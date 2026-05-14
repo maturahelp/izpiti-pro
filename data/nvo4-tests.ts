@@ -62,13 +62,14 @@ const officialNvo4Tests: Test[] = (officialNvo4Dataset as Nvo4Exam[]).map((exam,
 const mockNvo4Tests: Test[] = ((mockNvo4PracticeDataset as { exams: Nvo4Exam[] }).exams).map((exam) => {
   const meta = subjectMeta[exam.exam_type]
   const isModel = exam.id.endsWith('_model')
+  const isGenerated = exam.id.startsWith('generated_nvo4_')
   return {
     id: exam.id,
     title: exam.title || exam.source_title || `Примерен НВО ${meta.titleSubject}`,
     subjectId: meta.id,
     subjectName: meta.name,
-    topicId: `${meta.topicId}-${isModel ? 'model' : 'sample'}`,
-    topicName: isModel ? 'НВО — Модел' : 'НВО — Примерен изпит',
+    topicId: `${meta.topicId}-model`,
+    topicName: isGenerated ? 'НВО — Пробен тест' : isModel ? 'НВО — Модел' : 'НВО — Примерен изпит',
     examType: 'nvo4',
     difficulty: 'среден',
     questionsCount: exam.questions.length,

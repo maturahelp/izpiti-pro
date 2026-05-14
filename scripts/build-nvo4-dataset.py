@@ -46,6 +46,7 @@ VISUAL_PROMPT_RE = re.compile(
     r"чертеж|фигур|изображени|таблиц|схем|картин|диаграм|квадрат|окръжност|отсечк|радиус",
     re.I,
 )
+SECTION_INSTRUCTION_RE = re.compile(r"\s*[⮚➢¾]\s*Прочети внимателно[\s\S]*$", re.I)
 BOILERPLATE_RE = re.compile(
     r"^(?:\d+|МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО|ИНСТИТУТ ПО ОБРАЗОВАНИЕТО|"
     r"НАЦИОНАЛНО ВЪНШНО ОЦЕНЯВАНЕ|ТЕСТ ПО|ПО БЪЛГАРСКИ ЕЗИК|ПО МАТЕМАТИКА|"
@@ -76,20 +77,27 @@ def normalize_spaces(text: str) -> str:
     )
 
 
-def clean_lines(text: str) -> list[str]:
+def clean_lines(text: str, *, drop_numeric_boilerplate: bool = True) -> list[str]:
     lines: list[str] = []
     for raw in normalize_spaces(text).splitlines():
         line = re.sub(r"[ \t]+", " ", raw).strip()
         if not line:
             continue
         if BOILERPLATE_RE.match(line):
+            if not drop_numeric_boilerplate and re.fullmatch(r"\d+(?:\s*т\.?)?", line, re.I):
+                lines.append(line)
+                continue
             continue
         lines.append(line)
     return lines
 
 
-def collapse_text(text: str) -> str:
-    return re.sub(r"\n{3,}", "\n\n", "\n".join(clean_lines(text))).strip()
+def collapse_text(text: str, *, drop_numeric_boilerplate: bool = True) -> str:
+    return re.sub(
+        r"\n{3,}",
+        "\n\n",
+        "\n".join(clean_lines(text, drop_numeric_boilerplate=drop_numeric_boilerplate)),
+    ).strip()
 
 
 def detect_subject(label: str, href: str) -> Subject | None:
@@ -214,19 +222,47 @@ def normalize_label(label: str) -> str:
     return OPTION_LABEL_MAP.get(label.strip(), label.strip())
 
 
-def split_question_and_options(block: str) -> tuple[str, dict[str, str] | None]:
+def restore_math_placeholders(text: str) -> str:
+    text = normalize_spaces(text)
+    text = re.sub(r":\s{3,}(?==)", r": \\(\\square\\) ", text)
+    text = re.sub(r"–\s{3,}(?==)", r"– \\(\\square\\) ", text)
+    text = re.sub(r"-\s{3,}(?==)", r"- \\(\\square\\) ", text)
+    text = re.sub(r"\.\s{3,}(?==)", r" \\(\\cdot\\) \\(\\square\\) ", text)
+    text = re.sub(r"(?m)^(\s*)[:]\s+(\d+\s*=)", r"\1\\(\\square\\) : \2", text)
+    text = re.sub(r"(?m)^(\s*)[.]\s+(\d+\s*=)", r"\1\\(\\square\\) \\(\\cdot\\) \2", text)
+    collapsed = collapse_text(text, drop_numeric_boilerplate=False)
+    collapsed = re.sub(r":\s*=\s*", r": \\(\\square\\) = ", collapsed)
+    collapsed = re.sub(r"–\s*=\s*", r"– \\(\\square\\) = ", collapsed)
+    collapsed = re.sub(r"(?<!\\)\.\s*=\s*", r" \\(\\cdot\\) \\(\\square\\) = ", collapsed)
+    if re.search(r"квадратчет", collapsed, re.I):
+        collapsed = re.sub(r"=\s*$", r"= \\(\\square\\)", collapsed)
+    return collapsed.strip()
+
+
+def strip_section_instruction(text: str) -> str:
+    return SECTION_INSTRUCTION_RE.sub("", text).strip()
+
+
+def split_question_and_options(block: str, subject: Subject) -> tuple[str, dict[str, str] | None]:
     block = re.sub(r"^\s*\d{1,2}\.\s*", "", block).strip()
     matches = list(OPTION_RE.finditer(block))
     if len(matches) < 2:
-        return collapse_text(block), None
+        if subject == "math":
+            return restore_math_placeholders(block), None
+        return collapse_text(block, drop_numeric_boilerplate=False), None
 
-    question = collapse_text(block[: matches[0].start()])
+    raw_question = strip_section_instruction(block[: matches[0].start()])
+    question = (
+        restore_math_placeholders(raw_question)
+        if subject == "math"
+        else collapse_text(raw_question, drop_numeric_boilerplate=False)
+    )
     options: dict[str, str] = {}
     for index, match in enumerate(matches):
         label = normalize_label(match.group(1))
         start = match.start(2)
         end = matches[index + 1].start() if index + 1 < len(matches) else len(block)
-        options[label] = collapse_text(block[start:end])
+        options[label] = collapse_text(strip_section_instruction(block[start:end]), drop_numeric_boilerplate=False)
     return question, options
 
 
@@ -305,6 +341,97 @@ def render_page_image(doc: fitz.Document, exam_id: str, page_index: int) -> str:
     return f"/nvo4-page-images/{filename}"
 
 
+def question_y_ranges(page: fitz.Page) -> dict[int, tuple[float, float]]:
+    starts: list[tuple[int, float]] = []
+    for word in page.get_text("words"):
+        text = str(word[4]).strip()
+        if not re.fullmatch(r"\d{1,2}\.", text):
+            continue
+        number = int(text[:-1])
+        if 1 <= number <= 30:
+            starts.append((number, float(word[1])))
+
+    ranges: dict[int, tuple[float, float]] = {}
+    sorted_starts = sorted(starts, key=lambda item: item[1])
+    for index, (number, start_y) in enumerate(sorted_starts):
+        end_y = sorted_starts[index + 1][1] if index + 1 < len(sorted_starts) else float(page.rect.y1)
+        ranges[number] = (start_y, end_y)
+    return ranges
+
+
+def is_square_placeholder(rect: fitz.Rect) -> bool:
+    return 8 <= rect.width <= 20 and 8 <= rect.height <= 20 and abs(rect.width - rect.height) <= 4
+
+
+def is_page_rule(rect: fitz.Rect) -> bool:
+    return rect.width > 350 and rect.height <= 3
+
+
+def page_visual_assets(page: fitz.Page) -> list[tuple[fitz.Rect, str]]:
+    assets: list[tuple[fitz.Rect, str]] = []
+    for block in page.get_text("dict")["blocks"]:
+        if block["type"] == 1:
+            rect = fitz.Rect(block["bbox"])
+            if rect.width >= 20 and rect.height >= 20:
+                assets.append((rect, "image"))
+
+    for drawing in page.get_drawings():
+        rect = drawing.get("rect")
+        if not rect:
+            continue
+        rect = fitz.Rect(rect)
+        if is_page_rule(rect):
+            continue
+        if rect.width < 8 and rect.height < 8:
+            continue
+        assets.append((rect, "square" if is_square_placeholder(rect) else "drawing"))
+    return assets
+
+
+def question_visual_clips(page: fitz.Page) -> dict[int, fitz.Rect]:
+    ranges = question_y_ranges(page)
+    assets = page_visual_assets(page)
+    clips: dict[int, fitz.Rect] = {}
+
+    for number, (start_y, end_y) in ranges.items():
+        question_assets: list[fitz.Rect] = []
+        non_square_assets: list[fitz.Rect] = []
+        for rect, kind in assets:
+            center_y = (rect.y0 + rect.y1) / 2
+            if start_y - 6 <= center_y < end_y - 2:
+                question_assets.append(rect)
+                if kind != "square":
+                    non_square_assets.append(rect)
+
+        if not question_assets or not non_square_assets:
+            continue
+
+        clip = non_square_assets[0]
+        for rect in non_square_assets[1:]:
+            clip |= rect
+
+        margin = 8
+        clip = fitz.Rect(
+            max(page.rect.x0, clip.x0 - margin),
+            max(page.rect.y0, clip.y0 - margin),
+            min(page.rect.x1, clip.x1 + margin),
+            min(page.rect.y1, clip.y1 + margin),
+        )
+        if clip.width >= 24 and clip.height >= 12:
+            clips[number] = clip
+
+    return clips
+
+
+def render_question_crop(doc: fitz.Document, exam_id: str, page_index: int, question_number: int, clip: fitz.Rect) -> str:
+    PAGE_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    filename = f"{exam_id}_q{question_number:02d}.png"
+    path = PAGE_IMAGE_DIR / filename
+    pix = doc[page_index].get_pixmap(matrix=fitz.Matrix(2, 2), clip=clip, alpha=False)
+    pix.save(path)
+    return f"/nvo4-page-images/{filename}"
+
+
 def convert_source(source: Source) -> tuple[dict[str, object], dict[str, object]]:
     pdf_path = download_pdf(source)
     doc = fitz.open(pdf_path)
@@ -320,6 +447,7 @@ def convert_source(source: Source) -> tuple[dict[str, object], dict[str, object]
     seen_questions: set[int] = set()
 
     for page_index, page_text in enumerate(exam_pages):
+        page_clips = question_visual_clips(doc[page_index]) if page_index < doc.page_count else {}
         context, blocks = parse_question_blocks(page_text)
         if context and not questions:
             context_parts.append(context)
@@ -330,14 +458,22 @@ def convert_source(source: Source) -> tuple[dict[str, object], dict[str, object]
                 continue
             seen_questions.add(number)
 
-            question_text, options = split_question_and_options(block)
+            question_text, options = split_question_and_options(block, source.subject)
             is_visual = bool(VISUAL_PROMPT_RE.search(block))
+            question_clip = page_clips.get(number)
+            has_rendered_square_blank = "\\(\\square\\)" in question_text
             item_flags: list[str] = []
-            if is_visual:
-                item_flags.append("visual_prompt_page_snapshot")
+            if question_clip:
+                item_flags.append("visual_asset_crop_from_pdf")
+            elif is_visual and not has_rendered_square_blank:
+                item_flags.append("visual_prompt_without_detected_asset")
             if len(question_text) < 8:
                 item_flags.append("short_extracted_question_text")
-            if source.subject == "math" and re.search(r"[□■�]|_{2,}", block):
+            if (
+                source.subject == "math"
+                and not has_rendered_square_blank
+                and re.search(r"[□■�]|_{2,}|\s{3,}(?:=|:)|(?:=|:)\s{3,}", block)
+            ):
                 item_flags.append("possible_formula_or_blank_loss")
 
             answer = key.get(number, {})
@@ -368,8 +504,8 @@ def convert_source(source: Source) -> tuple[dict[str, object], dict[str, object]
                 question["official_answer"] = "TODO: Липсва автоматично разчетен ключ от оригиналния PDF."
                 question["answer_guide"] = question["official_answer"]
                 item_flags.append("missing_answer_key")
-            if is_visual:
-                question["question_image"] = render_page_image(doc, source.id, page_index)
+            if question_clip:
+                question["question_image"] = render_question_crop(doc, source.id, page_index, number, question_clip)
             if item_flags:
                 question["formatting_flags"] = item_flags
                 flags.append({"question": number, "flags": item_flags, "page": page_index + 1})
@@ -436,6 +572,10 @@ def main() -> None:
     official: list[dict[str, object]] = []
     mock: list[dict[str, object]] = []
     reports: list[dict[str, object]] = []
+
+    PAGE_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    for old_image in PAGE_IMAGE_DIR.glob("*.png"):
+        old_image.unlink()
 
     for source in sources:
         exam, report = convert_source(source)
