@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error: 'QUOTA_EXCEEDED',
-        message: 'Достигна седмичния лимит за безплатни въпроси. Надгради за неограничен достъп.',
+        message: 'Достигна дневния лимит за безплатни въпроси. Надгради за неограничен достъп.',
         plan: quota.plan,
       },
       { status: 429 }
