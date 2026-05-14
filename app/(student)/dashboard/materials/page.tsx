@@ -442,10 +442,17 @@ function getMaterialSection(material: (typeof materials)[number]): MaterialSecti
 }
 
 const grade7Sections = ['bulgarian', 'literature', 'math'] as const
+const grade4Sections = ['bulgarian', 'math'] as const
+type Grade4Section = typeof grade4Sections[number]
 type Grade7Section = typeof grade7Sections[number]
 type WorkPanel = 'cover' | 'text' | 'summary' | 'video' | 'exercise'
 const LITERATURE_READING_PROGRESS_STORAGE_KEY = 'literature-reading-progress-v1'
 const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
+
+const grade4SectionLabels: Record<Grade4Section, string> = {
+  bulgarian: 'Български език',
+  math: 'Математика',
+}
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
   bulgarian: 'Български език',
@@ -457,6 +464,7 @@ export default function MaterialsPage() {
   const { grade, lockedGrade } = useGrade()
   const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
+  const [grade4Section, setGrade4Section] = useState<Grade4Section>('bulgarian')
   const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
@@ -949,7 +957,9 @@ export default function MaterialsPage() {
   }, [activeNvoWorkPanel, hasPremiumAccess, isActiveNvoWorkFree])
 
   useEffect(() => {
-    const allowedSections = effectiveGrade === '7'
+    const allowedSections = effectiveGrade === '4'
+      ? (grade4Sections as readonly MaterialSection[])
+      : effectiveGrade === '7'
       ? (grade7Sections as readonly MaterialSection[])
       : grade12Sections
 
@@ -957,6 +967,113 @@ export default function MaterialsPage() {
       setSelectedSection('bulgarian')
     }
   }, [effectiveGrade, selectedSection])
+
+  if (effectiveGrade === '4') {
+    const theme = subjectTheme[grade4Section]
+    const cards = grade4Section === 'bulgarian'
+      ? [
+          {
+            title: 'Официални НВО тестове по БЕЛ',
+            description: 'Тестове и ключове от МОН за 4. клас по години.',
+            href: '/dashboard/tests?grade=4&section=bel&mode=past',
+            action: 'Отвори тестовете',
+          },
+          {
+            title: 'Модели и примерни материали',
+            description: 'Модели на НВО и примерни тестове от официалната страница.',
+            href: '/dashboard/tests?grade=4&section=bel&mode=sample',
+            action: 'Виж моделите',
+          },
+          {
+            title: 'Теория и упражнения',
+            description: 'TODO: теорията ще бъде добавена след одобрение на отделен източник.',
+            href: '',
+            action: 'Очаква се',
+          },
+        ]
+      : [
+          {
+            title: 'Официални НВО тестове по математика',
+            description: 'Тестове и ключове от МОН за 4. клас по години.',
+            href: '/dashboard/tests?grade=4&section=math&mode=past',
+            action: 'Отвори тестовете',
+          },
+          {
+            title: 'Модели и примерни материали',
+            description: 'Модели на НВО и примерни тестове от официалната страница.',
+            href: '/dashboard/tests?grade=4&section=math&mode=sample',
+            action: 'Виж моделите',
+          },
+          {
+            title: 'Теория и упражнения',
+            description: 'TODO: теорията ще бъде добавена след одобрение на отделен източник.',
+            href: '',
+            action: 'Очаква се',
+          },
+        ]
+
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Материали" />
+        <div className="p-4 md:p-6 max-w-5xl mx-auto">
+          <div className="mb-4 flex flex-wrap justify-center gap-2">
+            {grade4Sections.map((section) => {
+              const sectionTheme = subjectTheme[section]
+              const isActive = grade4Section === section
+              return (
+                <button
+                  key={section}
+                  type="button"
+                  onClick={() => setGrade4Section(section)}
+                  style={
+                    isActive
+                      ? { backgroundColor: sectionTheme.accent, borderColor: sectionTheme.accent, color: '#ffffff' }
+                      : undefined
+                  }
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                    isActive ? '' : 'bg-white text-text border-border hover:bg-slate-50'
+                  )}
+                >
+                  {grade4SectionLabels[section]}
+                </button>
+              )
+            })}
+          </div>
+
+          <div
+            className="rounded-2xl border p-4 md:p-5"
+            style={{ backgroundColor: theme.sectionBg, borderColor: theme.sectionBorder }}
+          >
+            <p className="text-sm text-text-muted mb-4">
+              Материали за <strong className="text-text">{grade4SectionLabels[grade4Section]}</strong> (4. клас)
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {cards.map((card) => (
+                <div
+                  key={card.title}
+                  className="rounded-xl border bg-white p-5 flex min-h-[210px] flex-col"
+                  style={{ borderColor: theme.cardBorder }}
+                >
+                  <h3 className="text-sm font-bold text-text leading-snug">{card.title}</h3>
+                  <p className="mt-2 text-sm text-text-muted leading-relaxed">{card.description}</p>
+                  <button
+                    type="button"
+                    onClick={() => card.href && router.push(card.href)}
+                    disabled={!card.href}
+                    style={card.href ? { color: theme.outlineText, borderColor: theme.outlineBorder } : undefined}
+                    className="mt-auto inline-flex justify-center rounded-xl border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-gray-200 disabled:text-text-muted"
+                  >
+                    {card.action}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (effectiveGrade === '7') {
     return (

@@ -12,6 +12,7 @@
     "review:english-mock:validate": "tsx scripts/validate-english-mock-parser.ts",
     "review:english-mock:screenshots": "tsx scripts/capture-english-mock-screenshots.ts",
     "review:english-mock": "tsx scripts/run-english-mock-review.ts",
+    "validate:nvo4": "tsx scripts/validate-nvo4-content.ts",
     "index:rag": "tsx scripts/build-rag-index.ts"
   },
   "dependencies": {

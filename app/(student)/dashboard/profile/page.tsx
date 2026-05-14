@@ -8,6 +8,7 @@ import { signOut } from '@/lib/auth'
 
 const EXAM_PATH_OPTIONS = [
   'НВО',
+  'НВО — 4. клас',
   'НВО — Български език',
   'НВО — Математика',
   'ДЗИ',
@@ -27,7 +28,7 @@ export default function ProfilePage() {
   const [plan, setPlan] = useState<'free' | 'premium' | null>(null)
 
   const [name, setName] = useState('')
-  const [classYear, setClassYear] = useState<'7' | '12' | ''>('')
+  const [classYear, setClassYear] = useState<'4' | '7' | '12' | ''>('')
   const [examPath, setExamPath] = useState<string>('НВО')
 
   const [profileStatus, setProfileStatus] = useState<Status>('idle')
@@ -65,7 +66,7 @@ export default function ProfilePage() {
       setUserId(user.id)
       setUserEmail(user.email ?? '')
       setName(profile?.name ?? user.user_metadata?.name ?? user.email?.split('@')[0] ?? '')
-      setClassYear((profile?.class as '7' | '12' | null) ?? '')
+      setClassYear((profile?.class as '4' | '7' | '12' | null) ?? '')
       setExamPath(profile?.exam_path ?? 'НВО')
       setPlan((profile?.plan as 'free' | 'premium' | null) ?? null)
       setLoaded(true)
@@ -236,11 +237,12 @@ export default function ProfilePage() {
               <label className="block text-xs font-medium text-text-muted mb-1.5">Клас</label>
               <select
                 value={classYear}
-                onChange={(e) => setClassYear(e.target.value as '7' | '12' | '')}
+                onChange={(e) => setClassYear(e.target.value as '4' | '7' | '12' | '')}
                 className="input-field"
                 disabled={!loaded}
               >
                 <option value="">Не е избран</option>
+                <option value="4">4. клас</option>
                 <option value="7">7. клас</option>
                 <option value="12">12. клас</option>
               </select>

@@ -2,7 +2,7 @@ export interface Subject {
   id: string
   name: string
   code: string
-  examType: 'nvo7' | 'dzi12'
+  examType: 'nvo4' | 'nvo7' | 'dzi12'
   color: string
   topicsCount: number
   testsCount: number
@@ -19,6 +19,26 @@ export interface Topic {
 }
 
 export const subjects: Subject[] = [
+  {
+    id: 'bg-lang-4',
+    name: 'Български език и литература',
+    code: 'БЕЛ',
+    examType: 'nvo4',
+    color: '#8B5CF6',
+    topicsCount: 4,
+    testsCount: 21,
+    lessonsCount: 0,
+  },
+  {
+    id: 'math-4',
+    name: 'Математика',
+    code: 'МАТ',
+    examType: 'nvo4',
+    color: '#16A34A',
+    topicsCount: 4,
+    testsCount: 21,
+    lessonsCount: 0,
+  },
   {
     id: 'bg-lang-7',
     name: 'Български език',
@@ -112,6 +132,10 @@ export const subjects: Subject[] = [
 ]
 
 export const topics: Topic[] = [
+  { id: 'bg4-nvo', subjectId: 'bg-lang-4', name: 'НВО — Пълен изпит', order: 1, lessonsCount: 0, testsCount: 18 },
+  { id: 'bg4-nvo-model', subjectId: 'bg-lang-4', name: 'НВО — Модели и примерни тестове', order: 2, lessonsCount: 0, testsCount: 3 },
+  { id: 'math4-nvo', subjectId: 'math-4', name: 'НВО — Пълен изпит', order: 1, lessonsCount: 0, testsCount: 18 },
+  { id: 'math4-nvo-model', subjectId: 'math-4', name: 'НВО — Модели и примерни тестове', order: 2, lessonsCount: 0, testsCount: 3 },
   { id: 'bg7-1', subjectId: 'bg-lang-7', name: 'Правопис и пунктуация', order: 1, lessonsCount: 4, testsCount: 7 },
   { id: 'bg7-2', subjectId: 'bg-lang-7', name: 'Части на речта', order: 2, lessonsCount: 3, testsCount: 2 },
   { id: 'bg7-3', subjectId: 'bg-lang-7', name: 'Анализ на текст', order: 3, lessonsCount: 5, testsCount: 4 },
@@ -133,6 +157,7 @@ export const topics: Topic[] = [
 ]
 
 export const examTypes = {
+  nvo4: { label: '4. клас НВО', description: 'Национално външно оценяване' },
   nvo7: { label: '7. клас НВО', description: 'Национално вътрешно оценяване' },
   dzi12: { label: '12. клас ДЗИ', description: 'Държавен зрелостен изпит' },
 }

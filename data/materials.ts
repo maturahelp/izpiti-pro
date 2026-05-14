@@ -10,7 +10,7 @@ export interface Material {
   subjectName: string
   topicId: string
   topicName: string
-  examType: 'nvo7' | 'dzi12'
+  examType: 'nvo4' | 'nvo7' | 'dzi12'
   access: MaterialAccess
   pages?: number
   downloadCount: number

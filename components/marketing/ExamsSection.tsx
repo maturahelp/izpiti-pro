@@ -16,7 +16,19 @@ type SectionSubject = {
   lessonsCount: number
 }
 
-const nvoSubjects: SectionSubject[] = subjects
+const nvo4Subjects: SectionSubject[] = subjects
+  .filter((s) => s.examType === 'nvo4')
+  .map((s) => ({
+    id: s.id,
+    name: s.name,
+    code: s.code,
+    color: s.color,
+    topicsCount: s.topicsCount,
+    testsCount: s.testsCount,
+    lessonsCount: s.lessonsCount,
+  }))
+
+const nvo7Subjects: SectionSubject[] = subjects
   .filter((s) => s.examType === 'nvo7')
   .map((s) => ({
     id: s.id,
@@ -59,6 +71,14 @@ const dziSubjects: SectionSubject[] = [
 ]
 
 const subjectMeta: Record<string, { description: string; formats: string[] }> = {
+  'bg-lang-4': {
+    description: 'Официални НВО тестове по БЕЛ за 4. клас, четене с разбиране и езикови задачи.',
+    formats: ['Тест с избор', 'Свободен отговор', 'Пълен НВО формат'],
+  },
+  'math-4': {
+    description: 'Официални задачи по математика за 4. клас с ключове и формат като на НВО.',
+    formats: ['Тест с избор', 'Задачи с решение', 'Пълен НВО формат'],
+  },
   'bg-lang-7': {
     description: 'Правопис, анализ на текст и писане по формат НВО с тестове и уроци по теми.',
     formats: ['Тест с избор', 'Анализ на текст', 'Пълен НВО формат'],
@@ -82,8 +102,8 @@ const subjectMeta: Record<string, { description: string; formats: string[] }> = 
 }
 
 export function ExamsSection() {
-  const [activeTab, setActiveTab] = useState<'nvo7' | 'dzi12'>('nvo7')
-  const filtered = activeTab === 'nvo7' ? nvoSubjects : dziSubjects
+  const [activeTab, setActiveTab] = useState<'nvo4' | 'nvo7' | 'dzi12'>('nvo4')
+  const filtered = activeTab === 'nvo4' ? nvo4Subjects : activeTab === 'nvo7' ? nvo7Subjects : dziSubjects
 
   return (
     <section id="izpiti" className="py-20 md:py-28 bg-white border-y border-[#E2E8F0]">
@@ -101,12 +121,13 @@ export function ExamsSection() {
         <FadeIn delay={0.1} className="flex justify-center mb-10">
           <div className="inline-flex bg-[#F8FAFC] border border-[#E2E8F0] p-1.5">
             {[
+              { key: 'nvo4', label: '4. клас - НВО' },
               { key: 'nvo7', label: '7. клас - НВО' },
               { key: 'dzi12', label: '12. клас - ДЗИ' },
             ].map((tab) => (
               <button
                 key={tab.key}
-                onClick={() => setActiveTab(tab.key as 'nvo7' | 'dzi12')}
+                onClick={() => setActiveTab(tab.key as 'nvo4' | 'nvo7' | 'dzi12')}
                 className={cn(
                   'relative px-5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 tracking-[-0.01em]',
                   activeTab === tab.key

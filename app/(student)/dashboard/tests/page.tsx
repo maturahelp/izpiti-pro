@@ -1,12 +1,18 @@
 import {
   TestsPageContent,
   type TestMode,
+  type TestSection4,
   type TestSection7,
   type TestSection12,
 } from '@/components/dashboard/TestsPageContent'
 
-function getInitialGrade(value: string | undefined): '7' | '12' {
-  return value === '7' ? '7' : '12'
+function getInitialGrade(value: string | undefined): '4' | '7' | '12' {
+  if (value === '4' || value === '7') return value
+  return '12'
+}
+
+function getInitialSection4(value: string | undefined): TestSection4 {
+  return value === 'math' ? 'math' : 'bel'
 }
 
 function getInitialSection7(value: string | undefined): TestSection7 {
@@ -33,8 +39,9 @@ export default async function TestsPage({
 
   return (
     <TestsPageContent
-      key={`${getInitialGrade(grade)}-${getInitialSection7(section)}-${getInitialSection12(section)}-${getInitialMode(mode)}`}
+      key={`${getInitialGrade(grade)}-${getInitialSection4(section)}-${getInitialSection7(section)}-${getInitialSection12(section)}-${getInitialMode(mode)}`}
       initialGrade={getInitialGrade(grade)}
+      initialSection4={getInitialSection4(section)}
       initialSection7={getInitialSection7(section)}
       initialSection12={getInitialSection12(section)}
       initialMode={getInitialMode(mode)}

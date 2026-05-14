@@ -1,5 +1,6 @@
 import { mockTests } from './mock-tests'
 import { englishTests } from './english-tests'
+import { nvo4Tests } from './nvo4-tests'
 
 export type Difficulty = 'лесен' | 'среден' | 'труден'
 export type TestStatus = 'not_started' | 'in_progress' | 'completed'
@@ -11,7 +12,7 @@ export interface Test {
   subjectName: string
   topicId: string
   topicName: string
-  examType: 'nvo7' | 'dzi12'
+  examType: 'nvo4' | 'nvo7' | 'dzi12'
   difficulty: Difficulty
   questionsCount: number
   timeMinutes: number
@@ -584,6 +585,7 @@ export const allTests: Test[] = [
     avgScore: 62,
     status: 'not_started',
   },
+  ...nvo4Tests,
   ...englishTests,
   ...mockTests,
 ]

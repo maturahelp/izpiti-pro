@@ -73,9 +73,11 @@ import {
   evaluateDziMatchingQuestion,
 } from '@/lib/dzi-matching-question'
 import nvoDataset from '@/data/official_quiz_dataset.json'
+import nvo4Dataset from '@/data/official_nvo4_dataset.json'
 import dziDataset from '@/data/official_dzi_bel_dataset.json'
 import mockPracticeDataset from '@/data/mock_exam_practice.json'
 import mockMathPracticeDataset from '@/data/mock_math_exam_practice.json'
+import mockNvo4PracticeDataset from '@/data/mock_nvo4_exam_practice.json'
 import { beronExamPayload, beronTests } from '@/data/beron-tests'
 import {
   generatedEnglishMaterialSections,
@@ -121,7 +123,9 @@ interface NvoQuestion {
     source_id?: string
     official_year?: string
     topic_bucket?: string
+    source_url?: string
   }
+  formatting_flags?: string[]
 }
 
 interface NvoExam {
@@ -139,13 +143,13 @@ interface NvoExam {
     labels: string[]
     values: number[]
   }
-  exam_type?: 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math' | 'dzi_english'
+  exam_type?: 'nvo4_bel' | 'nvo4_math' | 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math' | 'dzi_english'
 }
 
 interface MockPracticeExam {
   id: string
   title: string
-  exam_type: 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math'
+  exam_type: 'nvo4_bel' | 'nvo4_math' | 'nvo_bel' | 'dzi_bel' | 'nvo_math' | 'dzi_math'
   source_title?: string
   source_text?: string
   topic_focus?: string[]
@@ -164,12 +168,15 @@ interface MockPracticeExam {
     table_rows?: Record<string, string>
     correct_option?: string
     answer_guide?: string | Record<string, string>
+    question_image?: string
     section?: string
     source_tags?: {
       source_id?: string
       official_year?: string
       topic_bucket?: string
+      source_url?: string
     }
+    formatting_flags?: string[]
   }>
 }
 
@@ -454,6 +461,9 @@ function splitContextText(exam: NvoExam): { intro: string; body: string } {
 // Map izpiti-pro test ID → dataset exam ID
 // ---------------------------------------------------------------------------
 function mapTestId(testId: string): string {
+  const nvo4 = testId.match(/^nvo4-(bel|math)-(\d{4})$/)
+  if (nvo4) return `nvo4_${nvo4[2]}_${nvo4[1]}`
+
   const m = testId.match(/^nvo-(bel|math)-(\d{4})$/)
   if (m) return `${m[2]}_${m[1]}`
 
@@ -467,13 +477,14 @@ function mapTestId(testId: string): string {
 }
 
 function normalizeMockExam(exam: MockPracticeExam): NvoExam {
-  const isNvo = exam.exam_type === 'nvo_bel' || exam.exam_type === 'nvo_math'
-  const isMath = exam.exam_type === 'nvo_math' || exam.exam_type === 'dzi_math'
+  const isNvo4 = exam.exam_type === 'nvo4_bel' || exam.exam_type === 'nvo4_math'
+  const isNvo = isNvo4 || exam.exam_type === 'nvo_bel' || exam.exam_type === 'nvo_math'
+  const isMath = exam.exam_type === 'nvo4_math' || exam.exam_type === 'nvo_math' || exam.exam_type === 'dzi_math'
 
   return {
     id: exam.id,
     year: '',
-    subject: isMath ? 'Математика' : isNvo ? 'Български език' : 'Български език и литература',
+    subject: isMath ? 'Математика' : isNvo4 ? 'Български език и литература' : isNvo ? 'Български език' : 'Български език и литература',
     published_at: '',
     context_text: exam.source_text || (exam.topic_focus?.length ? `Основни теми: ${exam.topic_focus.join(', ')}.` : ''),
     context_images: [],
@@ -506,6 +517,8 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
         answer_guide: guideStr,
         section: question.section,
         source_tags: question.source_tags,
+        formatting_flags: question.formatting_flags,
+        question_image: question.question_image,
       }
     }),
   }
@@ -611,6 +624,7 @@ function normalizeBeronExam(test: BeronDifficultyTest): NvoExam {
 }
 
 const OFFICIAL_EXAMS: NvoExam[] = [
+  ...(nvo4Dataset as unknown as NvoExam[]),
   ...(nvoDataset as unknown as NvoExam[]),
   ...(dziDataset as unknown as NvoExam[]),
   ...(officialEnglishMockExams as unknown as NvoExam[]),
@@ -619,6 +633,7 @@ const OFFICIAL_EXAMS: NvoExam[] = [
 const GENERATED_ENGLISH_EXAMS: NvoExam[] = generatedEnglishMaterialSections.map(normalizeGeneratedEnglishSection)
 
 const MOCK_EXAMS: NvoExam[] = [
+  ...(mockNvo4PracticeDataset as { exams: MockPracticeExam[] }).exams,
   ...(mockPracticeDataset as { exams: MockPracticeExam[] }).exams,
   ...(mockMathPracticeDataset as { exams: MockPracticeExam[] }).exams,
 ].map(normalizeMockExam)
@@ -1171,7 +1186,13 @@ function QuestionCard({
   const isMath = exam.subject === 'Математика'
   const override = MATH_TEXT_OVERRIDES[exam.id]?.[question.number]
   const figureHref = FIGURE_HELPERS[exam.id]?.[question.number] ?? getMockNvoMathFigure(question.source_tags?.source_id)
-  const questionImageSrc = QUESTION_IMAGES[exam.id]?.[question.number]
+  const questionImageSrc =
+    QUESTION_IMAGES[exam.id]?.[question.number] ??
+    (question.question_image
+      ? question.question_image.startsWith('/')
+        ? question.question_image
+        : `/${question.question_image.replace(/^official_assets\//, '')}`
+      : undefined)
   const matchingModel =
     question.type === 'open_response' && question.pairs
       ? buildDziMatchingQuestionModel(question.pairs)
@@ -1289,6 +1310,11 @@ function QuestionCard({
           {normalizeMathText(question.task_condition)}
         </div>
       )}
+      {question.formatting_flags?.length ? (
+        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-relaxed text-amber-800">
+          Форматирането на тази задача е маркирано за преглед. Свери с изображението от оригиналния PDF.
+        </div>
+      ) : null}
       <div className="text-sm font-medium text-text leading-relaxed mb-4">
         {questionContent}
       </div>

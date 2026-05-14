@@ -11,7 +11,7 @@ export const organizationSchema = {
     width: 1254,
     height: 1254,
   },
-  description: 'Образователна платформа за подготовка за НВО (7 клас) и ДЗИ (12 клас) в България. 500+ теста, видео уроци и AI помощник.',
+  description: 'Образователна платформа за подготовка за НВО (4 и 7 клас) и ДЗИ (12 клас) в България. 500+ теста, видео уроци и AI помощник.',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
@@ -56,8 +56,8 @@ export const softwareApplicationSchema = {
   offers: [
     {
       '@type': 'Offer',
-      name: 'НВО Месечен',
-      price: '30.00',
+      name: 'НВО 4. клас месечен',
+      price: '19.99',
       priceCurrency: 'EUR',
       availability: 'https://schema.org/InStock',
       url: 'https://www.maturahelp.com/#pricing',

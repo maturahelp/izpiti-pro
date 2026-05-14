@@ -1,6 +1,6 @@
 export type UserRole = 'student' | 'admin'
 export type SubscriptionPlan = 'free' | 'premium'
-export type UserClass = '7' | '12'
+export type UserClass = '4' | '7' | '12'
 
 export interface User {
   id: string

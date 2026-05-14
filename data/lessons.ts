@@ -7,7 +7,7 @@ export interface Lesson {
   subjectName: string
   topicId: string
   topicName: string
-  examType: 'nvo7' | 'dzi12'
+  examType: 'nvo4' | 'nvo7' | 'dzi12'
   durationSeconds: number
   isPremium: boolean
   order: number

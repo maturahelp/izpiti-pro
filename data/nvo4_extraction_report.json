@@ -1,0 +1,4868 @@
+{
+  "source_url": "https://www.mon.bg/obshto-obrazovanie/natsionalno-vanshno-otsenyavane-nvo/nvo-za-iv-klas/testove-i-verni-otgovori-ot-nvo-za-iv-klas-po-godini/",
+  "official_count": 36,
+  "mock_count": 6,
+  "sources": [
+    {
+      "id": "nvo4_2025_bel",
+      "year": 2025,
+      "school_year": "2024-2025",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_bel_03062025.pdf",
+      "published_at": "2025-06-03"
+    },
+    {
+      "id": "nvo4_2025_math",
+      "year": 2025,
+      "school_year": "2024-2025",
+      "subject": "math",
+      "kind": "official",
+      "title": "Тест и ключ по математика",
+      "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf",
+      "published_at": "2025-06-04"
+    },
+    {
+      "id": "nvo4_2024_bel",
+      "year": 2024,
+      "school_year": "2023-2024",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_bel_27052024.pdf",
+      "published_at": "2024-05-27"
+    },
+    {
+      "id": "nvo4_2024_math",
+      "year": 2024,
+      "school_year": "2023-2024",
+      "subject": "math",
+      "kind": "official",
+      "title": "Тест и ключ по математика",
+      "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf",
+      "published_at": "2024-05-28"
+    },
+    {
+      "id": "nvo4_2023_bel",
+      "year": 2023,
+      "school_year": "2022-2023",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_bel_29052023.pdf",
+      "published_at": "2023-05-29"
+    },
+    {
+      "id": "nvo4_2023_math",
+      "year": 2023,
+      "school_year": "2022-2023",
+      "subject": "math",
+      "kind": "official",
+      "title": "Тест и ключ по математика",
+      "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf",
+      "published_at": "2023-05-30"
+    },
+    {
+      "id": "nvo4_2022_bel",
+      "year": 2022,
+      "school_year": "2021-2022",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_bel_26052022.pdf",
+      "published_at": "2022-05-26"
+    },
+    {
+      "id": "nvo4_2022_math",
+      "year": 2022,
+      "school_year": "2021-2022",
+      "subject": "math",
+      "kind": "official",
+      "title": "Тест и ключ по математика",
+      "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf",
+      "published_at": "2022-05-27"
+    },
+    {
+      "id": "nvo4_2021_bel",
+      "year": 2021,
+      "school_year": "2020-2021",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-bel_270521.pdf",
+      "published_at": "2021-05-27"
+    },
+    {
+      "id": "nvo4_2021_math",
+      "year": 2021,
+      "school_year": "2020-2021",
+      "subject": "math",
+      "kind": "official",
+      "title": "Тест и ключ по математика",
+      "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf",
+      "published_at": "2021-05-28"
+    },
+    {
+      "id": "nvo4_2019_bel",
+      "year": 2019,
+      "school_year": "2018-2019",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2019/05/nvo-bel4kl_090519.pdf",
+      "published_at": "2019-05-09"
+    },
+    {
+      "id": "nvo4_2019_math",
+      "year": 2019,
+      "school_year": "2018-2019",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf",
+      "published_at": "2019-05-10"
+    },
+    {
+      "id": "nvo4_2018_bel",
+      "year": 2018,
+      "school_year": "2017-2018",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература, 10 май 2018 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_bel_100518.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2018_math",
+      "year": 2018,
+      "school_year": "2017-2018",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика, 14 май 2018 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2017_bel",
+      "year": 2017,
+      "school_year": "2016-2017",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература, 10 май 2017 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/bel4_10052017.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2017_math",
+      "year": 2017,
+      "school_year": "2016-2017",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика, 12 май 2017 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2016_bel",
+      "year": 2016,
+      "school_year": "2015-2016",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература, 12 май 2016 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_bel_12may2016.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2016_math",
+      "year": 2016,
+      "school_year": "2015-2016",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика, 10 май 2016 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2015_bel",
+      "year": 2015,
+      "school_year": "2014-2015",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература, 7 май 2015 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/bel_vo_4kl_07.05.2015.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2015_math",
+      "year": 2015,
+      "school_year": "2014-2015",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика, 8 май 2015 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2014_bel",
+      "year": 2014,
+      "school_year": "2013-2014",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_bel_4klas.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2014_math",
+      "year": 2014,
+      "school_year": "2013-2014",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2013_bel",
+      "year": 2013,
+      "school_year": "2012-2013",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература, 9 май 2013 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_09_vo4kl_bel.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2013_math",
+      "year": 2013,
+      "school_year": "2012-2013",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика, 10 май 2013 г.",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2012_bel",
+      "year": 2012,
+      "school_year": "2011-2012",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2012_bel_vo_4kl.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2012_math",
+      "year": 2012,
+      "school_year": "2011-2012",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2011_bel",
+      "year": 2011,
+      "school_year": "2010-2011",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2011_bel_4kl.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2011_math",
+      "year": 2011,
+      "school_year": "2010-2011",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/2011_math_4kl.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2010_bel",
+      "year": 2010,
+      "school_year": "2009-2010",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/bel_4_kl_10_maj_2010_test_klyuchove.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2010_math",
+      "year": 2010,
+      "school_year": "2009-2010",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/matem_4_kl_11_maj_2010_test_klyuch.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2009_bel",
+      "year": 2009,
+      "school_year": "2008-2009",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/09_05_11_bel_test_4kl.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2009_math",
+      "year": 2009,
+      "school_year": "2008-2009",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/09_05_12_math_4kl.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2008_bel",
+      "year": 2008,
+      "school_year": "2007-2008",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/4kl_bel_test_2008.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2008_math",
+      "year": 2008,
+      "school_year": "2007-2008",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/4kl_matematika_test_2008.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2007_bel",
+      "year": 2007,
+      "school_year": "2006-2007",
+      "subject": "bel",
+      "kind": "official",
+      "title": "Български език и литература",
+      "source_url": "https://www.mon.bg/nfs/2018/01/test_answers_bel_4kl_2007.pdf",
+      "published_at": null
+    },
+    {
+      "id": "nvo4_2007_math",
+      "year": 2007,
+      "school_year": "2006-2007",
+      "subject": "math",
+      "kind": "official",
+      "title": "Математика",
+      "source_url": "https://www.mon.bg/nfs/2018/01/test_answers_matematika_4kl_2007.pdf",
+      "published_at": null
+    },
+    {
+      "id": "mock_nvo4_bel_2025_model",
+      "year": 2025,
+      "school_year": "2024-2025",
+      "subject": "bel",
+      "kind": "model",
+      "title": "Модел на НВО по български език и литература в IV клас за учебната 2024-2025 година",
+      "source_url": "https://www.mon.bg/nfs/2024/09/model-nvo_4kl_bel-2025-24092024.pdf",
+      "published_at": null
+    },
+    {
+      "id": "mock_nvo4_math_2025_model",
+      "year": 2025,
+      "school_year": "2024-2025",
+      "subject": "math",
+      "kind": "model",
+      "title": "Модел на НВО по математика в IV клас за учебната 2024-2025 година",
+      "source_url": "https://www.mon.bg/nfs/2024/09/model-nvo_4kl_math-2025-24092024.pdf",
+      "published_at": null
+    },
+    {
+      "id": "mock_nvo4_bel_2024_model",
+      "year": 2024,
+      "school_year": "2023-2024",
+      "subject": "bel",
+      "kind": "model",
+      "title": "Модел на НВО по български език и литература в IV клас за учебната 2023-2024 година",
+      "source_url": "https://www.mon.bg/nfs/2023/09/nvo_4kl_bel_model-2024_15092023.pdf",
+      "published_at": null
+    },
+    {
+      "id": "mock_nvo4_math_2024_model",
+      "year": 2024,
+      "school_year": "2023-2024",
+      "subject": "math",
+      "kind": "model",
+      "title": "Модел на НВО по математика в IV клас за учебната 2023-2024 година",
+      "source_url": "https://www.mon.bg/nfs/2023/09/nvo_4kl_math_model-2024_15092023.pdf",
+      "published_at": null
+    },
+    {
+      "id": "mock_nvo4_bel_2013_sample",
+      "year": 2013,
+      "school_year": "2012-2013",
+      "subject": "bel",
+      "kind": "sample",
+      "title": "Примерен тест по БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА за НВО на учениците в ІV клас през учебната 2012/2013 година",
+      "source_url": "https://www.mon.bg/nfs/2018/01/img_28_09_12_bel.pdf",
+      "published_at": null
+    },
+    {
+      "id": "mock_nvo4_math_2013_sample",
+      "year": 2013,
+      "school_year": "2012-2013",
+      "subject": "math",
+      "kind": "sample",
+      "title": "Примерен тест по МАТЕМАТИКА за НВО на учениците в ІV клас през учебната 2012/2013 година",
+      "source_url": "https://www.mon.bg/nfs/2018/01/4_kl_mat_x_2013_x.pdf",
+      "published_at": null
+    }
+  ],
+  "reports": [
+    {
+      "source": {
+        "id": "nvo4_2025_bel",
+        "year": 2025,
+        "school_year": "2024-2025",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_bel_03062025.pdf",
+        "published_at": "2025-06-03"
+      },
+      "pages": 7,
+      "key_start_page": 6,
+      "question_count": 25,
+      "flags": [
+        {
+          "question": 24,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        },
+        {
+          "question": 25,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2025_math",
+        "year": 2025,
+        "school_year": "2024-2025",
+        "subject": "math",
+        "kind": "official",
+        "title": "Тест и ключ по математика",
+        "source_url": "https://www.mon.bg/nfs/2025/06/nvo4_math_04062025.pdf",
+        "published_at": "2025-06-04"
+      },
+      "pages": 6,
+      "key_start_page": 6,
+      "question_count": 25,
+      "flags": [
+        {
+          "question": 12,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 19,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 20,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 23,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 24,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2024_bel",
+        "year": 2024,
+        "school_year": "2023-2024",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_bel_27052024.pdf",
+        "published_at": "2024-05-27"
+      },
+      "pages": 8,
+      "key_start_page": 6,
+      "question_count": 21,
+      "flags": [
+        {
+          "question": 21,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2024_math",
+        "year": 2024,
+        "school_year": "2023-2024",
+        "subject": "math",
+        "kind": "official",
+        "title": "Тест и ключ по математика",
+        "source_url": "https://www.mon.bg/nfs/2024/05/nvo_4kl_math_28052024.pdf",
+        "published_at": "2024-05-28"
+      },
+      "pages": 6,
+      "key_start_page": 6,
+      "question_count": 25,
+      "flags": [
+        {
+          "question": 11,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 17,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 21,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 23,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2023_bel",
+        "year": 2023,
+        "school_year": "2022-2023",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_bel_29052023.pdf",
+        "published_at": "2023-05-29"
+      },
+      "pages": 8,
+      "key_start_page": 6,
+      "question_count": 21,
+      "flags": [
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 21,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2023_math",
+        "year": 2023,
+        "school_year": "2022-2023",
+        "subject": "math",
+        "kind": "official",
+        "title": "Тест и ключ по математика",
+        "source_url": "https://www.mon.bg/nfs/2023/05/nvo_4klas_math_30052023.pdf",
+        "published_at": "2023-05-30"
+      },
+      "pages": 6,
+      "key_start_page": 6,
+      "question_count": 25,
+      "flags": [
+        {
+          "question": 2,
+          "flags": [
+            "possible_formula_or_blank_loss"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 17,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 18,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 21,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 22,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 23,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 24,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 5
+        },
+        {
+          "question": 25,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2022_bel",
+        "year": 2022,
+        "school_year": "2021-2022",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_bel_26052022.pdf",
+        "published_at": "2022-05-26"
+      },
+      "pages": 8,
+      "key_start_page": 7,
+      "question_count": 21,
+      "flags": [
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 21,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2022_math",
+        "year": 2022,
+        "school_year": "2021-2022",
+        "subject": "math",
+        "kind": "official",
+        "title": "Тест и ключ по математика",
+        "source_url": "https://www.mon.bg/nfs/2022/05/nvo_4klas_math_27052022.pdf",
+        "published_at": "2022-05-27"
+      },
+      "pages": 5,
+      "key_start_page": 5,
+      "question_count": 25,
+      "flags": [
+        {
+          "question": 2,
+          "flags": [
+            "possible_formula_or_blank_loss"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 17,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 18,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 21,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 22,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 23,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 25,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2021_bel",
+        "year": 2021,
+        "school_year": "2020-2021",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-bel_270521.pdf",
+        "published_at": "2021-05-27"
+      },
+      "pages": 8,
+      "key_start_page": 6,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 20,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2021_math",
+        "year": 2021,
+        "school_year": "2020-2021",
+        "subject": "math",
+        "kind": "official",
+        "title": "Тест и ключ по математика",
+        "source_url": "https://www.mon.bg/nfs/2021/05/nvo_4kls-math_280521.pdf",
+        "published_at": "2021-05-28"
+      },
+      "pages": 6,
+      "key_start_page": 6,
+      "question_count": 25,
+      "flags": [
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 3
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 20,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 21,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 22,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 23,
+          "flags": [
+            "visual_prompt_page_snapshot"
+          ],
+          "page": 4
+        },
+        {
+          "question": 25,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "short_extracted_question_text"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2019_bel",
+        "year": 2019,
+        "school_year": "2018-2019",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2019/05/nvo-bel4kl_090519.pdf",
+        "published_at": "2019-05-09"
+      },
+      "pages": 8,
+      "key_start_page": 6,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2019_math",
+        "year": 2019,
+        "school_year": "2018-2019",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2019/05/nvo-math4kl_100519.pdf",
+        "published_at": "2019-05-10"
+      },
+      "pages": 3,
+      "key_start_page": 3,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2018_bel",
+        "year": 2018,
+        "school_year": "2017-2018",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература, 10 май 2018 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_bel_100518.pdf",
+        "published_at": null
+      },
+      "pages": 8,
+      "key_start_page": 6,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2018_math",
+        "year": 2018,
+        "school_year": "2017-2018",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика, 14 май 2018 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/05/nvo4kl_math_140518.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2017_bel",
+        "year": 2017,
+        "school_year": "2016-2017",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература, 10 май 2017 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/bel4_10052017.pdf",
+        "published_at": null
+      },
+      "pages": 9,
+      "key_start_page": 7,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 5
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2017_math",
+        "year": 2017,
+        "school_year": "2016-2017",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика, 12 май 2017 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/math4_12052017.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": 3,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2016_bel",
+        "year": 2016,
+        "school_year": "2015-2016",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература, 12 май 2016 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_bel_12may2016.pdf",
+        "published_at": null
+      },
+      "pages": 6,
+      "key_start_page": 5,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2016_math",
+        "year": 2016,
+        "school_year": "2015-2016",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика, 10 май 2016 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/vo_4kl_math_10.05.2016.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 1,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 2,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 1,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 2,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 1,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 2,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 3,
+          "flag": "duplicate_question_number",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2015_bel",
+        "year": 2015,
+        "school_year": "2014-2015",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература, 7 май 2015 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/bel_vo_4kl_07.05.2015.pdf",
+        "published_at": null
+      },
+      "pages": 5,
+      "key_start_page": 5,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2015_math",
+        "year": 2015,
+        "school_year": "2014-2015",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика, 8 май 2015 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/math_vo_4kl_08.05.2015.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": 3,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2014_bel",
+        "year": 2014,
+        "school_year": "2013-2014",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_bel_4klas.pdf",
+        "published_at": null
+      },
+      "pages": 5,
+      "key_start_page": 5,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2014_math",
+        "year": 2014,
+        "school_year": "2013-2014",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2013_14_math_4klas.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": 3,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2013_bel",
+        "year": 2013,
+        "school_year": "2012-2013",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература, 9 май 2013 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_09_vo4kl_bel.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 11,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2013_math",
+        "year": 2013,
+        "school_year": "2012-2013",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика, 10 май 2013 г.",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2013_05_10_vo4kl_math.pdf",
+        "published_at": null
+      },
+      "pages": 2,
+      "key_start_page": null,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2012_bel",
+        "year": 2012,
+        "school_year": "2011-2012",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2012_bel_vo_4kl.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": 4,
+      "question_count": 15,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2012_math",
+        "year": 2012,
+        "school_year": "2011-2012",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2012_math_vo_4kl.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": 3,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2011_bel",
+        "year": 2011,
+        "school_year": "2010-2011",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2011_bel_4kl.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 15,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2011_math",
+        "year": 2011,
+        "school_year": "2010-2011",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/2011_math_4kl.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2010_bel",
+        "year": 2010,
+        "school_year": "2009-2010",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/bel_4_kl_10_maj_2010_test_klyuchove.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": 3,
+      "question_count": 15,
+      "flags": [
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2010_math",
+        "year": 2010,
+        "school_year": "2009-2010",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/matem_4_kl_11_maj_2010_test_klyuch.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2009_bel",
+        "year": 2009,
+        "school_year": "2008-2009",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/09_05_11_bel_test_4kl.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 15,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2009_math",
+        "year": 2009,
+        "school_year": "2008-2009",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/09_05_12_math_4kl.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2008_bel",
+        "year": 2008,
+        "school_year": "2007-2008",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/4kl_bel_test_2008.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 15,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 10,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 1,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 2,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 3,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 4,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 5,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 6,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 7,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 8,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 9,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 10,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 11,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 12,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 13,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 14,
+          "flag": "duplicate_question_number",
+          "page": 4
+        },
+        {
+          "question": 15,
+          "flag": "duplicate_question_number",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2008_math",
+        "year": 2008,
+        "school_year": "2007-2008",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/4kl_matematika_test_2008.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 1,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 2,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 3,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 4,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 5,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 6,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 7,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 8,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 9,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 10,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 11,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 12,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 13,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 14,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 15,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 16,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 17,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 18,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 19,
+          "flag": "duplicate_question_number",
+          "page": 3
+        },
+        {
+          "question": 20,
+          "flag": "duplicate_question_number",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2007_bel",
+        "year": 2007,
+        "school_year": "2006-2007",
+        "subject": "bel",
+        "kind": "official",
+        "title": "Български език и литература",
+        "source_url": "https://www.mon.bg/nfs/2018/01/test_answers_bel_4kl_2007.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": 4,
+      "question_count": 15,
+      "flags": [
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "nvo4_2007_math",
+        "year": 2007,
+        "school_year": "2006-2007",
+        "subject": "math",
+        "kind": "official",
+        "title": "Математика",
+        "source_url": "https://www.mon.bg/nfs/2018/01/test_answers_matematika_4kl_2007.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 20,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 20,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "mock_nvo4_bel_2025_model",
+        "year": 2025,
+        "school_year": "2024-2025",
+        "subject": "bel",
+        "kind": "model",
+        "title": "Модел на НВО по български език и литература в IV клас за учебната 2024-2025 година",
+        "source_url": "https://www.mon.bg/nfs/2024/09/model-nvo_4kl_bel-2025-24092024.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 6,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 6,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "mock_nvo4_math_2025_model",
+        "year": 2025,
+        "school_year": "2024-2025",
+        "subject": "math",
+        "kind": "model",
+        "title": "Модел на НВО по математика в IV клас за учебната 2024-2025 година",
+        "source_url": "https://www.mon.bg/nfs/2024/09/model-nvo_4kl_math-2025-24092024.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": null,
+      "question_count": 5,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 5,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 3
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "mock_nvo4_bel_2024_model",
+        "year": 2024,
+        "school_year": "2023-2024",
+        "subject": "bel",
+        "kind": "model",
+        "title": "Модел на НВО по български език и литература в IV клас за учебната 2023-2024 година",
+        "source_url": "https://www.mon.bg/nfs/2023/09/nvo_4kl_bel_model-2024_15092023.pdf",
+        "published_at": null
+      },
+      "pages": 6,
+      "key_start_page": null,
+      "question_count": 5,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "mock_nvo4_math_2024_model",
+        "year": 2024,
+        "school_year": "2023-2024",
+        "subject": "math",
+        "kind": "model",
+        "title": "Модел на НВО по математика в IV клас за учебната 2023-2024 година",
+        "source_url": "https://www.mon.bg/nfs/2023/09/nvo_4kl_math_model-2024_15092023.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 5,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 3
+        },
+        {
+          "question": 5,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 4
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "mock_nvo4_bel_2013_sample",
+        "year": 2013,
+        "school_year": "2012-2013",
+        "subject": "bel",
+        "kind": "sample",
+        "title": "Примерен тест по БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА за НВО на учениците в ІV клас през учебната 2012/2013 година",
+        "source_url": "https://www.mon.bg/nfs/2018/01/img_28_09_12_bel.pdf",
+        "published_at": null
+      },
+      "pages": 4,
+      "key_start_page": null,
+      "question_count": 1,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "pdf_without_extractable_text"
+          ],
+          "page": 1
+        }
+      ]
+    },
+    {
+      "source": {
+        "id": "mock_nvo4_math_2013_sample",
+        "year": 2013,
+        "school_year": "2012-2013",
+        "subject": "math",
+        "kind": "sample",
+        "title": "Примерен тест по МАТЕМАТИКА за НВО на учениците в ІV клас през учебната 2012/2013 година",
+        "source_url": "https://www.mon.bg/nfs/2018/01/4_kl_mat_x_2013_x.pdf",
+        "published_at": null
+      },
+      "pages": 3,
+      "key_start_page": 3,
+      "question_count": 19,
+      "flags": [
+        {
+          "question": 1,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 2,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 3,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 4,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 5,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 6,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 7,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 8,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 9,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 10,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 1
+        },
+        {
+          "question": 11,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 12,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 13,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 14,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 15,
+          "flags": [
+            "visual_prompt_page_snapshot",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 16,
+          "flags": [
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 17,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 18,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        },
+        {
+          "question": 19,
+          "flags": [
+            "possible_formula_or_blank_loss",
+            "missing_answer_key"
+          ],
+          "page": 2
+        }
+      ]
+    }
+  ]
+}

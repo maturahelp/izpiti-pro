@@ -6,7 +6,7 @@ export type BillingPatch = {
   plan: 'premium' | 'free'
   is_active: boolean
   plan_expires_at: string | null
-  class?: '7' | '12'
+  class?: '4' | '7' | '12'
   exam_path?: 'НВО' | 'ДЗИ'
   billing_plan_key: PlanKey | null
   billing_status: string | null

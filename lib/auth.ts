@@ -15,7 +15,7 @@ export async function signIn(email: string, password: string) {
   }
 }
 
-export type SignUpClass = '7' | '12'
+export type SignUpClass = '4' | '7' | '12'
 
 export async function signUp(
   email: string,

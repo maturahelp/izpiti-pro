@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
-type Grade = '7' | '12'
+type Grade = '4' | '7' | '12'
 
 interface GradeContextValue {
   grade: Grade
@@ -18,13 +18,13 @@ const GradeContext = createContext<GradeContextValue>({
   setGrade: () => {},
   lockedGrade: null,
   isGradeLocked: false,
-  availableGrades: ['7', '12'],
+  availableGrades: ['4', '7', '12'],
 })
 
 const STORAGE_KEY = 'grade'
 
 function isValidGrade(value: string | null): value is Grade {
-  return value === '7' || value === '12'
+  return value === '4' || value === '7' || value === '12'
 }
 
 export function GradeProvider({ children }: { children: React.ReactNode }) {
@@ -115,7 +115,7 @@ export function GradeProvider({ children }: { children: React.ReactNode }) {
         setGrade,
         lockedGrade,
         isGradeLocked: lockedGrade !== null,
-        availableGrades: lockedGrade ? [lockedGrade] : ['7', '12'],
+        availableGrades: lockedGrade ? [lockedGrade] : ['4', '7', '12'],
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
-type Grade = '7' | '12'
+type Grade = '4' | '7' | '12'
 
 function safeRedirectTo(raw: string | null): string {
   if (!raw) return '/dashboard/materials'
@@ -47,7 +47,7 @@ function SelectClassForm() {
           .eq('id', user.id)
           .single()
         if (cancelled) return
-        if (profile?.class === '7' || profile?.class === '12') {
+        if (profile?.class === '4' || profile?.class === '7' || profile?.class === '12') {
           router.replace(redirectTo)
           return
         }
@@ -109,7 +109,20 @@ function SelectClassForm() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3 mb-5">
+        <div className="grid grid-cols-3 gap-3 mb-5">
+          <button
+            type="button"
+            onClick={() => setSelected('4')}
+            aria-pressed={selected === '4'}
+            className={`px-4 py-5 rounded-xl border text-left transition ${
+              selected === '4'
+                ? 'border-primary bg-primary/[0.06] ring-2 ring-primary/15'
+                : 'border-[#E2E8F0] hover:border-[#CBD5E1] bg-white'
+            }`}
+          >
+            <div className="text-[15px] font-bold text-text mb-0.5">НВО</div>
+            <div className="text-[12px] text-text-muted">4. клас</div>
+          </button>
           <button
             type="button"
             onClick={() => setSelected('7')}

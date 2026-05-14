@@ -4,8 +4,8 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { FadeIn } from '@/components/ui/fade-in'
 
-type ExamTab = 'nvo' | 'dzi'
-type PlanKey = 'nvo-full' | 'dzi-full'
+type ExamTab = 'nvo4' | 'nvo7' | 'dzi12'
+type PlanKey = 'nvo4-full' | 'nvo-full' | 'dzi-full'
 
 type Plan = {
   label: string
@@ -21,7 +21,40 @@ type Plan = {
   planKey: PlanKey | null
 }
 
-const nvoPlans: Plan[] = [
+const nvo4Plans: Plan[] = [
+  {
+    label: 'Безплатен НВО 4. клас',
+    price: '0 €',
+    period: 'безплатно',
+    desc: 'Виж официалния формат и започни подготовка с част от тестовете.',
+    features: [
+      'НВО: първите въпроси от изпити от минали години',
+      'Български език и литература — четене с разбиране',
+      'Математика — задачи в официален формат',
+      'Модели и примерни материали от МОН',
+    ],
+    cta: 'Регистрирай се безплатно',
+    planKey: null,
+  },
+  {
+    label: 'НВО 4. клас',
+    price: '19.99 €',
+    period: 'месечно',
+    desc: 'Месечен достъп за подготовка по БЕЛ и математика в 4. клас.',
+    features: [
+      'Пълен достъп до НВО 4. клас',
+      'Официални тестове по БЕЛ и математика',
+      'Ключове и критерии от оригиналните материали',
+      'Модели и примерни тестове от МОН',
+      'AI помощник за въпроси и обяснения',
+    ],
+    cta: 'Започни месечен достъп',
+    featured: true,
+    planKey: 'nvo4-full',
+  },
+]
+
+const nvo7Plans: Plan[] = [
   {
     label: 'Безплатен НВО',
     price: '0 €',
@@ -57,7 +90,7 @@ const nvoPlans: Plan[] = [
   },
 ]
 
-const dziPlans: Plan[] = [
+const dzi12Plans: Plan[] = [
   {
     label: 'Безплатен ДЗИ',
     price: '0 €',
@@ -124,8 +157,8 @@ function handleFreeSignup() {
 }
 
 export function Pricing() {
-  const [tab, setTab] = useState<ExamTab>('dzi')
-  const plans = tab === 'nvo' ? nvoPlans : dziPlans
+  const [tab, setTab] = useState<ExamTab>('nvo4')
+  const plans = tab === 'nvo4' ? nvo4Plans : tab === 'nvo7' ? nvo7Plans : dzi12Plans
 
   return (
     <section id="ceni" className="relative py-16 md:py-24 bg-white">
@@ -142,11 +175,14 @@ export function Pricing() {
 
         <div className="flex justify-center mb-10">
           <div className="bg-gray-100 rounded-full p-1 flex gap-1" role="tablist" aria-label="Избор на изпит за ценови план">
-            <PricingTabButton active={tab === 'nvo'} onClick={() => setTab('nvo')}>
-              НВО
+            <PricingTabButton active={tab === 'nvo4'} onClick={() => setTab('nvo4')}>
+              4. клас НВО
             </PricingTabButton>
-            <PricingTabButton active={tab === 'dzi'} onClick={() => setTab('dzi')}>
-              ДЗИ
+            <PricingTabButton active={tab === 'nvo7'} onClick={() => setTab('nvo7')}>
+              7. клас НВО
+            </PricingTabButton>
+            <PricingTabButton active={tab === 'dzi12'} onClick={() => setTab('dzi12')}>
+              12. клас ДЗИ
             </PricingTabButton>
           </div>
         </div>

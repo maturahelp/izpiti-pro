@@ -13,15 +13,22 @@ import { useGrade } from '@/lib/grade-context'
 import { hasActivePremium } from '@/lib/subscription-access'
 import { cn } from '@/lib/utils'
 
+export type TestSection4 = 'bel' | 'math'
 export type TestSection7 = 'bel' | 'math'
 export type TestSection12 = 'bel' | 'english'
 export type TestMode = 'sample' | 'past'
 
 type TestsPageContentProps = {
-  initialGrade: '7' | '12'
+  initialGrade: '4' | '7' | '12'
+  initialSection4: TestSection4
   initialSection7: TestSection7
   initialSection12: TestSection12
   initialMode: TestMode
+}
+
+const sectionLabels4: Record<TestSection4, string> = {
+  bel: 'БЕЛ',
+  math: 'Математика',
 }
 
 const sectionLabels7: Record<TestSection7, string> = {
@@ -66,7 +73,11 @@ const sectionTheme: Record<'bel' | 'math' | 'english', SubjectThemeColors> = {
   },
 }
 
-const modeLabelsByGrade: Record<'7' | '12', Record<TestMode, string>> = {
+const modeLabelsByGrade: Record<'4' | '7' | '12', Record<TestMode, string>> = {
+  '4': {
+    sample: 'Модели и примерни НВО',
+    past: 'НВО от минали години',
+  },
   '7': {
     sample: 'Примерен НВО',
     past: 'НВО от минали години',
@@ -109,11 +120,13 @@ function getQuestionCountLabel(test: (typeof tests)[number]) {
 
 export function TestsPageContent({
   initialGrade,
+  initialSection4,
   initialSection7,
   initialSection12,
   initialMode,
 }: TestsPageContentProps) {
   const { grade, lockedGrade } = useGrade()
+  const [selectedSection4, setSelectedSection4] = useState<TestSection4>(initialSection4)
   const [selectedSection7, setSelectedSection7] = useState<TestSection7>(initialSection7)
   const [selectedSection12, setSelectedSection12] = useState<TestSection12>(initialSection12)
   const [selectedMode, setSelectedMode] = useState<TestMode>(initialMode)
@@ -148,7 +161,7 @@ export function TestsPageContent({
   }, [])
 
   const activeSectionKey: 'bel' | 'math' | 'english' =
-    effectiveGrade === '7' ? selectedSection7 : selectedSection12
+    effectiveGrade === '4' ? selectedSection4 : effectiveGrade === '7' ? selectedSection7 : selectedSection12
   const activeTheme = sectionTheme[activeSectionKey]
   const isEnglishSampleView =
     effectiveGrade === '12' && selectedSection12 === 'english' && selectedMode === 'sample'
@@ -161,6 +174,10 @@ export function TestsPageContent({
     if (effectiveGrade === '7') {
       if (test.examType !== 'nvo7') return false
       if (getTestSection(test) !== selectedSection7) return false
+      if (getTestMode(test) !== selectedMode) return false
+    } else if (effectiveGrade === '4') {
+      if (test.examType !== 'nvo4') return false
+      if (getTestSection(test) !== selectedSection4) return false
       if (getTestMode(test) !== selectedMode) return false
     } else {
       if (test.examType !== 'dzi12') return false
@@ -176,6 +193,37 @@ export function TestsPageContent({
       <TopBar title="Тестове" />
       <div className="p-4 md:p-6 max-w-5xl mx-auto">
         <div className="mb-6 -mt-4 space-y-3">
+          {effectiveGrade === '4' && (
+            <div className="flex flex-wrap justify-center gap-3">
+              {(Object.keys(sectionLabels4) as TestSection4[]).map((section) => {
+                const theme = sectionTheme[section]
+                const isActive = selectedSection4 === section
+
+                return (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => setSelectedSection4(section)}
+                    style={
+                      isActive
+                        ? { backgroundColor: theme.accent, color: '#ffffff' }
+                        : { backgroundColor: theme.soft, color: theme.onSoft }
+                    }
+                    onMouseEnter={(event) => {
+                      event.currentTarget.style.backgroundColor = isActive ? theme.accentHover : theme.softHover
+                    }}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.style.backgroundColor = isActive ? theme.accent : theme.soft
+                    }}
+                    className="inline-flex min-w-[190px] justify-center items-center rounded-xl px-8 py-3.5 text-base font-semibold transition-colors"
+                  >
+                    {sectionLabels4[section]}
+                  </button>
+                )
+              })}
+            </div>
+          )}
+
           {effectiveGrade === '7' && (
             <div className="flex flex-wrap justify-center gap-3">
               {(Object.keys(sectionLabels7) as TestSection7[]).map((section) => {
@@ -352,7 +400,7 @@ export function TestsPageContent({
                         className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
                         style={{ backgroundColor: activeTheme.softHover, color: activeTheme.onSoft }}
                       >
-                        {test.examType === 'nvo7' ? '7. клас НВО' : '12. клас ДЗИ'}
+                        {test.examType === 'nvo4' ? '4. клас НВО' : test.examType === 'nvo7' ? '7. клас НВО' : '12. клас ДЗИ'}
                       </span>
                       {test.status === 'completed' && (
                         <Badge variant="success">Завършен</Badge>

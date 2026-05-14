@@ -74,7 +74,7 @@ function RegisterForm() {
         setConfirmation(true)
       }
       const pendingClass = window.localStorage.getItem(PENDING_CLASS_KEY)
-      if (pendingClass === '7' || pendingClass === '12') {
+      if (pendingClass === '4' || pendingClass === '7' || pendingClass === '12') {
         setSelectedClass(pendingClass)
       }
     } catch {}
@@ -278,7 +278,20 @@ function RegisterForm() {
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="block text-[12.5px] font-semibold text-text mb-1.5">За какъв изпит се подготвяш?</label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedClass('4')}
+                      aria-pressed={selectedClass === '4'}
+                      className={`px-3 py-3 rounded-xl border text-left transition ${
+                        selectedClass === '4'
+                          ? 'border-primary bg-primary/[0.06] ring-2 ring-primary/15'
+                          : 'border-[#E2E8F0] hover:border-[#CBD5E1] bg-white'
+                      }`}
+                    >
+                      <div className="text-[13px] font-bold text-text">НВО</div>
+                      <div className="text-[11.5px] text-text-muted leading-tight">4. клас</div>
+                    </button>
                     <button
                       type="button"
                       onClick={() => setSelectedClass('7')}
