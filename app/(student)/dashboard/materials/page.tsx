@@ -28,7 +28,7 @@ import {
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { useGrade } from '@/lib/grade-context'
-import { hasActivePremium } from '@/lib/subscription-access'
+import { canAccessVideoLessons, hasActivePremium } from '@/lib/subscription-access'
 import {
   isFreeLiteratureWork,
   isFreeBelNvoTopic,
@@ -506,6 +506,7 @@ export default function MaterialsPage() {
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0)
   const [fullscreenImageTitle, setFullscreenImageTitle] = useState<string>('')
   const [isPremiumUser, setIsPremiumUser] = useState(false)
+  const [canPlayVideos, setCanPlayVideos] = useState(false)
   const workWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
 
@@ -642,12 +643,22 @@ export default function MaterialsPage() {
       return
     }
 
+    if (panel === 'video' && !canPlayVideos && !isActiveWorkFree) {
+      redirectToSubscription()
+      return
+    }
+
     setActiveWorkPanel(panel)
     setIsActiveWorkVideoPlaying(false)
   }
 
   const handleNvoWorkPanelChange = (panel: WorkPanel) => {
     if (panel !== 'text' && !hasPremiumAccess && !isActiveNvoWorkFree) {
+      redirectToSubscription()
+      return
+    }
+
+    if (panel === 'video' && !canPlayVideos && !isActiveNvoWorkFree) {
       redirectToSubscription()
       return
     }
@@ -772,13 +783,14 @@ export default function MaterialsPage() {
 
       const { data: profile } = await supabase
         .from('profiles')
-        .select('plan, is_active, plan_expires_at')
+        .select('plan, is_active, plan_expires_at, billing_plan_key')
         .eq('id', user.id)
         .single()
 
       if (cancelled) return
 
       setIsPremiumUser(hasActivePremium(profile))
+      setCanPlayVideos(canAccessVideoLessons(profile))
     })()
 
     return () => {
@@ -1575,7 +1587,7 @@ export default function MaterialsPage() {
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                     <button type="button" onClick={() => handleNvoWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
                     <button type="button" onClick={() => handleNvoWorkPanelChange('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveNvoWorkFree ? 'Резюме' : 'Резюме • Премиум'}</button>
-                    <button type="button" onClick={() => handleNvoWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveNvoWorkFree ? 'Видео урок' : 'Видео урок • Премиум'}</button>
+                    <button type="button" onClick={() => handleNvoWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{canPlayVideos || isActiveNvoWorkFree ? 'Видео урок' : 'Видео урок • Премиум'}</button>
                     <button type="button" onClick={() => handleNvoWorkPanelChange('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveNvoWorkFree ? 'Упражнение' : 'Упражнение • Премиум'}</button>
                     {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
                       <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>
@@ -2340,7 +2352,7 @@ export default function MaterialsPage() {
                 <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                   <button type="button" onClick={() => handleWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
                   <button type="button" onClick={() => handleWorkPanelChange('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveWorkFree ? 'Резюме' : 'Резюме • Премиум'}</button>
-                  <button type="button" onClick={() => handleWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveWorkFree ? 'Видео урок' : 'Видео урок • Премиум'}</button>
+                  <button type="button" onClick={() => handleWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{canPlayVideos || isActiveWorkFree ? 'Видео урок' : 'Видео урок • Премиум'}</button>
                   <button type="button" onClick={() => handleWorkPanelChange('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveWorkFree ? 'Упражнение' : 'Упражнение • Премиум'}</button>
                   {activeWorkPanel === 'video' && !activeWorkVideoPath && (
                     <p className="text-xs text-text-muted">Няма налично видео за това произведение.</p>

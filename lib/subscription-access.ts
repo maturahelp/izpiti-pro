@@ -60,6 +60,16 @@ function parseDate(value: string | null | undefined): Date | null {
  * `past_due` webhook събития не махат достъпа веднага — даваме grace до
  * края на вече платения период (current_period_end).
  */
+/**
+ * Спринт планът (`dzi-sprint`) дава достъп до повечето материали, но
+ * НЕ дава достъп до видео уроците. Тази функция връща true, ако
+ * потребителят има активен план, който включва видеата.
+ */
+export function canAccessVideoLessons(profile: SubscriptionAccessProfile | null | undefined) {
+  if (!hasActivePremium(profile)) return false
+  return profile?.billing_plan_key !== 'dzi-sprint'
+}
+
 export function hasActivePremium(profile: SubscriptionAccessProfile | null | undefined) {
   if (!profile) return false
   if (profile.plan !== 'premium') return false
