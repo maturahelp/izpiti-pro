@@ -10,9 +10,10 @@ import {
 } from '@/lib/marketing-exam-tab'
 
 type ExamTab = MarketingExamTab
-type PlanKey = 'nvo4-full' | 'nvo-full' | 'dzi-full'
+type PlanKey = 'nvo4-full' | 'nvo-full' | 'dzi-full' | 'dzi-sprint'
 
 type Plan = {
+  kicker?: string
   label: string
   price: string
   period: string
@@ -127,7 +128,26 @@ const dzi12Plans: Plan[] = [
     ],
     cta: 'Вземи достъп до 22 май',
     featured: true,
+    badge: 'Най-избиран',
     planKey: 'dzi-full',
+  },
+  {
+    kicker: 'Финален спринт',
+    label: 'Спринт до ДЗИ',
+    price: '10 €',
+    period: 'еднократно',
+    access: 'Достъп до 22 май 2026 г.',
+    desc: 'Всичко най-важно за последните дни преди изпита.',
+    features: [
+      'Достъп до края на ДЗИ',
+      'Обобщения на най-важното от всяко произведение',
+      'ДЗИ-та от минали години с разбор',
+      'Практически тестове в реалния формат на ДЗИ',
+      'AI помощник за бързи въпроси и обяснения',
+      'Есета и интерпретативни съчинения',
+    ],
+    cta: 'Започни спринта',
+    planKey: 'dzi-sprint',
   },
 ]
 
@@ -202,7 +222,13 @@ export function Pricing() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-7 max-w-3xl mx-auto mb-8">
+        <div
+          className={`grid gap-7 mx-auto mb-8 ${
+            plans.length >= 3
+              ? 'md:grid-cols-3 max-w-5xl'
+              : 'md:grid-cols-2 max-w-3xl'
+          }`}
+        >
           {plans.map((plan) => (
             <PlanCard key={plan.label} plan={plan} onCheckout={startCheckout} onFreeSignup={handleFreeSignup} />
           ))}
@@ -257,6 +283,11 @@ function PlanCard({
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3b82f6] text-white text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap">
           {plan.badge}
         </span>
+      )}
+      {plan.kicker && (
+        <p className="inline-block text-[10px] font-bold tracking-[0.12em] uppercase text-[#1e2a4a] bg-[#fef3c7] px-2.5 py-1 rounded-md mb-3">
+          {plan.kicker}
+        </p>
       )}
       <p className="text-xs font-semibold text-[#3b82f6] uppercase tracking-wide mb-2">{plan.label}</p>
       <div className="mb-1">
