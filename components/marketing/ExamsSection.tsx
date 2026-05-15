@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { subjects } from '@/data/subjects'
 import { cn } from '@/lib/utils'
 import { FadeIn } from '@/components/ui/fade-in'
+import {
+  DEFAULT_MARKETING_EXAM_TAB,
+  getMarketingExamTabFromBrowser,
+  type MarketingExamTab,
+} from '@/lib/marketing-exam-tab'
 
 type SectionSubject = {
   id: string
@@ -102,8 +107,18 @@ const subjectMeta: Record<string, { description: string; formats: string[] }> = 
 }
 
 export function ExamsSection() {
-  const [activeTab, setActiveTab] = useState<'nvo4' | 'nvo7' | 'dzi12'>('nvo4')
+  const [activeTab, setActiveTab] = useState<MarketingExamTab>(DEFAULT_MARKETING_EXAM_TAB)
   const filtered = activeTab === 'nvo4' ? nvo4Subjects : activeTab === 'nvo7' ? nvo7Subjects : dziSubjects
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setActiveTab(getMarketingExamTabFromBrowser(DEFAULT_MARKETING_EXAM_TAB))
+    }, 0)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [])
 
   return (
     <section id="izpiti" className="py-20 md:py-28 bg-white border-y border-[#E2E8F0]">
@@ -127,7 +142,7 @@ export function ExamsSection() {
             ].map((tab) => (
               <button
                 key={tab.key}
-                onClick={() => setActiveTab(tab.key as 'nvo4' | 'nvo7' | 'dzi12')}
+                onClick={() => setActiveTab(tab.key as MarketingExamTab)}
                 className={cn(
                   'relative px-5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 tracking-[-0.01em]',
                   activeTab === tab.key

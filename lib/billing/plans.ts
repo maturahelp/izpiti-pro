@@ -13,7 +13,7 @@ export type BillingPlanConfig = {
 export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   'nvo4-full': {
     name: 'НВО 4. клас — месечен достъп',
-    amount: 1999,
+    amount: 999,
     currency: 'eur',
     mode: 'subscription',
     class: '4',
@@ -30,7 +30,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   },
   'dzi-full': {
     name: 'ДЗИ до края на матурите',
-    amount: 1999,
+    amount: 999,
     currency: 'eur',
     mode: 'payment',
     class: '12',

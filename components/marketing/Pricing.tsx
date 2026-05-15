@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { FadeIn } from '@/components/ui/fade-in'
+import {
+  DEFAULT_MARKETING_EXAM_TAB,
+  getMarketingExamTabFromBrowser,
+  type MarketingExamTab,
+} from '@/lib/marketing-exam-tab'
 
-type ExamTab = 'nvo4' | 'nvo7' | 'dzi12'
+type ExamTab = MarketingExamTab
 type PlanKey = 'nvo4-full' | 'nvo-full' | 'dzi-full'
 
 type Plan = {
@@ -38,7 +43,7 @@ const nvo4Plans: Plan[] = [
   },
   {
     label: 'НВО 4. клас',
-    price: '19.99 €',
+    price: '9.99 €',
     period: 'месечно',
     desc: 'Месечен достъп за подготовка по БЕЛ и математика в 4. клас.',
     features: [
@@ -108,7 +113,7 @@ const dzi12Plans: Plan[] = [
   },
   {
     label: 'ДЗИ до края на матурите',
-    price: '19.99 €',
+    price: '9.99 €',
     period: 'еднократно',
     access: 'Достъп до 22 май 2026 г.',
     desc: 'За ученици, които искат пълен достъп до края на изпитния период.',
@@ -157,8 +162,18 @@ function handleFreeSignup() {
 }
 
 export function Pricing() {
-  const [tab, setTab] = useState<ExamTab>('nvo4')
+  const [tab, setTab] = useState<ExamTab>(DEFAULT_MARKETING_EXAM_TAB)
   const plans = tab === 'nvo4' ? nvo4Plans : tab === 'nvo7' ? nvo7Plans : dzi12Plans
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setTab(getMarketingExamTabFromBrowser(DEFAULT_MARKETING_EXAM_TAB))
+    }, 0)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [])
 
   return (
     <section id="ceni" className="relative py-16 md:py-24 bg-white">
