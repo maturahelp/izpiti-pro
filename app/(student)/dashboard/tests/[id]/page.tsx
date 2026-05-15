@@ -169,6 +169,7 @@ interface MockPracticeExam {
     correct_option?: string
     answer_guide?: string | Record<string, string>
     question_image?: string
+    points?: number
     section?: string
     source_tags?: {
       source_id?: string
@@ -519,6 +520,7 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
         source_tags: question.source_tags,
         formatting_flags: question.formatting_flags,
         question_image: question.question_image,
+        points: question.points,
       }
     }),
   }

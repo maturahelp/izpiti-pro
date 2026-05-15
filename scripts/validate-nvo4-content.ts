@@ -13,7 +13,9 @@ type Question = {
   options?: Record<string, string>
   correct_option?: string
   official_answer?: string
+  answer_guide?: string | Record<string, string>
   question_image?: string
+  points?: number
   formatting_flags?: string[]
   source_tags?: {
     source_id?: string
@@ -126,6 +128,25 @@ for (const exam of official) {
 }
 
 for (const exam of generatedMathMocks) {
+  const selectedCount = exam.questions.filter((question) => question.type === 'single_choice').length
+  const openCount = exam.questions.filter((question) => question.type === 'open_response').length
+  if (selectedCount !== 16 || openCount !== 9) {
+    fail(`${exam.id} must follow the 2025-2026 math model with 16 selected-answer and 9 open-response tasks`)
+  }
+  const totalPoints = exam.questions.reduce((total, question) => total + (question.points ?? 0), 0)
+  if (totalPoints !== 100) fail(`${exam.id} must have 100 total points, got ${totalPoints}`)
+
+  const question25 = exam.questions.find((question) => question.number === 25)
+  if (!question25) fail(`${exam.id} is missing q25`)
+  if (question25.type !== 'open_response') fail(`${exam.id} q25 must be open_response`)
+  if (JSON.stringify(Object.keys(question25.options ?? {})) !== JSON.stringify(['А', 'Б', 'В'])) {
+    fail(`${exam.id} q25 must expose three subconditions А/Б/В`)
+  }
+  if (!question25.answer_guide || typeof question25.answer_guide === 'string') {
+    fail(`${exam.id} q25 must have a keyed answer guide for А/Б/В`)
+  }
+  if (question25.points !== 20) fail(`${exam.id} q25 must be worth 20 points`)
+
   const imageQuestions = exam.questions.filter((question) => question.question_image)
   if (imageQuestions.length < 5) fail(`${exam.id} should include generated figures/graphs on at least 5 questions`)
   for (const question of imageQuestions) {
@@ -165,12 +186,47 @@ function validateGeneratedMaterials(tree: GeneratedMaterialTree, subject: string
   }
 }
 
-validateGeneratedMaterials(nvo4MathMaterials as GeneratedMaterialTree, 'math', 7, 31, 144)
-validateGeneratedMaterials(nvo4BulgarianMaterials as GeneratedMaterialTree, 'BEL', 6, 18, 72)
+validateGeneratedMaterials(nvo4MathMaterials as GeneratedMaterialTree, 'math', 7, 36, 160)
+validateGeneratedMaterials(nvo4BulgarianMaterials as GeneratedMaterialTree, 'BEL', 7, 23, 110)
+
+function requireMaterialCoverage(tree: GeneratedMaterialTree, subject: string, checks: Array<[string, RegExp]>) {
+  const materialText = JSON.stringify(tree)
+  for (const [label, pattern] of checks) {
+    if (!pattern.test(materialText)) {
+      fail(`${subject} materials are missing coverage for ${label}`)
+    }
+  }
+}
+
+requireMaterialCoverage(nvo4MathMaterials as GeneratedMaterialTree, 'math', [
+  ['третинка', /третин/i],
+  ['четвъртинка', /четвъртин/i],
+  ['геометрични тела', /куб/i],
+  ['правоъгълен паралелепипед', /паралелепипед/i],
+  ['цилиндър', /цилиндър/i],
+  ['конус', /конус/i],
+  ['пирамида', /пирамида/i],
+  ['пъти по-голямо', /пъти по-гол/i],
+  ['пъти по-малко', /пъти по-мал/i],
+  ['секунда', /секунд/i],
+  ['денонощие', /денонощие/i],
+])
+
+requireMaterialCoverage(nvo4BulgarianMaterials as GeneratedMaterialTree, 'BEL', [
+  ['текстове за поправка', /текстове? за поправка|редактиране на текст/i],
+  ['олекотен вариант', /олекотен вариант/i],
+  ['самоконтрол', /самоконтрол/i],
+  ['очакван брой грешки', /очакван брой грешки|брой грешки/i],
+  ['значение на думата', /значение на думата/i],
+  ['гласни и съгласни звукове', /гласни и съгласни/i],
+  ['ударение', /ударение/i],
+  ['синоними', /синоними/i],
+  ['словосъчетание', /словосъчетание/i],
+])
 
 const khanTemplateShape = {
   units: 7,
-  lessonsAtLeast: 31,
+  lessonsAtLeast: 36,
 }
 const mathLessonCount = nvo4MathMaterials.units.reduce((total, unit) => total + unit.lessons.length, 0)
 if (nvo4MathMaterials.units.length !== khanTemplateShape.units || mathLessonCount < khanTemplateShape.lessonsAtLeast) {

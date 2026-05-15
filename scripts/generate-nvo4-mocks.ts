@@ -8,8 +8,9 @@ type Question = {
   options?: Record<string, string>
   correct_option?: string
   official_answer?: string
-  answer_guide?: string
+  answer_guide?: string | Record<string, string>
   question_image?: string
+  points?: number
   section: 'nvo4'
   source_tags: {
     source_id: string
@@ -179,12 +180,13 @@ function sc(number: number, question: string, options: Record<string, string>, c
     official_answer: correct,
     answer_guide: correct,
     question_image: image,
+    points: 2,
     section: 'nvo4',
     source_tags: { source_id: `${id}_q${String(number).padStart(2, '0')}`, topic_bucket: bucket },
   }
 }
 
-function open(number: number, question: string, answer: string, id: string, bucket: string, image?: string): Question {
+function open(number: number, question: string, answer: string, id: string, bucket: string, image?: string, points = 4): Question {
   return {
     number,
     type: 'open_response',
@@ -192,6 +194,31 @@ function open(number: number, question: string, answer: string, id: string, buck
     official_answer: answer,
     answer_guide: answer,
     question_image: image,
+    points,
+    section: 'nvo4',
+    source_tags: { source_id: `${id}_q${String(number).padStart(2, '0')}`, topic_bucket: bucket },
+  }
+}
+
+function openMultipart(
+  number: number,
+  question: string,
+  prompts: Record<string, string>,
+  answers: Record<string, string>,
+  id: string,
+  bucket: string,
+  image: string,
+  points: number,
+): Question {
+  return {
+    number,
+    type: 'open_response',
+    question,
+    options: prompts,
+    official_answer: Object.entries(answers).map(([label, answer]) => `${label}) ${answer}`).join('\n'),
+    answer_guide: answers,
+    question_image: image,
+    points,
     section: 'nvo4',
     source_tags: { source_id: `${id}_q${String(number).padStart(2, '0')}`, topic_bucket: bucket },
   }
@@ -253,11 +280,28 @@ function makeMathMock(index: number): Exam {
       open(18, `Колко е третинката от произведението на числата ${500 + a * 3} и 6?`, String((500 + a * 3) * 2), id, 'fractions'),
       open(19, `Страната на всеки квадрат от фигурата е ${side} дм. Колко квадратни дециметра е лицето на оцветената част?`, String(gridCells * side * side), id, 'area', shadedGridFigure(id, a)),
       open(20, 'Подземен паркинг има три нива. Използвай данните от таблицата и пресметни колко общо са заетите места.', String(occupied), id, 'tables', tableFigure(id, a)),
-      open(21, `Три еднакви стола струват ${chairPrice * 3} лв., а два стола и четири маси струват ${2 * chairPrice + 4 * tablePrice} лв. Колко лева струва една маса?`, String(tablePrice), id, 'word-problems'),
-      open(22, `В книжарница има общо ${notebooks + textbooks + workbooks} тетрадки, учебници и сборници. Тетрадките са ${notebooks} и са 3 пъти повече от учебниците. Колко са сборниците?`, String(workbooks), id, 'word-problems'),
-      open(23, 'С колко лева се оскъпява пералнята при плащане на вноски?', String(installmentDiff), id, 'money', installmentFigure(id, a)),
-      open(24, 'Схемата илюстрира продажбите на различни зеленчуци. Колко килограма зеленчуци общо са продадени?', String(chartValues.reduce((total, value) => total + value, 0)), id, 'charts', barChartFigure(id, a)),
-      open(25, 'Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?', String(jacket + gloves + 2 * scarf + hat), id, 'tables', shopFigure(id, a)),
+      open(21, `Три еднакви стола струват ${chairPrice * 3} лв., а два стола и четири маси струват ${2 * chairPrice + 4 * tablePrice} лв. Колко лева струва една маса?`, String(tablePrice), id, 'word-problems', undefined, 8),
+      open(22, `В книжарница има общо ${notebooks + textbooks + workbooks} тетрадки, учебници и сборници. Тетрадките са ${notebooks} и са 3 пъти повече от учебниците. Колко са сборниците?`, String(workbooks), id, 'word-problems', undefined, 8),
+      open(23, 'С колко лева се оскъпява пералнята при плащане на вноски?', String(installmentDiff), id, 'money', installmentFigure(id, a), 8),
+      open(24, 'Схемата илюстрира продажбите на различни зеленчуци. Колко килограма зеленчуци общо са продадени?', String(chartValues.reduce((total, value) => total + value, 0)), id, 'charts', barChartFigure(id, a), 8),
+      openMultipart(
+        25,
+        'Използвай информацията за артикулите в спортен магазин и реши задачите.',
+        {
+          А: 'Колко лева общо струват двата най-скъпи артикула?',
+          Б: 'Колко лева са необходими за яке, ръкавици, два шала и шапка?',
+          В: 'В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?',
+        },
+        {
+          А: String(jacket + gloves),
+          Б: String(jacket + gloves + 2 * scarf + hat),
+          В: String((jacket / 2) * 3 + gloves * 3),
+        },
+        id,
+        'tables',
+        shopFigure(id, a),
+        20,
+      ),
     ],
   }
 }

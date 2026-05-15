@@ -904,6 +904,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q01",
@@ -922,6 +923,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q02",
@@ -940,6 +942,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q03",
@@ -958,6 +961,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q04",
@@ -976,6 +980,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q05",
@@ -988,6 +993,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q06",
@@ -1000,6 +1006,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q07",
@@ -1012,6 +1019,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q08",
@@ -1024,6 +1032,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q09",
@@ -1036,6 +1045,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q10",
@@ -1048,6 +1058,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q11",
@@ -1066,6 +1077,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q12",
@@ -1084,6 +1096,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q13",
@@ -1102,6 +1115,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q14",
@@ -1120,6 +1134,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q15",
@@ -1138,6 +1153,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q16",
@@ -1156,6 +1172,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q17",
@@ -1174,6 +1191,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q18",
@@ -1192,6 +1210,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q19",
@@ -1210,6 +1229,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q20",
@@ -1228,6 +1248,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q21",
@@ -1246,6 +1267,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q22",
@@ -1264,6 +1286,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q23",
@@ -1276,6 +1299,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q24",
@@ -1289,6 +1313,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_01-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_01_q25",
@@ -1319,6 +1344,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q01",
@@ -1337,6 +1363,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q02",
@@ -1355,6 +1382,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q03",
@@ -1373,6 +1401,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q04",
@@ -1391,6 +1420,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q05",
@@ -1403,6 +1433,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q06",
@@ -1415,6 +1446,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q07",
@@ -1427,6 +1459,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q08",
@@ -1439,6 +1472,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q09",
@@ -1451,6 +1485,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q10",
@@ -1463,6 +1498,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q11",
@@ -1481,6 +1517,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q12",
@@ -1499,6 +1536,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q13",
@@ -1517,6 +1555,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q14",
@@ -1535,6 +1574,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q15",
@@ -1553,6 +1593,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q16",
@@ -1571,6 +1612,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q17",
@@ -1589,6 +1631,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q18",
@@ -1607,6 +1650,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q19",
@@ -1625,6 +1669,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q20",
@@ -1643,6 +1688,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q21",
@@ -1661,6 +1707,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q22",
@@ -1679,6 +1726,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q23",
@@ -1691,6 +1739,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q24",
@@ -1704,6 +1753,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_02-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_02_q25",
@@ -1734,6 +1784,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q01",
@@ -1752,6 +1803,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q02",
@@ -1770,6 +1822,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q03",
@@ -1788,6 +1841,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q04",
@@ -1806,6 +1860,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q05",
@@ -1818,6 +1873,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q06",
@@ -1830,6 +1886,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q07",
@@ -1842,6 +1899,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q08",
@@ -1854,6 +1912,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q09",
@@ -1866,6 +1925,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q10",
@@ -1878,6 +1938,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q11",
@@ -1896,6 +1957,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q12",
@@ -1914,6 +1976,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q13",
@@ -1932,6 +1995,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q14",
@@ -1950,6 +2014,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q15",
@@ -1968,6 +2033,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q16",
@@ -1986,6 +2052,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q17",
@@ -2004,6 +2071,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q18",
@@ -2022,6 +2090,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q19",
@@ -2040,6 +2109,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q20",
@@ -2058,6 +2128,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q21",
@@ -2076,6 +2147,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q22",
@@ -2094,6 +2166,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q23",
@@ -2106,6 +2179,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q24",
@@ -2119,6 +2193,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_03-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_03_q25",
@@ -2149,6 +2224,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q01",
@@ -2167,6 +2243,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q02",
@@ -2185,6 +2262,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q03",
@@ -2203,6 +2281,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q04",
@@ -2221,6 +2300,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q05",
@@ -2233,6 +2313,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q06",
@@ -2245,6 +2326,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q07",
@@ -2257,6 +2339,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q08",
@@ -2269,6 +2352,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q09",
@@ -2281,6 +2365,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q10",
@@ -2293,6 +2378,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q11",
@@ -2311,6 +2397,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q12",
@@ -2329,6 +2416,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q13",
@@ -2347,6 +2435,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q14",
@@ -2365,6 +2454,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q15",
@@ -2383,6 +2473,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q16",
@@ -2401,6 +2492,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q17",
@@ -2419,6 +2511,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q18",
@@ -2437,6 +2530,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q19",
@@ -2455,6 +2549,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q20",
@@ -2473,6 +2568,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q21",
@@ -2491,6 +2587,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q22",
@@ -2509,6 +2606,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q23",
@@ -2521,6 +2619,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q24",
@@ -2534,6 +2633,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_04-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_04_q25",
@@ -2564,6 +2664,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q01",
@@ -2582,6 +2683,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q02",
@@ -2600,6 +2702,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q03",
@@ -2618,6 +2721,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q04",
@@ -2636,6 +2740,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q05",
@@ -2648,6 +2753,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q06",
@@ -2660,6 +2766,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q07",
@@ -2672,6 +2779,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q08",
@@ -2684,6 +2792,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q09",
@@ -2696,6 +2805,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q10",
@@ -2708,6 +2818,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q11",
@@ -2726,6 +2837,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q12",
@@ -2744,6 +2856,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q13",
@@ -2762,6 +2875,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q14",
@@ -2780,6 +2894,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q15",
@@ -2798,6 +2913,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q16",
@@ -2816,6 +2932,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q17",
@@ -2834,6 +2951,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q18",
@@ -2852,6 +2970,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q19",
@@ -2870,6 +2989,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q20",
@@ -2888,6 +3008,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q21",
@@ -2906,6 +3027,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q22",
@@ -2924,6 +3046,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q23",
@@ -2936,6 +3059,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q24",
@@ -2949,6 +3073,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_05-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_05_q25",
@@ -2979,6 +3104,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q01",
@@ -2997,6 +3123,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q02",
@@ -3015,6 +3142,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q03",
@@ -3033,6 +3161,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q04",
@@ -3051,6 +3180,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q05",
@@ -3063,6 +3193,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q06",
@@ -3075,6 +3206,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q07",
@@ -3087,6 +3219,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q08",
@@ -3099,6 +3232,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q09",
@@ -3111,6 +3245,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q10",
@@ -3123,6 +3258,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q11",
@@ -3141,6 +3277,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q12",
@@ -3159,6 +3296,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q13",
@@ -3177,6 +3315,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q14",
@@ -3195,6 +3334,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q15",
@@ -3213,6 +3353,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q16",
@@ -3231,6 +3372,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q17",
@@ -3249,6 +3391,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q18",
@@ -3267,6 +3410,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q19",
@@ -3285,6 +3429,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q20",
@@ -3303,6 +3448,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q21",
@@ -3321,6 +3467,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q22",
@@ -3339,6 +3486,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q23",
@@ -3351,6 +3499,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q24",
@@ -3364,6 +3513,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_06-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_06_q25",
@@ -3394,6 +3544,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q01",
@@ -3412,6 +3563,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q02",
@@ -3430,6 +3582,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q03",
@@ -3448,6 +3601,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q04",
@@ -3466,6 +3620,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q05",
@@ -3478,6 +3633,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q06",
@@ -3490,6 +3646,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q07",
@@ -3502,6 +3659,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q08",
@@ -3514,6 +3672,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q09",
@@ -3526,6 +3685,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q10",
@@ -3538,6 +3698,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q11",
@@ -3556,6 +3717,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q12",
@@ -3574,6 +3736,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q13",
@@ -3592,6 +3755,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q14",
@@ -3610,6 +3774,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q15",
@@ -3628,6 +3793,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q16",
@@ -3646,6 +3812,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q17",
@@ -3664,6 +3831,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q18",
@@ -3682,6 +3850,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q19",
@@ -3700,6 +3869,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q20",
@@ -3718,6 +3888,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q21",
@@ -3736,6 +3907,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q22",
@@ -3754,6 +3926,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q23",
@@ -3766,6 +3939,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q24",
@@ -3779,6 +3953,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_07-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_07_q25",
@@ -3809,6 +3984,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q01",
@@ -3827,6 +4003,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q02",
@@ -3845,6 +4022,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q03",
@@ -3863,6 +4041,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q04",
@@ -3881,6 +4060,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q05",
@@ -3893,6 +4073,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q06",
@@ -3905,6 +4086,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q07",
@@ -3917,6 +4099,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q08",
@@ -3929,6 +4112,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q09",
@@ -3941,6 +4125,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q10",
@@ -3953,6 +4138,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q11",
@@ -3971,6 +4157,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q12",
@@ -3989,6 +4176,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q13",
@@ -4007,6 +4195,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q14",
@@ -4025,6 +4214,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q15",
@@ -4043,6 +4233,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q16",
@@ -4061,6 +4252,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q17",
@@ -4079,6 +4271,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q18",
@@ -4097,6 +4290,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q19",
@@ -4115,6 +4309,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q20",
@@ -4133,6 +4328,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q21",
@@ -4151,6 +4347,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q22",
@@ -4169,6 +4366,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q23",
@@ -4181,6 +4379,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q24",
@@ -4194,6 +4393,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_08-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_08_q25",
@@ -4224,6 +4424,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q01",
@@ -4242,6 +4443,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q02",
@@ -4260,6 +4462,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q03",
@@ -4278,6 +4481,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q04",
@@ -4296,6 +4500,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q05",
@@ -4308,6 +4513,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q06",
@@ -4320,6 +4526,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q07",
@@ -4332,6 +4539,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q08",
@@ -4344,6 +4552,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q09",
@@ -4356,6 +4565,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q10",
@@ -4368,6 +4578,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q11",
@@ -4386,6 +4597,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q12",
@@ -4404,6 +4616,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q13",
@@ -4422,6 +4635,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q14",
@@ -4440,6 +4654,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q15",
@@ -4458,6 +4673,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q16",
@@ -4476,6 +4692,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q17",
@@ -4494,6 +4711,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q18",
@@ -4512,6 +4730,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q19",
@@ -4530,6 +4749,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q20",
@@ -4548,6 +4768,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q21",
@@ -4566,6 +4787,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q22",
@@ -4584,6 +4806,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q23",
@@ -4596,6 +4819,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q24",
@@ -4609,6 +4833,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_09-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_09_q25",
@@ -4639,6 +4864,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q01",
@@ -4657,6 +4883,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q02",
@@ -4675,6 +4902,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q03",
@@ -4693,6 +4921,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q04",
@@ -4711,6 +4940,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q05",
@@ -4723,6 +4953,7 @@
           "question": "Кой помага на героя да стигне до решение?",
           "official_answer": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
           "answer_guide": "Отговорът се приема, ако е посочено лице или обстоятелство от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q06",
@@ -4735,6 +4966,7 @@
           "question": "Запиши две думи или израза от текста, които показват отношението на героя.",
           "official_answer": "Оценява се откриване на подходящи думи или изрази от текста.",
           "answer_guide": "Оценява се откриване на подходящи думи или изрази от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q07",
@@ -4747,6 +4979,7 @@
           "question": "Запиши две действия на героя в правилната последователност.",
           "official_answer": "Оценява се вярна последователност според текста.",
           "answer_guide": "Оценява се вярна последователност според текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q08",
@@ -4759,6 +4992,7 @@
           "question": "Каква е поуката от текста? Докажи с пример.",
           "official_answer": "Оценява се смислен отговор с пример от текста.",
           "answer_guide": "Оценява се смислен отговор с пример от текста.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q09",
@@ -4771,6 +5005,7 @@
           "question": "Защо последното действие на героя е важно? Обоснови се.",
           "official_answer": "Оценява се аргументиран отговор.",
           "answer_guide": "Оценява се аргументиран отговор.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q10",
@@ -4783,6 +5018,7 @@
           "question": "Запиши три довода, че героят постъпва разумно.",
           "official_answer": "Оценява се собствено мнение с три подходящи довода.",
           "answer_guide": "Оценява се собствено мнение с три подходящи довода.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q11",
@@ -4801,6 +5037,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q12",
@@ -4819,6 +5056,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q13",
@@ -4837,6 +5075,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q14",
@@ -4855,6 +5094,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q15",
@@ -4873,6 +5113,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q16",
@@ -4891,6 +5132,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q17",
@@ -4909,6 +5151,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q18",
@@ -4927,6 +5170,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q19",
@@ -4945,6 +5189,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q20",
@@ -4963,6 +5208,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q21",
@@ -4981,6 +5227,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q22",
@@ -4999,6 +5246,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q23",
@@ -5011,6 +5259,7 @@
           "question": "Открий правописните грешки в текста и запиши правилно сгрешените думи.\nВъздухът беше свеш. До старото дарво децата вървяха бестрашно. Слънчев лач огря учи им. Те обичът да се расхождат на хлат, но трябваше да четът и пишът за испит.",
           "official_answer": "Приемат се правилно поправените сгрешени думи.",
           "answer_guide": "Приемат се правилно поправените сгрешени думи.",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q24",
@@ -5024,6 +5273,7 @@
           "official_answer": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "answer_guide": "Оценява се свързан текст със заглавие, последователност и правилна писмена реч.",
           "question_image": "/nvo4-generated-figures/generated_nvo4_bel_mock_10-q25.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_bel_mock_10_q25",
@@ -5053,6 +5303,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q01",
@@ -5071,6 +5322,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q02",
@@ -5089,6 +5341,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q03",
@@ -5107,6 +5360,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q04",
@@ -5125,6 +5379,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q05",
@@ -5143,6 +5398,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q06",
@@ -5161,6 +5417,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q07",
@@ -5179,6 +5436,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q08",
@@ -5197,6 +5455,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q09",
@@ -5215,6 +5474,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q10",
@@ -5233,6 +5493,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q11",
@@ -5251,6 +5512,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q12",
@@ -5270,6 +5532,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q13",
@@ -5289,6 +5552,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q14",
@@ -5308,6 +5572,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q15",
@@ -5327,6 +5592,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q16",
@@ -5339,6 +5605,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q17",
@@ -5351,6 +5618,7 @@
           "question": "Колко е третинката от произведението на числата 503 и 6?",
           "official_answer": "1006",
           "answer_guide": "1006",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q18",
@@ -5364,6 +5632,7 @@
           "official_answer": "216",
           "answer_guide": "216",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q19",
@@ -5377,6 +5646,7 @@
           "official_answer": "365",
           "answer_guide": "365",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q20",
@@ -5389,6 +5659,7 @@
           "question": "Три еднакви стола струват 195 лв., а два стола и четири маси струват 530 лв. Колко лева струва една маса?",
           "official_answer": "100",
           "answer_guide": "100",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q21",
@@ -5401,6 +5672,7 @@
           "question": "В книжарница има общо 838 тетрадки, учебници и сборници. Тетрадките са 246 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "510",
           "answer_guide": "510",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q22",
@@ -5414,6 +5686,7 @@
           "official_answer": "194",
           "answer_guide": "194",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q23",
@@ -5427,6 +5700,7 @@
           "official_answer": "1105",
           "answer_guide": "1105",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q24",
@@ -5436,10 +5710,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "262",
-          "answer_guide": "262",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 171\nБ) 262\nВ) 330",
+          "answer_guide": {
+            "А": "171",
+            "Б": "262",
+            "В": "330"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_01-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_01_q25",
@@ -5469,6 +5753,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q01",
@@ -5487,6 +5772,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q02",
@@ -5505,6 +5791,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q03",
@@ -5523,6 +5810,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q04",
@@ -5541,6 +5829,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q05",
@@ -5559,6 +5848,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q06",
@@ -5577,6 +5867,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q07",
@@ -5595,6 +5886,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q08",
@@ -5613,6 +5905,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q09",
@@ -5631,6 +5924,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q10",
@@ -5649,6 +5943,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q11",
@@ -5667,6 +5962,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q12",
@@ -5686,6 +5982,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q13",
@@ -5705,6 +6002,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q14",
@@ -5724,6 +6022,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q15",
@@ -5743,6 +6042,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q16",
@@ -5755,6 +6055,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q17",
@@ -5767,6 +6068,7 @@
           "question": "Колко е третинката от произведението на числата 506 и 6?",
           "official_answer": "1012",
           "answer_guide": "1012",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q18",
@@ -5780,6 +6082,7 @@
           "official_answer": "175",
           "answer_guide": "175",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q19",
@@ -5793,6 +6096,7 @@
           "official_answer": "371",
           "answer_guide": "371",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q20",
@@ -5805,6 +6109,7 @@
           "question": "Три еднакви стола струват 210 лв., а два стола и четири маси струват 580 лв. Колко лева струва една маса?",
           "official_answer": "110",
           "answer_guide": "110",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q21",
@@ -5817,6 +6122,7 @@
           "question": "В книжарница има общо 856 тетрадки, учебници и сборници. Тетрадките са 252 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "520",
           "answer_guide": "520",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q22",
@@ -5830,6 +6136,7 @@
           "official_answer": "99",
           "answer_guide": "99",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q23",
@@ -5843,6 +6150,7 @@
           "official_answer": "1150",
           "answer_guide": "1150",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q24",
@@ -5852,10 +6160,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "268",
-          "answer_guide": "268",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 174\nБ) 268\nВ) 336",
+          "answer_guide": {
+            "А": "174",
+            "Б": "268",
+            "В": "336"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_02-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_02_q25",
@@ -5885,6 +6203,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q01",
@@ -5903,6 +6222,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q02",
@@ -5921,6 +6241,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q03",
@@ -5939,6 +6260,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q04",
@@ -5957,6 +6279,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q05",
@@ -5975,6 +6298,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q06",
@@ -5993,6 +6317,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q07",
@@ -6011,6 +6336,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q08",
@@ -6029,6 +6355,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q09",
@@ -6047,6 +6374,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q10",
@@ -6065,6 +6393,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q11",
@@ -6083,6 +6412,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q12",
@@ -6102,6 +6432,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q13",
@@ -6121,6 +6452,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q14",
@@ -6140,6 +6472,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q15",
@@ -6159,6 +6492,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q16",
@@ -6171,6 +6505,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q17",
@@ -6183,6 +6518,7 @@
           "question": "Колко е третинката от произведението на числата 509 и 6?",
           "official_answer": "1018",
           "answer_guide": "1018",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q18",
@@ -6196,6 +6532,7 @@
           "official_answer": "180",
           "answer_guide": "180",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q19",
@@ -6209,6 +6546,7 @@
           "official_answer": "377",
           "answer_guide": "377",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q20",
@@ -6221,6 +6559,7 @@
           "question": "Три еднакви стола струват 225 лв., а два стола и четири маси струват 630 лв. Колко лева струва една маса?",
           "official_answer": "120",
           "answer_guide": "120",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q21",
@@ -6233,6 +6572,7 @@
           "question": "В книжарница има общо 874 тетрадки, учебници и сборници. Тетрадките са 258 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "530",
           "answer_guide": "530",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q22",
@@ -6246,6 +6586,7 @@
           "official_answer": "182",
           "answer_guide": "182",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q23",
@@ -6259,6 +6600,7 @@
           "official_answer": "1195",
           "answer_guide": "1195",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q24",
@@ -6268,10 +6610,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "274",
-          "answer_guide": "274",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 177\nБ) 274\nВ) 342",
+          "answer_guide": {
+            "А": "177",
+            "Б": "274",
+            "В": "342"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_03-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_03_q25",
@@ -6301,6 +6653,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q01",
@@ -6319,6 +6672,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q02",
@@ -6337,6 +6691,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q03",
@@ -6355,6 +6710,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q04",
@@ -6373,6 +6729,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q05",
@@ -6391,6 +6748,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q06",
@@ -6409,6 +6767,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q07",
@@ -6427,6 +6786,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q08",
@@ -6445,6 +6805,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q09",
@@ -6463,6 +6824,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q10",
@@ -6481,6 +6843,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q11",
@@ -6499,6 +6862,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q12",
@@ -6518,6 +6882,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q13",
@@ -6537,6 +6902,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q14",
@@ -6556,6 +6922,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q15",
@@ -6575,6 +6942,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q16",
@@ -6587,6 +6955,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q17",
@@ -6599,6 +6968,7 @@
           "question": "Колко е третинката от произведението на числата 512 и 6?",
           "official_answer": "1024",
           "answer_guide": "1024",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q18",
@@ -6612,6 +6982,7 @@
           "official_answer": "150",
           "answer_guide": "150",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q19",
@@ -6625,6 +6996,7 @@
           "official_answer": "383",
           "answer_guide": "383",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q20",
@@ -6637,6 +7009,7 @@
           "question": "Три еднакви стола струват 240 лв., а два стола и четири маси струват 680 лв. Колко лева струва една маса?",
           "official_answer": "130",
           "answer_guide": "130",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q21",
@@ -6649,6 +7022,7 @@
           "question": "В книжарница има общо 892 тетрадки, учебници и сборници. Тетрадките са 264 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "540",
           "answer_guide": "540",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q22",
@@ -6662,6 +7036,7 @@
           "official_answer": "83",
           "answer_guide": "83",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q23",
@@ -6675,6 +7050,7 @@
           "official_answer": "1240",
           "answer_guide": "1240",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q24",
@@ -6684,10 +7060,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "280",
-          "answer_guide": "280",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 180\nБ) 280\nВ) 348",
+          "answer_guide": {
+            "А": "180",
+            "Б": "280",
+            "В": "348"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_04-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_04_q25",
@@ -6717,6 +7103,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q01",
@@ -6735,6 +7122,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q02",
@@ -6753,6 +7141,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q03",
@@ -6771,6 +7160,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q04",
@@ -6789,6 +7179,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q05",
@@ -6807,6 +7198,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q06",
@@ -6825,6 +7217,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q07",
@@ -6843,6 +7236,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q08",
@@ -6861,6 +7255,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q09",
@@ -6879,6 +7274,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q10",
@@ -6897,6 +7293,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q11",
@@ -6915,6 +7312,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q12",
@@ -6934,6 +7332,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q13",
@@ -6953,6 +7352,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q14",
@@ -6972,6 +7372,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q15",
@@ -6991,6 +7392,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q16",
@@ -7003,6 +7405,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q17",
@@ -7015,6 +7418,7 @@
           "question": "Колко е третинката от произведението на числата 515 и 6?",
           "official_answer": "1030",
           "answer_guide": "1030",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q18",
@@ -7028,6 +7432,7 @@
           "official_answer": "252",
           "answer_guide": "252",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q19",
@@ -7041,6 +7446,7 @@
           "official_answer": "389",
           "answer_guide": "389",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q20",
@@ -7053,6 +7459,7 @@
           "question": "Три еднакви стола струват 255 лв., а два стола и четири маси струват 730 лв. Колко лева струва една маса?",
           "official_answer": "140",
           "answer_guide": "140",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q21",
@@ -7065,6 +7472,7 @@
           "question": "В книжарница има общо 910 тетрадки, учебници и сборници. Тетрадките са 270 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "550",
           "answer_guide": "550",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q22",
@@ -7078,6 +7486,7 @@
           "official_answer": "170",
           "answer_guide": "170",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q23",
@@ -7091,6 +7500,7 @@
           "official_answer": "1285",
           "answer_guide": "1285",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q24",
@@ -7100,10 +7510,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "286",
-          "answer_guide": "286",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 183\nБ) 286\nВ) 354",
+          "answer_guide": {
+            "А": "183",
+            "Б": "286",
+            "В": "354"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_05-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_05_q25",
@@ -7133,6 +7553,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q01",
@@ -7151,6 +7572,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q02",
@@ -7169,6 +7591,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q03",
@@ -7187,6 +7610,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q04",
@@ -7205,6 +7629,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q05",
@@ -7223,6 +7648,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q06",
@@ -7241,6 +7667,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q07",
@@ -7259,6 +7686,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q08",
@@ -7277,6 +7705,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q09",
@@ -7295,6 +7724,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q10",
@@ -7313,6 +7743,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q11",
@@ -7331,6 +7762,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q12",
@@ -7350,6 +7782,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q13",
@@ -7369,6 +7802,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q14",
@@ -7388,6 +7822,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q15",
@@ -7407,6 +7842,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q16",
@@ -7419,6 +7855,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q17",
@@ -7431,6 +7868,7 @@
           "question": "Колко е третинката от произведението на числата 518 и 6?",
           "official_answer": "1036",
           "answer_guide": "1036",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q18",
@@ -7444,6 +7882,7 @@
           "official_answer": "125",
           "answer_guide": "125",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q19",
@@ -7457,6 +7896,7 @@
           "official_answer": "395",
           "answer_guide": "395",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q20",
@@ -7469,6 +7909,7 @@
           "question": "Три еднакви стола струват 270 лв., а два стола и четири маси струват 780 лв. Колко лева струва една маса?",
           "official_answer": "150",
           "answer_guide": "150",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q21",
@@ -7481,6 +7922,7 @@
           "question": "В книжарница има общо 928 тетрадки, учебници и сборници. Тетрадките са 276 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "560",
           "answer_guide": "560",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q22",
@@ -7494,6 +7936,7 @@
           "official_answer": "67",
           "answer_guide": "67",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q23",
@@ -7507,6 +7950,7 @@
           "official_answer": "1330",
           "answer_guide": "1330",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q24",
@@ -7516,10 +7960,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "292",
-          "answer_guide": "292",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 186\nБ) 292\nВ) 360",
+          "answer_guide": {
+            "А": "186",
+            "Б": "292",
+            "В": "360"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_06-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_06_q25",
@@ -7549,6 +8003,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q01",
@@ -7567,6 +8022,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q02",
@@ -7585,6 +8041,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q03",
@@ -7603,6 +8060,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q04",
@@ -7621,6 +8079,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q05",
@@ -7639,6 +8098,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q06",
@@ -7657,6 +8117,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q07",
@@ -7675,6 +8136,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q08",
@@ -7693,6 +8155,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q09",
@@ -7711,6 +8174,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q10",
@@ -7729,6 +8193,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q11",
@@ -7747,6 +8212,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q12",
@@ -7766,6 +8232,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q13",
@@ -7785,6 +8252,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q14",
@@ -7804,6 +8272,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q15",
@@ -7823,6 +8292,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q16",
@@ -7835,6 +8305,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q17",
@@ -7847,6 +8318,7 @@
           "question": "Колко е третинката от произведението на числата 521 и 6?",
           "official_answer": "1042",
           "answer_guide": "1042",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q18",
@@ -7860,6 +8332,7 @@
           "official_answer": "216",
           "answer_guide": "216",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q19",
@@ -7873,6 +8346,7 @@
           "official_answer": "401",
           "answer_guide": "401",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q20",
@@ -7885,6 +8359,7 @@
           "question": "Три еднакви стола струват 285 лв., а два стола и четири маси струват 830 лв. Колко лева струва една маса?",
           "official_answer": "160",
           "answer_guide": "160",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q21",
@@ -7897,6 +8372,7 @@
           "question": "В книжарница има общо 946 тетрадки, учебници и сборници. Тетрадките са 282 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "570",
           "answer_guide": "570",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q22",
@@ -7910,6 +8386,7 @@
           "official_answer": "158",
           "answer_guide": "158",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q23",
@@ -7923,6 +8400,7 @@
           "official_answer": "1375",
           "answer_guide": "1375",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q24",
@@ -7932,10 +8410,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "298",
-          "answer_guide": "298",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 189\nБ) 298\nВ) 366",
+          "answer_guide": {
+            "А": "189",
+            "Б": "298",
+            "В": "366"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_07-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_07_q25",
@@ -7965,6 +8453,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q01",
@@ -7983,6 +8472,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q02",
@@ -8001,6 +8491,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q03",
@@ -8019,6 +8510,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q04",
@@ -8037,6 +8529,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q05",
@@ -8055,6 +8548,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q06",
@@ -8073,6 +8567,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q07",
@@ -8091,6 +8586,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q08",
@@ -8109,6 +8605,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q09",
@@ -8127,6 +8624,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q10",
@@ -8145,6 +8643,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q11",
@@ -8163,6 +8662,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q12",
@@ -8182,6 +8682,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q13",
@@ -8201,6 +8702,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q14",
@@ -8220,6 +8722,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q15",
@@ -8239,6 +8742,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q16",
@@ -8251,6 +8755,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q17",
@@ -8263,6 +8768,7 @@
           "question": "Колко е третинката от произведението на числата 524 и 6?",
           "official_answer": "1048",
           "answer_guide": "1048",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q18",
@@ -8276,6 +8782,7 @@
           "official_answer": "175",
           "answer_guide": "175",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q19",
@@ -8289,6 +8796,7 @@
           "official_answer": "407",
           "answer_guide": "407",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q20",
@@ -8301,6 +8809,7 @@
           "question": "Три еднакви стола струват 300 лв., а два стола и четири маси струват 880 лв. Колко лева струва една маса?",
           "official_answer": "170",
           "answer_guide": "170",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q21",
@@ -8313,6 +8822,7 @@
           "question": "В книжарница има общо 964 тетрадки, учебници и сборници. Тетрадките са 288 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "580",
           "answer_guide": "580",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q22",
@@ -8326,6 +8836,7 @@
           "official_answer": "51",
           "answer_guide": "51",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q23",
@@ -8339,6 +8850,7 @@
           "official_answer": "1420",
           "answer_guide": "1420",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q24",
@@ -8348,10 +8860,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "304",
-          "answer_guide": "304",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 192\nБ) 304\nВ) 372",
+          "answer_guide": {
+            "А": "192",
+            "Б": "304",
+            "В": "372"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_08-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_08_q25",
@@ -8381,6 +8903,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q01",
@@ -8399,6 +8922,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q02",
@@ -8417,6 +8941,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q03",
@@ -8435,6 +8960,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q04",
@@ -8453,6 +8979,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q05",
@@ -8471,6 +8998,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q06",
@@ -8489,6 +9017,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q07",
@@ -8507,6 +9036,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q08",
@@ -8525,6 +9055,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q09",
@@ -8543,6 +9074,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q10",
@@ -8561,6 +9093,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q11",
@@ -8579,6 +9112,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q12",
@@ -8598,6 +9132,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q13",
@@ -8617,6 +9152,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q14",
@@ -8636,6 +9172,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q15",
@@ -8655,6 +9192,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q16",
@@ -8667,6 +9205,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q17",
@@ -8679,6 +9218,7 @@
           "question": "Колко е третинката от произведението на числата 527 и 6?",
           "official_answer": "1054",
           "answer_guide": "1054",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q18",
@@ -8692,6 +9232,7 @@
           "official_answer": "180",
           "answer_guide": "180",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q19",
@@ -8705,6 +9246,7 @@
           "official_answer": "413",
           "answer_guide": "413",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q20",
@@ -8717,6 +9259,7 @@
           "question": "Три еднакви стола струват 315 лв., а два стола и четири маси струват 930 лв. Колко лева струва една маса?",
           "official_answer": "180",
           "answer_guide": "180",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q21",
@@ -8729,6 +9272,7 @@
           "question": "В книжарница има общо 982 тетрадки, учебници и сборници. Тетрадките са 294 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "590",
           "answer_guide": "590",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q22",
@@ -8742,6 +9286,7 @@
           "official_answer": "146",
           "answer_guide": "146",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q23",
@@ -8755,6 +9300,7 @@
           "official_answer": "1465",
           "answer_guide": "1465",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q24",
@@ -8764,10 +9310,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "310",
-          "answer_guide": "310",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 195\nБ) 310\nВ) 378",
+          "answer_guide": {
+            "А": "195",
+            "Б": "310",
+            "В": "378"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_09-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_09_q25",
@@ -8797,6 +9353,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q01",
@@ -8815,6 +9372,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q02",
@@ -8833,6 +9391,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q03",
@@ -8851,6 +9410,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q04",
@@ -8869,6 +9429,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q05",
@@ -8887,6 +9448,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q06",
@@ -8905,6 +9467,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q07",
@@ -8923,6 +9486,7 @@
           "correct_option": "В",
           "official_answer": "В",
           "answer_guide": "В",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q08",
@@ -8941,6 +9505,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q09",
@@ -8959,6 +9524,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q10",
@@ -8977,6 +9543,7 @@
           "correct_option": "Б",
           "official_answer": "Б",
           "answer_guide": "Б",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q11",
@@ -8995,6 +9562,7 @@
           "correct_option": "А",
           "official_answer": "А",
           "answer_guide": "А",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q12",
@@ -9014,6 +9582,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q13.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q13",
@@ -9033,6 +9602,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q14.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q14",
@@ -9052,6 +9622,7 @@
           "official_answer": "А",
           "answer_guide": "А",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q15.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q15",
@@ -9071,6 +9642,7 @@
           "official_answer": "Б",
           "answer_guide": "Б",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q16.svg",
+          "points": 2,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q16",
@@ -9083,6 +9655,7 @@
           "question": "На всяка стена на куба е залепен по един стикер. Колко стикера общо са залепени?",
           "official_answer": "6",
           "answer_guide": "6",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q17",
@@ -9095,6 +9668,7 @@
           "question": "Колко е третинката от произведението на числата 530 и 6?",
           "official_answer": "1060",
           "answer_guide": "1060",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q18",
@@ -9108,6 +9682,7 @@
           "official_answer": "150",
           "answer_guide": "150",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q19.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q19",
@@ -9121,6 +9696,7 @@
           "official_answer": "419",
           "answer_guide": "419",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q20.svg",
+          "points": 4,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q20",
@@ -9133,6 +9709,7 @@
           "question": "Три еднакви стола струват 330 лв., а два стола и четири маси струват 980 лв. Колко лева струва една маса?",
           "official_answer": "190",
           "answer_guide": "190",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q21",
@@ -9145,6 +9722,7 @@
           "question": "В книжарница има общо 1000 тетрадки, учебници и сборници. Тетрадките са 300 и са 3 пъти повече от учебниците. Колко са сборниците?",
           "official_answer": "600",
           "answer_guide": "600",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q22",
@@ -9158,6 +9736,7 @@
           "official_answer": "35",
           "answer_guide": "35",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q23.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q23",
@@ -9171,6 +9750,7 @@
           "official_answer": "1510",
           "answer_guide": "1510",
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q24.svg",
+          "points": 8,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q24",
@@ -9180,10 +9760,20 @@
         {
           "number": 25,
           "type": "open_response",
-          "question": "Използвай информацията за артикулите в спортен магазин. Колко лева са необходими за яке, ръкавици, два шала и шапка?",
-          "official_answer": "316",
-          "answer_guide": "316",
+          "question": "Използвай информацията за артикулите в спортен магазин и реши задачите.",
+          "options": {
+            "А": "Колко лева общо струват двата най-скъпи артикула?",
+            "Б": "Колко лева са необходими за яке, ръкавици, два шала и шапка?",
+            "В": "В края на сезона всички артикули над 100 лева са на половин цена. Колко лева ще струват три якета и три чифта ръкавици?"
+          },
+          "official_answer": "А) 198\nБ) 316\nВ) 384",
+          "answer_guide": {
+            "А": "198",
+            "Б": "316",
+            "В": "384"
+          },
           "question_image": "/nvo4-generated-figures/generated_nvo4_math_mock_10-q25.svg",
+          "points": 20,
           "section": "nvo4",
           "source_tags": {
             "source_id": "generated_nvo4_math_mock_10_q25",
