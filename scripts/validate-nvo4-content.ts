@@ -260,14 +260,34 @@ const materialsPageSource = readFileSync(
 if (materialsPageSource.includes('Модели и примерни материали') || materialsPageSource.includes('Официални НВО тестове по')) {
   fail('Grade 4 materials page must use topic cards, not the old quick-link cards')
 }
-if (!materialsPageSource.includes('activeGrade4Material') || !materialsPageSource.includes('Теория') || !materialsPageSource.includes('Тест')) {
+if (!materialsPageSource.includes('openGrade4Material(') || !materialsPageSource.includes("window.open(url, '_blank', 'noopener,noreferrer')")) {
+  fail('Grade 4 material Theory/Test buttons must open the dedicated material page in a new tab')
+}
+if (materialsPageSource.includes('activeGrade4Material') || materialsPageSource.includes('setActiveGrade4Material')) {
+  fail('Grade 4 materials must not render the old inline theory/test panel')
+}
+if (!materialsPageSource.includes('Теория') || !materialsPageSource.includes('Тест')) {
   fail('Grade 4 materials must expose topic-card Theory and Test actions like 7th/12th grade materials')
 }
-if (!materialsPageSource.includes('function fireGrade4MaterialConfetti()')) {
-  fail('Grade 4 materials must include the same burst-style confetti used by 7th/12th grade materials')
+const grade4TopicPagePath = path.join(process.cwd(), 'app/(student)/dashboard/materials/nvo4-topic/[id]/page.tsx')
+if (!existsSync(grade4TopicPagePath)) {
+  fail('Grade 4 materials must have a dedicated nvo4-topic material route')
 }
-if (!materialsPageSource.includes('completeGrade4Lesson(')) {
-  fail('Grade 4 materials must trigger confetti from a student completion action')
+const grade4TopicPageSource = readFileSync(grade4TopicPagePath, 'utf8')
+for (const requiredSnippet of [
+  'function fireConfetti()',
+  'handleCheck()',
+  'handleRestart()',
+  'Опитай пак',
+  'Виж резултата',
+  'showTheory',
+  'showTest',
+  'router.replace(`/dashboard/materials/nvo4-topic/${id}?view=theory`)',
+  'router.replace(`/dashboard/materials/nvo4-topic/${id}?view=test`)',
+]) {
+  if (!grade4TopicPageSource.includes(requiredSnippet)) {
+    fail(`Grade 4 material route missing interactive 12th-grade-style snippet: ${requiredSnippet}`)
+  }
 }
 
 const testDetailPageSource = readFileSync(

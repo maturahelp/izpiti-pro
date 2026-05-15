@@ -7,7 +7,7 @@
     "build": "tailwindcss -c tailwind.config.ts -i landing-input.css -o public/landing.css --minify && next build",
     "start": "next start",
     "lint": "npm run lint:feature",
-    "lint:feature": "eslint \"app/(student)/dashboard/literature-exercise/[workId]/page.tsx\" \"app/(student)/dashboard/materials/page.tsx\" \"data/dziLiteratureExercises.ts\" \"data/literatureExerciseResolver.ts\" \"scripts/dzi-literature-exercise-blueprints.ts\" \"scripts/validate-dzi-literature-exercises.ts\" \"eslint.config.mjs\"",
+    "lint:feature": "eslint \"app/(student)/dashboard/literature-exercise/[workId]/page.tsx\" \"app/(student)/dashboard/materials/page.tsx\" \"app/(student)/dashboard/materials/nvo4-topic/[id]/page.tsx\" \"data/dziLiteratureExercises.ts\" \"data/literatureExerciseResolver.ts\" \"scripts/dzi-literature-exercise-blueprints.ts\" \"scripts/validate-dzi-literature-exercises.ts\" \"eslint.config.mjs\"",
     "lint:all": "eslint .",
     "review:english-mock:validate": "tsx scripts/validate-english-mock-parser.ts",
     "review:english-mock:screenshots": "tsx scripts/capture-english-mock-screenshots.ts",

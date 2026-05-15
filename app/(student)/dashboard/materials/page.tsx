@@ -15,7 +15,6 @@ import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
 import {
   nvo4BulgarianMaterials,
   nvo4MathMaterials,
-  type Nvo4MaterialItem,
   type Nvo4MaterialTree,
 } from '@/data/nvo4-generated-materials'
 import { bulgarianRuleSections } from '@/data/bulgarianRules'
@@ -451,7 +450,6 @@ const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 const grade4Sections = ['bulgarian', 'math'] as const
 type Grade4Section = typeof grade4Sections[number]
 type Grade7Section = typeof grade7Sections[number]
-type Grade4MaterialMode = 'theory' | 'test'
 type WorkPanel = 'cover' | 'text' | 'summary' | 'video' | 'exercise'
 const LITERATURE_READING_PROGRESS_STORAGE_KEY = 'literature-reading-progress-v1'
 const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
@@ -461,69 +459,10 @@ const grade4SectionLabels: Record<Grade4Section, string> = {
   math: 'Математика',
 }
 
-const nvo4MaterialItemLabels: Record<Nvo4MaterialItem['type'], string> = {
-  theory: 'Теория',
-  worked_example: 'Пример',
-  practice: 'Упражнение',
-  quick_check: 'Проверка',
-  exam_tip: 'Съвет',
-}
-
 function formatNvo4MaterialText(text: string) {
   return text
     .replace(/\\\(\\square\\\)/g, '□')
     .replace(/\\\(\\cdot\\\)/g, '·')
-}
-
-function fireGrade4MaterialConfetti() {
-  if (typeof window === 'undefined') return
-  const COLORS = ['#1E4D7B', '#4CAF50', '#FFC107', '#FF5722', '#9C27B0', '#03A9F4', '#E91E63']
-  const container = document.createElement('div')
-  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;'
-  document.body.appendChild(container)
-  const cx = window.innerWidth / 2
-  const cy = window.innerHeight * 0.55
-  type P = { el: HTMLDivElement; x: number; y: number; vx: number; vy: number; rot: number; vr: number; life: number }
-  const particles: P[] = Array.from({ length: 70 }, () => {
-    const el = document.createElement('div')
-    const color = COLORS[Math.floor(Math.random() * COLORS.length)]
-    const size = 5 + Math.random() * 4
-    el.style.cssText = `position:absolute;left:${cx}px;top:${cy}px;width:${size}px;height:${size * 0.5}px;background:${color};border-radius:2px;will-change:transform,opacity;`
-    container.appendChild(el)
-    const angle = Math.random() * Math.PI * 2
-    const speed = 5 + Math.random() * 9
-    return {
-      el, x: 0, y: 0,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed - 4,
-      rot: Math.random() * 360,
-      vr: (Math.random() - 0.5) * 18,
-      life: 1,
-    }
-  })
-  const start = performance.now()
-  function tick(now: number) {
-    const elapsed = (now - start) / 1000
-    let alive = 0
-    for (const p of particles) {
-      if (p.life <= 0) continue
-      alive++
-      p.x += p.vx
-      p.y += p.vy
-      p.vy += 0.35
-      p.vx *= 0.99
-      p.rot += p.vr
-      p.life -= 0.016
-      p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${p.rot}deg)`
-      p.el.style.opacity = String(Math.max(0, p.life))
-    }
-    if (alive > 0 && elapsed < 4) {
-      requestAnimationFrame(tick)
-    } else {
-      container.remove()
-    }
-  }
-  requestAnimationFrame(tick)
 }
 
 const grade7SectionLabels: Record<Grade7Section, string> = {
@@ -537,8 +476,6 @@ export default function MaterialsPage() {
   const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [grade4Section, setGrade4Section] = useState<Grade4Section>('bulgarian')
-  const [activeGrade4Material, setActiveGrade4Material] = useState<{ lessonId: string; mode: Grade4MaterialMode } | null>(null)
-  const [grade4CompletedLessonIds, setGrade4CompletedLessonIds] = useState<Record<string, boolean>>({})
   const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
   const [activeNvoWorkId, setActiveNvoWorkId] = useState<string | null>(null)
@@ -817,9 +754,9 @@ export default function MaterialsPage() {
     router.push(`/dashboard/materials/dzi-essay-test/${material.id}`)
   }
 
-  const completeGrade4Lesson = (lessonId: string) => {
-    setGrade4CompletedLessonIds((prev) => ({ ...prev, [lessonId]: true }))
-    fireGrade4MaterialConfetti()
+  const openGrade4Material = (lessonId: string, mode: 'theory' | 'test') => {
+    const url = `/dashboard/materials/nvo4-topic/${encodeURIComponent(lessonId)}?view=${mode}`
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
   useEffect(() => {
@@ -1075,14 +1012,6 @@ export default function MaterialsPage() {
     const filteredGrade4Lessons = normalizedQuery
       ? grade4Lessons.filter((entry) => entry.searchableText.includes(normalizedQuery))
       : grade4Lessons
-    const activeGrade4Lesson = grade4Lessons.find((entry) => entry.lesson.id === activeGrade4Material?.lessonId)
-    const activeGrade4Items = activeGrade4Lesson
-      ? activeGrade4Lesson.lesson.items.filter((item) =>
-          activeGrade4Material?.mode === 'theory'
-            ? item.type === 'theory' || item.type === 'worked_example' || item.type === 'exam_tip'
-            : item.type === 'practice' || item.type === 'quick_check'
-        )
-      : []
 
     return (
       <div className="min-h-screen pb-20 md:pb-0">
@@ -1099,10 +1028,7 @@ export default function MaterialsPage() {
                   <button
                     key={section}
                     type="button"
-                    onClick={() => {
-                      setGrade4Section(section)
-                      setActiveGrade4Material(null)
-                    }}
+                    onClick={() => setGrade4Section(section)}
                     style={
                       isActive
                         ? { backgroundColor: sectionTheme.accent, borderColor: sectionTheme.accent, color: '#ffffff' }
@@ -1146,66 +1072,6 @@ export default function MaterialsPage() {
               Намерени: <strong className="text-text">{filteredGrade4Lessons.length}</strong> учебни теми
             </p>
 
-            {activeGrade4Lesson && activeGrade4Material ? (
-              <div
-                className="mb-4 rounded-xl border bg-white p-5"
-                style={{ borderColor: theme.cardBorder }}
-              >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <p className="text-xs font-semibold text-text-muted">
-                      Тема #{activeGrade4Lesson.topicNumber} · {activeGrade4Lesson.unit.title}
-                    </p>
-                    <h3 className="mt-1 text-base font-bold text-text">{activeGrade4Lesson.lesson.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-text-muted">
-                      {formatNvo4MaterialText(activeGrade4Lesson.lesson.goal)}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setActiveGrade4Material(null)}
-                    className="self-start rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-text-muted transition-colors hover:bg-slate-50"
-                  >
-                    Затвори
-                  </button>
-                </div>
-
-                <div className="mt-4 grid gap-3">
-                  {activeGrade4Items.map((item) => (
-                    <article key={item.id} className="rounded-lg border border-slate-200 bg-slate-50/60 p-4">
-                      <p className="text-xs font-bold uppercase tracking-wide" style={{ color: theme.headerText }}>
-                        {nvo4MaterialItemLabels[item.type]} · {item.title}
-                      </p>
-                      <p className="mt-2 text-sm leading-relaxed text-text">{formatNvo4MaterialText(item.body)}</p>
-                      {item.prompts?.length ? (
-                        <ul className="mt-3 space-y-1 text-xs leading-relaxed text-text-muted">
-                          {item.prompts.map((prompt) => (
-                            <li key={prompt}>• {formatNvo4MaterialText(prompt)}</li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </article>
-                  ))}
-                </div>
-
-                <div className="mt-4 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => completeGrade4Lesson(activeGrade4Lesson.lesson.id)}
-                    disabled={Boolean(grade4CompletedLessonIds[activeGrade4Lesson.lesson.id])}
-                    style={
-                      grade4CompletedLessonIds[activeGrade4Lesson.lesson.id]
-                        ? { backgroundColor: theme.sectionBg, borderColor: theme.sectionBorder, color: theme.headerText }
-                        : { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
-                    }
-                    className="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed"
-                  >
-                    {grade4CompletedLessonIds[activeGrade4Lesson.lesson.id] ? 'Темата е завършена' : 'Маркирай темата като готова'}
-                  </button>
-                </div>
-              </div>
-            ) : null}
-
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
               {filteredGrade4Lessons.map(({ lesson, topicNumber }) => (
                 <div
@@ -1213,11 +1079,6 @@ export default function MaterialsPage() {
                   className="relative flex h-full min-h-[220px] flex-col rounded-xl border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5"
                   style={{ borderColor: theme.cardBorder }}
                 >
-                  {grade4CompletedLessonIds[lesson.id] ? (
-                    <div className="absolute right-3 top-3">
-                      <Badge variant="success">Готово</Badge>
-                    </div>
-                  ) : null}
                   <div className="flex-1 min-w-0">
                     <h3
                       className="mb-2 break-words text-[15px] font-semibold leading-snug text-text line-clamp-2"
@@ -1236,26 +1097,19 @@ export default function MaterialsPage() {
                     </p>
                   </div>
                   <div className="mt-auto flex gap-2">
-                    {(['theory', 'test'] as const).map((mode) => {
-                      const isActive = activeGrade4Material?.lessonId === lesson.id && activeGrade4Material.mode === mode
-                      return (
-                        <button
-                          key={mode}
-                          type="button"
-                          onClick={() => setActiveGrade4Material({ lessonId: lesson.id, mode })}
-                          onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.backgroundColor = theme.outlineHoverBg }}
-                          onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.backgroundColor = '#ffffff' }}
-                          className="flex-1 rounded-lg border bg-white py-3 text-sm font-bold transition-colors"
-                          style={
-                            isActive
-                              ? { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
-                              : { borderColor: theme.outlineBorder, color: theme.outlineText }
-                          }
-                        >
-                          {mode === 'theory' ? 'Теория' : 'Тест'}
-                        </button>
-                      )
-                    })}
+                    {(['theory', 'test'] as const).map((mode) => (
+                      <button
+                        key={mode}
+                        type="button"
+                        onClick={() => openGrade4Material(lesson.id, mode)}
+                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = theme.outlineHoverBg }}
+                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff' }}
+                        className="flex-1 rounded-lg border bg-white py-3 text-sm font-bold transition-colors"
+                        style={{ borderColor: theme.outlineBorder, color: theme.outlineText }}
+                      >
+                        {mode === 'theory' ? 'Теория' : 'Тест'}
+                      </button>
+                    ))}
                   </div>
                 </div>
               ))}
