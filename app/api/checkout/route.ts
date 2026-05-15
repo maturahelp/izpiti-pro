@@ -154,14 +154,18 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const discounts = await resolveCheckoutDiscounts(stripe, payload.promoCode)
+    // Спринт планът е already-discounted price и не приема никакви промо кодове.
+    const allowPromoCodes = plan !== 'dzi-sprint'
+    const discounts = allowPromoCodes
+      ? await resolveCheckoutDiscounts(stripe, payload.promoCode)
+      : undefined
 
     const session = await stripe.checkout.sessions.create({
       mode: config.mode,
       client_reference_id: user.id,
       customer: customerId,
       metadata,
-      ...(discounts ? {} : { allow_promotion_codes: true }),
+      ...(allowPromoCodes && !discounts ? { allow_promotion_codes: true } : {}),
       ...(discounts ? { discounts } : {}),
       line_items: [
         {
