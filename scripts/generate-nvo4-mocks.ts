@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
 type Question = {
@@ -365,14 +365,15 @@ function makeBelMock(index: number): Exam {
 }
 
 function main() {
-  const existing = existsSync(mockPath) ? JSON.parse(readFileSync(mockPath, 'utf8')) as { exams: Exam[] } : { exams: [] }
-  const sourceExams = existing.exams.filter((exam) => !exam.id.startsWith('generated_nvo4_'))
+  if (!existsSync(mockPath)) {
+    writeFileSync(mockPath, `${JSON.stringify({ exams: [] }, null, 2)}\n`)
+  }
   const generated = [
     ...Array.from({ length: 10 }, (_, index) => makeBelMock(index + 1)),
     ...Array.from({ length: 10 }, (_, index) => makeMathMock(index + 1)),
   ]
-  writeFileSync(mockPath, `${JSON.stringify({ exams: [...sourceExams, ...generated] }, null, 2)}\n`)
-  console.log(`Wrote ${sourceExams.length} source model/sample exams and ${generated.length} generated mock exams`)
+  writeFileSync(mockPath, `${JSON.stringify({ exams: generated }, null, 2)}\n`)
+  console.log(`Wrote ${generated.length} generated mock exams`)
 }
 
 main()

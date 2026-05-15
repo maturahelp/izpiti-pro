@@ -75,7 +75,7 @@ const sectionTheme: Record<'bel' | 'math' | 'english', SubjectThemeColors> = {
 
 const modeLabelsByGrade: Record<'4' | '7' | '12', Record<TestMode, string>> = {
   '4': {
-    sample: 'Модели, примерни и пробни НВО',
+    sample: 'Пробни НВО',
     past: 'НВО от минали години',
   },
   '7': {
@@ -369,7 +369,9 @@ export function TestsPageContent({
 
           <div id={isEnglishSampleView ? 'english-generated-tests' : undefined} className="grid sm:grid-cols-2 gap-4">
             {filtered.map((test) => {
+              const isGeneratedNvo4Mock = test.id.startsWith('generated_nvo4_')
               const isMock =
+                isGeneratedNvo4Mock ||
                 test.id.startsWith('mock_') ||
                 test.id.startsWith('selected_mock_') ||
                 test.id.startsWith('english-generated-')
@@ -390,7 +392,7 @@ export function TestsPageContent({
                   </div>
                 ) : isMock ? (
                   <div className="absolute top-3 right-3">
-                    <Badge variant="neutral">Примерен</Badge>
+                    <Badge variant="neutral">{isGeneratedNvo4Mock ? 'Пробен' : 'Примерен'}</Badge>
                   </div>
                 ) : null}
 

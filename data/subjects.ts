@@ -26,7 +26,7 @@ export const subjects: Subject[] = [
     examType: 'nvo4',
     color: '#8B5CF6',
     topicsCount: 3,
-    testsCount: 31,
+    testsCount: 28,
     lessonsCount: 23,
   },
   {
@@ -36,7 +36,7 @@ export const subjects: Subject[] = [
     examType: 'nvo4',
     color: '#16A34A',
     topicsCount: 3,
-    testsCount: 31,
+    testsCount: 28,
     lessonsCount: 36,
   },
   {
@@ -133,10 +133,10 @@ export const subjects: Subject[] = [
 
 export const topics: Topic[] = [
   { id: 'bg4-nvo', subjectId: 'bg-lang-4', name: 'НВО — Пълен изпит', order: 1, lessonsCount: 0, testsCount: 18 },
-  { id: 'bg4-nvo-model', subjectId: 'bg-lang-4', name: 'НВО — Модели и пробни тестове', order: 2, lessonsCount: 0, testsCount: 13 },
+  { id: 'bg4-nvo-model', subjectId: 'bg-lang-4', name: 'НВО — Пробни тестове', order: 2, lessonsCount: 0, testsCount: 10 },
   { id: 'bg4-materials', subjectId: 'bg-lang-4', name: 'Материали за подготовка', order: 3, lessonsCount: 23, testsCount: 0 },
   { id: 'math4-nvo', subjectId: 'math-4', name: 'НВО — Пълен изпит', order: 1, lessonsCount: 0, testsCount: 18 },
-  { id: 'math4-nvo-model', subjectId: 'math-4', name: 'НВО — Модели и пробни тестове', order: 2, lessonsCount: 0, testsCount: 13 },
+  { id: 'math4-nvo-model', subjectId: 'math-4', name: 'НВО — Пробни тестове', order: 2, lessonsCount: 0, testsCount: 10 },
   { id: 'math4-materials', subjectId: 'math-4', name: 'Материали за подготовка', order: 3, lessonsCount: 36, testsCount: 0 },
   { id: 'bg7-1', subjectId: 'bg-lang-7', name: 'Правопис и пунктуация', order: 1, lessonsCount: 4, testsCount: 7 },
   { id: 'bg7-2', subjectId: 'bg-lang-7', name: 'Части на речта', order: 2, lessonsCount: 3, testsCount: 2 },

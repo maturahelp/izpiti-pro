@@ -451,6 +451,7 @@ const grade7Sections = ['bulgarian', 'literature', 'math'] as const
 const grade4Sections = ['bulgarian', 'math'] as const
 type Grade4Section = typeof grade4Sections[number]
 type Grade7Section = typeof grade7Sections[number]
+type Grade4MaterialMode = 'theory' | 'test'
 type WorkPanel = 'cover' | 'text' | 'summary' | 'video' | 'exercise'
 const LITERATURE_READING_PROGRESS_STORAGE_KEY = 'literature-reading-progress-v1'
 const NVO_READING_PROGRESS_STORAGE_KEY = 'nvo-literature-reading-progress-v1'
@@ -536,6 +537,7 @@ export default function MaterialsPage() {
   const router = useRouter()
   const [selectedSection, setSelectedSection] = useState<MaterialSection>('bulgarian')
   const [grade4Section, setGrade4Section] = useState<Grade4Section>('bulgarian')
+  const [activeGrade4Material, setActiveGrade4Material] = useState<{ lessonId: string; mode: Grade4MaterialMode } | null>(null)
   const [grade4CompletedLessonIds, setGrade4CompletedLessonIds] = useState<Record<string, boolean>>({})
   const [grade7Section, setGrade7Section] = useState<Grade7Section>('bulgarian')
   const [activeWorkId, setActiveWorkId] = useState<string | null>(null)
@@ -1048,75 +1050,92 @@ export default function MaterialsPage() {
   if (effectiveGrade === '4') {
     const theme = subjectTheme[grade4Section]
     const materialTree: Nvo4MaterialTree = grade4Section === 'bulgarian' ? nvo4BulgarianMaterials : nvo4MathMaterials
-    const quickLinks = grade4Section === 'bulgarian'
-      ? [
-          {
-            title: 'Официални НВО тестове по БЕЛ',
-            description: 'Тестове и ключове от МОН за 4. клас по години.',
-            href: '/dashboard/tests?grade=4&section=bel&mode=past',
-            action: 'Отвори тестовете',
-          },
-          {
-            title: 'Модели и примерни материали',
-            description: 'Модели на НВО и примерни тестове от официалната страница.',
-            href: '/dashboard/tests?grade=4&section=bel&mode=sample',
-            action: 'Виж моделите',
-          },
-          {
-            title: '10 пробни НВО по БЕЛ',
-            description: 'Оригинални пробни тестове по формата на официалното НВО.',
-            href: '/dashboard/tests?grade=4&section=bel&mode=sample',
-            action: 'Започни пробен тест',
-          },
-        ]
-      : [
-          {
-            title: 'Официални НВО тестове по математика',
-            description: 'Тестове и ключове от МОН за 4. клас по години.',
-            href: '/dashboard/tests?grade=4&section=math&mode=past',
-            action: 'Отвори тестовете',
-          },
-          {
-            title: 'Модели и примерни материали',
-            description: 'Модели на НВО и примерни тестове от официалната страница.',
-            href: '/dashboard/tests?grade=4&section=math&mode=sample',
-            action: 'Виж моделите',
-          },
-          {
-            title: '10 пробни НВО по математика',
-            description: 'Оригинални пробни тестове с генерирани фигури, схеми и графики.',
-            href: '/dashboard/tests?grade=4&section=math&mode=sample',
-            action: 'Започни пробен тест',
-          },
-        ]
+    let grade4TopicCounter = 0
+    const grade4Lessons = materialTree.units.flatMap((unit) =>
+      unit.lessons.map((lesson) => {
+        grade4TopicCounter += 1
+        return {
+          unit,
+          lesson,
+          topicNumber: grade4TopicCounter,
+          searchableText: [
+            unit.title,
+            unit.description,
+            lesson.title,
+            lesson.goal,
+            ...lesson.items.flatMap((item) => [
+              item.title,
+              item.body,
+              ...(item.prompts ?? []),
+            ]),
+          ].join(' ').toLowerCase(),
+        }
+      })
+    )
+    const filteredGrade4Lessons = normalizedQuery
+      ? grade4Lessons.filter((entry) => entry.searchableText.includes(normalizedQuery))
+      : grade4Lessons
+    const activeGrade4Lesson = grade4Lessons.find((entry) => entry.lesson.id === activeGrade4Material?.lessonId)
+    const activeGrade4Items = activeGrade4Lesson
+      ? activeGrade4Lesson.lesson.items.filter((item) =>
+          activeGrade4Material?.mode === 'theory'
+            ? item.type === 'theory' || item.type === 'worked_example' || item.type === 'exam_tip'
+            : item.type === 'practice' || item.type === 'quick_check'
+        )
+      : []
 
     return (
       <div className="min-h-screen pb-20 md:pb-0">
         <TopBar title="Материали" />
         <div className="p-4 md:p-6 max-w-5xl mx-auto">
-          <div className="mb-4 flex flex-wrap justify-center gap-2">
-            {grade4Sections.map((section) => {
-              const sectionTheme = subjectTheme[section]
-              const isActive = grade4Section === section
-              return (
-                <button
-                  key={section}
-                  type="button"
-                  onClick={() => setGrade4Section(section)}
-                  style={
-                    isActive
-                      ? { backgroundColor: sectionTheme.accent, borderColor: sectionTheme.accent, color: '#ffffff' }
-                      : undefined
-                  }
-                  className={cn(
-                    'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
-                    isActive ? '' : 'bg-white text-text border-border hover:bg-slate-50'
-                  )}
-                >
-                  {grade4SectionLabels[section]}
-                </button>
-              )
-            })}
+          <div className="mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
+            <div className="hidden md:block" />
+
+            <div className="flex flex-wrap justify-center gap-2">
+              {grade4Sections.map((section) => {
+                const sectionTheme = subjectTheme[section]
+                const isActive = grade4Section === section
+                return (
+                  <button
+                    key={section}
+                    type="button"
+                    onClick={() => {
+                      setGrade4Section(section)
+                      setActiveGrade4Material(null)
+                    }}
+                    style={
+                      isActive
+                        ? { backgroundColor: sectionTheme.accent, borderColor: sectionTheme.accent, color: '#ffffff' }
+                        : undefined
+                    }
+                    className={cn(
+                      'inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                      isActive ? '' : 'bg-white text-text border-border hover:bg-slate-50'
+                    )}
+                  >
+                    {grade4SectionLabels[section]}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="flex justify-center md:justify-end">
+              <label className="relative w-full max-w-[180px]">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Търси"
+                  className="w-full rounded-xl border border-border bg-white py-1.5 pl-8 pr-2 text-xs text-text placeholder:text-text-muted/70 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                />
+              </label>
+            </div>
           </div>
 
           <div
@@ -1124,94 +1143,130 @@ export default function MaterialsPage() {
             style={{ backgroundColor: theme.sectionBg, borderColor: theme.sectionBorder }}
           >
             <p className="text-sm text-text-muted mb-4">
-              Материали за <strong className="text-text">{grade4SectionLabels[grade4Section]}</strong> (4. клас)
+              Намерени: <strong className="text-text">{filteredGrade4Lessons.length}</strong> учебни теми
             </p>
-            <div className="grid sm:grid-cols-3 gap-4">
-              {quickLinks.map((card) => (
-                <div
-                  key={card.title}
-                  className="rounded-xl border bg-white p-5 flex min-h-[190px] flex-col"
-                  style={{ borderColor: theme.cardBorder }}
-                >
-                  <h3 className="text-sm font-bold text-text leading-snug">{card.title}</h3>
-                  <p className="mt-2 text-sm text-text-muted leading-relaxed">{card.description}</p>
+
+            {activeGrade4Lesson && activeGrade4Material ? (
+              <div
+                className="mb-4 rounded-xl border bg-white p-5"
+                style={{ borderColor: theme.cardBorder }}
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-semibold text-text-muted">
+                      Тема #{activeGrade4Lesson.topicNumber} · {activeGrade4Lesson.unit.title}
+                    </p>
+                    <h3 className="mt-1 text-base font-bold text-text">{activeGrade4Lesson.lesson.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-text-muted">
+                      {formatNvo4MaterialText(activeGrade4Lesson.lesson.goal)}
+                    </p>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => card.href && router.push(card.href)}
-                    disabled={!card.href}
-                    style={card.href ? { color: theme.outlineText, borderColor: theme.outlineBorder } : undefined}
-                    className="mt-auto inline-flex justify-center rounded-xl border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:border-gray-200 disabled:text-text-muted"
+                    onClick={() => setActiveGrade4Material(null)}
+                    className="self-start rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-text-muted transition-colors hover:bg-slate-50"
                   >
-                    {card.action}
+                    Затвори
                   </button>
+                </div>
+
+                <div className="mt-4 grid gap-3">
+                  {activeGrade4Items.map((item) => (
+                    <article key={item.id} className="rounded-lg border border-slate-200 bg-slate-50/60 p-4">
+                      <p className="text-xs font-bold uppercase tracking-wide" style={{ color: theme.headerText }}>
+                        {nvo4MaterialItemLabels[item.type]} · {item.title}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-text">{formatNvo4MaterialText(item.body)}</p>
+                      {item.prompts?.length ? (
+                        <ul className="mt-3 space-y-1 text-xs leading-relaxed text-text-muted">
+                          {item.prompts.map((prompt) => (
+                            <li key={prompt}>• {formatNvo4MaterialText(prompt)}</li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => completeGrade4Lesson(activeGrade4Lesson.lesson.id)}
+                    disabled={Boolean(grade4CompletedLessonIds[activeGrade4Lesson.lesson.id])}
+                    style={
+                      grade4CompletedLessonIds[activeGrade4Lesson.lesson.id]
+                        ? { backgroundColor: theme.sectionBg, borderColor: theme.sectionBorder, color: theme.headerText }
+                        : { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
+                    }
+                    className="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed"
+                  >
+                    {grade4CompletedLessonIds[activeGrade4Lesson.lesson.id] ? 'Темата е завършена' : 'Маркирай темата като готова'}
+                  </button>
+                </div>
+              </div>
+            ) : null}
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+              {filteredGrade4Lessons.map(({ lesson, topicNumber }) => (
+                <div
+                  key={lesson.id}
+                  className="relative flex h-full min-h-[220px] flex-col rounded-xl border bg-white p-5 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                  style={{ borderColor: theme.cardBorder }}
+                >
+                  {grade4CompletedLessonIds[lesson.id] ? (
+                    <div className="absolute right-3 top-3">
+                      <Badge variant="success">Готово</Badge>
+                    </div>
+                  ) : null}
+                  <div className="flex-1 min-w-0">
+                    <h3
+                      className="mb-2 break-words text-[15px] font-semibold leading-snug text-text line-clamp-2"
+                      title={lesson.title}
+                    >
+                      {lesson.title}
+                    </h3>
+                    <p
+                      className="mb-4 min-h-[2.6em] break-words text-[15px] font-semibold leading-snug text-text line-clamp-2"
+                      title={lesson.goal}
+                    >
+                      {formatNvo4MaterialText(lesson.goal)}
+                    </p>
+                    <p className="mb-4 text-sm font-semibold" style={{ color: theme.accent, opacity: 0.8 }}>
+                      Тема #{topicNumber}
+                    </p>
+                  </div>
+                  <div className="mt-auto flex gap-2">
+                    {(['theory', 'test'] as const).map((mode) => {
+                      const isActive = activeGrade4Material?.lessonId === lesson.id && activeGrade4Material.mode === mode
+                      return (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => setActiveGrade4Material({ lessonId: lesson.id, mode })}
+                          onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.backgroundColor = theme.outlineHoverBg }}
+                          onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.backgroundColor = '#ffffff' }}
+                          className="flex-1 rounded-lg border bg-white py-3 text-sm font-bold transition-colors"
+                          style={
+                            isActive
+                              ? { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
+                              : { borderColor: theme.outlineBorder, color: theme.outlineText }
+                          }
+                        >
+                          {mode === 'theory' ? 'Теория' : 'Тест'}
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 rounded-xl bg-white/70 p-4">
-              <div className="mb-4">
-                <h2 className="text-base font-bold text-text">{materialTree.title}</h2>
-                <p className="mt-1 text-sm text-text-muted leading-relaxed">{materialTree.description}</p>
+            {filteredGrade4Lessons.length === 0 && (
+              <div className="text-center py-10 text-text-muted">
+                <p className="font-medium mb-1">Няма намерени теми</p>
+                <p className="text-sm">Опитай с друга ключова дума.</p>
               </div>
-
-              <div className="space-y-4">
-                {materialTree.units.map((unit) => (
-                  <section key={unit.id} className="border-t border-white/80 pt-4 first:border-t-0 first:pt-0">
-                    <div className="mb-3">
-                      <h3 className="text-sm font-bold" style={{ color: theme.headerText }}>{unit.title}</h3>
-                      <p className="mt-1 text-sm text-text-muted leading-relaxed">{unit.description}</p>
-                    </div>
-                    <div className="divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
-                      {unit.lessons.map((lesson) => (
-                        <details key={lesson.id} className="group">
-                          <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-4 py-3 text-left">
-                            <span>
-                              <span className="block text-sm font-semibold text-text">{lesson.title}</span>
-                              <span className="mt-1 block text-xs leading-relaxed text-text-muted">{formatNvo4MaterialText(lesson.goal)}</span>
-                            </span>
-                            <span className="mt-1 text-xs font-bold text-text-muted transition-transform group-open:rotate-180">⌄</span>
-                          </summary>
-                          <div className="px-4 pb-4">
-                            <div className="space-y-3">
-                              {lesson.items.map((item) => (
-                                <div key={item.id} className="border-l-2 pl-3" style={{ borderColor: theme.outlineBorder }}>
-                                  <p className="text-xs font-bold uppercase tracking-wide" style={{ color: theme.headerText }}>
-                                    {nvo4MaterialItemLabels[item.type]} · {item.title}
-                                  </p>
-                                  <p className="mt-1 text-sm leading-relaxed text-text">{formatNvo4MaterialText(item.body)}</p>
-                                  {item.prompts?.length ? (
-                                    <ul className="mt-2 space-y-1 text-xs leading-relaxed text-text-muted">
-                                      {item.prompts.map((prompt) => (
-                                        <li key={prompt}>• {formatNvo4MaterialText(prompt)}</li>
-                                      ))}
-                                    </ul>
-                                  ) : null}
-                                </div>
-                              ))}
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                              <button
-                                type="button"
-                                onClick={() => completeGrade4Lesson(lesson.id)}
-                                disabled={Boolean(grade4CompletedLessonIds[lesson.id])}
-                                style={
-                                  grade4CompletedLessonIds[lesson.id]
-                                    ? { backgroundColor: theme.sectionBg, borderColor: theme.sectionBorder, color: theme.headerText }
-                                    : { backgroundColor: theme.accent, borderColor: theme.accent, color: '#ffffff' }
-                                }
-                                className="inline-flex items-center justify-center rounded-xl border px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed"
-                              >
-                                {grade4CompletedLessonIds[lesson.id] ? 'Урокът е завършен' : 'Маркирай урока като готов'}
-                              </button>
-                            </div>
-                          </div>
-                        </details>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

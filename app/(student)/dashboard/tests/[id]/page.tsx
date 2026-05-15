@@ -1312,11 +1312,6 @@ function QuestionCard({
           {normalizeMathText(question.task_condition)}
         </div>
       )}
-      {question.formatting_flags?.length ? (
-        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-relaxed text-amber-800">
-          Форматирането на тази задача е маркирано за преглед. Свери с изображението от оригиналния PDF.
-        </div>
-      ) : null}
       <div className="text-sm font-medium text-text leading-relaxed mb-4">
         {questionContent}
       </div>

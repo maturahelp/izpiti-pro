@@ -50,13 +50,13 @@ if (official.length !== expectedOfficialYears.length * 2) {
   fail(`Expected ${expectedOfficialYears.length * 2} official exams, got ${official.length}`)
 }
 
-if (mock.length !== 26) {
-  fail(`Expected 26 model/sample/generated mock exams, got ${mock.length}`)
+if (mock.length !== 20) {
+  fail(`Expected 20 generated mock exams, got ${mock.length}`)
 }
 
 const sourceModelOrSample = mock.filter((exam) => /^mock_nvo4_(?:bel|math)_\d{4}_(?:model|sample)$/.test(exam.id))
-if (sourceModelOrSample.length !== 6) {
-  fail(`Expected 6 source model/sample exams, got ${sourceModelOrSample.length}`)
+if (sourceModelOrSample.length !== 0) {
+  fail(`Source model/sample exams must not be shown as Grade 4 mock tests: ${sourceModelOrSample.map((exam) => exam.id).join(', ')}`)
 }
 
 const generatedMathMocks = mock.filter((exam) => /^generated_nvo4_math_mock_\d{2}$/.test(exam.id))
@@ -243,15 +243,30 @@ for (const year of expectedOfficialYears) {
   if (!catalogIds.has(`nvo4-bel-${year}`)) fail(`Catalog missing nvo4-bel-${year}`)
   if (!catalogIds.has(`nvo4-math-${year}`)) fail(`Catalog missing nvo4-math-${year}`)
 }
+if (nvo4Tests.length !== 56) {
+  fail(`Expected 56 NVO 4 catalog entries after removing model/sample cards, got ${nvo4Tests.length}`)
+}
+const staleCatalogEntries = nvo4Tests.filter((test) =>
+  /Модел на НВО|Примерен тест|примерни материали|Модели/i.test(`${test.id} ${test.title} ${test.topicName}`)
+)
+if (staleCatalogEntries.length) {
+  fail(`Catalog still exposes model/sample Grade 4 cards: ${staleCatalogEntries.map((test) => test.id).join(', ')}`)
+}
 
 const materialsPageSource = readFileSync(
   path.join(process.cwd(), 'app/(student)/dashboard/materials/page.tsx'),
   'utf8',
 )
+if (materialsPageSource.includes('Модели и примерни материали') || materialsPageSource.includes('Официални НВО тестове по')) {
+  fail('Grade 4 materials page must use topic cards, not the old quick-link cards')
+}
+if (!materialsPageSource.includes('activeGrade4Material') || !materialsPageSource.includes('Теория') || !materialsPageSource.includes('Тест')) {
+  fail('Grade 4 materials must expose topic-card Theory and Test actions like 7th/12th grade materials')
+}
 if (!materialsPageSource.includes('function fireGrade4MaterialConfetti()')) {
   fail('Grade 4 materials must include the same burst-style confetti used by 7th/12th grade materials')
 }
-if (!materialsPageSource.includes('completeGrade4Lesson(lesson.id)')) {
+if (!materialsPageSource.includes('completeGrade4Lesson(')) {
   fail('Grade 4 materials must trigger confetti from a student completion action')
 }
 
@@ -268,5 +283,8 @@ if (!testDetailPageSource.includes('mockNvo4PracticeDataset')) {
 if (!testDetailPageSource.includes('fireBurstConfetti()')) {
   fail('Grade 4 tests must keep the burst confetti trigger on strong submissions')
 }
+if (testDetailPageSource.includes('Форматирането на тази задача е маркирано за преглед')) {
+  fail('Student-facing test images must not show the PDF-formatting warning banner')
+}
 
-console.log(`Validated ${official.length} official NVO 4 exams, ${mock.length} model/sample/generated exams, ${nvo4Tests.length} catalog entries.`)
+console.log(`Validated ${official.length} official NVO 4 exams, ${mock.length} generated mock exams, ${nvo4Tests.length} catalog entries.`)
