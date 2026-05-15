@@ -104,7 +104,7 @@ export default function SubscriptionPage() {
       'nvo4-full': 9.99,
       'nvo-full': 30,
       'dzi-full': 9.99,
-      'dzi-sprint': 10,
+      'dzi-sprint': 9.99,
     }
     const STORAGE_KEY = 'mh_purchase_pixel_fired'
     let sessionId: string | null = null

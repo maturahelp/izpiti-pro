@@ -39,7 +39,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   },
   'dzi-sprint': {
     name: 'Спринт до ДЗИ',
-    amount: 1000,
+    amount: 999,
     currency: 'eur',
     mode: 'payment',
     class: '12',
