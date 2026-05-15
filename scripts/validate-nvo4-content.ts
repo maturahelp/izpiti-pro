@@ -260,8 +260,11 @@ const materialsPageSource = readFileSync(
 if (materialsPageSource.includes('Модели и примерни материали') || materialsPageSource.includes('Официални НВО тестове по')) {
   fail('Grade 4 materials page must use topic cards, not the old quick-link cards')
 }
-if (!materialsPageSource.includes('openGrade4Material(') || !materialsPageSource.includes("window.open(url, '_blank', 'noopener,noreferrer')")) {
-  fail('Grade 4 material Theory/Test buttons must open the dedicated material page in a new tab')
+if (!materialsPageSource.includes('openGrade4Material(') || !materialsPageSource.includes('router.push(url)')) {
+  fail('Grade 4 material Theory/Test buttons must navigate to the dedicated material page in the current app tab')
+}
+if (materialsPageSource.includes('window.open(') || materialsPageSource.includes("'_blank'")) {
+  fail('Grade 4 material Theory/Test buttons must not open a browser tab')
 }
 if (materialsPageSource.includes('activeGrade4Material') || materialsPageSource.includes('setActiveGrade4Material')) {
   fail('Grade 4 materials must not render the old inline theory/test panel')

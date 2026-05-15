@@ -756,7 +756,7 @@ export default function MaterialsPage() {
 
   const openGrade4Material = (lessonId: string, mode: 'theory' | 'test') => {
     const url = `/dashboard/materials/nvo4-topic/${encodeURIComponent(lessonId)}?view=${mode}`
-    window.open(url, '_blank', 'noopener,noreferrer')
+    router.push(url)
   }
 
   useEffect(() => {
