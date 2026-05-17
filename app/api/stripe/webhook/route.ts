@@ -9,6 +9,7 @@ import {
   resolveUserIdFromCustomer,
   type BillingPatch,
 } from '@/lib/billing/state'
+import { schedulePurchaseEmailAutomations } from '@/lib/email-automation/jobs'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const runtime = 'nodejs'
@@ -78,6 +79,10 @@ async function markEventProcessed(eventId: string) {
 async function handleCheckoutCompleted(stripe: Stripe, session: Stripe.Checkout.Session) {
   const planKey = metadataString(session.metadata, 'planKey')
   const userId = session.client_reference_id ?? metadataString(session.metadata, 'userId')
+  const userEmail =
+    metadataString(session.metadata, 'userEmail') ??
+    session.customer_details?.email ??
+    null
 
   if (!planKey || !isPlanKey(planKey) || !userId) {
     console.error('[stripe webhook] checkout.session.completed missing metadata', {
@@ -99,6 +104,12 @@ async function handleCheckoutCompleted(stripe: Stripe, session: Stripe.Checkout.
 
     const patch = buildOneTimePaymentPatch(planKey as PlanKey, customerId)
     await applyBillingPatch(userId, patch)
+    await schedulePurchaseEmailAutomations({
+      userId,
+      email: userEmail,
+      planKey,
+      purchaseReference: session.id,
+    })
     return
   }
 
@@ -118,6 +129,12 @@ async function handleCheckoutCompleted(stripe: Stripe, session: Stripe.Checkout.
     lastPaymentStatus: 'succeeded',
   })
   await applyBillingPatch(userId, patch)
+  await schedulePurchaseEmailAutomations({
+    userId,
+    email: userEmail,
+    planKey,
+    purchaseReference: session.id,
+  })
 }
 
 async function handleInvoicePaid(stripe: Stripe, invoice: Stripe.Invoice) {

@@ -1,4 +1,10 @@
 {
+  "crons": [
+    {
+      "path": "/api/cron/email-automations",
+      "schedule": "*/15 * * * *"
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",
