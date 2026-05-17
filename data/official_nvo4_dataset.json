@@ -4500,11 +4500,12 @@
           "Б": "нахранил се обилно",
           "В": "повикал животните да го видят"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 2,
@@ -4547,11 +4548,12 @@
           "Б": "прозорлива",
           "В": "лукава"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 5,
@@ -4568,11 +4570,12 @@
           "Б": "отказва да влезе в пещерата",
           "В": "предлага му храна"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 6,
@@ -4621,11 +4624,12 @@
           "Б": "многозначни",
           "В": "сродни"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -4642,11 +4646,12 @@
           "Б": "възклицателно",
           "В": "съобщително\n Прочети само оцветената част от текста и реши следните задачи:"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 10,
@@ -4711,11 +4716,12 @@
           "Б": "2 707 007",
           "В": "2 707 700"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 2,
@@ -4732,11 +4738,12 @@
           "Б": "56 758",
           "В": "56 689"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 3,
@@ -4753,11 +4760,12 @@
           "Б": "66 805",
           "В": "56 905"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -4774,11 +4782,12 @@
           "Б": "72 065",
           "В": "72 075"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 5,
@@ -4795,11 +4804,12 @@
           "Б": "69 025",
           "В": "68 055"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 6,
@@ -4816,11 +4826,12 @@
           "Б": "50 864",
           "В": "50 964"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -4837,11 +4848,12 @@
           "Б": "980",
           "В": "9080"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -4858,11 +4870,12 @@
           "Б": "207",
           "В": "270"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 9,
@@ -4879,11 +4892,12 @@
           "Б": "15",
           "В": "238"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 10,
@@ -4900,11 +4914,12 @@
           "Б": "1138",
           "В": "1550"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 11,
@@ -4921,11 +4936,12 @@
           "Б": "474",
           "В": "948"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 12,
@@ -4942,11 +4958,12 @@
           "Б": "122 дм",
           "В": "140 дм"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 13,
@@ -4963,13 +4980,14 @@
           "Б": "четири",
           "В": "пет"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 14,
@@ -4986,13 +5004,14 @@
           "Б": "четири",
           "В": "три"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 15,
@@ -5009,13 +5028,14 @@
           "Б": "185 см",
           "В": "193 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2019_math_q15.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 16,
@@ -5032,13 +5052,14 @@
           "Б": "320 – (320:4 + 160) = 80 лв.",
           "В": "(320 – 160):4 = 40 лв.\n\nПрочети внимателно следващите две задачи, пресметни и запиши отговора на\nопределеното място."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2019_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 17,
@@ -5135,11 +5156,12 @@
           "Б": "за да ги склонят да излязат от кошарата",
           "В": "за да ги излъжат и нападнат по-лесно"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 3,
@@ -5156,11 +5178,12 @@
           "Б": "да принесат в жертва една овца",
           "В": "вълците да пазят овцете вместо кучетата"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -5209,11 +5232,12 @@
           "Б": "временен мир",
           "В": "безсрочен мир"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -5246,11 +5270,12 @@
           "Б": "антоними",
           "В": "синоними"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 9,
@@ -5267,11 +5292,12 @@
           "Б": "съобщително",
           "В": "въпросително\n Прочети само двете оцветени изречения в текста и реши следните задачи:"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 10,
@@ -5334,11 +5360,12 @@
           "Б": "53 167 541",
           "В": "73 621 409"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 2,
@@ -5355,11 +5382,12 @@
           "Б": "150 898",
           "В": "150 899"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 3,
@@ -5376,11 +5404,12 @@
           "Б": "60 739",
           "В": "50 739"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 4,
@@ -5397,11 +5426,12 @@
           "Б": "30 867",
           "В": "31 867"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 5,
@@ -5418,12 +5448,13 @@
           "Б": "15 105",
           "В": "15 025"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 6,
@@ -5440,11 +5471,12 @@
           "Б": "30 047",
           "В": "32 047"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -5461,12 +5493,13 @@
           "Б": "680",
           "В": "608"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 8,
@@ -5483,11 +5516,12 @@
           "Б": "107",
           "В": "17"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 9,
@@ -5504,12 +5538,13 @@
           "Б": "3500",
           "В": "19 880"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -5526,11 +5561,12 @@
           "Б": "3880",
           "В": "3780"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 11,
@@ -5547,12 +5583,13 @@
           "Б": "93",
           "В": "1488"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 12,
@@ -5569,11 +5606,12 @@
           "Б": "26 040 м",
           "В": "26 400 м"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 13,
@@ -5590,12 +5628,13 @@
           "Б": "два",
           "В": "три"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 14,
@@ -5612,14 +5651,15 @@
           "Б": "шест",
           "В": "седем"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2018_math_q14.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 15,
@@ -5636,13 +5676,14 @@
           "Б": "136 м",
           "В": "160 м"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2018_math_q15.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 16,
@@ -5659,11 +5700,12 @@
           "Б": "1260 – (1260 : 2 + 378) = 252",
           "В": "(1260 – 378) : 2 = 441\n! Прочети внимателно следните две задачи. Пресметни и запиши на определеното\nмясто само отговора на всяка от тях."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 17,
@@ -5758,11 +5800,12 @@
           "Б": "снасяло яйца",
           "В": "мътело пиленца"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 3,
@@ -5805,11 +5848,12 @@
           "Б": "хитро",
           "В": "надменно"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 6,
@@ -5842,11 +5886,12 @@
           "Б": "остава да се грижи за своите пиленца",
           "В": "иска да вземе и пиленцата, за да ядат наготово"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -5863,11 +5908,12 @@
           "Б": "многозначни",
           "В": "сродни"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -5884,11 +5930,12 @@
           "Б": "възклицателно",
           "В": "въпросително\nПрочети само оцветената част от текста и реши следните задачи:"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -5951,11 +5998,12 @@
           "Б": "4 560 021",
           "В": "4 560 210"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 2,
@@ -5972,11 +6020,12 @@
           "Б": "60 606",
           "В": "60 006"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 3,
@@ -5993,12 +6042,13 @@
           "Б": "7333",
           "В": "6343"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -6015,11 +6065,12 @@
           "Б": "4592",
           "В": "533"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 5,
@@ -6036,12 +6087,13 @@
           "Б": "25 104",
           "В": "24 684"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 6,
@@ -6058,11 +6110,12 @@
           "Б": "6958",
           "В": "7958"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -6079,12 +6132,13 @@
           "Б": "370",
           "В": "307"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 8,
@@ -6101,12 +6155,13 @@
           "Б": "160",
           "В": "1060"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -6123,12 +6178,13 @@
           "Б": "100",
           "В": "39 184"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -6145,13 +6201,14 @@
           "Б": "2282",
           "В": "3798"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2017_math_q10.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 11,
@@ -6168,12 +6225,13 @@
           "Б": "6921",
           "В": "20 763"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 12,
@@ -6190,11 +6248,12 @@
           "Б": "6230 кг",
           "В": "6023 кг"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 13,
@@ -6211,13 +6270,14 @@
           "Б": "пет",
           "В": "шест"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 14,
@@ -6234,14 +6294,15 @@
           "Б": "осем",
           "В": "девет"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2017_math_q14.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 15,
@@ -6258,11 +6319,12 @@
           "Б": "480 кв. см",
           "В": "672 кв. см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 16,
@@ -6279,14 +6341,15 @@
           "Б": "1200 – (1200:3 + 180 ) = 620 лв.",
           "В": "1200 – (1200:3 – 180 ) = 980 лв.\n Прочети внимателно следните две задачи. Пресметни и запиши отговора си на\nопределеното място."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2017_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 17,
@@ -6367,11 +6430,12 @@
           "Б": "красотата на водопада",
           "В": "чувствата на кладенчето"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 2,
@@ -6414,11 +6478,12 @@
           "Б": "водопадът е нахален",
           "В": "кладенчето е сърдито"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 5,
@@ -6435,11 +6500,12 @@
           "Б": "водата на кладенчето е вълшебна",
           "В": "водата на водопада е недостъпна"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 6,
@@ -6472,11 +6538,12 @@
           "Б": "достатъчно количество вода",
           "В": "недостатъчно количество вода"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -6493,11 +6560,12 @@
           "Б": "възклицателно изречение",
           "В": "съобщително изречение\nПрочети само оцветената част от текста и реши задачите към него:"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 9,
@@ -6576,11 +6644,12 @@
           "Б": "12 397 048",
           "В": "17 365 721"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 2,
@@ -6597,11 +6666,12 @@
           "Б": "940 901",
           "В": "941 000"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 3,
@@ -6618,11 +6688,12 @@
           "Б": "51 925",
           "В": "41 925"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 4,
@@ -6639,11 +6710,12 @@
           "Б": "4965",
           "В": "5055"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 5,
@@ -6660,11 +6732,12 @@
           "Б": "22 274",
           "В": "22 374"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 6,
@@ -6681,11 +6754,12 @@
           "Б": "20 574",
           "В": "2 570"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 7,
@@ -6702,11 +6776,12 @@
           "Б": "370",
           "В": "3070"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -6723,11 +6798,12 @@
           "Б": "240",
           "В": "2040"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -6744,11 +6820,12 @@
           "Б": "15 912",
           "В": "0"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 10,
@@ -6765,11 +6842,12 @@
           "Б": "733",
           "В": "1000"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 11,
@@ -6786,14 +6864,15 @@
           "Б": "901",
           "В": "91"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "question_image": "/nvo4-page-images/nvo4_2016_math_q11.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 12,
@@ -6810,11 +6889,12 @@
           "Б": "1108 см",
           "В": "11 008 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 13,
@@ -6831,13 +6911,14 @@
           "Б": "8",
           "В": "10"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 14,
@@ -6854,13 +6935,14 @@
           "Б": "8",
           "В": "9"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 15,
@@ -6877,11 +6959,12 @@
           "Б": "480 см",
           "В": "540 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 16,
@@ -6898,13 +6981,14 @@
           "Б": "1480 + 1480:2 + 1670 = 3890 лв.",
           "В": "1480 + 1480.2 + 1670 = 6110 лв.\n Прочети внимателно следните две задачи, пресметни и запиши отговора си на\nопределеното място."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2016_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 17,
@@ -6998,11 +7082,12 @@
           "Б": "скрила се на сянка в гората",
           "В": "отишла да подпира облака"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 3,
@@ -7045,11 +7130,12 @@
           "Б": "ядосано",
           "В": "недоверчиво"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 6,
@@ -7079,11 +7165,12 @@
           "Б": "отмъщава на лисицата",
           "В": "връща житото на врабчето"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 8,
@@ -7100,11 +7187,12 @@
           "Б": "многозначни",
           "В": "сродни"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -7121,11 +7209,12 @@
           "Б": "съобщително",
           "В": "възклицателно\n Прочети само оцветената част от текста и реши следните задачи:"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 10,
@@ -7182,11 +7271,12 @@
           "Б": "2 003 350",
           "В": "2 003 035"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 2,
@@ -7203,13 +7293,14 @@
           "Б": "1",
           "В": "6"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2015_math_q02.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 3,
@@ -7226,12 +7317,13 @@
           "Б": "18 263",
           "В": "69 914"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 4,
@@ -7248,12 +7340,13 @@
           "Б": "67 294",
           "В": "67 394"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 5,
@@ -7270,14 +7363,15 @@
           "Б": "28 648",
           "В": "31 748"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2015_math_q05.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 6,
@@ -7294,12 +7388,13 @@
           "Б": "4333",
           "В": "2470"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 7,
@@ -7316,12 +7411,13 @@
           "Б": "607",
           "В": "6070"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -7338,12 +7434,13 @@
           "Б": "406",
           "В": "460"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 9,
@@ -7360,12 +7457,13 @@
           "Б": "12 910",
           "В": "42 800"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -7382,12 +7480,13 @@
           "Б": "7238",
           "В": "7152"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 11,
@@ -7404,12 +7503,13 @@
           "Б": "176",
           "В": "352"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 12,
@@ -7426,12 +7526,13 @@
           "Б": "90 минути",
           "В": "150 минути"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 13,
@@ -7448,13 +7549,14 @@
           "Б": "два тъпоъгълни триъгълника",
           "В": "два правоъгълни триъгълника"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 14,
@@ -7471,14 +7573,15 @@
           "Б": "три",
           "В": "четири"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2015_math_q14.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 15,
@@ -7495,12 +7598,13 @@
           "Б": "93 см",
           "В": "111 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 16,
@@ -7517,14 +7621,15 @@
           "Б": "3000 + 8 . 8256 = 69 048",
           "В": "3000 . 8 + 8256 = 32 256\n Прочети внимателно следващите две задачи, пресметни и запиши отговорите си на\nопределеното място."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2015_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 17,
@@ -7621,11 +7726,12 @@
           "Б": "под клоните на стар бук",
           "В": "до един стар дъб"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 3,
@@ -7642,11 +7748,12 @@
           "Б": "слънцето",
           "В": "земята"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 4,
@@ -7695,11 +7802,12 @@
           "Б": "добра",
           "В": "коварна"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -7732,11 +7840,12 @@
           "Б": "сродни",
           "В": "синоними"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 9,
@@ -7753,11 +7862,12 @@
           "Б": "възклицателно",
           "В": "съобщително\n Прочети само оцветената част от текста и реши следните задачи:"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 10,
@@ -7820,11 +7930,12 @@
           "Б": "4 230 030",
           "В": "4 203 030"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 2,
@@ -7841,11 +7952,12 @@
           "Б": "215 и 238",
           "В": "207 и 223"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 3,
@@ -7862,11 +7974,12 @@
           "Б": "9091",
           "В": "9001"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -7883,11 +7996,12 @@
           "Б": "3878",
           "В": "3968"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 5,
@@ -7904,11 +8018,12 @@
           "Б": "14 621",
           "В": "20 041"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 6,
@@ -7925,11 +8040,12 @@
           "Б": "8707",
           "В": "9807"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -7946,11 +8062,12 @@
           "Б": "709",
           "В": "79"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 8,
@@ -7967,11 +8084,12 @@
           "Б": "3005",
           "В": "3050"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -7988,11 +8106,12 @@
           "Б": "14 980",
           "В": "15 000"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -8009,11 +8128,12 @@
           "Б": "3",
           "В": "305"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 11,
@@ -8030,11 +8150,12 @@
           "Б": "261",
           "В": "783"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 12,
@@ -8051,11 +8172,12 @@
           "Б": "3045 м",
           "В": "3450 м"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 13,
@@ -8072,14 +8194,15 @@
           "Б": "пет прави ъгъла",
           "В": "шест прави ъгъла"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2014_math_q13.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 14,
@@ -8096,13 +8219,14 @@
           "Б": "АСD",
           "В": "ВСD"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "question_image": "/nvo4-page-images/nvo4_2014_math_q14.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 15,
@@ -8119,13 +8243,14 @@
           "Б": "18 см",
           "В": "24 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "visual_prompt_without_detected_asset",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 16,
@@ -8142,13 +8267,14 @@
           "Б": "(822 – 69) : 3 = 251",
           "В": "(822 – 822 : 3) – 69 = 479\nØ Прочети внимателно следните две задачи, пресметни и запиши отговора си."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2014_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 17,
@@ -8262,11 +8388,12 @@
           "Б": "глупави",
           "В": "плашливи"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -8283,11 +8410,12 @@
           "Б": "синоними",
           "В": "антоними"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 5,
@@ -8319,11 +8447,12 @@
           "А": "страхлив\nБ ) глупав",
           "В": "безгрижен"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 7,
@@ -8340,11 +8469,12 @@
           "Б": "стихотворение",
           "В": "басня"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -8439,11 +8569,12 @@
           "Б": "броя на десетохилядите",
           "В": "броя на хилядите"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 2,
@@ -8460,12 +8591,13 @@
           "Б": "99 999 и 100 002",
           "В": "9 999 и 10 001"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 3,
@@ -8482,12 +8614,13 @@
           "Б": "4081",
           "В": "5071"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -8504,12 +8637,13 @@
           "Б": "5918",
           "В": "6908"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 5,
@@ -8526,14 +8660,15 @@
           "Б": "41 676",
           "В": "40 626"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "question_image": "/nvo4-page-images/nvo4_2013_math_q05.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 6,
@@ -8550,12 +8685,13 @@
           "Б": "8418",
           "В": "8618"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -8572,12 +8708,13 @@
           "Б": "7005",
           "В": "7050"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -8594,12 +8731,13 @@
           "Б": "3007",
           "В": "3070"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 9,
@@ -8616,12 +8754,13 @@
           "Б": "12 570",
           "В": "12 600"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -8638,13 +8777,14 @@
           "Б": "4041",
           "В": "4051"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2013_math_q10.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 11,
@@ -8661,12 +8801,13 @@
           "Б": "105",
           "В": "945"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 12,
@@ -8683,11 +8824,12 @@
           "Б": "7030 г",
           "В": "730 г"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 13,
@@ -8749,12 +8891,13 @@
           "Б": "54 см",
           "В": "66 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 16,
@@ -8770,14 +8913,15 @@
           "А": "27\n45.11\n522\n+\n=",
           "Б": "(\n)\n27\n27\n45 .11\n819\n+\n+\n=\nВ (\n)\n27\n45 .11\n792\n+\n=\nПрочетете внимателно следните две задачи, пресметнете и запишете отговора си на\nопределеното място."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2013_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 17,
@@ -8858,11 +9002,12 @@
           "Б": "предвидлив",
           "В": "нападателен"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 2,
@@ -8895,11 +9040,12 @@
           "Б": "щом като го нападнат",
           "В": "преди да възникне опасност"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 4,
@@ -8932,11 +9078,12 @@
           "Б": "скромен, стеснен, срамежлив",
           "В": "нужен, необходим, употребен"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 6,
@@ -8953,13 +9100,14 @@
           "Б": "Зарони горчиви сълзи.",
           "В": "Пиеше горчиви хапчета."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2012_bel_q06.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -8976,11 +9124,12 @@
           "Б": "антоними",
           "В": "сродни думи"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 8,
@@ -8997,11 +9146,12 @@
           "Б": "простуда, студ, студент",
           "В": "риболов, рибарски, риба"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 9,
@@ -9018,11 +9168,12 @@
           "Б": "скъпоценна, писмена, неизменна",
           "В": "огнена, обикновенна, изкуствена"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -9039,11 +9190,12 @@
           "Б": "Ще дойдеш на рождения ми ден, нали?",
           "В": "Ще дойдеш на рождения ми ден, моля те!"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 11,
@@ -9060,13 +9212,14 @@
           "Б": "Чухме звън на часовник.",
           "В": "Някъде звъни часовник."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2012_bel_q11.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 12,
@@ -9083,13 +9236,14 @@
           "Б": "басня",
           "В": "разказ"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "question_image": "/nvo4-page-images/nvo4_2012_bel_q12.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 13,
@@ -9106,13 +9260,14 @@
           "Б": "сравнение",
           "В": "олицетворение"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "question_image": "/nvo4-page-images/nvo4_2012_bel_q13.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 14,
@@ -9129,11 +9284,12 @@
           "Б": "„Обичам те, родино” и „Татковина”",
           "В": "„Де е България” и „Песента на синчеца”"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 15,
@@ -9150,11 +9306,12 @@
           "Б": "Eлин Пелин е написал „Мечо Пух”.",
           "В": "Леда Милева е написала „Ян Бибиян”."
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       }
     ]
   },
@@ -9185,11 +9342,12 @@
           "Б": "605 220",
           "В": "650 220"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 2,
@@ -9206,11 +9364,12 @@
           "Б": "208 000",
           "В": "208 998"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 3,
@@ -9227,11 +9386,12 @@
           "Б": "7070",
           "В": "6080"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 4,
@@ -9248,11 +9408,12 @@
           "Б": "2459",
           "В": "3459"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 5,
@@ -9269,11 +9430,12 @@
           "Б": "9046",
           "В": "9056"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 6,
@@ -9290,11 +9452,12 @@
           "Б": "18 724",
           "В": "18 824"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 7,
@@ -9311,11 +9474,12 @@
           "Б": "360",
           "В": "3060"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 8,
@@ -9332,11 +9496,12 @@
           "Б": "4003",
           "В": "40030"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 9,
@@ -9353,11 +9518,12 @@
           "Б": "1200",
           "В": "13 800"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 10,
@@ -9374,11 +9540,12 @@
           "Б": "2650",
           "В": "2500"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 11,
@@ -9395,13 +9562,14 @@
           "Б": "2350",
           "В": "2250"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2012_math_q11.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 12,
@@ -9418,11 +9586,12 @@
           "Б": "308",
           "В": "4928"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 13,
@@ -9439,11 +9608,12 @@
           "Б": "7025 см",
           "В": "7250 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 14,
@@ -9460,13 +9630,14 @@
           "Б": "2",
           "В": "3"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2012_math_q14.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 15,
@@ -9483,13 +9654,14 @@
           "Б": "два",
           "В": "три"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "В",
+        "answer_guide": "В",
         "question_image": "/nvo4-page-images/nvo4_2012_math_q15.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "В"
       },
       {
         "number": 16,
@@ -9506,13 +9678,14 @@
           "Б": "30 кв. см",
           "В": "15 кв. см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "question_image": "/nvo4-page-images/nvo4_2012_math_q16.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 17,
@@ -9529,11 +9702,12 @@
           "Б": "110 см",
           "В": "118 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 18,
@@ -9550,11 +9724,12 @@
           "Б": "108 см",
           "В": "144 см"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "formatting_flags": [
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       },
       {
         "number": 19,
@@ -9571,12 +9746,13 @@
           "Б": "\n\n2.165\n165\n25\n470\n\n\n",
           "В": "2.165\n25\n305\n\n"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "Б",
+        "answer_guide": "Б",
         "formatting_flags": [
           "possible_formula_or_blank_loss",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "Б"
       },
       {
         "number": 20,
@@ -9593,13 +9769,14 @@
           "Б": "2950",
           "В": "3050"
         },
-        "official_answer": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
-        "answer_guide": "TODO: Липсва автоматично разчетен ключ от оригиналния PDF.",
+        "official_answer": "А",
+        "answer_guide": "А",
         "question_image": "/nvo4-page-images/nvo4_2012_math_q20.png",
         "formatting_flags": [
           "visual_asset_crop_from_pdf",
           "missing_answer_key"
-        ]
+        ],
+        "correct_option": "А"
       }
     ]
   },
