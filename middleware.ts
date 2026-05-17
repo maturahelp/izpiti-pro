@@ -135,6 +135,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/dashboard') &&
     pathname !== '/dashboard/select-class' &&
     profile.role !== 'admin' &&
+    profile.class !== '4' &&
     profile.class !== '7' &&
     profile.class !== '12'
   ) {
