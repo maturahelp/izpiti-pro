@@ -115,6 +115,7 @@ interface NvoQuestion {
   correct_option?: string
   official_answer?: string
   answer_guide?: string
+  sub_answers?: Record<string, string>
   question_image?: string
   task_condition?: string
   points?: number
@@ -348,6 +349,20 @@ function extractAlternatives(cleaned: string): string[] {
     .split(/\s*\/\s*|\s*;\s*|\s+или\s+/i)
     .map((p) => normalizeOpenAnswer(p))
     .filter(Boolean)
+}
+
+// За multi-part Q25 (математика 4. клас 2021–2025): извлича всички числа
+// (разделени по ";" в expected) и проверява, че всяко се появява в user
+// input. Толерира интервали и разделители в "10 000" / "17 875".
+function matchesSubAnswer(user: string, expected: string): boolean {
+  const digitsFrom = (s: string) => (s.match(/\d+/g) || []).join(',')
+  const userDigits = digitsFrom(user)
+  if (!userDigits) return false
+  return expected.split(';').every((part) => {
+    const expDigits = digitsFrom(part)
+    if (!expDigits) return true
+    return userDigits.includes(expDigits)
+  })
 }
 
 function isManualCheck(cleaned: string): boolean {
@@ -1275,6 +1290,28 @@ function QuestionCard({
     }
     const filledEntries = effectiveLabels.filter((l) => (openState[l] || '').trim())
     if (!filledEntries.length) return { mode: 'empty' as const, cleaned }
+    // Multi-part с структуриран ключ от МОН (Q25 в математика 4. клас 2021–2025).
+    if (question.sub_answers && Object.keys(question.sub_answers).length > 0) {
+      const subs = question.sub_answers
+      const perLabel: Record<string, 'correct' | 'incorrect' | 'empty'> = {}
+      let allCorrect = true
+      let anyFilled = false
+      for (const label of effectiveLabels) {
+        const expected = subs[label]
+        const val = (openState[label] || '').trim()
+        if (!val) {
+          perLabel[label] = 'empty'
+          allCorrect = false
+          continue
+        }
+        anyFilled = true
+        const ok = expected ? matchesSubAnswer(val, expected) : false
+        perLabel[label] = ok ? 'correct' : 'incorrect'
+        if (!ok) allCorrect = false
+      }
+      const mode = allCorrect ? 'correct' as const : anyFilled ? 'incorrect' as const : 'empty' as const
+      return { mode, cleaned, perLabel }
+    }
     if (isManualCheck(cleaned)) return { mode: 'manual' as const, cleaned }
     if (labels.length <= 1) {
       const variants = extractAlternatives(cleaned)
@@ -1446,8 +1483,14 @@ function QuestionCard({
           <div className="space-y-3">
             {effectiveLabels.map((label) => {
               const val = openState[label] || ''
-              const isCorrect = openEval?.mode === 'correct'
-              const isIncorrect = openEval?.mode === 'incorrect'
+              const perLabel = (openEval && 'perLabel' in openEval ? openEval.perLabel : undefined) as
+                | Record<string, 'correct' | 'incorrect' | 'empty'>
+                | undefined
+              const labelState = perLabel?.[label]
+              const isCorrect = labelState ? labelState === 'correct' : openEval?.mode === 'correct'
+              const isIncorrect = labelState
+                ? labelState === 'incorrect'
+                : openEval?.mode === 'incorrect'
               return (
                 <div key={label} className="grid gap-1.5">
                   <label className="text-xs font-bold text-amber-700">
@@ -1551,7 +1594,11 @@ function FeedbackBox({
 }: {
   question: NvoQuestion
   answers: SingleChoiceAnswers
-  openEval: { mode: 'empty' | 'correct' | 'incorrect' | 'manual'; cleaned: string } | null
+  openEval: {
+    mode: 'empty' | 'correct' | 'incorrect' | 'manual'
+    cleaned: string
+    perLabel?: Record<string, 'correct' | 'incorrect' | 'empty'>
+  } | null
 }) {
   if (question.type === 'single_choice') {
     const chosen = answers[question.number]
