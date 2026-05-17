@@ -237,6 +237,16 @@ function normalizeMathText(text: string): string {
   if (!text) return ''
   return text
     .replace(/\s+ПО МАТЕМАТИКА[\s\S]*$/u, '')
+    // Преобразуваме MathJax-стил LaTeX макроси, попаднали в текста на въпросите
+    // (\(\cdot\), \(\square\) и т.н.), в Unicode еквивалентите.
+    .replace(/\\\(\s*\\cdot\s*\\\)/g, '·')
+    .replace(/\\\(\s*\\times\s*\\\)/g, '×')
+    .replace(/\\\(\s*\\div\s*\\\)/g, '÷')
+    .replace(/\\\(\s*\\pm\s*\\\)/g, '±')
+    .replace(/\\\(\s*\\leq\s*\\\)/g, '≤')
+    .replace(/\\\(\s*\\geq\s*\\\)/g, '≥')
+    .replace(/\\\(\s*\\neq\s*\\\)/g, '≠')
+    .replace(/\\\(\s*\\square\s*\\\)/g, '☐')
     .replace(/\uf040/g, '≅')
     .replace(/\uf050/g, '∥')
     .replace(/\uf0a3/g, '≤')
