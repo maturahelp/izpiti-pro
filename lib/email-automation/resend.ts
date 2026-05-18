@@ -3,6 +3,7 @@ type SendResendEmailInput = {
   subject: string
   html: string
   text: string
+  idempotencyKey?: string
 }
 
 export function getResendConfig() {
@@ -23,13 +24,18 @@ export function getResendConfig() {
 
 export async function sendResendEmail(input: SendResendEmailInput) {
   const { apiKey, from, replyTo } = getResendConfig()
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+  }
+
+  if (input.idempotencyKey) {
+    headers['Idempotency-Key'] = input.idempotencyKey
+  }
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({
       from,
       to: [input.to],

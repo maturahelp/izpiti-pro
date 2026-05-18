@@ -41,6 +41,7 @@ type ProcessEmailAutomationJobsResult = {
 
 const RETRY_DELAY_MS = 15 * 60 * 1000
 const MAX_ATTEMPTS = 3
+const STALE_PROCESSING_AFTER_MS = 30 * 60 * 1000
 
 function isTemplateKey(value: string): value is EmailAutomationTemplateKey {
   return EMAIL_AUTOMATION_TEMPLATES.includes(
@@ -181,6 +182,43 @@ async function markJobFailed(job: EmailAutomationJobRow, errorMessage: string) {
   if (error) throw error
 }
 
+async function releaseStaleProcessingJobs() {
+  const admin = createAdminClient()
+  const nowIso = new Date().toISOString()
+  const staleBeforeIso = new Date(
+    Date.now() - STALE_PROCESSING_AFTER_MS
+  ).toISOString()
+
+  const { error: retryError } = await admin
+    .from('email_automation_jobs')
+    .update({
+      status: 'pending',
+      scheduled_for: nowIso,
+      processing_started_at: null,
+      updated_at: nowIso,
+      last_error: 'released_stale_processing_job',
+    })
+    .eq('status', 'processing')
+    .lt('processing_started_at', staleBeforeIso)
+    .lt('attempts', MAX_ATTEMPTS)
+
+  if (retryError) throw retryError
+
+  const { error: failError } = await admin
+    .from('email_automation_jobs')
+    .update({
+      status: 'failed',
+      processing_started_at: null,
+      updated_at: nowIso,
+      last_error: 'stale_processing_job_max_attempts_reached',
+    })
+    .eq('status', 'processing')
+    .lt('processing_started_at', staleBeforeIso)
+    .gte('attempts', MAX_ATTEMPTS)
+
+  if (failError) throw failError
+}
+
 function getPayloadPlanName(job: EmailAutomationJobRow) {
   const payload = job.payload as Partial<EmailAutomationPayloadMap['purchase_welcome']>
   return typeof payload.planName === 'string' ? payload.planName : null
@@ -198,6 +236,8 @@ function getProfilePlanKey(profile: ProfileSnapshot | null) {
 export async function processEmailAutomationJobs(
   limit = 20
 ): Promise<ProcessEmailAutomationJobsResult> {
+  await releaseStaleProcessingJobs()
+
   const dueJobs = await getDueJobs(limit)
   let processed = 0
   let sent = 0
@@ -270,6 +310,7 @@ export async function processEmailAutomationJobs(
         subject: rendered.subject,
         html: rendered.html,
         text: rendered.text,
+        idempotencyKey: job.id,
       })
 
       await markJobSent(job.id, result.id)

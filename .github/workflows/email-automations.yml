@@ -1,0 +1,22 @@
+name: Email automations
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  process-due-email-jobs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Process due email jobs
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          test -n "$CRON_SECRET"
+          curl --fail-with-body --show-error --silent \
+            --request POST \
+            --header "Authorization: Bearer ${CRON_SECRET}" \
+            "https://www.maturahelp.com/api/cron/email-automations?limit=20"
