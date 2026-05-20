@@ -388,10 +388,10 @@
         { "@type": "Offer", "name": "Безплатен НВО 4. клас", "price": "0.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "НВО 4. клас месечен", "price": "9.99", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "Безплатен НВО", "price": "0.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
-        { "@type": "Offer", "name": "НВО до края на изпитите", "price": "30.00", "priceCurrency": "EUR", "priceValidUntil": "2026-06-19", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
+        { "@type": "Offer", "name": "НВО до края на изпитите", "price": "19.99", "priceCurrency": "EUR", "priceValidUntil": "2026-06-19", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "Безплатен ДЗИ", "price": "0.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "ДЗИ до края на матурите", "price": "19.99", "priceCurrency": "EUR", "priceValidUntil": "2026-05-22", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
-        { "@type": "Offer", "name": "Интензивен английски", "price": "5.00", "priceCurrency": "EUR", "priceValidUntil": "2026-05-23", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" }
+        { "@type": "Offer", "name": "Интензивен английски", "price": "4.99", "priceCurrency": "EUR", "priceValidUntil": "2026-05-23", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" }
       ]
     },
     {
@@ -1189,7 +1189,7 @@
             <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap tracking-wide">Интензивен</span>
             <p class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-2">Интензивен английски</p>
             <div class="mb-1">
-              <span class="text-4xl font-extrabold text-accent-navy">5 €</span>
+              <span class="text-4xl font-extrabold text-accent-navy">4.99 €</span>
             </div>
             <p class="text-xs text-gray-400 mb-3">еднократно плащане</p>
             <p class="text-gray-500 text-sm mb-6">Концентрирана подготовка за матурата по английски.</p>
@@ -1230,7 +1230,7 @@
           <div class="bg-white rounded-2xl card-shadow-lg p-6 sm:p-8 border-2 border-primary-500 relative mt-2 sm:mt-0">
             <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">НВО до края на изпитите</p>
             <div class="mb-1">
-              <span class="text-4xl font-extrabold text-accent-navy">30 €</span>
+              <span class="text-4xl font-extrabold text-accent-navy">19.99 €</span>
               <span class="text-gray-400 text-sm"> еднократно</span>
             </div>
             <p class="text-xs text-primary-600 font-medium mb-1">Достъп до 19 юни 2026 г.</p>
@@ -1794,10 +1794,10 @@
       // Plan → price mapping (in EUR, kept in sync with lib/billing/plans.ts)
       var PLAN_VALUES = {
         'nvo4-full': 9.99,
-        'nvo-full': 30,
+        'nvo-full': 19.99,
         'dzi-full': 19.99,
         'dzi-sprint': 9.99,
-        'dzi-english-sprint': 5,
+        'dzi-english-sprint': 4.99,
       };
       document.querySelectorAll('button[data-checkout-plan]').forEach(function (btn) {
         btn.addEventListener('click', async function () {

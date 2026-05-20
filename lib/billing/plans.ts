@@ -34,7 +34,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   },
   'nvo-full': {
     name: 'НВО до края на изпитите',
-    amount: 3000,
+    amount: 1999,
     currency: 'eur',
     mode: 'payment',
     class: '7',
@@ -61,7 +61,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   },
   'dzi-english-sprint': {
     name: 'Интензивен английски',
-    amount: 500,
+    amount: 499,
     currency: 'eur',
     mode: 'payment',
     class: '12',
