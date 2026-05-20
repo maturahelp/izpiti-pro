@@ -36,6 +36,8 @@ test('landing page shows and tracks the configured plan prices', () => {
   assert.match(source, /"name": "Интензивен английски", "price": "4\.99"/)
   assert.match(source, /'nvo4-full': 9\.99/)
   assert.match(source, /'nvo-full': 19\.99/)
+  assert.match(source, /"name": "Финален спринт НВО", "price": "9\.99"/)
+  assert.match(source, /'nvo-sprint': 9\.99/)
   assert.match(source, /'dzi-full': 19\.99/)
   assert.match(source, /'dzi-english-sprint': 4\.99/)
 })

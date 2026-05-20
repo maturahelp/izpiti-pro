@@ -84,7 +84,8 @@ export async function GET(req: NextRequest) {
 
   try {
     // Спринт плановете са already-discounted цени и не приемат никакви промо кодове.
-    const allowPromoCodes = plan !== 'dzi-sprint' && plan !== 'dzi-english-sprint'
+    const allowPromoCodes =
+      plan !== 'dzi-sprint' && plan !== 'dzi-english-sprint' && plan !== 'nvo-sprint'
     const discounts = allowPromoCodes
       ? await resolveCheckoutDiscounts(stripe, promoCode)
       : undefined

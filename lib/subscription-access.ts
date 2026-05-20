@@ -71,6 +71,8 @@ export function canAccessVideoLessons(profile: SubscriptionAccessProfile | null 
   if (planKey === 'dzi-sprint') return false
   // English-only sprint няма видеа за DZI/NVO литература.
   if (planKey === 'dzi-english-sprint') return false
+  // НВО спринт планът не включва видеа.
+  if (planKey === 'nvo-sprint') return false
   return true
 }
 

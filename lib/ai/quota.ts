@@ -1,7 +1,24 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { getPlanAiDailyLimit, isPlanKey, type PlanKey } from '@/lib/billing/plans'
 import { hasActivePremium, type SubscriptionAccessProfile } from '@/lib/subscription-access'
 
 export const FREE_DAILY_LIMIT = 1
+
+/**
+ * Връща дневния лимит за AI чат за дадения профил:
+ *  - null = неограничен (full платени планове)
+ *  - число = твърд лимит / 24h (sprint планове или free)
+ */
+function resolveDailyLimit(
+  profile: (SubscriptionAccessProfile & { class?: string | null }) | null | undefined
+): number | null {
+  if (!hasActivePremium(profile ?? null)) return FREE_DAILY_LIMIT
+  const planKey = profile?.billing_plan_key
+  if (planKey && isPlanKey(planKey)) {
+    return getPlanAiDailyLimit(planKey as PlanKey)
+  }
+  return null
+}
 
 export type StudentClass = 7 | 12 | null
 
@@ -48,7 +65,7 @@ export async function checkAndIncrementQuota(
   const isPremium = hasActivePremium(profile ?? null)
   const plan: 'free' | 'premium' = isPremium ? 'premium' : 'free'
   const studentClass = parseClass(profile?.class)
-  const limit = isPremium ? null : FREE_DAILY_LIMIT
+  const limit = resolveDailyLimit(profile)
 
   const { data, error } = await admin.rpc('check_and_increment_ai_usage', {
     p_user_id: userId,
@@ -92,8 +109,9 @@ export async function readQuota(
 
   const isPremium = hasActivePremium(profile ?? null)
   const plan: 'free' | 'premium' = isPremium ? 'premium' : 'free'
+  const limit = resolveDailyLimit(profile)
 
-  if (isPremium) return { remaining: null, plan }
+  if (limit === null) return { remaining: null, plan }
 
   // UTC day boundary.
   const today = new Date().toISOString().slice(0, 10)
@@ -105,5 +123,5 @@ export async function readQuota(
     .maybeSingle<{ period_start: string; count: number }>()
 
   const used = usage && usage.period_start === today ? usage.count : 0
-  return { remaining: Math.max(FREE_DAILY_LIMIT - used, 0), plan }
+  return { remaining: Math.max(limit - used, 0), plan }
 }

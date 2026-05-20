@@ -1,6 +1,7 @@
 export type PlanKey =
   | 'nvo4-full'
   | 'nvo-full'
+  | 'nvo-sprint'
   | 'dzi-full'
   | 'dzi-sprint'
   | 'dzi-english-sprint'
@@ -21,6 +22,8 @@ export type BillingPlanConfig = {
   examPath: 'НВО' | 'ДЗИ'
   accessEndsAt?: string
   accessScope?: AccessScope
+  // null = неограничено, число = дневен лимит за AI чат.
+  aiDailyLimit?: number | null
 }
 
 export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
@@ -40,6 +43,16 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     class: '7',
     examPath: 'НВО',
     accessEndsAt: '2026-06-19T23:59:59.999+03:00',
+  },
+  'nvo-sprint': {
+    name: 'Финален спринт НВО',
+    amount: 999,
+    currency: 'eur',
+    mode: 'payment',
+    class: '7',
+    examPath: 'НВО',
+    accessEndsAt: '2026-06-19T23:59:59.999+03:00',
+    aiDailyLimit: 10,
   },
   'dzi-full': {
     name: 'ДЗИ до края на матурите',
@@ -74,6 +87,17 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
 export function getPlanAccessScope(planKey: PlanKey | null | undefined): AccessScope {
   if (!planKey) return 'full'
   return BILLING_PLANS[planKey]?.accessScope ?? 'full'
+}
+
+/**
+ * Връща дневния AI лимит за активен платен план.
+ * `null` = неограничен, число = брой съобщения / 24h.
+ * За планове без `aiDailyLimit` (full плановете) → null.
+ */
+export function getPlanAiDailyLimit(planKey: PlanKey | null | undefined): number | null {
+  if (!planKey) return null
+  const limit = BILLING_PLANS[planKey]?.aiDailyLimit
+  return limit === undefined ? null : limit
 }
 
 export function isPlanKey(value: string): value is PlanKey {
