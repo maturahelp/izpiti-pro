@@ -1159,25 +1159,46 @@ export default function MaterialsPage() {
       <div className="min-h-screen pb-20 md:pb-0">
         <TopBar title="Материали" />
         <div className="p-4 md:p-6 max-w-5xl mx-auto">
-          <Link
-            href="/dashboard/highschools"
-            className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-primary-200 bg-primary-50/60 px-4 py-3 hover:bg-primary-50 transition-colors group"
-          >
-            <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-700">
-                Безплатен справочник
-              </p>
-              <p className="text-sm font-semibold text-[#1E2A4A] truncate">
-                Бал на гимназиите в София — 2025 г.
-              </p>
-              <p className="text-xs text-gray-600 mt-0.5 hidden sm:block">
-                Виж минималния и максималния бал по паралелки от миналогодишното класиране.
-              </p>
-            </div>
-            <span className="flex-shrink-0 text-sm font-semibold text-primary-700 group-hover:translate-x-1 transition-transform">
-              →
-            </span>
-          </Link>
+          <div className="mb-4 grid sm:grid-cols-2 gap-3">
+            <Link
+              href="/dashboard/plan"
+              className="flex items-center justify-between gap-3 rounded-2xl border-2 border-primary-500 bg-primary-50 px-4 py-3 hover:bg-primary-100/70 transition-colors group"
+            >
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-700">
+                  Дневен план
+                </p>
+                <p className="text-sm font-semibold text-[#1E2A4A] truncate">
+                  29 дни до НВО — задача по задача
+                </p>
+                <p className="text-xs text-gray-600 mt-0.5 hidden sm:block">
+                  Подреден график с литература, математика и тренировъчни тестове.
+                </p>
+              </div>
+              <span className="flex-shrink-0 text-sm font-semibold text-primary-700 group-hover:translate-x-1 transition-transform">
+                →
+              </span>
+            </Link>
+            <Link
+              href="/dashboard/highschools"
+              className="flex items-center justify-between gap-3 rounded-2xl border border-primary-200 bg-primary-50/60 px-4 py-3 hover:bg-primary-50 transition-colors group"
+            >
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-700">
+                  Безплатен справочник
+                </p>
+                <p className="text-sm font-semibold text-[#1E2A4A] truncate">
+                  Бал на гимназиите в София — 2025
+                </p>
+                <p className="text-xs text-gray-600 mt-0.5 hidden sm:block">
+                  Мин. и макс. бал по паралелки от 2-ро класиране.
+                </p>
+              </div>
+              <span className="flex-shrink-0 text-sm font-semibold text-primary-700 group-hover:translate-x-1 transition-transform">
+                →
+              </span>
+            </Link>
+          </div>
           <div className="mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
             <div className="hidden md:block" />
 
