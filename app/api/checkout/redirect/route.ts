@@ -83,8 +83,8 @@ export async function GET(req: NextRequest) {
   const metadata = { planKey: plan, userId: user.id, userEmail: user.email }
 
   try {
-    // Спринт планът е already-discounted price и не приема никакви промо кодове.
-    const allowPromoCodes = plan !== 'dzi-sprint'
+    // Спринт плановете са already-discounted цени и не приемат никакви промо кодове.
+    const allowPromoCodes = plan !== 'dzi-sprint' && plan !== 'dzi-english-sprint'
     const discounts = allowPromoCodes
       ? await resolveCheckoutDiscounts(stripe, promoCode)
       : undefined

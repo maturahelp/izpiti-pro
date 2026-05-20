@@ -28,7 +28,12 @@ import {
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { useGrade } from '@/lib/grade-context'
-import { canAccessVideoLessons, hasActivePremium } from '@/lib/subscription-access'
+import {
+  canAccessEnglishContent,
+  canAccessFullContent,
+  canAccessVideoLessons,
+  hasActivePremium,
+} from '@/lib/subscription-access'
 import {
   isFreeLiteratureWork,
   isFreeBelNvoTopic,
@@ -506,6 +511,7 @@ export default function MaterialsPage() {
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0)
   const [fullscreenImageTitle, setFullscreenImageTitle] = useState<string>('')
   const [isPremiumUser, setIsPremiumUser] = useState(false)
+  const [hasFullAccessState, setHasFullAccessState] = useState(false)
   const [canPlayVideos, setCanPlayVideos] = useState(false)
   const workWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
   const nvoWordRefs = useRef<Record<number, HTMLSpanElement | null>>({})
@@ -570,7 +576,11 @@ export default function MaterialsPage() {
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
   const activeNvoMarkedWordIndex = activeNvoWorkId ? nvoReadingProgressByWork[activeNvoWorkId] : undefined
   const activeNvoTextTokens = useMemo(() => activeNvoWorkText.split(/(\s+)/), [activeNvoWorkText])
-  const hasPremiumAccess = isPremiumUser
+  // English-only план дава достъп само до английския раздел; не-английското
+  // съдържание изисква full plan (hasFullAccessState). Английското съдържание
+  // се отключва от всеки активен план (hasEnglishAccess === isPremiumUser).
+  const hasPremiumAccess = hasFullAccessState
+  const hasEnglishAccess = isPremiumUser
 
   const nvoLiteratureGroups = nvoLiteratureThemeOrder
     .map((theme) => ({
@@ -719,7 +729,7 @@ export default function MaterialsPage() {
   }
 
   const openEnglishMaterial = async (material: EnglishMaterial) => {
-    if (!hasPremiumAccess && !isFreeEnglishDziMaterial(material.title)) {
+    if (!hasEnglishAccess && !isFreeEnglishDziMaterial(material.title)) {
       redirectToSubscription()
       return
     }
@@ -790,7 +800,11 @@ export default function MaterialsPage() {
       if (cancelled) return
 
       setIsPremiumUser(hasActivePremium(profile))
+      setHasFullAccessState(canAccessFullContent(profile))
       setCanPlayVideos(canAccessVideoLessons(profile))
+      // canAccessEnglishContent === hasActivePremium за момента, но
+      // го извикваме за future-proof проверки.
+      void canAccessEnglishContent
     })()
 
     return () => {
@@ -1968,10 +1982,10 @@ export default function MaterialsPage() {
                           return (
                           <div
                             key={item.title}
-                            className={cn('relative p-4 flex flex-col gap-3 rounded-xl bg-white border', !hasPremiumAccess && !isFreeItem && 'opacity-60')}
+                            className={cn('relative p-4 flex flex-col gap-3 rounded-xl bg-white border', !hasEnglishAccess && !isFreeItem && 'opacity-60')}
                             style={{ borderColor: grade12SectionTheme.english.cardBorder }}
                           >
-                            {!hasPremiumAccess && !isFreeItem && (
+                            {!hasEnglishAccess && !isFreeItem && (
                               <div className="absolute top-2 right-2">
                                 <Badge variant="amber">
                                   <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-1 inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
@@ -2009,7 +2023,7 @@ export default function MaterialsPage() {
                                   onClick={() =>
                                     handlePremiumAction(
                                       () => openImageGallery(item.imageSrcs!, item.title),
-                                      isFreeEnglishDziMaterial(item.title)
+                                      isFreeEnglishDziMaterial(item.title) || hasEnglishAccess
                                     )
                                   }
                                   className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border transition-colors px-3"

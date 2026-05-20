@@ -67,7 +67,30 @@ function parseDate(value: string | null | undefined): Date | null {
  */
 export function canAccessVideoLessons(profile: SubscriptionAccessProfile | null | undefined) {
   if (!hasActivePremium(profile)) return false
-  return profile?.billing_plan_key !== 'dzi-sprint'
+  const planKey = profile?.billing_plan_key
+  if (planKey === 'dzi-sprint') return false
+  // English-only sprint няма видеа за DZI/NVO литература.
+  if (planKey === 'dzi-english-sprint') return false
+  return true
+}
+
+/**
+ * Английското съдържание (`englishMaterialGroups`, english-generated тестове,
+ * officialEnglishMockExams) се отключва от всеки активен план, включително
+ * scope='english' планът `dzi-english-sprint`.
+ */
+export function canAccessEnglishContent(profile: SubscriptionAccessProfile | null | undefined) {
+  return hasActivePremium(profile)
+}
+
+/**
+ * Не-английското premium съдържание (литература, БЕЛ, математика, есета)
+ * се отключва САМО от пълните планове. Scope='english' планове
+ * се третират като free за тези секции.
+ */
+export function canAccessFullContent(profile: SubscriptionAccessProfile | null | undefined) {
+  if (!hasActivePremium(profile)) return false
+  return profile?.billing_plan_key !== 'dzi-english-sprint'
 }
 
 export function hasActivePremium(profile: SubscriptionAccessProfile | null | undefined) {

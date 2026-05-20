@@ -30,10 +30,11 @@ test('landing page defaults course and pricing tabs to DZI', () => {
 test('landing page shows and tracks the configured plan prices', () => {
   assert.match(source, /<span class="text-4xl font-extrabold text-accent-navy">9\.99 €<\/span>/)
   assert.match(source, /<span class="text-4xl font-extrabold text-accent-navy">19\.99 €<\/span>/)
+  assert.match(source, /<span class="text-4xl font-extrabold text-accent-navy">5 €<\/span>/)
   assert.match(source, /"name": "НВО 4\. клас месечен", "price": "9\.99"/)
   assert.match(source, /"name": "ДЗИ до края на матурите", "price": "19\.99"/)
-  assert.match(source, /"name": "Спринт до ДЗИ", "price": "9\.99"/)
+  assert.match(source, /"name": "Интензивен английски", "price": "5\.00"/)
   assert.match(source, /'nvo4-full': 9\.99/)
   assert.match(source, /'dzi-full': 19\.99/)
-  assert.match(source, /'dzi-sprint': 9\.99/)
+  assert.match(source, /'dzi-english-sprint': 5/)
 })

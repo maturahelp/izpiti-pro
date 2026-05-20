@@ -24,6 +24,7 @@ const PLAN_LABELS: Record<string, string> = {
   'nvo-full': 'НВО — до края на изпитите',
   'dzi-full': 'ДЗИ — до края на матурите',
   'dzi-sprint': 'Спринт до ДЗИ',
+  'dzi-english-sprint': 'Интензивен английски',
 }
 
 function formatBgDate(iso: string | null | undefined): string | null {
@@ -105,6 +106,7 @@ export default function SubscriptionPage() {
       'nvo-full': 30,
       'dzi-full': 19.99,
       'dzi-sprint': 9.99,
+      'dzi-english-sprint': 5,
     }
     const STORAGE_KEY = 'mh_purchase_pixel_fired'
     let sessionId: string | null = null
