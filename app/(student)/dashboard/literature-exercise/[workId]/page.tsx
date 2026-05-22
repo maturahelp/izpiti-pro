@@ -168,6 +168,15 @@ function QuestionCard({
         />
       </div>
 
+      {question.source && (
+        <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" />
+          </svg>
+          {question.source}
+        </div>
+      )}
+
       <p className="text-base font-semibold text-text mb-5 leading-snug">{question.question}</p>
 
       <div className="flex flex-col gap-2.5">
