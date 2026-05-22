@@ -9,6 +9,7 @@ import { literatureSummaries } from '@/data/literatureSummaries'
 import { literatureVideoPaths } from '@/data/literatureVideoPaths'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
 import { nvoLiteratureSummaries } from '@/data/nvoLiteratureSummaries'
+import { nvoLiteratureRichSummaries } from '@/data/nvoLiteratureRichSummaries'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
@@ -1600,7 +1601,25 @@ export default function MaterialsPage() {
                   </div>
                   <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
                     <button type="button" onClick={() => handleNvoWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
-                    <button type="button" onClick={() => handleNvoWorkPanelChange('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveNvoWorkFree ? 'Резюме' : 'Резюме • Премиум'}</button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (nvoLiteratureRichSummaries[activeNvoWork.id]) {
+                          handlePremiumAction(
+                            () => {
+                              setActiveNvoWorkId(null)
+                              router.push(`/dashboard/materials/nvo-summary/${activeNvoWork.id}`)
+                            },
+                            isActiveNvoWorkFree,
+                          )
+                          return
+                        }
+                        handleNvoWorkPanelChange('summary')
+                      }}
+                      className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4"
+                    >
+                      {hasPremiumAccess || isActiveNvoWorkFree ? 'Резюме' : 'Резюме • Премиум'}
+                    </button>
                     <button type="button" onClick={() => handleNvoWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{canPlayVideos || isActiveNvoWorkFree ? 'Видео урок' : 'Видео урок • Премиум'}</button>
                     <button type="button" onClick={() => handleNvoWorkPanelChange('exercise')} className="w-full rounded-xl bg-[#C46A28] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveNvoWorkFree ? 'Упражнение' : 'Упражнение • Премиум'}</button>
                     {activeNvoWorkPanel === 'video' && !activeNvoVideoPath && (
