@@ -45,18 +45,22 @@ export function computeBal(args: {
     2 * nvoMath +
     GRADE_POINTS[grade1] +
     GRADE_POINTS[grade2]
-  // Закръгляме до 2 десетични знака, за да избегнем floating-point шум.
   return Math.round(bal * 100) / 100
 }
 
-export type Paralelka = {
-  name: string
+export type ParalelkaRecord = {
+  row_no: number
+  school_code: string
+  school_name: string
+  paralelka_code: string
+  paralelka_name: string
   min_bal_obshto: number
   min_bal_men: number | null
   min_bal_women: number | null
   max_bal_obshto: number | null
   max_bal_men: number | null
-  source_page: number
+  source_page_school: number
+  source_page_bal: number
 }
 
 export type ParalelkiDataset = {
@@ -64,63 +68,67 @@ export type ParalelkiDataset = {
     source: string
     source_authority: string
     as_of: string
-    extracted_pages: number[]
+    school_pages: number[]
+    bal_pages: number[]
     row_count: number
-    unique_names: number
-    duplicate_name_count: number
-    columns: string[]
+    unique_paralelki_names: number
+    unique_schools: number
+    join_method: string
     note: string
   }
-  paralelki: Paralelka[]
+  records: ParalelkaRecord[]
 }
 
 export const PARALELKI_DATASET = paralelkiData as unknown as ParalelkiDataset
 
-// Стойностите 0 в pol-specific колоните идват от празни клетки в PDF-а —
-// нормализираме ги към null, за да не подвеждат UI-я.
+// 0 в pol-specific колоните идва от празни клетки в PDF-а — нормализираме
+// към null, за да не подвеждат UI-я.
 function nullifyZero(value: number | null): number | null {
   return value === 0 ? null : value
 }
 
-export type IndexedParalelka = Paralelka & {
-  id: string
-  occurrences: number
+export type IndexedRecord = ParalelkaRecord & { id: string }
+
+function buildAllRecords(): IndexedRecord[] {
+  return PARALELKI_DATASET.records.map((r) => ({
+    ...r,
+    min_bal_men: nullifyZero(r.min_bal_men),
+    min_bal_women: nullifyZero(r.min_bal_women),
+    max_bal_men: nullifyZero(r.max_bal_men),
+    id: `${r.row_no}`,
+  }))
 }
 
-// Едно и също име може да се появи в няколко училища. Запазваме целия
-// ред с най-нисък общ минимален бал (най-лесният за влизане) и броим
-// останалите срещания — НЕ смесваме min от един ред с max от друг.
-function buildUniqueParalelki(): IndexedParalelka[] {
-  const byName = new Map<string, IndexedParalelka>()
-  for (let i = 0; i < PARALELKI_DATASET.paralelki.length; i++) {
-    const raw = PARALELKI_DATASET.paralelki[i]
-    const p: Paralelka = {
-      ...raw,
-      min_bal_men: nullifyZero(raw.min_bal_men),
-      min_bal_women: nullifyZero(raw.min_bal_women),
-      max_bal_men: nullifyZero(raw.max_bal_men),
-    }
-    const existing = byName.get(p.name)
-    if (!existing) {
-      byName.set(p.name, { ...p, id: `${p.name}#${i}`, occurrences: 1 })
-      continue
-    }
-    existing.occurrences += 1
-    if (p.min_bal_obshto < existing.min_bal_obshto) {
-      // Запазваме целия ред с най-нисък мин. бал, за да не комбинираме
-      // полета от различни редове.
-      Object.assign(existing, p)
+// Всички 385 (училище × паралелка) комбинации, подредени по най-висок мин. бал.
+export const ALL_RECORDS: ReadonlyArray<IndexedRecord> = buildAllRecords()
+  .slice()
+  .sort((a, b) => b.min_bal_obshto - a.min_bal_obshto)
+
+// Уникални училища за филтриране (по код, с името от първото срещане).
+export const UNIQUE_SCHOOLS: ReadonlyArray<{
+  code: string
+  name: string
+  count: number
+}> = (() => {
+  const map = new Map<string, { code: string; name: string; count: number }>()
+  for (const r of ALL_RECORDS) {
+    const existing = map.get(r.school_code)
+    if (existing) {
+      existing.count += 1
+    } else {
+      map.set(r.school_code, {
+        code: r.school_code,
+        name: r.school_name,
+        count: 1,
+      })
     }
   }
-  return Array.from(byName.values()).sort(
-    (a, b) => b.min_bal_obshto - a.min_bal_obshto,
+  return Array.from(map.values()).sort((a, b) =>
+    a.name.localeCompare(b.name, 'bg-BG'),
   )
-}
-
-export const UNIQUE_PARALELKI: ReadonlyArray<IndexedParalelka> = buildUniqueParalelki()
+})()
 
 export function formatBal(value: number): string {
-  // 462 -> "462", 462.5 -> "462.5", 462.25 -> "462.25"
   return Number.isInteger(value)
     ? String(value)
     : value.toFixed(2).replace(/\.?0+$/, '')
@@ -129,4 +137,22 @@ export function formatBal(value: number): string {
 export function formatGap(diff: number): string {
   const sign = diff >= 0 ? '+' : '−'
   return `${sign}${formatBal(Math.abs(diff))}`
+}
+
+/** Съкращава дълги имена на училища за компактно показване (напр. в таблици). */
+export function shortSchoolName(name: string): string {
+  // "Софийска математическа гимназия "Паисий Хилендарски"" -> "СМГ"
+  // прости съкращения за най-разпознаваемите училища
+  const abbreviations: Array<[RegExp, string]> = [
+    [/^Софийска математическа гимназия/i, 'СМГ'],
+    [/^Национална природо-математическа гимназия/i, 'НПМГ'],
+    [/^Национална гимназия за древни езици и култури/i, 'НГДЕК'],
+    [/^Технологично училище "Електронни системи"/i, 'ТУЕС'],
+    [/^Национална финансово-стопанска гимназия/i, 'НФСГ'],
+    [/^91\.НЕМСКА ЕЗИКОВА ГИМНАЗИЯ/i, '91. НЕГ'],
+  ]
+  for (const [re, abbr] of abbreviations) {
+    if (re.test(name)) return abbr
+  }
+  return name
 }

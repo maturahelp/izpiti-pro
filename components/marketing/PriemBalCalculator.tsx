@@ -2,14 +2,15 @@
 
 import { useId, useMemo, useState } from 'react'
 import {
+  ALL_RECORDS,
   GRADE_OPTIONS,
   GradeKey,
-  IndexedParalelka,
+  IndexedRecord,
   MAX_BAL,
   MAX_NVO_SCORE,
   PARALELKI_DATASET,
   PRIEM_YEAR,
-  UNIQUE_PARALELKI,
+  UNIQUE_SCHOOLS,
   computeBal,
   formatBal,
   formatGap,
@@ -54,10 +55,7 @@ function ScoreInput({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-sm font-semibold text-text"
-      >
+      <label htmlFor={id} className="text-sm font-semibold text-text">
         {label}
       </label>
       <input
@@ -124,53 +122,45 @@ function GradeSelect({
 
 export function PriemBalCalculator() {
   const idPrefix = useId()
-  const [bel, setBel] = useState<ScoreInputState>({
-    raw: '',
-    error: null,
-    value: null,
-  })
-  const [math, setMath] = useState<ScoreInputState>({
-    raw: '',
-    error: null,
-    value: null,
-  })
+  const [bel, setBel] = useState<ScoreInputState>({ raw: '', error: null, value: null })
+  const [math, setMath] = useState<ScoreInputState>({ raw: '', error: null, value: null })
   const [grade1, setGrade1] = useState<GradeKey>('excellent_6')
   const [grade2, setGrade2] = useState<GradeKey>('excellent_6')
-  const [paralelkaQuery, setParalelkaQuery] = useState('')
-  const [selectedParalelka, setSelectedParalelka] = useState<string | null>(null)
+  const [query, setQuery] = useState('')
+  const [schoolFilter, setSchoolFilter] = useState<string>('') // school_code or ''
+  const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const inputsValid = bel.value !== null && math.value !== null
   const bal = inputsValid
-    ? computeBal({
-        nvoBel: bel.value!,
-        nvoMath: math.value!,
-        grade1,
-        grade2,
-      })
+    ? computeBal({ nvoBel: bel.value!, nvoMath: math.value!, grade1, grade2 })
     : null
 
   const filteredOptions = useMemo(() => {
-    const q = paralelkaQuery.trim().toLocaleLowerCase('bg-BG')
-    if (q === '') return UNIQUE_PARALELKI
-    return UNIQUE_PARALELKI.filter((p) =>
-      p.name.toLocaleLowerCase('bg-BG').includes(q),
-    )
-  }, [paralelkaQuery])
+    const q = query.trim().toLocaleLowerCase('bg-BG')
+    return ALL_RECORDS.filter((r) => {
+      if (schoolFilter && r.school_code !== schoolFilter) return false
+      if (q === '') return true
+      const hay =
+        r.paralelka_name.toLocaleLowerCase('bg-BG') +
+        ' ' +
+        r.school_name.toLocaleLowerCase('bg-BG')
+      return hay.includes(q)
+    })
+  }, [query, schoolFilter])
 
-  // Извеждаме селекцията от филтрираните опции — ако избраната паралелка
-  // не присъства в текущото търсене, не показваме резултатна карта, дори
-  // ако вътрешният state още я помни.
+  // Извеждаме селекцията от филтрираните опции — ако избраната запис не
+  // присъства в текущото търсене, не показваме резултатна карта.
   const selected = useMemo(
     () =>
-      selectedParalelka
-        ? filteredOptions.find((p) => p.id === selectedParalelka) ?? null
+      selectedId
+        ? filteredOptions.find((r) => r.id === selectedId) ?? null
         : null,
-    [filteredOptions, selectedParalelka],
+    [filteredOptions, selectedId],
   )
 
   const qualifyingList = useMemo(() => {
     if (bal === null) return []
-    return UNIQUE_PARALELKI.filter((p) => bal >= p.min_bal_obshto)
+    return ALL_RECORDS.filter((r) => bal >= r.min_bal_obshto)
   }, [bal])
 
   const handleReset = () => {
@@ -178,8 +168,9 @@ export function PriemBalCalculator() {
     setMath({ raw: '', error: null, value: null })
     setGrade1('excellent_6')
     setGrade2('excellent_6')
-    setParalelkaQuery('')
-    setSelectedParalelka(null)
+    setQuery('')
+    setSchoolFilter('')
+    setSelectedId(null)
   }
 
   return (
@@ -224,9 +215,7 @@ export function PriemBalCalculator() {
             <span className="section-label text-text-muted">Твоят бал</span>
             <span className="text-4xl font-extrabold tracking-[-0.03em] text-primary-dark">
               {bal === null ? '— ' : formatBal(bal)}
-              <span className="text-xl font-bold text-text-muted ml-1">
-                / {MAX_BAL}
-              </span>
+              <span className="text-xl font-bold text-text-muted ml-1">/ {MAX_BAL}</span>
             </span>
           </div>
           <button
@@ -247,8 +236,9 @@ export function PriemBalCalculator() {
       <section className="card p-6 sm:p-8">
         <h2 className="section-title mb-1">Провери конкретна паралелка</h2>
         <p className="text-sm text-text-muted mb-6">
-          {PARALELKI_DATASET.metadata.unique_names} различни паралелки в София-град
-          от приема за {PRIEM_YEAR} г.
+          {PARALELKI_DATASET.metadata.row_count} паралелки в{' '}
+          {PARALELKI_DATASET.metadata.unique_schools} училища в София-град от
+          приема за {PRIEM_YEAR} г.
         </p>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -257,18 +247,43 @@ export function PriemBalCalculator() {
               htmlFor={`${idPrefix}-search`}
               className="text-sm font-semibold text-text"
             >
-              Търси по име
+              Търси по паралелка или училище
             </label>
             <input
               id={`${idPrefix}-search`}
               type="search"
-              value={paralelkaQuery}
-              onChange={(e) => setParalelkaQuery(e.target.value)}
-              placeholder="напр. Математически, Чужди езици..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="напр. СМГ, Математически, Чужди езици..."
               className="input-field"
             />
           </div>
           <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor={`${idPrefix}-school`}
+              className="text-sm font-semibold text-text"
+            >
+              Филтър по училище
+            </label>
+            <select
+              id={`${idPrefix}-school`}
+              value={schoolFilter}
+              onChange={(e) => setSchoolFilter(e.target.value)}
+              className="input-field appearance-none pr-10 bg-no-repeat bg-[right_0.85rem_center] bg-[length:1rem_1rem]"
+              style={{
+                backgroundImage:
+                  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2364748B'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z' clip-rule='evenodd'/></svg>\")",
+              }}
+            >
+              <option value="">Всички {UNIQUE_SCHOOLS.length} училища</option>
+              {UNIQUE_SCHOOLS.map((s) => (
+                <option key={s.code} value={s.code}>
+                  {s.name} · {s.count} паралелки
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-1.5 sm:col-span-2">
             <label
               htmlFor={`${idPrefix}-select`}
               className="text-sm font-semibold text-text"
@@ -277,8 +292,8 @@ export function PriemBalCalculator() {
             </label>
             <select
               id={`${idPrefix}-select`}
-              value={selectedParalelka ?? ''}
-              onChange={(e) => setSelectedParalelka(e.target.value || null)}
+              value={selectedId ?? ''}
+              onChange={(e) => setSelectedId(e.target.value || null)}
               className="input-field appearance-none pr-10 bg-no-repeat bg-[right_0.85rem_center] bg-[length:1rem_1rem]"
               style={{
                 backgroundImage:
@@ -286,29 +301,20 @@ export function PriemBalCalculator() {
               }}
             >
               <option value="">— Избери от списъка —</option>
-              {filteredOptions.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name} · мин. {formatBal(p.min_bal_obshto)}
-                  {p.occurrences > 1 ? ` · ${p.occurrences} училища` : ''}
+              {filteredOptions.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.school_name} · {r.paralelka_name} · мин. {formatBal(r.min_bal_obshto)}
                 </option>
               ))}
             </select>
-            {paralelkaQuery.trim() !== '' && (
-              <p className="text-xs text-text-light" aria-live="polite">
-                Намерени {filteredOptions.length}{' '}
-                {filteredOptions.length === 1 ? 'съвпадение' : 'съвпадения'}.
-              </p>
-            )}
+            <p className="text-xs text-text-light" aria-live="polite">
+              Намерени {filteredOptions.length}{' '}
+              {filteredOptions.length === 1 ? 'паралелка' : 'паралелки'}.
+            </p>
           </div>
         </div>
 
-        {/* Selected paralelka result */}
-        {selected && (
-          <SelectedParalelkaResult
-            paralelka={selected}
-            bal={bal}
-          />
-        )}
+        {selected && <SelectedRecordResult record={selected} bal={bal} />}
       </section>
 
       {/* Qualifying list */}
@@ -329,7 +335,6 @@ export function PriemBalCalculator() {
         )}
       </section>
 
-      {/* Disclaimer */}
       <p className="text-xs text-text-muted text-center px-2">
         Данните са от справката на РУО София-град към {PARALELKI_DATASET.metadata.as_of}
         {' '}и са за приема през {PRIEM_YEAR} г. Стойностите са ориентировъчни — реалните
@@ -339,15 +344,15 @@ export function PriemBalCalculator() {
   )
 }
 
-function SelectedParalelkaResult({
-  paralelka,
+function SelectedRecordResult({
+  record,
   bal,
 }: {
-  paralelka: IndexedParalelka
+  record: IndexedRecord
   bal: number | null
 }) {
-  const passes = bal !== null && bal >= paralelka.min_bal_obshto
-  const gap = bal !== null ? bal - paralelka.min_bal_obshto : null
+  const passes = bal !== null && bal >= record.min_bal_obshto
+  const gap = bal !== null ? bal - record.min_bal_obshto : null
 
   return (
     <div
@@ -362,27 +367,29 @@ function SelectedParalelkaResult({
       )}
     >
       <div className="flex flex-col gap-1 mb-4">
+        <p className="text-xs font-bold uppercase tracking-[0.08em] text-text-light">
+          {record.school_name}
+        </p>
         <h3 className="text-base font-bold text-text leading-snug">
-          {paralelka.name}
-          {paralelka.occurrences > 1 && (
-            <span className="ml-2 align-middle inline-flex items-center rounded-full bg-white/70 px-2 py-0.5 text-[0.6875rem] font-bold text-text-muted">
-              {paralelka.occurrences} училища
-            </span>
-          )}
+          {record.paralelka_name}
         </h3>
+        <p className="text-xs text-text-light">
+          Код на паралелката: {record.paralelka_code} · Код на училището:{' '}
+          {record.school_code}
+        </p>
         <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-text-muted sm:grid-cols-4">
-          <Stat label="Мин. бал (общо)" value={formatBal(paralelka.min_bal_obshto)} />
+          <Stat label="Мин. бал (общо)" value={formatBal(record.min_bal_obshto)} />
           <Stat
             label="Макс. бал (общо)"
-            value={paralelka.max_bal_obshto !== null ? formatBal(paralelka.max_bal_obshto) : '—'}
+            value={record.max_bal_obshto !== null ? formatBal(record.max_bal_obshto) : '—'}
           />
           <Stat
             label="Мин. за момчета"
-            value={paralelka.min_bal_men !== null ? formatBal(paralelka.min_bal_men) : '—'}
+            value={record.min_bal_men !== null ? formatBal(record.min_bal_men) : '—'}
           />
           <Stat
             label="Мин. за момичета"
-            value={paralelka.min_bal_women !== null ? formatBal(paralelka.min_bal_women) : '—'}
+            value={record.min_bal_women !== null ? formatBal(record.min_bal_women) : '—'}
           />
         </dl>
       </div>
@@ -413,7 +420,7 @@ function SelectedParalelkaResult({
                 </>
               )}
             </p>
-            {(paralelka.min_bal_men !== null || paralelka.min_bal_women !== null) && (
+            {(record.min_bal_men !== null || record.min_bal_women !== null) && (
               <p className="mt-1 text-xs text-text-light">
                 Прагът за момчета/момичета може да е по-висок от общия (виж горе).
               </p>
@@ -440,7 +447,7 @@ function QualifyingTable({
   items,
   userBal,
 }: {
-  items: ReadonlyArray<IndexedParalelka>
+  items: ReadonlyArray<IndexedRecord>
   userBal: number
 }) {
   return (
@@ -452,7 +459,7 @@ function QualifyingTable({
         <thead>
           <tr className="bg-slate-50 text-[0.7rem] font-bold uppercase tracking-[0.08em] text-text-muted">
             <th scope="col" className="px-4 py-3 text-left">
-              Паралелка
+              Училище и паралелка
             </th>
             <th scope="col" className="px-4 py-3 text-right whitespace-nowrap">
               Мин. бал
@@ -466,26 +473,21 @@ function QualifyingTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
-          {items.map((p) => {
-            const diff = userBal - p.min_bal_obshto
+          {items.map((r) => {
+            const diff = userBal - r.min_bal_obshto
             return (
-              <tr key={p.id}>
-                <th
-                  scope="row"
-                  className="px-4 py-3 text-left font-semibold text-text leading-snug"
-                >
-                  {p.name}
-                  {p.occurrences > 1 && (
-                    <span className="ml-2 text-[0.6875rem] font-bold uppercase tracking-[0.06em] text-text-light">
-                      · {p.occurrences} училища
-                    </span>
-                  )}
+              <tr key={r.id}>
+                <th scope="row" className="px-4 py-3 text-left font-semibold text-text leading-snug">
+                  <span className="block text-[0.6875rem] uppercase tracking-[0.06em] text-text-light">
+                    {r.school_name}
+                  </span>
+                  <span className="block">{r.paralelka_name}</span>
                 </th>
                 <td className="px-4 py-3 text-right text-text-muted whitespace-nowrap tabular-nums">
-                  {formatBal(p.min_bal_obshto)}
+                  {formatBal(r.min_bal_obshto)}
                 </td>
                 <td className="px-4 py-3 text-right text-text-muted whitespace-nowrap tabular-nums">
-                  {p.max_bal_obshto !== null ? formatBal(p.max_bal_obshto) : '—'}
+                  {r.max_bal_obshto !== null ? formatBal(r.max_bal_obshto) : '—'}
                 </td>
                 <td
                   className={cn(
