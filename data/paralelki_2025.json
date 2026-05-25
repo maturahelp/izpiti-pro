@@ -1,0 +1,3502 @@
+{
+  "metadata": {
+    "source": "za_saita_min_max_1kl_2025.pdf",
+    "source_authority": "РУО София-град",
+    "as_of": "2025-07-14",
+    "extracted_pages": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "row_count": 385,
+    "unique_names": 310,
+    "duplicate_name_count": 48,
+    "columns": [
+      "name",
+      "min_bal_obshto",
+      "min_bal_men",
+      "min_bal_women",
+      "max_bal_obshto",
+      "max_bal_men"
+    ],
+    "note": "PDF table contains only 6 data columns; макс. бал Жени не присъства в източника."
+  },
+  "paralelki": [
+    {
+      "name": "Математически (математика и физика) - АЕ (РИЧЕ)",
+      "min_bal_obshto": 493.25,
+      "min_bal_men": 493.5,
+      "min_bal_women": 493.25,
+      "max_bal_obshto": 500.0,
+      "max_bal_men": 498.0,
+      "source_page": 15
+    },
+    {
+      "name": "Математически (математика и информатика) - АЕ (РИЧЕ)",
+      "min_bal_obshto": 490.5,
+      "min_bal_men": 490.75,
+      "min_bal_women": 490.5,
+      "max_bal_obshto": 500.0,
+      "max_bal_men": 500.0,
+      "source_page": 15
+    },
+    {
+      "name": "Математически (математика и физика) - НЕ (ИИЧЕ)",
+      "min_bal_obshto": 490.0,
+      "min_bal_men": 490.0,
+      "min_bal_women": 490.5,
+      "max_bal_obshto": 499.5,
+      "max_bal_men": 497.0,
+      "source_page": 15
+    },
+    {
+      "name": "Математически - АЕ М Инф",
+      "min_bal_obshto": 488.0,
+      "min_bal_men": 488.0,
+      "min_bal_women": 488.25,
+      "max_bal_obshto": 499.0,
+      "max_bal_men": 497.5,
+      "source_page": 15
+    },
+    {
+      "name": "Математически - НЕ М Инф",
+      "min_bal_obshto": 487.5,
+      "min_bal_men": 487.5,
+      "min_bal_women": 487.5,
+      "max_bal_obshto": 498.0,
+      "max_bal_men": 497.5,
+      "source_page": 15
+    },
+    {
+      "name": "Математически (математика и информатика) - НЕ (ИИЧЕ)",
+      "min_bal_obshto": 487.5,
+      "min_bal_men": 487.5,
+      "min_bal_women": 489.5,
+      "max_bal_obshto": 498.5,
+      "max_bal_men": 494.0,
+      "source_page": 15
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 475.5,
+      "min_bal_men": 475.5,
+      "min_bal_women": 485.0,
+      "max_bal_obshto": 495.0,
+      "max_bal_men": 495.0,
+      "source_page": 15
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - АЕ, НЕ",
+      "min_bal_obshto": 474.75,
+      "min_bal_men": 474.75,
+      "min_bal_women": 477.75,
+      "max_bal_obshto": 496.0,
+      "max_bal_men": 492.5,
+      "source_page": 15
+    },
+    {
+      "name": "Природни науки - АЕ ХООС БЗО",
+      "min_bal_obshto": 472.2,
+      "min_bal_men": 472.2,
+      "min_bal_women": 475.44,
+      "max_bal_obshto": 492.73,
+      "max_bal_men": 491.73,
+      "source_page": 15
+    },
+    {
+      "name": "Системно програмиране - АЕ, НЕ",
+      "min_bal_obshto": 471.75,
+      "min_bal_men": 471.75,
+      "min_bal_women": 473.5,
+      "max_bal_obshto": 497.0,
+      "max_bal_men": 497.0,
+      "source_page": 15
+    },
+    {
+      "name": "Чужди езици - НЕ интензивно, АЕ",
+      "min_bal_obshto": 468.5,
+      "min_bal_men": 468.5,
+      "min_bal_women": 473.0,
+      "max_bal_obshto": 498.0,
+      "max_bal_men": 494.0,
+      "source_page": 15
+    },
+    {
+      "name": "Системно програмиране - АЕ, РЕ",
+      "min_bal_obshto": 467.25,
+      "min_bal_men": 467.25,
+      "min_bal_women": 467.75,
+      "max_bal_obshto": 487.5,
+      "max_bal_men": 487.5,
+      "source_page": 15
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, ИтЕ",
+      "min_bal_obshto": 467.0,
+      "min_bal_men": 467.0,
+      "min_bal_women": 481.5,
+      "max_bal_obshto": 498.0,
+      "max_bal_men": 496.0,
+      "source_page": 15
+    },
+    {
+      "name": "Икономическо развитие - АЕ ГИ М",
+      "min_bal_obshto": 465.0,
+      "min_bal_men": 465.5,
+      "min_bal_women": 465.0,
+      "max_bal_obshto": 494.0,
+      "max_bal_men": 494.0,
+      "source_page": 15
+    },
+    {
+      "name": "Компютърни мрежи - АЕ, РЕ",
+      "min_bal_obshto": 464.25,
+      "min_bal_men": 464.25,
+      "min_bal_women": 465.0,
+      "max_bal_obshto": 494.0,
+      "max_bal_men": 494.0,
+      "source_page": 15
+    },
+    {
+      "name": "Чужди езици - НЕ интензивно, АЕ",
+      "min_bal_obshto": 463.5,
+      "min_bal_men": 463.5,
+      "min_bal_women": 467.0,
+      "max_bal_obshto": 486.5,
+      "max_bal_men": 476.0,
+      "source_page": 15
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, ФЕ",
+      "min_bal_obshto": 461.5,
+      "min_bal_men": 461.5,
+      "min_bal_women": 474.5,
+      "max_bal_obshto": 494.0,
+      "max_bal_men": 494.0,
+      "source_page": 15
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, ПортЕ",
+      "min_bal_obshto": 461.0,
+      "min_bal_men": 461.0,
+      "min_bal_women": 474.5,
+      "max_bal_obshto": 483.5,
+      "max_bal_men": 466.0,
+      "source_page": 15
+    },
+    {
+      "name": "Строителство и архитектура - АЕ",
+      "min_bal_obshto": 460.75,
+      "min_bal_men": 460.75,
+      "min_bal_women": 461.25,
+      "max_bal_obshto": 496.0,
+      "max_bal_men": 496.0,
+      "source_page": 16
+    },
+    {
+      "name": "Природни науки - АЕ БЗО ХООС",
+      "min_bal_obshto": 458.72,
+      "min_bal_men": 461.75,
+      "min_bal_women": 458.72,
+      "max_bal_obshto": 493.5,
+      "max_bal_men": 493.5,
+      "source_page": 16
+    },
+    {
+      "name": "Математически - АЕ ФА М",
+      "min_bal_obshto": 458.38,
+      "min_bal_men": 462.47,
+      "min_bal_women": 458.38,
+      "max_bal_obshto": 491.61,
+      "max_bal_men": 491.61,
+      "source_page": 16
+    },
+    {
+      "name": "Математически - НЕ интензивно, РЕ, М и ФА",
+      "min_bal_obshto": 457.0,
+      "min_bal_men": 457.0,
+      "min_bal_women": 461.0,
+      "max_bal_obshto": 473.5,
+      "max_bal_men": 471.5,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - НЕ интензивно, ФЕ",
+      "min_bal_obshto": 456.5,
+      "min_bal_men": 456.5,
+      "min_bal_women": 464.5,
+      "max_bal_obshto": 480.0,
+      "max_bal_men": 466.5,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, НЕ",
+      "min_bal_obshto": 453.0,
+      "min_bal_men": 453.0,
+      "min_bal_women": 460.5,
+      "max_bal_obshto": 482.5,
+      "max_bal_men": 482.5,
+      "source_page": 16
+    },
+    {
+      "name": "Строителство и архитектура - НЕ",
+      "min_bal_obshto": 452.75,
+      "min_bal_men": 452.75,
+      "min_bal_women": 460.5,
+      "max_bal_obshto": 492.75,
+      "max_bal_men": 487.0,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици АЕ интензивно, ИЕ",
+      "min_bal_obshto": 452.0,
+      "min_bal_men": 452.0,
+      "min_bal_women": 466.5,
+      "max_bal_obshto": 490.5,
+      "max_bal_men": 478.0,
+      "source_page": 16
+    },
+    {
+      "name": "Интериорен дизайн - ИтЕ",
+      "min_bal_obshto": 451.0,
+      "min_bal_men": 466.5,
+      "min_bal_women": 451.0,
+      "max_bal_obshto": 477.5,
+      "max_bal_men": 466.5,
+      "source_page": 16
+    },
+    {
+      "name": "Системно програмиране - АЕ, НЕ",
+      "min_bal_obshto": 451.0,
+      "min_bal_men": 451.0,
+      "min_bal_women": 461.75,
+      "max_bal_obshto": 482.5,
+      "max_bal_men": 482.5,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, НЕ",
+      "min_bal_obshto": 450.5,
+      "min_bal_men": 450.5,
+      "min_bal_women": 460.5,
+      "max_bal_obshto": 495.0,
+      "max_bal_men": 476.0,
+      "source_page": 16
+    },
+    {
+      "name": "Обществени науки - НЕ интензивно, РЕ, ИЦ и ГИ",
+      "min_bal_obshto": 449.0,
+      "min_bal_men": 449.0,
+      "min_bal_women": 452.5,
+      "max_bal_obshto": 475.5,
+      "max_bal_men": 475.5,
+      "source_page": 16
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, НЕ",
+      "min_bal_obshto": 448.5,
+      "min_bal_men": 448.5,
+      "min_bal_women": 455.5,
+      "max_bal_obshto": 485.0,
+      "max_bal_men": 485.0,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 448.0,
+      "min_bal_men": 448.0,
+      "min_bal_women": 465.5,
+      "max_bal_obshto": 490.0,
+      "max_bal_men": 476.0,
+      "source_page": 16
+    },
+    {
+      "name": "Приложно програмиране - АЕ, НЕ",
+      "min_bal_obshto": 447.75,
+      "min_bal_men": 447.75,
+      "min_bal_women": 460.75,
+      "max_bal_obshto": 479.75,
+      "max_bal_men": 479.75,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, РЕ",
+      "min_bal_obshto": 447.5,
+      "min_bal_men": 447.5,
+      "min_bal_women": 457.0,
+      "max_bal_obshto": 464.5,
+      "max_bal_men": 461.0,
+      "source_page": 16
+    },
+    {
+      "name": "Хуманитарен - БЕЛ/Фил, ИЕ интензивно, АЕ",
+      "min_bal_obshto": 445.5,
+      "min_bal_men": 445.5,
+      "min_bal_women": 446.0,
+      "max_bal_obshto": 474.0,
+      "max_bal_men": 450.0,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, РЕ",
+      "min_bal_obshto": 443.5,
+      "min_bal_men": 443.5,
+      "min_bal_women": 454.0,
+      "max_bal_obshto": 465.5,
+      "max_bal_men": 447.5,
+      "source_page": 16
+    },
+    {
+      "name": "Компютърна анимация - АЕ интензивно, ИтЕ",
+      "min_bal_obshto": 443.0,
+      "min_bal_men": 443.5,
+      "min_bal_women": 443.0,
+      "max_bal_obshto": 473.5,
+      "max_bal_men": 473.5,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ФЕ",
+      "min_bal_obshto": 442.0,
+      "min_bal_men": 442.0,
+      "min_bal_women": 457.0,
+      "max_bal_obshto": 498.0,
+      "max_bal_men": 455.5,
+      "source_page": 16
+    },
+    {
+      "name": "Интериорен дизайн - ФЕ",
+      "min_bal_obshto": 440.25,
+      "min_bal_men": 0.0,
+      "min_bal_women": 440.25,
+      "max_bal_obshto": 457.5,
+      "max_bal_men": 0.0,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 440.0,
+      "min_bal_men": 440.0,
+      "min_bal_women": 440.5,
+      "max_bal_obshto": 469.5,
+      "max_bal_men": 460.0,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, НЕ",
+      "min_bal_obshto": 440.0,
+      "min_bal_men": 440.0,
+      "min_bal_women": 458.5,
+      "max_bal_obshto": 475.0,
+      "max_bal_men": 475.0,
+      "source_page": 16
+    },
+    {
+      "name": "Изобразително изкуство - АЕ интензивно, ИтЕ",
+      "min_bal_obshto": 439.25,
+      "min_bal_men": 439.5,
+      "min_bal_women": 439.25,
+      "max_bal_obshto": 487.0,
+      "max_bal_men": 456.75,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, АЕ",
+      "min_bal_obshto": 438.5,
+      "min_bal_men": 438.5,
+      "min_bal_women": 459.5,
+      "max_bal_obshto": 484.0,
+      "max_bal_men": 483.0,
+      "source_page": 16
+    },
+    {
+      "name": "Програмиране на роботи - АЕ, НЕ",
+      "min_bal_obshto": 437.0,
+      "min_bal_men": 437.0,
+      "min_bal_women": 438.25,
+      "max_bal_obshto": 466.5,
+      "max_bal_men": 466.5,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - НЕ интензивно, РЕ",
+      "min_bal_obshto": 436.0,
+      "min_bal_men": 436.5,
+      "min_bal_women": 436.0,
+      "max_bal_obshto": 455.0,
+      "max_bal_men": 449.5,
+      "source_page": 16
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 435.5,
+      "min_bal_men": 435.5,
+      "min_bal_women": 437.0,
+      "max_bal_obshto": 466.5,
+      "max_bal_men": 447.5,
+      "source_page": 17
+    },
+    {
+      "name": "Компютърна графика - АЕ интензивно, Японски език",
+      "min_bal_obshto": 435.0,
+      "min_bal_men": 435.0,
+      "min_bal_women": 435.0,
+      "max_bal_obshto": 498.0,
+      "max_bal_men": 498.0,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, ИЕ",
+      "min_bal_obshto": 435.0,
+      "min_bal_men": 435.0,
+      "min_bal_women": 458.0,
+      "max_bal_obshto": 482.0,
+      "max_bal_men": 458.5,
+      "source_page": 17
+    },
+    {
+      "name": "Природни науки БЗО, ХООС, ИЕ - интензивно, АЕ",
+      "min_bal_obshto": 433.5,
+      "min_bal_men": 434.0,
+      "min_bal_women": 433.5,
+      "max_bal_obshto": 466.0,
+      "max_bal_men": 443.5,
+      "source_page": 17
+    },
+    {
+      "name": "Геодезия - АЕ",
+      "min_bal_obshto": 433.5,
+      "min_bal_men": 435.25,
+      "min_bal_women": 433.5,
+      "max_bal_obshto": 459.25,
+      "max_bal_men": 459.25,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, Латински език",
+      "min_bal_obshto": 432.5,
+      "min_bal_men": 432.5,
+      "min_bal_women": 455.0,
+      "max_bal_obshto": 461.0,
+      "max_bal_men": 442.5,
+      "source_page": 17
+    },
+    {
+      "name": "Банково дело - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 432.5,
+      "min_bal_men": 432.5,
+      "min_bal_women": 433.0,
+      "max_bal_obshto": 490.0,
+      "max_bal_men": 490.0,
+      "source_page": 17
+    },
+    {
+      "name": "Природни науки - НЕ БЗО ХООС",
+      "min_bal_obshto": 431.32,
+      "min_bal_men": 434.6,
+      "min_bal_women": 431.32,
+      "max_bal_obshto": 478.96,
+      "max_bal_men": 478.96,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - ЯЕ интензивно, АЕ",
+      "min_bal_obshto": 431.0,
+      "min_bal_men": 432.0,
+      "min_bal_women": 431.0,
+      "max_bal_obshto": 478.5,
+      "max_bal_men": 474.5,
+      "source_page": 17
+    },
+    {
+      "name": "Природни науки - Биол, Хим, АЕ интензивно, НЕ",
+      "min_bal_obshto": 431.0,
+      "min_bal_men": 431.0,
+      "min_bal_women": 431.5,
+      "max_bal_obshto": 454.0,
+      "max_bal_men": 454.0,
+      "source_page": 17
+    },
+    {
+      "name": "Хуманитарен - БЕЛ/Фил, АЕ интензивно, ИЕ",
+      "min_bal_obshto": 431.0,
+      "min_bal_men": 431.5,
+      "min_bal_women": 431.0,
+      "max_bal_obshto": 453.5,
+      "max_bal_men": 442.0,
+      "source_page": 17
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, ИЕ, БЗО и ХООС",
+      "min_bal_obshto": 431.0,
+      "min_bal_men": 432.0,
+      "min_bal_women": 431.0,
+      "max_bal_obshto": 461.5,
+      "max_bal_men": 451.5,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, РЕ",
+      "min_bal_obshto": 430.5,
+      "min_bal_men": 0.0,
+      "min_bal_women": 430.5,
+      "max_bal_obshto": 455.5,
+      "max_bal_men": 0.0,
+      "source_page": 17
+    },
+    {
+      "name": "Обществени науки - Ист/Фил, ИЕ интензивно, АЕ",
+      "min_bal_obshto": 430.0,
+      "min_bal_men": 434.5,
+      "min_bal_women": 430.0,
+      "max_bal_obshto": 455.5,
+      "max_bal_men": 455.5,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - НЕ интензивно, АЕ",
+      "min_bal_obshto": 429.0,
+      "min_bal_men": 429.5,
+      "min_bal_women": 429.0,
+      "max_bal_obshto": 454.0,
+      "max_bal_men": 448.0,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, РЕ",
+      "min_bal_obshto": 428.5,
+      "min_bal_men": 428.5,
+      "min_bal_women": 436.0,
+      "max_bal_obshto": 452.5,
+      "max_bal_men": 448.0,
+      "source_page": 17
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 428.0,
+      "min_bal_men": 428.0,
+      "min_bal_women": 428.0,
+      "max_bal_obshto": 462.5,
+      "max_bal_men": 450.5,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - интензивно НЕ, РЕ",
+      "min_bal_obshto": 428.0,
+      "min_bal_men": 428.0,
+      "min_bal_women": 446.0,
+      "max_bal_obshto": 459.0,
+      "max_bal_men": 436.5,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, НЕ",
+      "min_bal_obshto": 427.0,
+      "min_bal_men": 427.0,
+      "min_bal_women": 448.0,
+      "max_bal_obshto": 458.0,
+      "max_bal_men": 447.5,
+      "source_page": 17
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 426.5,
+      "min_bal_men": 426.5,
+      "min_bal_women": 451.0,
+      "max_bal_obshto": 465.0,
+      "max_bal_men": 450.0,
+      "source_page": 17
+    },
+    {
+      "name": "Компютърни мрежи - АЕ, НЕ",
+      "min_bal_obshto": 426.5,
+      "min_bal_men": 426.5,
+      "min_bal_women": 435.0,
+      "max_bal_obshto": 481.25,
+      "max_bal_men": 462.0,
+      "source_page": 17
+    },
+    {
+      "name": "Хуманитарни науки - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 425.5,
+      "min_bal_men": 425.5,
+      "min_bal_women": 425.75,
+      "max_bal_obshto": 452.5,
+      "max_bal_men": 452.5,
+      "source_page": 17
+    },
+    {
+      "name": "Обществени науки - Ист/Фил, АЕ интензивно, ИЕ",
+      "min_bal_obshto": 424.0,
+      "min_bal_men": 424.0,
+      "min_bal_women": 424.0,
+      "max_bal_obshto": 443.5,
+      "max_bal_men": 430.5,
+      "source_page": 17
+    },
+    {
+      "name": "Хуманитарни науки - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 423.25,
+      "min_bal_men": 423.75,
+      "min_bal_women": 423.25,
+      "max_bal_obshto": 475.5,
+      "max_bal_men": 434.0,
+      "source_page": 17
+    },
+    {
+      "name": "Компютърна техника и технологии - АЕ, НЕ",
+      "min_bal_obshto": 421.5,
+      "min_bal_men": 421.5,
+      "min_bal_women": 425.0,
+      "max_bal_obshto": 456.75,
+      "max_bal_men": 456.75,
+      "source_page": 17
+    },
+    {
+      "name": "Природни науки - БЗО ХООС интензивно НЕ, РЕ",
+      "min_bal_obshto": 420.5,
+      "min_bal_men": 420.5,
+      "min_bal_women": 450.0,
+      "max_bal_obshto": 470.5,
+      "max_bal_men": 428.5,
+      "source_page": 18
+    },
+    {
+      "name": "Обществени науки - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 420.25,
+      "min_bal_men": 420.25,
+      "min_bal_women": 420.5,
+      "max_bal_obshto": 471.0,
+      "max_bal_men": 448.0,
+      "source_page": 18
+    },
+    {
+      "name": "Хуманитарни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 419.75,
+      "min_bal_men": 419.75,
+      "min_bal_women": 419.75,
+      "max_bal_obshto": 453.25,
+      "max_bal_men": 435.75,
+      "source_page": 18
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, ИЕ",
+      "min_bal_obshto": 419.0,
+      "min_bal_men": 419.0,
+      "min_bal_women": 419.0,
+      "max_bal_obshto": 453.5,
+      "max_bal_men": 425.5,
+      "source_page": 18
+    },
+    {
+      "name": "Банково дело - НЕ интензивно, АЕ",
+      "min_bal_obshto": 418.0,
+      "min_bal_men": 418.0,
+      "min_bal_women": 420.5,
+      "max_bal_obshto": 460.0,
+      "max_bal_men": 444.5,
+      "source_page": 18
+    },
+    {
+      "name": "Икономическа информатика - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 417.5,
+      "min_bal_men": 422.5,
+      "min_bal_women": 417.5,
+      "max_bal_obshto": 445.0,
+      "max_bal_men": 444.5,
+      "source_page": 18
+    },
+    {
+      "name": "Водно строителство - АЕ",
+      "min_bal_obshto": 417.25,
+      "min_bal_men": 417.25,
+      "min_bal_women": 421.0,
+      "max_bal_obshto": 451.75,
+      "max_bal_men": 450.75,
+      "source_page": 18
+    },
+    {
+      "name": "Математически - АЕ интензивно, НЕ",
+      "min_bal_obshto": 417.0,
+      "min_bal_men": 419.5,
+      "min_bal_women": 417.0,
+      "max_bal_obshto": 476.0,
+      "max_bal_men": 459.5,
+      "source_page": 18
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ФЕ",
+      "min_bal_obshto": 416.5,
+      "min_bal_men": 416.5,
+      "min_bal_women": 442.0,
+      "max_bal_obshto": 452.0,
+      "max_bal_men": 427.5,
+      "source_page": 18
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, РЕ",
+      "min_bal_obshto": 416.0,
+      "min_bal_men": 416.0,
+      "min_bal_women": 447.0,
+      "max_bal_obshto": 457.0,
+      "max_bal_men": 431.5,
+      "source_page": 18
+    },
+    {
+      "name": "Електронна търговия - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 415.5,
+      "min_bal_men": 417.0,
+      "min_bal_women": 415.5,
+      "max_bal_obshto": 467.0,
+      "max_bal_men": 457.0,
+      "source_page": 18
+    },
+    {
+      "name": "Парково строителство и озеленяване - АЕ",
+      "min_bal_obshto": 415.5,
+      "min_bal_men": 416.0,
+      "min_bal_women": 415.5,
+      "max_bal_obshto": 453.75,
+      "max_bal_men": 429.0,
+      "source_page": 18
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 414.25,
+      "min_bal_men": 414.75,
+      "min_bal_women": 414.25,
+      "max_bal_obshto": 485.5,
+      "max_bal_men": 453.0,
+      "source_page": 18
+    },
+    {
+      "name": "Природни науки - интензивно ФЕ, РЕ",
+      "min_bal_obshto": 413.0,
+      "min_bal_men": 413.0,
+      "min_bal_women": 432.0,
+      "max_bal_obshto": 452.0,
+      "max_bal_men": 429.5,
+      "source_page": 18
+    },
+    {
+      "name": "Бизнес администрация - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 413.0,
+      "min_bal_men": 413.0,
+      "min_bal_women": 441.5,
+      "max_bal_obshto": 476.0,
+      "max_bal_men": 460.5,
+      "source_page": 18
+    },
+    {
+      "name": "Математически - АЕ интензивно, НЕ; М и Инф",
+      "min_bal_obshto": 412.0,
+      "min_bal_men": 413.5,
+      "min_bal_women": 412.0,
+      "max_bal_obshto": 463.0,
+      "max_bal_men": 463.0,
+      "source_page": 18
+    },
+    {
+      "name": "Чужди езици - НЕ интензивно, АЕ/РЕ по избор",
+      "min_bal_obshto": 411.5,
+      "min_bal_men": 411.5,
+      "min_bal_women": 412.75,
+      "max_bal_obshto": 446.75,
+      "max_bal_men": 432.25,
+      "source_page": 18
+    },
+    {
+      "name": "Хуманитарни науки - АЕ интензивно, РЕ; БЕЛ и ИЦ",
+      "min_bal_obshto": 411.5,
+      "min_bal_men": 411.5,
+      "min_bal_women": 424.5,
+      "max_bal_obshto": 449.5,
+      "max_bal_men": 428.0,
+      "source_page": 18
+    },
+    {
+      "name": "Транспортно строителство - АЕ",
+      "min_bal_obshto": 411.5,
+      "min_bal_men": 411.5,
+      "min_bal_women": 416.0,
+      "max_bal_obshto": 444.0,
+      "max_bal_men": 444.0,
+      "source_page": 18
+    },
+    {
+      "name": "Промишлена електроника - АЕ, НЕ",
+      "min_bal_obshto": 411.0,
+      "min_bal_men": 411.0,
+      "min_bal_women": 419.0,
+      "max_bal_obshto": 444.0,
+      "max_bal_men": 444.0,
+      "source_page": 18
+    },
+    {
+      "name": "Природни науки - БЗО и ХООС - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 410.0,
+      "min_bal_men": 411.25,
+      "min_bal_women": 410.0,
+      "max_bal_obshto": 449.25,
+      "max_bal_men": 421.25,
+      "source_page": 18
+    },
+    {
+      "name": "Компютърна анимация - ИЕ",
+      "min_bal_obshto": 409.75,
+      "min_bal_men": 409.75,
+      "min_bal_women": 440.0,
+      "max_bal_obshto": 461.0,
+      "max_bal_men": 438.0,
+      "source_page": 18
+    },
+    {
+      "name": "Графичен дизайн - НЕ",
+      "min_bal_obshto": 409.5,
+      "min_bal_men": 409.5,
+      "min_bal_women": 439.5,
+      "max_bal_obshto": 472.5,
+      "max_bal_men": 448.75,
+      "source_page": 18
+    },
+    {
+      "name": "Застрахователно и осигурително дело - AE интензивно, ИЕ",
+      "min_bal_obshto": 408.0,
+      "min_bal_men": 408.0,
+      "min_bal_women": 410.0,
+      "max_bal_obshto": 441.0,
+      "max_bal_men": 429.5,
+      "source_page": 18
+    },
+    {
+      "name": "Икономика и мениджмънт - АЕ",
+      "min_bal_obshto": 408.0,
+      "min_bal_men": 408.5,
+      "min_bal_women": 408.0,
+      "max_bal_obshto": 487.0,
+      "max_bal_men": 457.5,
+      "source_page": 18
+    },
+    {
+      "name": "Природни науки - НЕ интензивно, АЕ; БЗО и ХООС",
+      "min_bal_obshto": 407.5,
+      "min_bal_men": 409.0,
+      "min_bal_women": 407.5,
+      "max_bal_obshto": 456.5,
+      "max_bal_men": 420.0,
+      "source_page": 18
+    },
+    {
+      "name": "Чужди езици - КорЕ интензивно, АЕ",
+      "min_bal_obshto": 407.5,
+      "min_bal_men": 413.0,
+      "min_bal_women": 407.5,
+      "max_bal_obshto": 460.5,
+      "max_bal_men": 460.5,
+      "source_page": 18
+    },
+    {
+      "name": "Хуманитарни науки - АЕ интензивно",
+      "min_bal_obshto": 406.0,
+      "min_bal_men": 406.0,
+      "min_bal_women": 408.0,
+      "max_bal_obshto": 469.25,
+      "max_bal_men": 446.5,
+      "source_page": 18
+    },
+    {
+      "name": "Обществени науки - ИЕ разширено, АЕ",
+      "min_bal_obshto": 404.25,
+      "min_bal_men": 408.0,
+      "min_bal_women": 404.25,
+      "max_bal_obshto": 420.0,
+      "max_bal_men": 418.75,
+      "source_page": 19
+    },
+    {
+      "name": "Банково дело - ФЕ интензивно, АЕ",
+      "min_bal_obshto": 404.0,
+      "min_bal_men": 404.0,
+      "min_bal_women": 415.0,
+      "max_bal_obshto": 454.5,
+      "max_bal_men": 417.0,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - ИтЕ интензивно, АЕ",
+      "min_bal_obshto": 402.0,
+      "min_bal_men": 402.0,
+      "min_bal_women": 424.0,
+      "max_bal_obshto": 460.5,
+      "max_bal_men": 440.5,
+      "source_page": 19
+    },
+    {
+      "name": "Икономика и мениджмънт - ИЕ",
+      "min_bal_obshto": 402.0,
+      "min_bal_men": 402.0,
+      "min_bal_women": 402.5,
+      "max_bal_obshto": 455.5,
+      "max_bal_men": 452.5,
+      "source_page": 19
+    },
+    {
+      "name": "Маркетингови проучвания - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 401.75,
+      "min_bal_men": 403.25,
+      "min_bal_women": 401.75,
+      "max_bal_obshto": 453.25,
+      "max_bal_men": 433.0,
+      "source_page": 19
+    },
+    {
+      "name": "Електронна търговия - РЕ интензивно, АЕ",
+      "min_bal_obshto": 401.5,
+      "min_bal_men": 401.5,
+      "min_bal_women": 402.5,
+      "max_bal_obshto": 464.0,
+      "max_bal_men": 416.0,
+      "source_page": 19
+    },
+    {
+      "name": "Рекламна графика - АЕ",
+      "min_bal_obshto": 400.5,
+      "min_bal_men": 400.5,
+      "min_bal_women": 436.75,
+      "max_bal_obshto": 459.5,
+      "max_bal_men": 426.5,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - КитЕ интензивно, АЕ",
+      "min_bal_obshto": 398.0,
+      "min_bal_men": 400.5,
+      "min_bal_women": 398.0,
+      "max_bal_obshto": 449.0,
+      "max_bal_men": 439.5,
+      "source_page": 19
+    },
+    {
+      "name": "Природни науки - ФЕ интензивно, АЕ; БЗО и ХООС",
+      "min_bal_obshto": 397.0,
+      "min_bal_men": 397.0,
+      "min_bal_women": 397.0,
+      "max_bal_obshto": 439.5,
+      "max_bal_men": 434.0,
+      "source_page": 19
+    },
+    {
+      "name": "Икономическа информатика - АЕ",
+      "min_bal_obshto": 396.0,
+      "min_bal_men": 396.5,
+      "min_bal_women": 396.0,
+      "max_bal_obshto": 447.5,
+      "max_bal_men": 417.5,
+      "source_page": 19
+    },
+    {
+      "name": "Предприемачески - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 395.5,
+      "min_bal_men": 397.0,
+      "min_bal_women": 395.5,
+      "max_bal_obshto": 442.5,
+      "max_bal_men": 417.5,
+      "source_page": 19
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 395.5,
+      "min_bal_men": 395.5,
+      "min_bal_women": 398.0,
+      "max_bal_obshto": 431.5,
+      "max_bal_men": 417.5,
+      "source_page": 19
+    },
+    {
+      "name": "Икономика и мениджмънт - НЕ",
+      "min_bal_obshto": 395.5,
+      "min_bal_men": 395.5,
+      "min_bal_women": 396.0,
+      "max_bal_obshto": 440.0,
+      "max_bal_men": 440.0,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, Иврит",
+      "min_bal_obshto": 394.5,
+      "min_bal_men": 401.0,
+      "min_bal_women": 394.5,
+      "max_bal_obshto": 462.75,
+      "max_bal_men": 420.0,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - ЯЕ интензивно, АЕ",
+      "min_bal_obshto": 394.25,
+      "min_bal_men": 396.5,
+      "min_bal_women": 394.25,
+      "max_bal_obshto": 448.0,
+      "max_bal_men": 421.25,
+      "source_page": 19
+    },
+    {
+      "name": "Икономическо развитие - АЕ разширено, ГИ",
+      "min_bal_obshto": 394.25,
+      "min_bal_men": 400.75,
+      "min_bal_women": 394.25,
+      "max_bal_obshto": 438.5,
+      "max_bal_men": 423.0,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 394.0,
+      "min_bal_men": 394.5,
+      "min_bal_women": 394.0,
+      "max_bal_obshto": 418.0,
+      "max_bal_men": 418.0,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - РЕ интензивно, АЕ",
+      "min_bal_obshto": 393.0,
+      "min_bal_men": 393.0,
+      "min_bal_women": 422.0,
+      "max_bal_obshto": 462.5,
+      "max_bal_men": 462.5,
+      "source_page": 19
+    },
+    {
+      "name": "Природни науки - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 392.0,
+      "min_bal_men": 402.0,
+      "min_bal_women": 392.0,
+      "max_bal_obshto": 429.0,
+      "max_bal_men": 413.5,
+      "source_page": 19
+    },
+    {
+      "name": "Икономическо развитие - АЕ интензивно, НЕ",
+      "min_bal_obshto": 391.5,
+      "min_bal_men": 392.0,
+      "min_bal_women": 391.5,
+      "max_bal_obshto": 417.5,
+      "max_bal_men": 417.0,
+      "source_page": 19
+    },
+    {
+      "name": "Чужди езици - РЕ интензивно",
+      "min_bal_obshto": 391.0,
+      "min_bal_men": 394.5,
+      "min_bal_women": 391.0,
+      "max_bal_obshto": 439.25,
+      "max_bal_men": 413.5,
+      "source_page": 19
+    },
+    {
+      "name": "Оперативно счетоводство - РЕ интензивно, АЕ",
+      "min_bal_obshto": 390.0,
+      "min_bal_men": 395.0,
+      "min_bal_women": 390.0,
+      "max_bal_obshto": 448.0,
+      "max_bal_men": 448.0,
+      "source_page": 19
+    },
+    {
+      "name": "Брокер недвижими имоти - АЕ",
+      "min_bal_obshto": 389.5,
+      "min_bal_men": 391.25,
+      "min_bal_women": 389.5,
+      "max_bal_obshto": 429.0,
+      "max_bal_men": 427.75,
+      "source_page": 19
+    },
+    {
+      "name": "Икономическо развитие - АЕ разширено, ИЕ",
+      "min_bal_obshto": 388.5,
+      "min_bal_men": 389.0,
+      "min_bal_women": 388.5,
+      "max_bal_obshto": 422.0,
+      "max_bal_men": 412.5,
+      "source_page": 19
+    },
+    {
+      "name": "Природни науки - БЗО, ХООС, АЕ интензивно, НЕ",
+      "min_bal_obshto": 388.0,
+      "min_bal_men": 388.0,
+      "min_bal_women": 388.5,
+      "max_bal_obshto": 433.5,
+      "max_bal_men": 433.5,
+      "source_page": 19
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - АЕ",
+      "min_bal_obshto": 388.0,
+      "min_bal_men": 388.0,
+      "min_bal_women": 390.0,
+      "max_bal_obshto": 452.5,
+      "max_bal_men": 452.5,
+      "source_page": 19
+    },
+    {
+      "name": "Предприемачески -АЕ интензивно, ИЕ, Предприемачество и ГИ",
+      "min_bal_obshto": 387.25,
+      "min_bal_men": 387.25,
+      "min_bal_women": 387.5,
+      "max_bal_obshto": 444.5,
+      "max_bal_men": 444.5,
+      "source_page": 19
+    },
+    {
+      "name": "Хуманитарни науки - АЕ интензивно, ИЕ, БЕЛ и ИЦ",
+      "min_bal_obshto": 385.0,
+      "min_bal_men": 385.0,
+      "min_bal_women": 385.75,
+      "max_bal_obshto": 447.25,
+      "max_bal_men": 407.5,
+      "source_page": 19
+    },
+    {
+      "name": "Икономика и мениджмънт - ФЕ",
+      "min_bal_obshto": 383.5,
+      "min_bal_men": 383.5,
+      "min_bal_women": 384.0,
+      "max_bal_obshto": 416.0,
+      "max_bal_men": 407.5,
+      "source_page": 20
+    },
+    {
+      "name": "Икономическа информатика - НЕ",
+      "min_bal_obshto": 382.5,
+      "min_bal_men": 382.5,
+      "min_bal_women": 382.5,
+      "max_bal_obshto": 425.5,
+      "max_bal_men": 425.5,
+      "source_page": 20
+    },
+    {
+      "name": "Хуманитарни науки - АЕ интензивно",
+      "min_bal_obshto": 381.75,
+      "min_bal_men": 382.0,
+      "min_bal_women": 381.75,
+      "max_bal_obshto": 433.5,
+      "max_bal_men": 433.5,
+      "source_page": 20
+    },
+    {
+      "name": "Оперативно счетоводство - АЕ",
+      "min_bal_obshto": 381.5,
+      "min_bal_men": 381.5,
+      "min_bal_women": 382.5,
+      "max_bal_obshto": 455.5,
+      "max_bal_men": 420.5,
+      "source_page": 20
+    },
+    {
+      "name": "Компютърна графика",
+      "min_bal_obshto": 381.25,
+      "min_bal_men": 384.5,
+      "min_bal_women": 381.25,
+      "max_bal_obshto": 471.25,
+      "max_bal_men": 471.25,
+      "source_page": 20
+    },
+    {
+      "name": "Чужди езици - ИтЕ интензивно, АЕ",
+      "min_bal_obshto": 381.0,
+      "min_bal_men": 381.0,
+      "min_bal_women": 381.5,
+      "max_bal_obshto": 445.5,
+      "max_bal_men": 405.0,
+      "source_page": 20
+    },
+    {
+      "name": "Моден дизайн - ИтЕ, АЕ",
+      "min_bal_obshto": 378.75,
+      "min_bal_men": 392.75,
+      "min_bal_women": 378.75,
+      "max_bal_obshto": 427.75,
+      "max_bal_men": 392.75,
+      "source_page": 20
+    },
+    {
+      "name": "Икономическо развитие - АЕ интензивно",
+      "min_bal_obshto": 378.5,
+      "min_bal_men": 381.5,
+      "min_bal_women": 378.5,
+      "max_bal_obshto": 449.0,
+      "max_bal_men": 406.0,
+      "source_page": 20
+    },
+    {
+      "name": "Природни науки - АЕ интензивно",
+      "min_bal_obshto": 378.0,
+      "min_bal_men": 382.0,
+      "min_bal_women": 378.0,
+      "max_bal_obshto": 429.0,
+      "max_bal_men": 421.5,
+      "source_page": 20
+    },
+    {
+      "name": "Природни науки - БЗО, ХООС, АЕ интензивно, ФЕ",
+      "min_bal_obshto": 376.5,
+      "min_bal_men": 380.0,
+      "min_bal_women": 376.5,
+      "max_bal_obshto": 427.0,
+      "max_bal_men": 409.5,
+      "source_page": 20
+    },
+    {
+      "name": "Природни науки - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 374.0,
+      "min_bal_men": 374.0,
+      "min_bal_women": 375.5,
+      "max_bal_obshto": 458.0,
+      "max_bal_men": 458.0,
+      "source_page": 20
+    },
+    {
+      "name": "Чужди езици - КитЕ интензивно, АЕ",
+      "min_bal_obshto": 373.5,
+      "min_bal_men": 374.5,
+      "min_bal_women": 373.5,
+      "max_bal_obshto": 441.25,
+      "max_bal_men": 385.75,
+      "source_page": 20
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, НЕ",
+      "min_bal_obshto": 373.0,
+      "min_bal_men": 373.0,
+      "min_bal_women": 373.0,
+      "max_bal_obshto": 403.0,
+      "max_bal_men": 403.0,
+      "source_page": 20
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, Иврит",
+      "min_bal_obshto": 373.0,
+      "min_bal_men": 373.5,
+      "min_bal_women": 373.0,
+      "max_bal_obshto": 446.0,
+      "max_bal_men": 396.5,
+      "source_page": 20
+    },
+    {
+      "name": "Екскурзоводско обслужване - ИтЕ интензивно, АЕ",
+      "min_bal_obshto": 371.0,
+      "min_bal_men": 371.0,
+      "min_bal_women": 393.5,
+      "max_bal_obshto": 433.5,
+      "max_bal_men": 398.25,
+      "source_page": 20
+    },
+    {
+      "name": "Математически - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 369.5,
+      "min_bal_men": 369.5,
+      "min_bal_women": 372.5,
+      "max_bal_obshto": 445.0,
+      "max_bal_men": 445.0,
+      "source_page": 20
+    },
+    {
+      "name": "Системно програмиране - АЕ",
+      "min_bal_obshto": 368.75,
+      "min_bal_men": 368.75,
+      "min_bal_women": 388.75,
+      "max_bal_obshto": 430.0,
+      "max_bal_men": 430.0,
+      "source_page": 20
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 368.5,
+      "min_bal_men": 368.5,
+      "min_bal_women": 369.0,
+      "max_bal_obshto": 419.0,
+      "max_bal_men": 409.0,
+      "source_page": 20
+    },
+    {
+      "name": "Предприемачески - ИЕ, АЕ",
+      "min_bal_obshto": 368.0,
+      "min_bal_men": 368.0,
+      "min_bal_women": 372.0,
+      "max_bal_obshto": 432.5,
+      "max_bal_men": 416.5,
+      "source_page": 20
+    },
+    {
+      "name": "Предприемачески - ФЕ интензивно, АЕ",
+      "min_bal_obshto": 367.5,
+      "min_bal_men": 367.5,
+      "min_bal_women": 369.0,
+      "max_bal_obshto": 433.0,
+      "max_bal_men": 409.5,
+      "source_page": 20
+    },
+    {
+      "name": "Компютърна техника и технологии - АЕ",
+      "min_bal_obshto": 367.0,
+      "min_bal_men": 367.0,
+      "min_bal_women": 387.0,
+      "max_bal_obshto": 413.0,
+      "max_bal_men": 413.0,
+      "source_page": 20
+    },
+    {
+      "name": "Интериорен дизайн - ИтЕ интензивно, АЕ",
+      "min_bal_obshto": 365.0,
+      "min_bal_men": 365.0,
+      "min_bal_women": 411.0,
+      "max_bal_obshto": 454.0,
+      "max_bal_men": 424.5,
+      "source_page": 20
+    },
+    {
+      "name": "Графичен дизайн - АЕ",
+      "min_bal_obshto": 363.25,
+      "min_bal_men": 363.25,
+      "min_bal_women": 364.25,
+      "max_bal_obshto": 406.75,
+      "max_bal_men": 379.0,
+      "source_page": 20
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - английски интензивно, втори чужд език испански",
+      "min_bal_obshto": 363.0,
+      "min_bal_men": 364.0,
+      "min_bal_women": 363.0,
+      "max_bal_obshto": 443.0,
+      "max_bal_men": 443.0,
+      "source_page": 20
+    },
+    {
+      "name": "Обществени науки - АЕ, ИЕ",
+      "min_bal_obshto": 360.75,
+      "min_bal_men": 360.75,
+      "min_bal_women": 371.0,
+      "max_bal_obshto": 411.25,
+      "max_bal_men": 392.75,
+      "source_page": 20
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 359.0,
+      "min_bal_men": 359.0,
+      "min_bal_women": 362.5,
+      "max_bal_obshto": 404.5,
+      "max_bal_men": 404.5,
+      "source_page": 20
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - АЕ",
+      "min_bal_obshto": 359.0,
+      "min_bal_men": 359.0,
+      "min_bal_women": 374.0,
+      "max_bal_obshto": 432.5,
+      "max_bal_men": 432.5,
+      "source_page": 20
+    },
+    {
+      "name": "Предприемачески - НЕ интензивно, НорвЕ",
+      "min_bal_obshto": 358.0,
+      "min_bal_men": 358.5,
+      "min_bal_women": 358.0,
+      "max_bal_obshto": 422.0,
+      "max_bal_men": 422.0,
+      "source_page": 20
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, Иврит",
+      "min_bal_obshto": 357.0,
+      "min_bal_men": 357.0,
+      "min_bal_women": 357.0,
+      "max_bal_obshto": 408.5,
+      "max_bal_men": 408.5,
+      "source_page": 20
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - английски интензивно, втори чужд език немски",
+      "min_bal_obshto": 357.0,
+      "min_bal_men": 357.0,
+      "min_bal_women": 357.5,
+      "max_bal_obshto": 435.0,
+      "max_bal_men": 435.0,
+      "source_page": 21
+    },
+    {
+      "name": "Приложно програмиране - АЕ",
+      "min_bal_obshto": 356.0,
+      "min_bal_men": 356.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 439.25,
+      "max_bal_men": 439.25,
+      "source_page": 21
+    },
+    {
+      "name": "Софтуерни и хардуени науки - АЕ интензивно, КорЕ",
+      "min_bal_obshto": 352.5,
+      "min_bal_men": 354.5,
+      "min_bal_women": 352.5,
+      "max_bal_obshto": 422.0,
+      "max_bal_men": 388.0,
+      "source_page": 21
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, ШвЕ",
+      "min_bal_obshto": 352.5,
+      "min_bal_men": 352.5,
+      "min_bal_women": 356.5,
+      "max_bal_obshto": 411.5,
+      "max_bal_men": 375.0,
+      "source_page": 21
+    },
+    {
+      "name": "Медицинска техника - НЕ",
+      "min_bal_obshto": 352.0,
+      "min_bal_men": 352.0,
+      "min_bal_women": 355.0,
+      "max_bal_obshto": 438.0,
+      "max_bal_men": 438.0,
+      "source_page": 21
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 351.5,
+      "min_bal_men": 351.5,
+      "min_bal_women": 352.0,
+      "max_bal_obshto": 415.5,
+      "max_bal_men": 415.5,
+      "source_page": 21
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, НЕ или ИЕ",
+      "min_bal_obshto": 349.0,
+      "min_bal_men": 349.0,
+      "min_bal_women": 349.0,
+      "max_bal_obshto": 441.5,
+      "max_bal_men": 404.0,
+      "source_page": 21
+    },
+    {
+      "name": "Обществени науки - АЕ интензивно, РЕ",
+      "min_bal_obshto": 349.0,
+      "min_bal_men": 360.75,
+      "min_bal_women": 349.0,
+      "max_bal_obshto": 397.0,
+      "max_bal_men": 395.0,
+      "source_page": 21
+    },
+    {
+      "name": "Хуманитарни науки - АрЕ интензивно, АЕ; БЕЛ и Фил",
+      "min_bal_obshto": 348.5,
+      "min_bal_men": 348.5,
+      "min_bal_women": 352.5,
+      "max_bal_obshto": 426.5,
+      "max_bal_men": 384.5,
+      "source_page": 21
+    },
+    {
+      "name": "Предприемачески - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 348.5,
+      "min_bal_men": 348.5,
+      "min_bal_women": 348.5,
+      "max_bal_obshto": 397.5,
+      "max_bal_men": 397.5,
+      "source_page": 21
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно",
+      "min_bal_obshto": 347.5,
+      "min_bal_men": 347.5,
+      "min_bal_women": 348.0,
+      "max_bal_obshto": 408.5,
+      "max_bal_men": 408.5,
+      "source_page": 21
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 347.0,
+      "min_bal_men": 347.0,
+      "min_bal_women": 347.0,
+      "max_bal_obshto": 425.5,
+      "max_bal_men": 425.5,
+      "source_page": 21
+    },
+    {
+      "name": "Предприемачески - НЕ интензивно, ДатЕ",
+      "min_bal_obshto": 346.5,
+      "min_bal_men": 346.5,
+      "min_bal_women": 346.5,
+      "max_bal_obshto": 390.0,
+      "max_bal_men": 383.5,
+      "source_page": 21
+    },
+    {
+      "name": "Обществени науки - РЕ интензивно, АЕ",
+      "min_bal_obshto": 342.5,
+      "min_bal_men": 343.75,
+      "min_bal_women": 342.5,
+      "max_bal_obshto": 467.75,
+      "max_bal_men": 405.0,
+      "source_page": 21
+    },
+    {
+      "name": "Природни науки - АЕ интензивно",
+      "min_bal_obshto": 342.0,
+      "min_bal_men": 342.0,
+      "min_bal_women": 342.5,
+      "max_bal_obshto": 465.5,
+      "max_bal_men": 422.0,
+      "source_page": 21
+    },
+    {
+      "name": "Предприемачески - АЕ, ИтЕ",
+      "min_bal_obshto": 341.5,
+      "min_bal_men": 341.5,
+      "min_bal_women": 342.0,
+      "max_bal_obshto": 386.5,
+      "max_bal_men": 362.0,
+      "source_page": 21
+    },
+    {
+      "name": "Бутикови облекла - ИтЕ, АЕ",
+      "min_bal_obshto": 340.0,
+      "min_bal_men": 0.0,
+      "min_bal_women": 340.0,
+      "max_bal_obshto": 376.5,
+      "max_bal_men": 0.0,
+      "source_page": 21
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ; ИЕ",
+      "min_bal_obshto": 337.5,
+      "min_bal_men": 356.0,
+      "min_bal_women": 337.5,
+      "max_bal_obshto": 392.0,
+      "max_bal_men": 392.0,
+      "source_page": 21
+    },
+    {
+      "name": "Икономическо развитие - АЕ, ИтЕ",
+      "min_bal_obshto": 337.5,
+      "min_bal_men": 339.5,
+      "min_bal_women": 337.5,
+      "max_bal_obshto": 392.0,
+      "max_bal_men": 392.0,
+      "source_page": 21
+    },
+    {
+      "name": "Театрален грим и перуки, АЕ, ФЕ",
+      "min_bal_obshto": 337.0,
+      "min_bal_men": 0.0,
+      "min_bal_women": 337.0,
+      "max_bal_obshto": 451.0,
+      "max_bal_men": 0.0,
+      "source_page": 21
+    },
+    {
+      "name": "Фотография",
+      "min_bal_obshto": 335.5,
+      "min_bal_men": 336.0,
+      "min_bal_women": 335.5,
+      "max_bal_obshto": 421.75,
+      "max_bal_men": 421.75,
+      "source_page": 21
+    },
+    {
+      "name": "Кинотехника, аудио- и видеосистеми - АЕ",
+      "min_bal_obshto": 333.0,
+      "min_bal_men": 333.0,
+      "min_bal_women": 336.5,
+      "max_bal_obshto": 386.5,
+      "max_bal_men": 386.5,
+      "source_page": 21
+    },
+    {
+      "name": "Фотография - АЕ",
+      "min_bal_obshto": 333.0,
+      "min_bal_men": 336.5,
+      "min_bal_women": 333.0,
+      "max_bal_obshto": 400.5,
+      "max_bal_men": 371.0,
+      "source_page": 21
+    },
+    {
+      "name": "Лазерна и оптична техника - АЕ",
+      "min_bal_obshto": 331.0,
+      "min_bal_men": 331.0,
+      "min_bal_women": 331.0,
+      "max_bal_obshto": 419.0,
+      "max_bal_men": 419.0,
+      "source_page": 21
+    },
+    {
+      "name": "Рекламна графика - АЕ",
+      "min_bal_obshto": 329.5,
+      "min_bal_men": 339.75,
+      "min_bal_women": 329.5,
+      "max_bal_obshto": 427.5,
+      "max_bal_men": 427.5,
+      "source_page": 21
+    },
+    {
+      "name": "Екскурзоводско обслужване - ИтЕ интензивно, АЕ",
+      "min_bal_obshto": 329.5,
+      "min_bal_men": 329.5,
+      "min_bal_women": 329.5,
+      "max_bal_obshto": 392.0,
+      "max_bal_men": 360.25,
+      "source_page": 21
+    },
+    {
+      "name": "Сценичен костюм - АЕ, ФЕ",
+      "min_bal_obshto": 328.0,
+      "min_bal_men": 0.0,
+      "min_bal_women": 328.0,
+      "max_bal_obshto": 359.25,
+      "max_bal_men": 0.0,
+      "source_page": 21
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, ИЕ или НЕ",
+      "min_bal_obshto": 327.5,
+      "min_bal_men": 327.75,
+      "min_bal_women": 327.5,
+      "max_bal_obshto": 358.0,
+      "max_bal_men": 355.25,
+      "source_page": 22
+    },
+    {
+      "name": "Очна оптика - НЕ",
+      "min_bal_obshto": 327.0,
+      "min_bal_men": 327.0,
+      "min_bal_women": 327.0,
+      "max_bal_obshto": 390.5,
+      "max_bal_men": 377.5,
+      "source_page": 22
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - ИЕ разширено",
+      "min_bal_obshto": 326.25,
+      "min_bal_men": 326.25,
+      "min_bal_women": 326.5,
+      "max_bal_obshto": 423.0,
+      "max_bal_men": 423.0,
+      "source_page": 22
+    },
+    {
+      "name": "Софтуерни и хардуерни науки /АЕ/",
+      "min_bal_obshto": 324.5,
+      "min_bal_men": 327.5,
+      "min_bal_women": 324.5,
+      "max_bal_obshto": 390.5,
+      "max_bal_men": 390.5,
+      "source_page": 22
+    },
+    {
+      "name": "Компютърни мрежи - АЕ",
+      "min_bal_obshto": 324.5,
+      "min_bal_men": 324.5,
+      "min_bal_women": 327.0,
+      "max_bal_obshto": 400.75,
+      "max_bal_men": 400.75,
+      "source_page": 22
+    },
+    {
+      "name": "Театрален, кино и телевизионен декор - АЕ",
+      "min_bal_obshto": 322.0,
+      "min_bal_men": 323.25,
+      "min_bal_women": 322.0,
+      "max_bal_obshto": 378.0,
+      "max_bal_men": 365.75,
+      "source_page": 22
+    },
+    {
+      "name": "Съдебна администрация - АЕ",
+      "min_bal_obshto": 321.0,
+      "min_bal_men": 329.25,
+      "min_bal_women": 321.0,
+      "max_bal_obshto": 378.5,
+      "max_bal_men": 378.5,
+      "source_page": 22
+    },
+    {
+      "name": "Чужди езици - ИЕ интензивно, АЕ",
+      "min_bal_obshto": 318.0,
+      "min_bal_men": 318.0,
+      "min_bal_women": 318.5,
+      "max_bal_obshto": 446.0,
+      "max_bal_men": 414.0,
+      "source_page": 22
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, РЕ",
+      "min_bal_obshto": 318.0,
+      "min_bal_men": 318.0,
+      "min_bal_women": 320.0,
+      "max_bal_obshto": 391.5,
+      "max_bal_men": 391.5,
+      "source_page": 22
+    },
+    {
+      "name": "Хуманитарни науки",
+      "min_bal_obshto": 313.5,
+      "min_bal_men": 313.5,
+      "min_bal_women": 313.75,
+      "max_bal_obshto": 434.5,
+      "max_bal_men": 369.0,
+      "source_page": 22
+    },
+    {
+      "name": "Изобразително изкуство - АЕ",
+      "min_bal_obshto": 312.0,
+      "min_bal_men": 312.0,
+      "min_bal_women": 317.75,
+      "max_bal_obshto": 418.25,
+      "max_bal_men": 393.75,
+      "source_page": 22
+    },
+    {
+      "name": "Измервателна и организационна техника - АЕ",
+      "min_bal_obshto": 311.5,
+      "min_bal_men": 311.5,
+      "min_bal_women": 312.5,
+      "max_bal_obshto": 371.5,
+      "max_bal_men": 351.0,
+      "source_page": 22
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 310.5,
+      "min_bal_men": 310.5,
+      "min_bal_women": 312.25,
+      "max_bal_obshto": 394.0,
+      "max_bal_men": 352.75,
+      "source_page": 22
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, ИтЕ",
+      "min_bal_obshto": 310.0,
+      "min_bal_men": 313.0,
+      "min_bal_women": 310.0,
+      "max_bal_obshto": 391.5,
+      "max_bal_men": 364.0,
+      "source_page": 22
+    },
+    {
+      "name": "Предприемачески - АЕ разширено, ИЕ",
+      "min_bal_obshto": 310.0,
+      "min_bal_men": 310.0,
+      "min_bal_women": 310.0,
+      "max_bal_obshto": 388.5,
+      "max_bal_men": 388.5,
+      "source_page": 22
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, НЕ",
+      "min_bal_obshto": 307.5,
+      "min_bal_men": 308.5,
+      "min_bal_women": 307.5,
+      "max_bal_obshto": 410.0,
+      "max_bal_men": 410.0,
+      "source_page": 22
+    },
+    {
+      "name": "Фризьорство",
+      "min_bal_obshto": 307.25,
+      "min_bal_men": 322.5,
+      "min_bal_women": 307.25,
+      "max_bal_obshto": 410.0,
+      "max_bal_men": 368.75,
+      "source_page": 22
+    },
+    {
+      "name": "Природни науки - АЕ разширено, БЗО и ХООС",
+      "min_bal_obshto": 307.0,
+      "min_bal_men": 307.75,
+      "min_bal_women": 307.0,
+      "max_bal_obshto": 415.75,
+      "max_bal_men": 404.25,
+      "source_page": 22
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ",
+      "min_bal_obshto": 306.5,
+      "min_bal_men": 306.5,
+      "min_bal_women": 318.0,
+      "max_bal_obshto": 387.5,
+      "max_bal_men": 387.5,
+      "source_page": 22
+    },
+    {
+      "name": "Природни науки - АЕ интензивно, ИЕ или НЕ",
+      "min_bal_obshto": 306.5,
+      "min_bal_men": 306.5,
+      "min_bal_women": 307.5,
+      "max_bal_obshto": 375.0,
+      "max_bal_men": 334.75,
+      "source_page": 22
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, ФЕ или РЕ",
+      "min_bal_obshto": 306.0,
+      "min_bal_men": 307.5,
+      "min_bal_women": 306.0,
+      "max_bal_obshto": 401.0,
+      "max_bal_men": 379.0,
+      "source_page": 22
+    },
+    {
+      "name": "Конструиране, моделиране и технология на облекло от текстил - АЕ, ФЕ",
+      "min_bal_obshto": 306.0,
+      "min_bal_men": 313.5,
+      "min_bal_women": 306.0,
+      "max_bal_obshto": 423.75,
+      "max_bal_men": 423.75,
+      "source_page": 22
+    },
+    {
+      "name": "Козметика",
+      "min_bal_obshto": 306.0,
+      "min_bal_men": 0.0,
+      "min_bal_women": 306.0,
+      "max_bal_obshto": 422.0,
+      "max_bal_men": 0.0,
+      "source_page": 22
+    },
+    {
+      "name": "Художествено осветление за театър, кино и телевизия - АЕ",
+      "min_bal_obshto": 304.0,
+      "min_bal_men": 305.75,
+      "min_bal_women": 304.0,
+      "max_bal_obshto": 405.0,
+      "max_bal_men": 405.0,
+      "source_page": 22
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, НЕ",
+      "min_bal_obshto": 302.5,
+      "min_bal_men": 302.5,
+      "min_bal_women": 315.0,
+      "max_bal_obshto": 425.0,
+      "max_bal_men": 425.0,
+      "source_page": 22
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 302.0,
+      "min_bal_men": 302.0,
+      "min_bal_women": 302.5,
+      "max_bal_obshto": 416.0,
+      "max_bal_men": 406.0,
+      "source_page": 22
+    },
+    {
+      "name": "Електронна търговия - АЕ",
+      "min_bal_obshto": 301.5,
+      "min_bal_men": 301.5,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 421.0,
+      "max_bal_men": 421.0,
+      "source_page": 22
+    },
+    {
+      "name": "Компютърна техника и технологии - АЕ",
+      "min_bal_obshto": 300.5,
+      "min_bal_men": 300.5,
+      "min_bal_women": 350.0,
+      "max_bal_obshto": 369.5,
+      "max_bal_men": 369.5,
+      "source_page": 22
+    },
+    {
+      "name": "Пространствен дизайн",
+      "min_bal_obshto": 299.75,
+      "min_bal_men": 308.25,
+      "min_bal_women": 299.75,
+      "max_bal_obshto": 435.5,
+      "max_bal_men": 357.5,
+      "source_page": 22
+    },
+    {
+      "name": "Икономическо развитие - АЕ интензивно, НЕ",
+      "min_bal_obshto": 299.5,
+      "min_bal_men": 315.75,
+      "min_bal_women": 299.5,
+      "max_bal_obshto": 392.25,
+      "max_bal_men": 362.75,
+      "source_page": 22
+    },
+    {
+      "name": "Обществени науки - АЕ, ИЕ",
+      "min_bal_obshto": 297.75,
+      "min_bal_men": 297.75,
+      "min_bal_women": 299.25,
+      "max_bal_obshto": 377.25,
+      "max_bal_men": 377.25,
+      "source_page": 23
+    },
+    {
+      "name": "Обществени науки - АЕ интензивно, ИЕ или НЕ",
+      "min_bal_obshto": 296.25,
+      "min_bal_men": 296.25,
+      "min_bal_women": 302.0,
+      "max_bal_obshto": 394.0,
+      "max_bal_men": 394.0,
+      "source_page": 23
+    },
+    {
+      "name": "Хуманитарни науки - ИЕ интензивно, РумЕ, БЕЛ и Философия",
+      "min_bal_obshto": 292.0,
+      "min_bal_men": 293.5,
+      "min_bal_women": 292.0,
+      "max_bal_obshto": 393.25,
+      "max_bal_men": 393.25,
+      "source_page": 23
+    },
+    {
+      "name": "Рекламна графика - ИЕ",
+      "min_bal_obshto": 287.5,
+      "min_bal_men": 292.75,
+      "min_bal_women": 287.5,
+      "max_bal_obshto": 429.5,
+      "max_bal_men": 336.5,
+      "source_page": 23
+    },
+    {
+      "name": "Екскурзоводско обслужване - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 287.5,
+      "min_bal_men": 291.5,
+      "min_bal_women": 287.5,
+      "max_bal_obshto": 418.0,
+      "max_bal_men": 333.5,
+      "source_page": 23
+    },
+    {
+      "name": "Телекомуникационни системи-АЕ",
+      "min_bal_obshto": 287.5,
+      "min_bal_men": 287.5,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 381.5,
+      "max_bal_men": 381.5,
+      "source_page": 23
+    },
+    {
+      "name": "Промишлен дизайн - АЕ",
+      "min_bal_obshto": 285.0,
+      "min_bal_men": 285.0,
+      "min_bal_women": 285.0,
+      "max_bal_obshto": 390.5,
+      "max_bal_men": 374.5,
+      "source_page": 23
+    },
+    {
+      "name": "Природни науки - ИЕ интензивно, НЕ или АЕ",
+      "min_bal_obshto": 283.0,
+      "min_bal_men": 285.0,
+      "min_bal_women": 283.0,
+      "max_bal_obshto": 368.5,
+      "max_bal_men": 368.5,
+      "source_page": 23
+    },
+    {
+      "name": "Икономическа информатика - АЕ",
+      "min_bal_obshto": 282.5,
+      "min_bal_men": 282.5,
+      "min_bal_women": 296.25,
+      "max_bal_obshto": 365.0,
+      "max_bal_men": 365.0,
+      "source_page": 23
+    },
+    {
+      "name": "Предприемачески - НЕ разширено, АЕ",
+      "min_bal_obshto": 282.0,
+      "min_bal_men": 285.0,
+      "min_bal_women": 282.0,
+      "max_bal_obshto": 345.5,
+      "max_bal_men": 345.5,
+      "source_page": 23
+    },
+    {
+      "name": "Обществени науки - АЕ интензивно, ИЕ/РЕ",
+      "min_bal_obshto": 281.5,
+      "min_bal_men": 286.5,
+      "min_bal_women": 281.5,
+      "max_bal_obshto": 430.0,
+      "max_bal_men": 410.0,
+      "source_page": 23
+    },
+    {
+      "name": "Хуманитарни науки - ЯЕ",
+      "min_bal_obshto": 280.0,
+      "min_bal_men": 280.0,
+      "min_bal_women": 287.0,
+      "max_bal_obshto": 344.0,
+      "max_bal_men": 344.0,
+      "source_page": 23
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 279.0,
+      "min_bal_men": 282.0,
+      "min_bal_women": 279.0,
+      "max_bal_obshto": 408.0,
+      "max_bal_men": 401.0,
+      "source_page": 23
+    },
+    {
+      "name": "Предприемачески - АЕ разширено, РЕ",
+      "min_bal_obshto": 278.75,
+      "min_bal_men": 278.75,
+      "min_bal_women": 284.25,
+      "max_bal_obshto": 382.75,
+      "max_bal_men": 382.75,
+      "source_page": 23
+    },
+    {
+      "name": "Икономическо информационно осигуряване - АЕ",
+      "min_bal_obshto": 276.0,
+      "min_bal_men": 278.5,
+      "min_bal_women": 276.0,
+      "max_bal_obshto": 430.5,
+      "max_bal_men": 305.5,
+      "source_page": 23
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - АЕ интензивно; втори ЧЕ - Китайски език",
+      "min_bal_obshto": 276.0,
+      "min_bal_men": 276.0,
+      "min_bal_women": 332.25,
+      "max_bal_obshto": 444.5,
+      "max_bal_men": 444.5,
+      "source_page": 23
+    },
+    {
+      "name": "Индустриални отношения - АЕ",
+      "min_bal_obshto": 275.75,
+      "min_bal_men": 277.0,
+      "min_bal_women": 275.75,
+      "max_bal_obshto": 369.0,
+      "max_bal_men": 369.0,
+      "source_page": 23
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - НЕ интензивно, АЕ",
+      "min_bal_obshto": 275.5,
+      "min_bal_men": 279.0,
+      "min_bal_women": 275.5,
+      "max_bal_obshto": 352.5,
+      "max_bal_men": 335.0,
+      "source_page": 23
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно",
+      "min_bal_obshto": 275.5,
+      "min_bal_men": 276.5,
+      "min_bal_women": 275.5,
+      "max_bal_obshto": 389.0,
+      "max_bal_men": 334.0,
+      "source_page": 23
+    },
+    {
+      "name": "Моден дизайн - АЕ",
+      "min_bal_obshto": 273.5,
+      "min_bal_men": 0.0,
+      "min_bal_women": 273.5,
+      "max_bal_obshto": 360.25,
+      "max_bal_men": 0.0,
+      "source_page": 23
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно, КитЕ/ГрЕ",
+      "min_bal_obshto": 269.5,
+      "min_bal_men": 271.5,
+      "min_bal_women": 269.5,
+      "max_bal_obshto": 380.0,
+      "max_bal_men": 380.0,
+      "source_page": 23
+    },
+    {
+      "name": "Чужди езици - ФЕ интензивно, АЕ",
+      "min_bal_obshto": 267.5,
+      "min_bal_men": 290.0,
+      "min_bal_women": 267.5,
+      "max_bal_obshto": 402.5,
+      "max_bal_men": 332.0,
+      "source_page": 23
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 264.0,
+      "min_bal_men": 264.0,
+      "min_bal_women": 264.5,
+      "max_bal_obshto": 377.0,
+      "max_bal_men": 377.0,
+      "source_page": 23
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, РЕ/ИЕ",
+      "min_bal_obshto": 260.0,
+      "min_bal_men": 260.0,
+      "min_bal_women": 263.5,
+      "max_bal_obshto": 386.5,
+      "max_bal_men": 386.5,
+      "source_page": 23
+    },
+    {
+      "name": "Икономическо информационно осигуряване - АЕ",
+      "min_bal_obshto": 257.0,
+      "min_bal_men": 257.5,
+      "min_bal_women": 257.0,
+      "max_bal_obshto": 298.0,
+      "max_bal_men": 294.0,
+      "source_page": 23
+    },
+    {
+      "name": "Компютърна графика- АЕ",
+      "min_bal_obshto": 256.5,
+      "min_bal_men": 257.75,
+      "min_bal_women": 256.5,
+      "max_bal_obshto": 409.25,
+      "max_bal_men": 377.5,
+      "source_page": 23
+    },
+    {
+      "name": "Организация на хотелиерството - АЕ",
+      "min_bal_obshto": 254.5,
+      "min_bal_men": 257.0,
+      "min_bal_women": 254.5,
+      "max_bal_obshto": 404.5,
+      "max_bal_men": 369.5,
+      "source_page": 23
+    },
+    {
+      "name": "Автомобилна мехатроника (дуална) - АЕ",
+      "min_bal_obshto": 254.0,
+      "min_bal_men": 254.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 396.5,
+      "max_bal_men": 396.5,
+      "source_page": 23
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 253.0,
+      "min_bal_men": 253.0,
+      "min_bal_women": 265.5,
+      "max_bal_obshto": 460.5,
+      "max_bal_men": 318.5,
+      "source_page": 23
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ разширено",
+      "min_bal_obshto": 252.0,
+      "min_bal_men": 253.25,
+      "min_bal_women": 252.0,
+      "max_bal_obshto": 440.25,
+      "max_bal_men": 372.0,
+      "source_page": 24
+    },
+    {
+      "name": "Системно програмиране - АЕ интензивно; - втори ЧЕ - Немски език",
+      "min_bal_obshto": 252.0,
+      "min_bal_men": 252.0,
+      "min_bal_women": 301.0,
+      "max_bal_obshto": 417.0,
+      "max_bal_men": 373.75,
+      "source_page": 24
+    },
+    {
+      "name": "Хуманитарни науки - ИтЕ интензивно, РумЕ, БЕЛ, ИЦ",
+      "min_bal_obshto": 251.5,
+      "min_bal_men": 251.5,
+      "min_bal_women": 252.25,
+      "max_bal_obshto": 409.25,
+      "max_bal_men": 334.5,
+      "source_page": 24
+    },
+    {
+      "name": "Приложно програмиране - АЕ интензивно; втори ЧЕ - Немски език",
+      "min_bal_obshto": 250.5,
+      "min_bal_men": 250.5,
+      "min_bal_women": 471.5,
+      "max_bal_obshto": 471.5,
+      "max_bal_men": 397.75,
+      "source_page": 24
+    },
+    {
+      "name": "Предприемачески - АЕ разширено, РЕ",
+      "min_bal_obshto": 248.0,
+      "min_bal_men": 248.0,
+      "min_bal_women": 252.5,
+      "max_bal_obshto": 332.5,
+      "max_bal_men": 325.0,
+      "source_page": 24
+    },
+    {
+      "name": "Графичен дизайн",
+      "min_bal_obshto": 247.5,
+      "min_bal_men": 270.0,
+      "min_bal_women": 247.5,
+      "max_bal_obshto": 396.0,
+      "max_bal_men": 353.0,
+      "source_page": 24
+    },
+    {
+      "name": "Екскурзоводско обслужване - АЕ",
+      "min_bal_obshto": 246.5,
+      "min_bal_men": 251.0,
+      "min_bal_women": 246.5,
+      "max_bal_obshto": 367.0,
+      "max_bal_men": 367.0,
+      "source_page": 24
+    },
+    {
+      "name": "Икономическо развитие - АЕ интензивно, НЕ",
+      "min_bal_obshto": 246.25,
+      "min_bal_men": 252.5,
+      "min_bal_women": 246.25,
+      "max_bal_obshto": 390.75,
+      "max_bal_men": 339.5,
+      "source_page": 24
+    },
+    {
+      "name": "Извършване на термални процедури - АЕ",
+      "min_bal_obshto": 245.5,
+      "min_bal_men": 260.0,
+      "min_bal_women": 245.5,
+      "max_bal_obshto": 384.75,
+      "max_bal_men": 292.5,
+      "source_page": 24
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, РЕ",
+      "min_bal_obshto": 245.0,
+      "min_bal_men": 245.0,
+      "min_bal_women": 285.0,
+      "max_bal_obshto": 436.5,
+      "max_bal_men": 436.5,
+      "source_page": 24
+    },
+    {
+      "name": "Търговия (дуална) - АЕ разширено",
+      "min_bal_obshto": 244.5,
+      "min_bal_men": 244.5,
+      "min_bal_women": 246.5,
+      "max_bal_obshto": 410.0,
+      "max_bal_men": 356.0,
+      "source_page": 24
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, НЕ",
+      "min_bal_obshto": 243.5,
+      "min_bal_men": 247.0,
+      "min_bal_women": 243.5,
+      "max_bal_obshto": 435.0,
+      "max_bal_men": 435.0,
+      "source_page": 24
+    },
+    {
+      "name": "Компютърни мрежи - АЕ - разширено; втори ЧЕ - Испански език",
+      "min_bal_obshto": 242.75,
+      "min_bal_men": 242.75,
+      "min_bal_women": 249.75,
+      "max_bal_obshto": 393.25,
+      "max_bal_men": 393.25,
+      "source_page": 24
+    },
+    {
+      "name": "Организация на туризма и свободното време - АЕ",
+      "min_bal_obshto": 241.0,
+      "min_bal_men": 241.0,
+      "min_bal_women": 241.5,
+      "max_bal_obshto": 416.5,
+      "max_bal_men": 416.5,
+      "source_page": 24
+    },
+    {
+      "name": "Ремонт на летателни апарати - АЕ",
+      "min_bal_obshto": 237.5,
+      "min_bal_men": 237.5,
+      "min_bal_women": 319.0,
+      "max_bal_obshto": 362.5,
+      "max_bal_men": 362.5,
+      "source_page": 24
+    },
+    {
+      "name": "Чужди езици - РумЕ интензивно, АЕ",
+      "min_bal_obshto": 237.5,
+      "min_bal_men": 239.75,
+      "min_bal_women": 237.5,
+      "max_bal_obshto": 372.0,
+      "max_bal_men": 369.75,
+      "source_page": 24
+    },
+    {
+      "name": "Сътрудник в малък и среден бизнес - АЕ разширено, НЕ",
+      "min_bal_obshto": 237.25,
+      "min_bal_men": 237.25,
+      "min_bal_women": 239.0,
+      "max_bal_obshto": 454.25,
+      "max_bal_men": 350.5,
+      "source_page": 24
+    },
+    {
+      "name": "Природни науки - АЕ, ИЕ",
+      "min_bal_obshto": 237.0,
+      "min_bal_men": 237.0,
+      "min_bal_women": 243.0,
+      "max_bal_obshto": 347.0,
+      "max_bal_men": 347.0,
+      "source_page": 24
+    },
+    {
+      "name": "Природни науки - АЕ",
+      "min_bal_obshto": 235.0,
+      "min_bal_men": 235.0,
+      "min_bal_women": 235.0,
+      "max_bal_obshto": 406.5,
+      "max_bal_men": 406.5,
+      "source_page": 24
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно, РЕ/ИЕ",
+      "min_bal_obshto": 233.0,
+      "min_bal_men": 233.0,
+      "min_bal_women": 240.5,
+      "max_bal_obshto": 427.5,
+      "max_bal_men": 311.0,
+      "source_page": 24
+    },
+    {
+      "name": "Кетъринг - ИЕ",
+      "min_bal_obshto": 232.5,
+      "min_bal_men": 243.0,
+      "min_bal_women": 232.5,
+      "max_bal_obshto": 398.5,
+      "max_bal_men": 398.5,
+      "source_page": 24
+    },
+    {
+      "name": "Производство и обслужване в заведенията за хранене и развлечения - ИтЕ",
+      "min_bal_obshto": 232.5,
+      "min_bal_men": 232.5,
+      "min_bal_women": 238.0,
+      "max_bal_obshto": 436.5,
+      "max_bal_men": 345.5,
+      "source_page": 24
+    },
+    {
+      "name": "Организация на обслужването в хотелиерството - АЕ",
+      "min_bal_obshto": 231.0,
+      "min_bal_men": 234.0,
+      "min_bal_women": 231.0,
+      "max_bal_obshto": 392.5,
+      "max_bal_men": 309.0,
+      "source_page": 24
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, РЕ",
+      "min_bal_obshto": 224.0,
+      "min_bal_men": 224.0,
+      "min_bal_women": 224.5,
+      "max_bal_obshto": 363.0,
+      "max_bal_men": 313.0,
+      "source_page": 24
+    },
+    {
+      "name": "Обществени науки - АЕ, РЕ",
+      "min_bal_obshto": 223.5,
+      "min_bal_men": 223.5,
+      "min_bal_women": 230.5,
+      "max_bal_obshto": 356.0,
+      "max_bal_men": 356.0,
+      "source_page": 24
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, РЕ",
+      "min_bal_obshto": 219.0,
+      "min_bal_men": 219.0,
+      "min_bal_women": 232.5,
+      "max_bal_obshto": 408.5,
+      "max_bal_men": 379.0,
+      "source_page": 24
+    },
+    {
+      "name": "Бизнес администрация - РЕ интензивно; АЕ",
+      "min_bal_obshto": 218.75,
+      "min_bal_men": 218.75,
+      "min_bal_women": 219.0,
+      "max_bal_obshto": 366.5,
+      "max_bal_men": 347.75,
+      "source_page": 24
+    },
+    {
+      "name": "Компютърна графика - АЕ, РЕ",
+      "min_bal_obshto": 217.0,
+      "min_bal_men": 217.0,
+      "min_bal_women": 224.0,
+      "max_bal_obshto": 400.0,
+      "max_bal_men": 367.5,
+      "source_page": 24
+    },
+    {
+      "name": "Чужди езици - АЕ интензивно",
+      "min_bal_obshto": 217.0,
+      "min_bal_men": 217.0,
+      "min_bal_women": 219.5,
+      "max_bal_obshto": 444.0,
+      "max_bal_men": 280.5,
+      "source_page": 24
+    },
+    {
+      "name": "Микропроцесорна техника АЕ - разширено; втори ЧЕ - Испански език",
+      "min_bal_obshto": 217.0,
+      "min_bal_men": 219.25,
+      "min_bal_women": 217.0,
+      "max_bal_obshto": 372.0,
+      "max_bal_men": 372.0,
+      "source_page": 24
+    },
+    {
+      "name": "Кетъринг - РЕ",
+      "min_bal_obshto": 215.0,
+      "min_bal_men": 215.0,
+      "min_bal_women": 218.0,
+      "max_bal_obshto": 308.5,
+      "max_bal_men": 308.5,
+      "source_page": 25
+    },
+    {
+      "name": "Помощник-инструктор по спортно туристическа дейност - АЕ",
+      "min_bal_obshto": 213.5,
+      "min_bal_men": 213.5,
+      "min_bal_women": 227.5,
+      "max_bal_obshto": 431.0,
+      "max_bal_men": 330.5,
+      "source_page": 25
+    },
+    {
+      "name": "Бутикови облекла",
+      "min_bal_obshto": 213.5,
+      "min_bal_men": 271.0,
+      "min_bal_women": 213.5,
+      "max_bal_obshto": 369.5,
+      "max_bal_men": 271.0,
+      "source_page": 25
+    },
+    {
+      "name": "Производство и обслужване в заведенията за хранене и развлечения - НЕ",
+      "min_bal_obshto": 213.0,
+      "min_bal_men": 213.0,
+      "min_bal_women": 213.0,
+      "max_bal_obshto": 417.0,
+      "max_bal_men": 306.0,
+      "source_page": 25
+    },
+    {
+      "name": "Автотранспортна техника (дуална) - АЕ",
+      "min_bal_obshto": 210.5,
+      "min_bal_men": 210.5,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 371.0,
+      "max_bal_men": 371.0,
+      "source_page": 25
+    },
+    {
+      "name": "Хуманитарни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 210.0,
+      "min_bal_men": 210.0,
+      "min_bal_women": 211.0,
+      "max_bal_obshto": 462.0,
+      "max_bal_men": 325.5,
+      "source_page": 25
+    },
+    {
+      "name": "Програмиране на изкуствен интелект - АЕ",
+      "min_bal_obshto": 210.0,
+      "min_bal_men": 210.0,
+      "min_bal_women": 250.0,
+      "max_bal_obshto": 407.0,
+      "max_bal_men": 407.0,
+      "source_page": 25
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, ИЕ/РЕ",
+      "min_bal_obshto": 208.0,
+      "min_bal_men": 215.0,
+      "min_bal_women": 208.0,
+      "max_bal_obshto": 445.0,
+      "max_bal_men": 445.0,
+      "source_page": 25
+    },
+    {
+      "name": "Предприемачески - АЕ разширено, РЕ/ИЕ",
+      "min_bal_obshto": 207.0,
+      "min_bal_men": 207.0,
+      "min_bal_women": 207.0,
+      "max_bal_obshto": 351.0,
+      "max_bal_men": 276.0,
+      "source_page": 25
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ разширено",
+      "min_bal_obshto": 207.0,
+      "min_bal_men": 207.0,
+      "min_bal_women": 209.5,
+      "max_bal_obshto": 329.0,
+      "max_bal_men": 329.0,
+      "source_page": 25
+    },
+    {
+      "name": "Телекомуникационни системи - АЕ - разширено; втори ЧЕ - Руски език",
+      "min_bal_obshto": 204.75,
+      "min_bal_men": 204.75,
+      "min_bal_women": 223.5,
+      "max_bal_obshto": 337.5,
+      "max_bal_men": 335.5,
+      "source_page": 25
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 200.5,
+      "min_bal_men": 200.5,
+      "min_bal_women": 220.25,
+      "max_bal_obshto": 353.75,
+      "max_bal_men": 353.75,
+      "source_page": 25
+    },
+    {
+      "name": "Обществени науки - ИЕ интензивно, АЕ/РЕ",
+      "min_bal_obshto": 197.5,
+      "min_bal_men": 204.0,
+      "min_bal_women": 197.5,
+      "max_bal_obshto": 447.75,
+      "max_bal_men": 345.75,
+      "source_page": 25
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 194.0,
+      "min_bal_men": 194.0,
+      "min_bal_women": 218.5,
+      "max_bal_obshto": 426.0,
+      "max_bal_men": 426.0,
+      "source_page": 25
+    },
+    {
+      "name": "Бизнес администрация - АЕ, ИЕ",
+      "min_bal_obshto": 192.0,
+      "min_bal_men": 192.0,
+      "min_bal_women": 197.0,
+      "max_bal_obshto": 339.5,
+      "max_bal_men": 262.0,
+      "source_page": 25
+    },
+    {
+      "name": "Екскурзоводско обслужване - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 191.0,
+      "min_bal_men": 202.5,
+      "min_bal_women": 191.0,
+      "max_bal_obshto": 391.75,
+      "max_bal_men": 391.75,
+      "source_page": 25
+    },
+    {
+      "name": "Предприемачески - АЕ интензивно; РЕ",
+      "min_bal_obshto": 190.5,
+      "min_bal_men": 191.0,
+      "min_bal_women": 190.5,
+      "max_bal_obshto": 322.0,
+      "max_bal_men": 322.0,
+      "source_page": 25
+    },
+    {
+      "name": "Социална работа с деца и семейства в риск - АЕ",
+      "min_bal_obshto": 181.0,
+      "min_bal_men": 181.0,
+      "min_bal_women": 183.0,
+      "max_bal_obshto": 422.5,
+      "max_bal_men": 422.5,
+      "source_page": 25
+    },
+    {
+      "name": "Топлоенергетика (дуална) - АЕ",
+      "min_bal_obshto": 179.0,
+      "min_bal_men": 179.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 286.5,
+      "max_bal_men": 286.5,
+      "source_page": 25
+    },
+    {
+      "name": "Електронна търговия - АЕ, НЕ",
+      "min_bal_obshto": 172.0,
+      "min_bal_men": 172.0,
+      "min_bal_women": 180.0,
+      "max_bal_obshto": 392.75,
+      "max_bal_men": 392.75,
+      "source_page": 25
+    },
+    {
+      "name": "Митническа и данъчна администрация - АЕ, НЕ",
+      "min_bal_obshto": 171.0,
+      "min_bal_men": 171.0,
+      "min_bal_women": 175.0,
+      "max_bal_obshto": 295.0,
+      "max_bal_men": 295.0,
+      "source_page": 25
+    },
+    {
+      "name": "Икономическо развитие - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 169.0,
+      "min_bal_men": 169.0,
+      "min_bal_women": 191.5,
+      "max_bal_obshto": 331.75,
+      "max_bal_men": 331.5,
+      "source_page": 25
+    },
+    {
+      "name": "Системно програмиране - АЕ",
+      "min_bal_obshto": 163.0,
+      "min_bal_men": 163.0,
+      "min_bal_women": 196.0,
+      "max_bal_obshto": 384.0,
+      "max_bal_men": 384.0,
+      "source_page": 25
+    },
+    {
+      "name": "Технологичен и микробиологичен контрол в химични производства - лаборант - АЕ",
+      "min_bal_obshto": 161.0,
+      "min_bal_men": 180.0,
+      "min_bal_women": 161.0,
+      "max_bal_obshto": 363.0,
+      "max_bal_men": 363.0,
+      "source_page": 25
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, НЕ",
+      "min_bal_obshto": 158.0,
+      "min_bal_men": 184.0,
+      "min_bal_women": 158.0,
+      "max_bal_obshto": 396.0,
+      "max_bal_men": 337.5,
+      "source_page": 25
+    },
+    {
+      "name": "Електрически превозни средства - АЕ",
+      "min_bal_obshto": 157.0,
+      "min_bal_men": 157.0,
+      "min_bal_women": 278.0,
+      "max_bal_obshto": 420.0,
+      "max_bal_men": 420.0,
+      "source_page": 25
+    },
+    {
+      "name": "Туристическа анимация - АЕ интензивно",
+      "min_bal_obshto": 154.0,
+      "min_bal_men": 154.0,
+      "min_bal_women": 179.0,
+      "max_bal_obshto": 343.5,
+      "max_bal_men": 329.5,
+      "source_page": 25
+    },
+    {
+      "name": "Автотранспортна техника - АЕ",
+      "min_bal_obshto": 152.5,
+      "min_bal_men": 152.5,
+      "min_bal_women": 241.0,
+      "max_bal_obshto": 281.5,
+      "max_bal_men": 281.5,
+      "source_page": 26
+    },
+    {
+      "name": "Търговия на едро и дребно - АЕ",
+      "min_bal_obshto": 150.0,
+      "min_bal_men": 150.0,
+      "min_bal_women": 168.0,
+      "max_bal_obshto": 352.5,
+      "max_bal_men": 352.5,
+      "source_page": 26
+    },
+    {
+      "name": "Български танци",
+      "min_bal_obshto": 148.0,
+      "min_bal_men": 148.0,
+      "min_bal_women": 150.0,
+      "max_bal_obshto": 443.5,
+      "max_bal_men": 443.5,
+      "source_page": 26
+    },
+    {
+      "name": "Екология и опазване на околната среда - АЕ",
+      "min_bal_obshto": 147.0,
+      "min_bal_men": 147.0,
+      "min_bal_women": 153.0,
+      "max_bal_obshto": 306.0,
+      "max_bal_men": 298.5,
+      "source_page": 26
+    },
+    {
+      "name": "Производство на месо, месни продукти и риба - оператор",
+      "min_bal_obshto": 144.5,
+      "min_bal_men": 144.5,
+      "min_bal_women": 203.0,
+      "max_bal_obshto": 274.75,
+      "max_bal_men": 274.75,
+      "source_page": 26
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 141.0,
+      "min_bal_men": 141.0,
+      "min_bal_women": 171.5,
+      "max_bal_obshto": 373.5,
+      "max_bal_men": 373.5,
+      "source_page": 26
+    },
+    {
+      "name": "Електрообзавеждане на производството - електромонтьор",
+      "min_bal_obshto": 141.0,
+      "min_bal_men": 142.0,
+      "min_bal_women": 141.0,
+      "max_bal_obshto": 364.0,
+      "max_bal_men": 364.0,
+      "source_page": 26
+    },
+    {
+      "name": "Промишлена електроника",
+      "min_bal_obshto": 140.5,
+      "min_bal_men": 140.5,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 356.0,
+      "max_bal_men": 356.0,
+      "source_page": 26
+    },
+    {
+      "name": "Производство и преработка на мляко и млечни продукти - АЕ",
+      "min_bal_obshto": 139.5,
+      "min_bal_men": 150.0,
+      "min_bal_women": 139.5,
+      "max_bal_obshto": 244.25,
+      "max_bal_men": 239.0,
+      "source_page": 26
+    },
+    {
+      "name": "Митническа и данъчна администрация - АЕ, ИЕ",
+      "min_bal_obshto": 139.0,
+      "min_bal_men": 139.0,
+      "min_bal_women": 170.0,
+      "max_bal_obshto": 284.25,
+      "max_bal_men": 284.25,
+      "source_page": 26
+    },
+    {
+      "name": "Бизнес администрация - ИЕ, АЕ",
+      "min_bal_obshto": 138.0,
+      "min_bal_men": 138.0,
+      "min_bal_women": 139.0,
+      "max_bal_obshto": 330.5,
+      "max_bal_men": 312.0,
+      "source_page": 26
+    },
+    {
+      "name": "Електронна търговия - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 138.0,
+      "min_bal_men": 138.0,
+      "min_bal_women": 141.0,
+      "max_bal_obshto": 285.0,
+      "max_bal_men": 285.0,
+      "source_page": 26
+    },
+    {
+      "name": "Природни науки - АЕ интензивно; РЕ",
+      "min_bal_obshto": 135.0,
+      "min_bal_men": 139.0,
+      "min_bal_women": 135.0,
+      "max_bal_obshto": 379.25,
+      "max_bal_men": 286.0,
+      "source_page": 26
+    },
+    {
+      "name": "Туристическа анимация",
+      "min_bal_obshto": 134.5,
+      "min_bal_men": 136.0,
+      "min_bal_women": 134.5,
+      "max_bal_obshto": 385.5,
+      "max_bal_men": 361.0,
+      "source_page": 26
+    },
+    {
+      "name": "Експлоатация на автомобилния транспорт",
+      "min_bal_obshto": 133.5,
+      "min_bal_men": 133.5,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 299.5,
+      "max_bal_men": 299.5,
+      "source_page": 26
+    },
+    {
+      "name": "Обществени науки",
+      "min_bal_obshto": 133.0,
+      "min_bal_men": 134.0,
+      "min_bal_women": 133.0,
+      "max_bal_obshto": 236.0,
+      "max_bal_men": 236.0,
+      "source_page": 26
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно",
+      "min_bal_obshto": 133.0,
+      "min_bal_men": 133.0,
+      "min_bal_women": 186.0,
+      "max_bal_obshto": 375.0,
+      "max_bal_men": 345.5,
+      "source_page": 26
+    },
+    {
+      "name": "Търговия (дуална) - НЕ разширено",
+      "min_bal_obshto": 131.5,
+      "min_bal_men": 131.5,
+      "min_bal_women": 165.5,
+      "max_bal_obshto": 357.5,
+      "max_bal_men": 313.25,
+      "source_page": 26
+    },
+    {
+      "name": "Производство на кулинарни изделия и напитки - готвач",
+      "min_bal_obshto": 130.0,
+      "min_bal_men": 135.0,
+      "min_bal_women": 130.0,
+      "max_bal_obshto": 293.5,
+      "max_bal_men": 293.5,
+      "source_page": 26
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно",
+      "min_bal_obshto": 130.0,
+      "min_bal_men": 130.0,
+      "min_bal_women": 148.0,
+      "max_bal_obshto": 290.0,
+      "max_bal_men": 290.0,
+      "source_page": 26
+    },
+    {
+      "name": "Компютърна техника и технологии - АЕ",
+      "min_bal_obshto": 129.0,
+      "min_bal_men": 129.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 372.5,
+      "max_bal_men": 372.5,
+      "source_page": 26
+    },
+    {
+      "name": "Спедиция транспортна и складова логистика - АЕ, НЕ",
+      "min_bal_obshto": 125.0,
+      "min_bal_men": 125.0,
+      "min_bal_women": 186.0,
+      "max_bal_obshto": 236.0,
+      "max_bal_men": 236.0,
+      "source_page": 26
+    },
+    {
+      "name": "Български танци - АЕ",
+      "min_bal_obshto": 124.6,
+      "min_bal_men": 124.6,
+      "min_bal_women": 278.7,
+      "max_bal_obshto": 401.05,
+      "max_bal_men": 392.25,
+      "source_page": 26
+    },
+    {
+      "name": "Възобновяеми енергийни източници (дуална) - АЕ",
+      "min_bal_obshto": 121.0,
+      "min_bal_men": 121.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 423.5,
+      "max_bal_men": 423.5,
+      "source_page": 26
+    },
+    {
+      "name": "Спедиция транспортна и складова логистика - АЕ (дневна)",
+      "min_bal_obshto": 115.5,
+      "min_bal_men": 115.5,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 217.5,
+      "max_bal_men": 217.5,
+      "source_page": 26
+    },
+    {
+      "name": "Организация на хотелиерството - АЕ",
+      "min_bal_obshto": 115.0,
+      "min_bal_men": 115.0,
+      "min_bal_women": 129.5,
+      "max_bal_obshto": 322.0,
+      "max_bal_men": 216.0,
+      "source_page": 26
+    },
+    {
+      "name": "Ремонт на летателни апарати - АЕ",
+      "min_bal_obshto": 114.0,
+      "min_bal_men": 114.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 273.0,
+      "max_bal_men": 273.0,
+      "source_page": 26
+    },
+    {
+      "name": "Програмиране на роботи - АЕ",
+      "min_bal_obshto": 112.5,
+      "min_bal_men": 112.5,
+      "min_bal_women": 132.0,
+      "max_bal_obshto": 298.0,
+      "max_bal_men": 298.0,
+      "source_page": 26
+    },
+    {
+      "name": "Изобразително изкуство",
+      "min_bal_obshto": 110.0,
+      "min_bal_men": 110.0,
+      "min_bal_women": 111.0,
+      "max_bal_obshto": 327.5,
+      "max_bal_men": 327.5,
+      "source_page": 26
+    },
+    {
+      "name": "Логистика на товари и услуги - куриер",
+      "min_bal_obshto": 109.0,
+      "min_bal_men": 109.0,
+      "min_bal_women": 120.0,
+      "max_bal_obshto": 264.0,
+      "max_bal_men": 153.0,
+      "source_page": 26
+    },
+    {
+      "name": "Бизнес администрация - АЕ интензивно",
+      "min_bal_obshto": 108.0,
+      "min_bal_men": 108.0,
+      "min_bal_women": 116.5,
+      "max_bal_obshto": 348.5,
+      "max_bal_men": 270.5,
+      "source_page": 27
+    },
+    {
+      "name": "Автомобилна мехатроника - АЕ, НЕ",
+      "min_bal_obshto": 108.0,
+      "min_bal_men": 108.0,
+      "min_bal_women": 309.5,
+      "max_bal_obshto": 341.0,
+      "max_bal_men": 341.0,
+      "source_page": 27
+    },
+    {
+      "name": "Автомобилна мехатроника - АЕ",
+      "min_bal_obshto": 101.0,
+      "min_bal_men": 101.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 378.5,
+      "max_bal_men": 378.5,
+      "source_page": 27
+    },
+    {
+      "name": "Автотранспортна техника - техник АЕ",
+      "min_bal_obshto": 100.0,
+      "min_bal_men": 100.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 332.0,
+      "max_bal_men": 332.0,
+      "source_page": 27
+    },
+    {
+      "name": "Промишлена електроника - АЕ",
+      "min_bal_obshto": 98.0,
+      "min_bal_men": 98.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 268.0,
+      "max_bal_men": 268.0,
+      "source_page": 27
+    },
+    {
+      "name": "Помощник-възпитател",
+      "min_bal_obshto": 97.0,
+      "min_bal_men": 97.0,
+      "min_bal_women": 131.0,
+      "max_bal_obshto": 243.0,
+      "max_bal_men": 97.0,
+      "source_page": 27
+    },
+    {
+      "name": "Природни науки - АЕ разширено",
+      "min_bal_obshto": 96.0,
+      "min_bal_men": 131.0,
+      "min_bal_women": 96.0,
+      "max_bal_obshto": 344.0,
+      "max_bal_men": 249.0,
+      "source_page": 27
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ интензивно, ИЕ",
+      "min_bal_obshto": 96.0,
+      "min_bal_men": 110.0,
+      "min_bal_women": 96.0,
+      "max_bal_obshto": 256.5,
+      "max_bal_men": 256.5,
+      "source_page": 27
+    },
+    {
+      "name": "Подемно - транспортна техника, монтирана на пътни транспортни средства",
+      "min_bal_obshto": 96.0,
+      "min_bal_men": 96.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 188.0,
+      "max_bal_men": 188.0,
+      "source_page": 27
+    },
+    {
+      "name": "Електронна търговия - АЕ интензивно, НЕ",
+      "min_bal_obshto": 94.0,
+      "min_bal_men": 94.0,
+      "min_bal_women": 211.0,
+      "max_bal_obshto": 423.0,
+      "max_bal_men": 316.0,
+      "source_page": 27
+    },
+    {
+      "name": "Електрически превозни средства - техник АЕ",
+      "min_bal_obshto": 94.0,
+      "min_bal_men": 94.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 207.0,
+      "max_bal_men": 207.0,
+      "source_page": 27
+    },
+    {
+      "name": "Организация и технология на козметичните услуги",
+      "min_bal_obshto": 91.0,
+      "min_bal_men": 0.0,
+      "min_bal_women": 91.0,
+      "max_bal_obshto": 307.5,
+      "max_bal_men": 0.0,
+      "source_page": 27
+    },
+    {
+      "name": "Предприемачески - ИЕ, АЕ",
+      "min_bal_obshto": 90.0,
+      "min_bal_men": 90.0,
+      "min_bal_women": 153.5,
+      "max_bal_obshto": 354.5,
+      "max_bal_men": 354.5,
+      "source_page": 27
+    },
+    {
+      "name": "Природни науки - АЕ, ИЕ",
+      "min_bal_obshto": 90.0,
+      "min_bal_men": 90.0,
+      "min_bal_women": 96.0,
+      "max_bal_obshto": 421.0,
+      "max_bal_men": 421.0,
+      "source_page": 27
+    },
+    {
+      "name": "Туристическа анимация - АЕ",
+      "min_bal_obshto": 89.0,
+      "min_bal_men": 139.5,
+      "min_bal_women": 89.0,
+      "max_bal_obshto": 431.25,
+      "max_bal_men": 353.25,
+      "source_page": 27
+    },
+    {
+      "name": "Осигуряване на продуктова информация - НЕ",
+      "min_bal_obshto": 89.0,
+      "min_bal_men": 129.0,
+      "min_bal_women": 89.0,
+      "max_bal_obshto": 305.0,
+      "max_bal_men": 212.5,
+      "source_page": 27
+    },
+    {
+      "name": "Организация на туризма и свободното време - АЕ",
+      "min_bal_obshto": 89.0,
+      "min_bal_men": 89.0,
+      "min_bal_women": 171.0,
+      "max_bal_obshto": 275.75,
+      "max_bal_men": 232.0,
+      "source_page": 27
+    },
+    {
+      "name": "Икономическо развитие - АЕ, НЕ",
+      "min_bal_obshto": 88.0,
+      "min_bal_men": 88.0,
+      "min_bal_women": 141.0,
+      "max_bal_obshto": 264.5,
+      "max_bal_men": 264.5,
+      "source_page": 27
+    },
+    {
+      "name": "Компютърни мрежи - АЕ",
+      "min_bal_obshto": 88.0,
+      "min_bal_men": 88.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 321.0,
+      "max_bal_men": 321.0,
+      "source_page": 27
+    },
+    {
+      "name": "Електрообзавеждане на ел. превозни средства за гр. транспорт (дуална)",
+      "min_bal_obshto": 88.0,
+      "min_bal_men": 88.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 293.5,
+      "max_bal_men": 293.5,
+      "source_page": 27
+    },
+    {
+      "name": "Търговия на едро и дребно - АЕ, РЕ",
+      "min_bal_obshto": 86.0,
+      "min_bal_men": 91.0,
+      "min_bal_women": 86.0,
+      "max_bal_obshto": 277.25,
+      "max_bal_men": 247.5,
+      "source_page": 27
+    },
+    {
+      "name": "Природни науки - АЕ интензивно",
+      "min_bal_obshto": 83.0,
+      "min_bal_men": 83.0,
+      "min_bal_women": 128.0,
+      "max_bal_obshto": 420.75,
+      "max_bal_men": 420.75,
+      "source_page": 27
+    },
+    {
+      "name": "Производство и обслужване в заведенията за хранене и развлечения - АЕ",
+      "min_bal_obshto": 82.0,
+      "min_bal_men": 82.0,
+      "min_bal_women": 109.0,
+      "max_bal_obshto": 329.0,
+      "max_bal_men": 329.0,
+      "source_page": 27
+    },
+    {
+      "name": "Помощник - възпитател в отглеждането и възпитанието на деца",
+      "min_bal_obshto": 82.0,
+      "min_bal_men": 0.0,
+      "min_bal_women": 82.0,
+      "max_bal_obshto": 305.5,
+      "max_bal_men": 0.0,
+      "source_page": 27
+    },
+    {
+      "name": "Производство на хляб хлебни и сладкарски изделия - АЕ, НЕ",
+      "min_bal_obshto": 79.0,
+      "min_bal_men": 79.0,
+      "min_bal_women": 123.0,
+      "max_bal_obshto": 402.75,
+      "max_bal_men": 192.0,
+      "source_page": 27
+    },
+    {
+      "name": "Митническо и данъчно обслужване",
+      "min_bal_obshto": 78.0,
+      "min_bal_men": 78.0,
+      "min_bal_women": 187.0,
+      "max_bal_obshto": 320.0,
+      "max_bal_men": 320.0,
+      "source_page": 27
+    },
+    {
+      "name": "Декорация на сладкарски изделия - АЕ",
+      "min_bal_obshto": 77.0,
+      "min_bal_men": 118.0,
+      "min_bal_women": 77.0,
+      "max_bal_obshto": 358.5,
+      "max_bal_men": 208.0,
+      "source_page": 27
+    },
+    {
+      "name": "Извършване на термални процедури - АЕ",
+      "min_bal_obshto": 74.0,
+      "min_bal_men": 74.0,
+      "min_bal_women": 100.0,
+      "max_bal_obshto": 348.5,
+      "max_bal_men": 287.0,
+      "source_page": 27
+    },
+    {
+      "name": "Производство на облекло от текстил",
+      "min_bal_obshto": 72.0,
+      "min_bal_men": 72.0,
+      "min_bal_women": 81.0,
+      "max_bal_obshto": 208.0,
+      "max_bal_men": 132.0,
+      "source_page": 27
+    },
+    {
+      "name": "Спедиция транспортна и складова логистика - АЕ (дуална)",
+      "min_bal_obshto": 71.0,
+      "min_bal_men": 127.0,
+      "min_bal_women": 71.0,
+      "max_bal_obshto": 256.0,
+      "max_bal_men": 256.0,
+      "source_page": 28
+    },
+    {
+      "name": "Топлотехника - отоплителна, климатична, вентилационна и хладилна (дуална) - АЕ",
+      "min_bal_obshto": 70.0,
+      "min_bal_men": 70.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 325.5,
+      "max_bal_men": 325.5,
+      "source_page": 28
+    },
+    {
+      "name": "Софтуерни и хардуерни науки",
+      "min_bal_obshto": 68.0,
+      "min_bal_men": 68.0,
+      "min_bal_women": 86.0,
+      "max_bal_obshto": 296.5,
+      "max_bal_men": 230.0,
+      "source_page": 28
+    },
+    {
+      "name": "Цветарство",
+      "min_bal_obshto": 64.0,
+      "min_bal_men": 107.0,
+      "min_bal_women": 64.0,
+      "max_bal_obshto": 136.0,
+      "max_bal_men": 123.0,
+      "source_page": 28
+    },
+    {
+      "name": "Икономическо развитие - АЕ, НЕ",
+      "min_bal_obshto": 60.0,
+      "min_bal_men": 60.0,
+      "min_bal_women": 65.0,
+      "max_bal_obshto": 387.5,
+      "max_bal_men": 387.5,
+      "source_page": 28
+    },
+    {
+      "name": "Музика - АЕ",
+      "min_bal_obshto": 59.5,
+      "min_bal_men": 59.5,
+      "min_bal_women": 128.0,
+      "max_bal_obshto": 434.75,
+      "max_bal_men": 374.5,
+      "source_page": 28
+    },
+    {
+      "name": "Ръководител движение - АЕ",
+      "min_bal_obshto": 58.0,
+      "min_bal_men": 58.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 228.0,
+      "max_bal_men": 228.0,
+      "source_page": 28
+    },
+    {
+      "name": "Логистика на товари и услуги",
+      "min_bal_obshto": 54.0,
+      "min_bal_men": 71.0,
+      "min_bal_women": 54.0,
+      "max_bal_obshto": 150.0,
+      "max_bal_men": 150.0,
+      "source_page": 28
+    },
+    {
+      "name": "Сценичен костюм",
+      "min_bal_obshto": 54.0,
+      "min_bal_men": 71.0,
+      "min_bal_women": 54.0,
+      "max_bal_obshto": 306.25,
+      "max_bal_men": 209.0,
+      "source_page": 28
+    },
+    {
+      "name": "Производство на облекло от текстил",
+      "min_bal_obshto": 52.0,
+      "min_bal_men": 52.0,
+      "min_bal_women": 52.0,
+      "max_bal_obshto": 222.0,
+      "max_bal_men": 197.0,
+      "source_page": 28
+    },
+    {
+      "name": "Предприемачески",
+      "min_bal_obshto": 52.0,
+      "min_bal_men": 52.0,
+      "min_bal_women": 74.0,
+      "max_bal_obshto": 200.0,
+      "max_bal_men": 200.0,
+      "source_page": 28
+    },
+    {
+      "name": "Технология на фармацевтичните и парфюмерийно- козметични продукти - АЕ",
+      "min_bal_obshto": 52.0,
+      "min_bal_men": 74.0,
+      "min_bal_women": 52.0,
+      "max_bal_obshto": 458.0,
+      "max_bal_men": 458.0,
+      "source_page": 28
+    },
+    {
+      "name": "Продавач-консултант /АЕ/",
+      "min_bal_obshto": 48.0,
+      "min_bal_men": 48.0,
+      "min_bal_women": 93.0,
+      "max_bal_obshto": 182.0,
+      "max_bal_men": 132.0,
+      "source_page": 28
+    },
+    {
+      "name": "Локомотиви и вагони (дуална) - РЕ",
+      "min_bal_obshto": 44.0,
+      "min_bal_men": 44.0,
+      "min_bal_women": 0.0,
+      "max_bal_obshto": 188.0,
+      "max_bal_men": 188.0,
+      "source_page": 28
+    },
+    {
+      "name": "Предприемачески",
+      "min_bal_obshto": 41.0,
+      "min_bal_men": 102.5,
+      "min_bal_women": 41.0,
+      "max_bal_obshto": 305.0,
+      "max_bal_men": 216.5,
+      "source_page": 28
+    },
+    {
+      "name": "Софтуерни и хардуерни науки - АЕ разширено, ИЕ",
+      "min_bal_obshto": 41.0,
+      "min_bal_men": 41.0,
+      "min_bal_women": 89.5,
+      "max_bal_obshto": 250.0,
+      "max_bal_men": 250.0,
+      "source_page": 28
+    },
+    {
+      "name": "Предприемачески - АЕ",
+      "min_bal_obshto": 36.0,
+      "min_bal_men": 81.0,
+      "min_bal_women": 36.0,
+      "max_bal_obshto": 266.0,
+      "max_bal_men": 210.0,
+      "source_page": 28
+    },
+    {
+      "name": "Продавач-консултант /РЕ/",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 58.0,
+      "max_bal_obshto": 271.0,
+      "max_bal_men": 151.0,
+      "source_page": 28
+    },
+    {
+      "name": "Митническо и данъчно обслужване - АЕ",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 112.5,
+      "max_bal_obshto": 291.5,
+      "max_bal_men": 192.0,
+      "source_page": 28
+    },
+    {
+      "name": "Предприемачески",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 30.0,
+      "max_bal_obshto": 380.5,
+      "max_bal_men": 257.0,
+      "source_page": 28
+    },
+    {
+      "name": "Търговия на едро и дребно - Испански език разширено, АЕ",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 41.0,
+      "min_bal_women": 30.0,
+      "max_bal_obshto": 306.0,
+      "max_bal_men": 253.0,
+      "source_page": 28
+    },
+    {
+      "name": "Готвач",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 86.0,
+      "max_bal_obshto": 215.0,
+      "max_bal_men": 152.0,
+      "source_page": 28
+    },
+    {
+      "name": "Ветеринарен лаборант - разширено изучаване на АЕ",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 30.0,
+      "max_bal_obshto": 317.0,
+      "max_bal_men": 274.0,
+      "source_page": 28
+    },
+    {
+      "name": "Трайни насаждения",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 54.0,
+      "min_bal_women": 30.0,
+      "max_bal_obshto": 217.0,
+      "max_bal_men": 217.0,
+      "source_page": 28
+    },
+    {
+      "name": "Пътно-строителна техника - АЕ",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 101.0,
+      "max_bal_obshto": 422.0,
+      "max_bal_men": 422.0,
+      "source_page": 28
+    },
+    {
+      "name": "Производство на захар и захарни изделия - АЕ",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 160.0,
+      "max_bal_obshto": 313.75,
+      "max_bal_men": 313.75,
+      "source_page": 28
+    },
+    {
+      "name": "Производство на хляб, хлебни и сладкарски изделия - АЕ, ИспанскиЕ",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 157.5,
+      "max_bal_obshto": 305.0,
+      "max_bal_men": 274.5,
+      "source_page": 28
+    },
+    {
+      "name": "Предприемачески",
+      "min_bal_obshto": 30.0,
+      "min_bal_men": 30.0,
+      "min_bal_women": 140.0,
+      "max_bal_obshto": 332.0,
+      "max_bal_men": 323.0,
+      "source_page": 28
+    }
+  ]
+}
