@@ -1,10 +1,12 @@
 import bankRaw from './notebooklm_video_prompts_bg_quiz_questions.json'
+import { getRealQuestionsForWork } from './nvoLiteratureRealQuestions'
 
 export interface LiteratureQuestion {
   question: string
   options: { A: string; B: string; C: string; D: string }
   correct_answer: 'A' | 'B' | 'C' | 'D'
   explanation: string
+  source?: string
 }
 
 export interface LiteratureExerciseSet {
@@ -60,12 +62,16 @@ export function getExerciseForWork(workId: string): LiteratureExerciseSet | null
   if (index === undefined) return null
   const entry = bank[index]
   if (!entry) return null
+
+  const realQuestions = getRealQuestionsForWork(workId)
+  const questions = realQuestions ?? entry.questions
+
   return {
     author: entry.author,
     title: entry.title,
     genre: entry.genre,
     summary: entry.summary,
     themes: entry.themes,
-    questions: entry.questions,
+    questions,
   }
 }

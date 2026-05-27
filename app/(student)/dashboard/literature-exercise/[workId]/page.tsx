@@ -144,7 +144,6 @@ function QuestionCard({
   revealed,
   onSelect,
   onCheck,
-  onRetry,
 }: {
   question: LiteratureQuestion
   index: number
@@ -153,7 +152,6 @@ function QuestionCard({
   revealed: boolean
   onSelect: (key: OptionKey) => void
   onCheck: () => void
-  onRetry: () => void
 }) {
   return (
     <div className="card p-5 md:p-7 max-w-2xl mx-auto w-full">
@@ -167,6 +165,15 @@ function QuestionCard({
           style={{ width: `${((index + 1) / total) * 100}%` }}
         />
       </div>
+
+      {question.source && (
+        <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" />
+          </svg>
+          {question.source}
+        </div>
+      )}
 
       <p className="text-base font-semibold text-text mb-5 leading-snug">{question.question}</p>
 
@@ -221,32 +228,22 @@ function QuestionCard({
         </div>
       )}
 
-      {/* Action buttons */}
-      {(!revealed || selected !== question.correct_answer) && (
+      {/* Action button — only before reveal; after reveal user navigates via bottom prev/next */}
+      {!revealed && (
         <div className="mt-4 flex flex-col gap-2">
-          {!revealed ? (
-            <button
-              type="button"
-              disabled={!selected}
-              onClick={onCheck}
-              className={cn(
-                'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
-                selected
-                  ? 'bg-primary text-white hover:bg-primary-dark'
-                  : 'bg-border text-text-muted cursor-not-allowed'
-              )}
-            >
-              Провери отговора
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={onRetry}
-              className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
-            >
-              Опитай пак
-            </button>
-          )}
+          <button
+            type="button"
+            disabled={!selected}
+            onClick={onCheck}
+            className={cn(
+              'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+              selected
+                ? 'bg-primary text-white hover:bg-primary-dark'
+                : 'bg-border text-text-muted cursor-not-allowed'
+            )}
+          >
+            Провери отговора
+          </button>
         </div>
       )}
     </div>
@@ -301,19 +298,6 @@ export default function LiteratureExercisePage({
     if (selected === question.correct_answer) {
       fireConfetti()
     }
-  }
-
-  const handleRetryQuestion = () => {
-    setAnswers((prev) => {
-      const next = { ...prev }
-      delete next[currentIndex]
-      return next
-    })
-    setRevealed((prev) => {
-      const next = { ...prev }
-      delete next[currentIndex]
-      return next
-    })
   }
 
   const handleNext = () => {
@@ -411,7 +395,6 @@ export default function LiteratureExercisePage({
               revealed={isRevealed}
               onSelect={handleSelect}
               onCheck={handleCheck}
-              onRetry={handleRetryQuestion}
             />
 
             <div className="flex items-center justify-between gap-3 mt-5 max-w-2xl mx-auto">
