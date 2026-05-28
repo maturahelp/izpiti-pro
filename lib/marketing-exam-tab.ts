@@ -1,6 +1,6 @@
 export type MarketingExamTab = 'nvo4' | 'nvo7' | 'dzi12'
 
-export const DEFAULT_MARKETING_EXAM_TAB: MarketingExamTab = 'dzi12'
+export const DEFAULT_MARKETING_EXAM_TAB: MarketingExamTab = 'nvo7'
 
 export function resolveMarketingExamTab(
   value: string | null | undefined,

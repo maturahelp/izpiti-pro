@@ -23,7 +23,7 @@ const PLAN_LABELS: Record<string, string> = {
   'nvo4-full': 'НВО 4. клас — месечен достъп',
   'nvo-full': 'НВО — до края на изпитите',
   'nvo-sprint': 'Финален спринт НВО',
-  'dzi-full': 'ДЗИ — до края на матурите',
+  'dzi-full': 'ДЗИ — месечен достъп',
   'dzi-sprint': 'Спринт до ДЗИ',
   'dzi-english-sprint': 'Интензивен английски',
 }
@@ -106,7 +106,7 @@ export default function SubscriptionPage() {
       'nvo4-full': 9.99,
       'nvo-full': 19.99,
       'nvo-sprint': 9.99,
-      'dzi-full': 19.99,
+      'dzi-full': 9.99,
       'dzi-sprint': 9.99,
       'dzi-english-sprint': 4.99,
     }

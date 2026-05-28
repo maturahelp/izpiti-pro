@@ -55,13 +55,12 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     aiDailyLimit: 10,
   },
   'dzi-full': {
-    name: 'ДЗИ до края на матурите',
-    amount: 1999,
+    name: 'ДЗИ — месечен достъп',
+    amount: 999,
     currency: 'eur',
-    mode: 'payment',
+    mode: 'subscription',
     class: '12',
     examPath: 'ДЗИ',
-    accessEndsAt: '2026-05-22T23:59:59.999+03:00',
   },
   'dzi-sprint': {
     name: 'Спринт до ДЗИ',
