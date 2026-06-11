@@ -49,7 +49,11 @@ export async function POST() {
       })
       queued++
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err)
+      const msg = err instanceof Error
+        ? err.message
+        : typeof err === 'object' && err !== null
+          ? JSON.stringify(err)
+          : String(err)
       // Skip duplicate inserts silently (already queued/sent)
       if (!msg.includes('23505')) {
         errors.push(`${profile.id}: ${msg}`)
