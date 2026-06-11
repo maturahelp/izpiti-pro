@@ -737,21 +737,38 @@ export default function TestPage() {
 
   // Inject MathJax on mount, retrigger after state changes
   useEffect(() => {
-    const w = window as unknown as {
-      MathJax?: { typesetPromise?: () => Promise<void>; startup?: { promise: Promise<void> } }
+    type MathJaxWindow = {
+      MathJax?: {
+        typesetPromise?: () => Promise<void>
+        startup?: { promise: Promise<void> }
+      }
     }
+    const w = window as unknown as MathJaxWindow
+
+    const typeset = () => {
+      const ww = window as unknown as MathJaxWindow
+      if (ww.MathJax?.startup?.promise) {
+        ww.MathJax.startup.promise.then(() => ww.MathJax?.typesetPromise?.()).catch(() => {})
+      } else {
+        ww.MathJax?.typesetPromise?.()
+      }
+    }
+
     if (!document.getElementById('mathjax-script')) {
+      ;(window as unknown as MathJaxWindow).MathJax = {
+        // @ts-expect-error — startup config not in trimmed type
+        startup: { typeset: true },
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+        svg: { fontCache: 'global' },
+      }
       const script = document.createElement('script')
       script.id = 'mathjax-script'
       script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js'
       script.async = true
-      ;(window as unknown as { MathJax: object }).MathJax = {
-        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
-        svg: { fontCache: 'global' },
-      }
+      script.onload = typeset
       document.head.appendChild(script)
     } else if (w.MathJax?.typesetPromise) {
-      w.MathJax.typesetPromise()
+      typeset()
     }
   }, [submitted, revealAnswers, answers])
 
