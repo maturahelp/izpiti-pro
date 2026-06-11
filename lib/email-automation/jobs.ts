@@ -6,6 +6,7 @@ export const EMAIL_AUTOMATION_TEMPLATES = [
   'purchase_welcome',
   'purchase_feedback',
   'grade12_no_purchase_nudge',
+  'nvo7_urgency_nudge',
 ] as const
 
 export type EmailAutomationTemplateKey =
@@ -23,10 +24,16 @@ type Grade12NoPurchasePayload = {
   class_snapshot: '12'
 }
 
+type Nvo7UrgencyNudgePayload = {
+  source: 'profiles-trigger' | 'bulk-campaign'
+  class_snapshot: '7'
+}
+
 export type EmailAutomationPayloadMap = {
   purchase_welcome: PurchaseEmailPayload
   purchase_feedback: PurchaseEmailPayload
   grade12_no_purchase_nudge: Grade12NoPurchasePayload
+  nvo7_urgency_nudge: Nvo7UrgencyNudgePayload
 }
 
 export type QueueEmailAutomationJobInput<

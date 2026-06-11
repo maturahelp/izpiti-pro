@@ -296,6 +296,39 @@ export async function processEmailAutomationJobs(
         }
       }
 
+      if (job.template_key === 'nvo7_urgency_nudge') {
+        if (!authUser?.email_confirmed_at) {
+          await markJobSkipped(job.id, 'email_not_confirmed')
+          skipped += 1
+          continue
+        }
+
+        if (!profile || profile.class !== '7') {
+          await markJobSkipped(job.id, 'not_grade7_anymore')
+          skipped += 1
+          continue
+        }
+
+        if (profile.role === 'admin') {
+          await markJobSkipped(job.id, 'admin_profile')
+          skipped += 1
+          continue
+        }
+
+        if (hasActivePremium(profile)) {
+          await markJobSkipped(job.id, 'already_premium')
+          skipped += 1
+          continue
+        }
+
+        const marketingConsent = await getLatestMarketingConsent(job.user_id)
+        if (marketingConsent === false) {
+          await markJobSkipped(job.id, 'marketing_opt_out')
+          skipped += 1
+          continue
+        }
+      }
+
       const rendered = renderEmailAutomationTemplate({
         templateKey: job.template_key,
         recipientEmail: email,

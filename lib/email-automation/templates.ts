@@ -195,5 +195,29 @@ export function renderEmailAutomationTemplate(
         ...content,
       }
     }
+
+    case 'nvo7_urgency_nudge': {
+      const nvo7PricingHref = 'https://www.maturahelp.com/?grade=nvo7#pricing'
+      const content = renderLayout({
+        eyebrow: 'НВО — 7. клас',
+        title: 'НВО е след дни. Все още навреме.',
+        intro: `${recipientGreeting}, регистрира се в MaturaHelp, но все още нямаш активен план. НВО по БЕЛ е на 17 юни, по математика — на 19 юни. Имаш още няколко дни да се подготвиш структурирано.`,
+        bullets: [
+          'Резюмета и анализи на всички произведения за НВО.',
+          'Видео уроци по всички теми.',
+          'Тестове и примерни НВО-та от минали години.',
+          'AI помощник за бързи въпроси и обяснения.',
+          'Финален спринт от 9.99 € — достъп до самия изпит.',
+        ],
+        ctaLabel: 'Виж плановете за НВО →',
+        ctaHref: nvo7PricingHref,
+        outro: 'Ако имаш въпрос, просто отговори на този имейл — четем всичко.',
+      })
+
+      return {
+        subject: 'НВО е след дни — все още навреме да се подготвиш',
+        ...content,
+      }
+    }
   }
 }

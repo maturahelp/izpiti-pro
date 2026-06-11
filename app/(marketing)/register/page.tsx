@@ -28,6 +28,8 @@ async function persistSelectedClass(selected: SignUpClass) {
       .from('profiles')
       .update({ class: selected, updated_at: new Date().toISOString() })
       .eq('id', user.id)
+    // Queue the appropriate nudge email for this class (fire-and-forget)
+    fetch('/api/onboarding/nudge', { method: 'POST' }).catch(() => {})
   } catch {
     // ignore — trigger should have set it from metadata anyway
   }
