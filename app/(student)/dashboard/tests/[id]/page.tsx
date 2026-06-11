@@ -10,6 +10,8 @@ import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { getMockNvoMathFigure } from '@/data/nvo-math-figure-assets'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
+import { renderMathInHtml } from '@/lib/render-math'
+import 'katex/dist/katex.min.css'
 import { saveDziAttempt } from '@/lib/progress'
 import { logActivity } from '@/lib/activity-log'
 import { allTests } from '@/data/tests'
@@ -735,42 +737,6 @@ export default function TestPage() {
     }
   }, [])
 
-  // Inject MathJax on mount, retrigger after state changes
-  useEffect(() => {
-    type MathJaxWindow = {
-      MathJax?: {
-        typesetPromise?: () => Promise<void>
-        startup?: { promise: Promise<void> }
-      }
-    }
-    const w = window as unknown as MathJaxWindow
-
-    const typeset = () => {
-      const ww = window as unknown as MathJaxWindow
-      if (ww.MathJax?.startup?.promise) {
-        ww.MathJax.startup.promise.then(() => ww.MathJax?.typesetPromise?.()).catch(() => {})
-      } else {
-        ww.MathJax?.typesetPromise?.()
-      }
-    }
-
-    if (!document.getElementById('mathjax-script')) {
-      ;(window as unknown as MathJaxWindow).MathJax = {
-        // @ts-expect-error — startup config not in trimmed type
-        startup: { typeset: true },
-        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
-        svg: { fontCache: 'global' },
-      }
-      const script = document.createElement('script')
-      script.id = 'mathjax-script'
-      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js'
-      script.async = true
-      script.onload = typeset
-      document.head.appendChild(script)
-    } else if (w.MathJax?.typesetPromise) {
-      typeset()
-    }
-  }, [submitted, revealAnswers, answers])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -1261,7 +1227,7 @@ function QuestionCard({
   // Question text
   let questionContent: React.ReactNode
   if (override?.questionHtml) {
-    questionContent = <span dangerouslySetInnerHTML={{ __html: override.questionHtml }} />
+    questionContent = <span dangerouslySetInnerHTML={{ __html: renderMathInHtml(override.questionHtml) }} />
   } else if (underlinedWordModel) {
     questionContent = (
       <>
@@ -1419,7 +1385,7 @@ function QuestionCard({
 
             let optText: React.ReactNode = cleanMathChoiceText(text || 'Избор по изображение')
             if (override?.optionsHtml?.[label]) {
-              optText = <span dangerouslySetInnerHTML={{ __html: override.optionsHtml[label] }} />
+              optText = <span dangerouslySetInnerHTML={{ __html: renderMathInHtml(override.optionsHtml[label]) }} />
             }
 
             return (
