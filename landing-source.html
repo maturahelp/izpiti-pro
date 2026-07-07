@@ -389,9 +389,10 @@
         { "@type": "Offer", "name": "НВО 4. клас месечен", "price": "9.99", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "Безплатен НВО", "price": "0.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "НВО до края на изпитите", "price": "19.99", "priceCurrency": "EUR", "priceValidUntil": "2026-06-19", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
-        { "@type": "Offer", "name": "Финален спринт НВО", "price": "9.99", "priceCurrency": "EUR", "priceValidUntil": "2026-06-19", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
+        { "@type": "Offer", "name": "Лятна подготовка НВО", "price": "9.99", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
         { "@type": "Offer", "name": "Безплатен ДЗИ", "price": "0.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
-        { "@type": "Offer", "name": "ДЗИ месечен достъп", "price": "9.99", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" }
+        { "@type": "Offer", "name": "ДЗИ месечен достъп", "price": "19.99", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" },
+        { "@type": "Offer", "name": "Лятна подготовка ДЗИ", "price": "9.99", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.maturahelp.com/#pricing" }
       ]
     },
     {
@@ -1146,7 +1147,7 @@
 
       <!-- ДЗИ Cards -->
       <div id="pricing-dzi" class="hidden">
-        <div class="grid md:grid-cols-2 gap-6 md:gap-7 max-w-3xl mx-auto mb-7 md:mb-8">
+        <div class="grid md:grid-cols-3 gap-6 md:gap-7 max-w-5xl mx-auto mb-7 md:mb-8">
           <!-- ДЗИ Безплатен -->
           <div class="bg-white rounded-2xl card-shadow-lg p-6 sm:p-8 border border-gray-100">
             <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Безплатен ДЗИ</p>
@@ -1169,7 +1170,7 @@
             <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap">Най-избиран</span>
             <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">ДЗИ месечен достъп</p>
             <div class="mb-1">
-              <span class="text-4xl font-extrabold text-accent-navy">9.99 €</span>
+              <span class="text-4xl font-extrabold text-accent-navy">19.99 €</span>
               <span class="text-gray-400 text-sm"> месечно</span>
             </div>
             <p class="text-gray-500 text-sm mb-6">Месечен абонамент с пълен достъп до подготовката за ДЗИ.</p>
@@ -1182,6 +1183,24 @@
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Можеш да отмениш по всяко време</li>
             </ul>
             <button type="button" data-checkout-plan="dzi-full" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Започни месечен достъп</button>
+          </div>
+          <!-- ДЗИ Лятна подготовка -->
+          <div class="bg-white rounded-2xl card-shadow-lg p-6 sm:p-8 border-2 border-amber-400 relative mt-2 sm:mt-0">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-accent-navy text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap">Лятна подготовка</span>
+            <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Лятна подготовка ДЗИ</p>
+            <div class="mb-1">
+              <span class="text-4xl font-extrabold text-accent-navy">9.99 €</span>
+              <span class="text-gray-400 text-sm"> месечно</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">По-достъпна месечна цена за подготовка преди ДЗИ.</p>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Пълен достъп до материалите за ДЗИ</li>
+              <li class="flex items-start gap-2 text-sm text-gray-500"><span class="text-red-500 mt-0.5">✕</span>Видео уроци — не са включени</li>
+              <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Практически тестове в реален формат</li>
+              <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>AI помощник — ограничен достъп</li>
+              <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Можеш да отмениш по всяко време</li>
+            </ul>
+            <button type="button" data-checkout-plan="dzi-sprint" class="block w-full text-center font-semibold py-3 rounded-full text-sm bg-amber-400 text-accent-navy hover:bg-amber-500 hover:shadow-lg hover:shadow-amber-200 transition-all">Започни подготовката</button>
           </div>
         </div>
       </div>
@@ -1226,16 +1245,15 @@
             </ul>
             <button type="button" data-checkout-plan="nvo-full" class="block w-full text-center gradient-btn text-white font-semibold py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Вземи достъп до 19 юни</button>
           </div>
-          <!-- НВО Финален спринт -->
+          <!-- НВО Лятна подготовка -->
           <div class="bg-white rounded-2xl card-shadow-lg p-6 sm:p-8 border-2 border-amber-400 relative mt-2 sm:mt-0">
-            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-accent-navy text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap">Финален спринт</span>
-            <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Финален спринт НВО</p>
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-accent-navy text-[10px] font-bold px-4 py-1 rounded-full whitespace-nowrap">Лятна подготовка</span>
+            <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Лятна подготовка НВО</p>
             <div class="mb-1">
               <span class="text-4xl font-extrabold text-accent-navy">9.99 €</span>
-              <span class="text-gray-400 text-sm"> еднократно</span>
+              <span class="text-gray-400 text-sm"> месечно</span>
             </div>
-            <p class="text-xs text-primary-600 font-medium mb-1">Достъп до 19 юни 2026 г.</p>
-            <p class="text-gray-500 text-sm mb-6">По-достъпна цена за последните седмици преди НВО.</p>
+            <p class="text-gray-500 text-sm mb-6">По-достъпна месечна цена за подготовка преди НВО.</p>
             <ul class="space-y-3 mb-8">
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Пълен достъп до материалите за НВО</li>
               <li class="flex items-start gap-2 text-sm text-gray-500"><span class="text-red-500 mt-0.5">✕</span>Видео уроци — не са включени</li>
@@ -1244,7 +1262,7 @@
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>Упражнения и тестове в изпитен формат</li>
               <li class="flex items-start gap-2 text-sm text-gray-600"><span class="text-primary-600 mt-0.5">✓</span>AI помощник — ограничен достъп</li>
             </ul>
-            <button type="button" data-checkout-plan="nvo-sprint" class="block w-full text-center font-semibold py-3 rounded-full text-sm bg-amber-400 text-accent-navy hover:bg-amber-500 hover:shadow-lg hover:shadow-amber-200 transition-all">Започни спринта</button>
+            <button type="button" data-checkout-plan="nvo-sprint" class="block w-full text-center font-semibold py-3 rounded-full text-sm bg-amber-400 text-accent-navy hover:bg-amber-500 hover:shadow-lg hover:shadow-amber-200 transition-all">Започни подготовката</button>
           </div>
         </div>
       </div>
@@ -1797,7 +1815,7 @@
         'nvo4-full': 9.99,
         'nvo-full': 19.99,
         'nvo-sprint': 9.99,
-        'dzi-full': 9.99,
+        'dzi-full': 19.99,
         'dzi-sprint': 9.99,
         'dzi-english-sprint': 4.99,
       };

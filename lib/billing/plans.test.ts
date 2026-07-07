@@ -8,8 +8,8 @@ describe('billing plans', () => {
     assert.equal(BILLING_PLANS['nvo4-full'].currency, 'eur')
   })
 
-  it('charges 9.99 EUR for the DZI full-access plan', () => {
-    assert.equal(BILLING_PLANS['dzi-full'].amount, 999)
+  it('charges 19.99 EUR for the DZI full-access plan', () => {
+    assert.equal(BILLING_PLANS['dzi-full'].amount, 1999)
     assert.equal(BILLING_PLANS['dzi-full'].currency, 'eur')
   })
 })
