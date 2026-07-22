@@ -42,7 +42,6 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     mode: 'payment',
     class: '7',
     examPath: 'НВО',
-    accessEndsAt: '2026-06-19T23:59:59.999+03:00',
   },
   'nvo-sprint': {
     name: 'Лятна подготовка НВО',
@@ -76,7 +75,6 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     mode: 'payment',
     class: '12',
     examPath: 'ДЗИ',
-    accessEndsAt: '2026-05-23T23:59:59.999+03:00',
     accessScope: 'english',
   },
 }
