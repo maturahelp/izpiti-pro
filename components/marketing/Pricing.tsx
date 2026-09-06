@@ -190,7 +190,7 @@ async function startCheckout(plan: PlanKey) {
     if (data.url) {
       window.location.href = data.url
     } else {
-      alert('Грешка: ' + (data.error ?? 'Неизвестна грешка'))
+      alert(data.message ?? 'Възникна проблем при плащането. Опитай отново.')
     }
   } catch (err) {
     alert('Проблем при свързване с плащане. Опитай отново.')

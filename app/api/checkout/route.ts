@@ -233,6 +233,9 @@ export async function POST(req: NextRequest) {
     }
 
     console.error('Stripe error:', err)
-    return NextResponse.json({ error: String(err) }, { status: 500 })
+    return NextResponse.json(
+      { error: 'CHECKOUT_FAILED', message: 'Възникна проблем при плащането. Опитай отново след малко.' },
+      { status: 500 }
+    )
   }
 }
