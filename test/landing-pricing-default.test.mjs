@@ -10,18 +10,18 @@ function classListFor(id) {
   return match[1].split(/\s+/).filter(Boolean)
 }
 
-test('landing page defaults course and pricing tabs to DZI', () => {
-  assert.ok(classListFor('tab-dzi').includes('gradient-btn'))
-  assert.ok(classListFor('tab-dzi').includes('text-white'))
-  assert.ok(classListFor('cards-dzi').includes('grid'))
-  assert.ok(!classListFor('cards-dzi').includes('hidden'))
+test('landing page defaults course and pricing tabs to NVO7', () => {
+  assert.ok(classListFor('tab-nvo7').includes('gradient-btn'))
+  assert.ok(classListFor('tab-nvo7').includes('text-white'))
+  assert.ok(classListFor('cards-nvo7').includes('grid'))
+  assert.ok(!classListFor('cards-nvo7').includes('hidden'))
 
   assert.ok(!classListFor('tab-nvo4').includes('gradient-btn'))
   assert.ok(classListFor('cards-nvo4').includes('hidden'))
 
-  assert.ok(classListFor('pricing-tab-dzi').includes('gradient-btn'))
-  assert.ok(classListFor('pricing-tab-dzi').includes('text-white'))
-  assert.ok(!classListFor('pricing-dzi').includes('hidden'))
+  assert.ok(classListFor('pricing-tab-nvo7').includes('gradient-btn'))
+  assert.ok(classListFor('pricing-tab-nvo7').includes('text-white'))
+  assert.ok(!classListFor('pricing-nvo7').includes('hidden'))
 
   assert.ok(!classListFor('pricing-tab-nvo4').includes('gradient-btn'))
   assert.ok(classListFor('pricing-nvo4').includes('hidden'))

@@ -7,10 +7,10 @@ import {
 } from './marketing-exam-tab'
 
 describe('marketing exam tab defaults', () => {
-  it('defaults new visitors to the DZI track', () => {
-    assert.equal(DEFAULT_MARKETING_EXAM_TAB, 'dzi12')
-    assert.equal(resolveMarketingExamTab(null), 'dzi12')
-    assert.equal(resolveMarketingExamTab(''), 'dzi12')
+  it('defaults new visitors to the NVO7 track', () => {
+    assert.equal(DEFAULT_MARKETING_EXAM_TAB, 'nvo7')
+    assert.equal(resolveMarketingExamTab(null), 'nvo7')
+    assert.equal(resolveMarketingExamTab(''), 'nvo7')
   })
 
   it('maps saved or linked class choices to the matching marketing tab', () => {

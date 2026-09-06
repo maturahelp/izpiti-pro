@@ -14,7 +14,7 @@ test('landing page loads the Trustpilot TrustBox bootstrap script in the head', 
 })
 
 test('landing page renders the Trustpilot Review Collector widget in the reviews section', () => {
-  assert.match(landingHtml, /<div class="trustpilot-widget"/)
+  assert.match(landingHtml, /<div class="trustpilot-widget[^"]*"/)
   assert.match(landingHtml, /data-template-id="56278e9abfbbba0bdcd568bc"/)
   assert.match(landingHtml, /data-businessunit-id="69e134ff73f43e0c4356f6f3"/)
   assert.match(landingHtml, /data-token="3e1c945c-8d8b-478a-8e00-6ee8bb0ae531"/)

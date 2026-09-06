@@ -100,12 +100,12 @@ const previews = [
               </svg>
             </div>
             <div className="bg-[#F8FAFC] rounded-xl px-4 py-3 text-[12.5px] text-text-muted max-w-[85%] border border-[#E2E8F0]">
-              Защо "Вятъра духаше" е грешно?
+              Защо „Вятъра духаше“ е грешно?
             </div>
           </div>
           <div className="flex gap-2.5 justify-end">
             <div className="bg-primary/[0.07] rounded-xl px-4 py-3 text-[12.5px] text-text max-w-[85%] border border-primary/10 leading-relaxed">
-              "Вятърът" е подлог и трябва да е в именителен падеж. Правилно: <span className="font-semibold text-primary">"Вятърът духаше силно."</span>
+              „Вятърът“ е подлог и трябва да е в именителен падеж. Правилно: <span className="font-semibold text-primary">„Вятърът духаше силно.“</span>
               <br /><br />
               Запомни: подлозите завършват на <span className="font-semibold">-ът/-ят</span>.
             </div>
