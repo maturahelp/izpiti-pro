@@ -1,14 +1,52 @@
-'use client'
-
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
-import { nvoLiteratureRichSummaries } from '@/data/nvoLiteratureRichSummaries'
+import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { canAccessFullContent, type SubscriptionAccessProfile } from '@/lib/subscription-access'
+import { isFreeLiteratureWork } from '@/lib/free-content'
 
-export default function NvoSummaryPage() {
-  const params = useParams<{ id: string }>()
-  const router = useRouter()
-  const summary = nvoLiteratureRichSummaries[params.id]
+export default async function NvoSummaryPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+
+  if (!isFreeLiteratureWork(id)) {
+    const entitled = await hasEntitlement()
+    if (!entitled) {
+      return (
+        <div className="min-h-screen pb-20 md:pb-0">
+          <TopBar title="Резюме" />
+          <div className="p-4 md:p-6 max-w-3xl mx-auto">
+            <div className="rounded-2xl bg-white border border-border p-6 md:p-8 shadow-sm text-center">
+              <p className="text-xs font-bold uppercase tracking-wider text-primary mb-2">Премиум съдържание</p>
+              <h1 className="text-xl font-bold text-[#1B2845] mb-3">Това резюме е част от платен план</h1>
+              <p className="text-text-muted mb-6">
+                Активирай абонамент, за да отключиш пълните литературни резюмета за НВО.
+              </p>
+              <Link
+                href="/dashboard/subscription"
+                className="inline-block rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 transition-colors"
+              >
+                Виж плановете
+              </Link>
+              <div>
+                <Link href="/dashboard/materials" className="mt-4 inline-block text-sm text-primary hover:underline">
+                  ← Назад към материалите
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  // Imported here (server-only render path) so the full rich-summary
+  // dataset never ships to the client for users who aren't entitled to it.
+  const { nvoLiteratureRichSummaries } = await import('@/data/nvoLiteratureRichSummaries')
+  const summary = nvoLiteratureRichSummaries[id]
 
   if (!summary) {
     return (
@@ -29,13 +67,12 @@ export default function NvoSummaryPage() {
       <TopBar title="Резюме" />
 
       <div className="p-4 md:p-8 max-w-4xl mx-auto">
-        <button
-          type="button"
-          onClick={() => router.push('/dashboard/materials')}
+        <Link
+          href="/dashboard/materials"
           className="mb-5 inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary-dark transition-colors"
         >
           ← Назад към материалите
-        </button>
+        </Link>
 
         {/* Header */}
         <div className="rounded-2xl bg-white border border-border p-6 md:p-8 mb-6 shadow-sm">
@@ -175,17 +212,35 @@ export default function NvoSummaryPage() {
           >
             Към упражнението
           </Link>
-          <button
-            type="button"
-            onClick={() => router.push('/dashboard/materials')}
-            className="flex-1 rounded-xl border border-border bg-white text-text font-semibold py-3.5 px-5 hover:bg-primary-light/50 transition-colors"
+          <Link
+            href="/dashboard/materials"
+            className="flex-1 text-center rounded-xl border border-border bg-white text-text font-semibold py-3.5 px-5 hover:bg-primary-light/50 transition-colors"
           >
             Назад към материалите
-          </button>
+          </Link>
         </div>
       </div>
     </div>
   )
+}
+
+async function hasEntitlement(): Promise<boolean> {
+  const supabase = await createClient()
+  if (!supabase) return false
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return false
+
+  const admin = createAdminClient()
+  const { data: profile } = await admin
+    .from('profiles')
+    .select('role, plan, is_active, plan_expires_at, billing_status, billing_plan_key')
+    .eq('id', user.id)
+    .maybeSingle<SubscriptionAccessProfile>()
+
+  return canAccessFullContent(profile)
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {

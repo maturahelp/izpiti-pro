@@ -9,7 +9,7 @@ import { literatureSummaries } from '@/data/literatureSummaries'
 import { literatureVideoPaths } from '@/data/literatureVideoPaths'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
 import { nvoLiteratureSummaries } from '@/data/nvoLiteratureSummaries'
-import { nvoLiteratureRichSummaries } from '@/data/nvoLiteratureRichSummaries'
+import { NVO_LITERATURE_RICH_SUMMARY_IDS } from '@/data/nvoLiteratureRichSummaryIds'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
 import { nvoLiteratureWorkTextPaths } from '@/data/nvoLiteratureWorkTexts'
@@ -1604,7 +1604,7 @@ export default function MaterialsPage() {
                     <button
                       type="button"
                       onClick={() => {
-                        if (nvoLiteratureRichSummaries[activeNvoWork.id]) {
+                        if (NVO_LITERATURE_RICH_SUMMARY_IDS.has(activeNvoWork.id)) {
                           handlePremiumAction(
                             () => {
                               setActiveNvoWorkId(null)
