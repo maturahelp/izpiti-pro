@@ -261,7 +261,7 @@ export function LoginGateModal() {
             <div className="w-full max-w-[400px] max-h-[calc(100vh-2rem)] overflow-y-auto bg-white rounded-2xl border border-[#E2E8F0] shadow-[0_24px_64px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.08)] pointer-events-auto">
 
               <div className="flex justify-end px-5 pt-4">
-                <button onClick={closeLoginGate} className="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:bg-slate-100 hover:text-text transition-colors">
+                <button onClick={closeLoginGate} aria-label="Затвори" className="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:bg-slate-100 hover:text-text transition-colors">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
               </div>
@@ -297,18 +297,18 @@ export function LoginGateModal() {
                 {tab === 'login' ? (
                   <form onSubmit={handleLogin}>
                     <div className="mb-3">
-                      <label className="block text-[12.5px] font-semibold text-text mb-1.5">Имейл адрес</label>
-                      <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                      <label htmlFor="nav-login-email" className="block text-[12.5px] font-semibold text-text mb-1.5">Имейл адрес</label>
+                      <input id="nav-login-email" name="email" type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)}
                         placeholder="Въведи своя имейл"
                         className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/50 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
                     </div>
                     <div className="mb-4">
                       <div className="flex items-center justify-between mb-1.5">
-                        <label className="text-[12.5px] font-semibold text-text">Парола</label>
+                        <label htmlFor="nav-login-password" className="text-[12.5px] font-semibold text-text">Парола</label>
                         <Link href="/forgot-password" className="text-[12px] text-primary hover:underline">Забравена парола?</Link>
                       </div>
                       <div className="relative">
-                        <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
+                        <input id="nav-login-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)}
                           placeholder="••••••••"
                           className="w-full px-4 py-2.5 pr-14 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
                         <button type="button" onClick={() => setShowPassword(v => !v)}
@@ -325,21 +325,21 @@ export function LoginGateModal() {
                 ) : (
                   <form onSubmit={handleRegister}>
                     <div className="mb-3">
-                      <label className="block text-[12.5px] font-semibold text-text mb-1.5">Имe (по избор)</label>
-                      <input type="text" value={name} onChange={e => setName(e.target.value)}
+                      <label htmlFor="nav-register-name" className="block text-[12.5px] font-semibold text-text mb-1.5">Имe (по избор)</label>
+                      <input id="nav-register-name" name="name" type="text" autoComplete="name" value={name} onChange={e => setName(e.target.value)}
                         placeholder="Твоето име"
                         className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/50 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
                     </div>
                     <div className="mb-3">
-                      <label className="block text-[12.5px] font-semibold text-text mb-1.5">Имейл адрес</label>
-                      <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                      <label htmlFor="nav-register-email" className="block text-[12.5px] font-semibold text-text mb-1.5">Имейл адрес</label>
+                      <input id="nav-register-email" name="email" type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)}
                         placeholder="Въведи своя имейл"
                         className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/50 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
                     </div>
                     <div className="mb-3">
-                      <label className="block text-[12.5px] font-semibold text-text mb-1.5">Парола</label>
+                      <label htmlFor="nav-register-password" className="block text-[12.5px] font-semibold text-text mb-1.5">Парола</label>
                       <div className="relative">
-                        <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
+                        <input id="nav-register-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" value={password} onChange={e => setPassword(e.target.value)}
                           placeholder="Минимум 8 знака"
                           className="w-full px-4 py-2.5 pr-14 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
                         <button type="button" onClick={() => setShowPassword(v => !v)}
@@ -349,8 +349,8 @@ export function LoginGateModal() {
                       </div>
                     </div>
                     <div className="mb-3">
-                      <label className="block text-[12.5px] font-semibold text-text mb-1.5">Потвърди паролата</label>
-                      <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+                      <label htmlFor="nav-register-confirm-password" className="block text-[12.5px] font-semibold text-text mb-1.5">Потвърди паролата</label>
+                      <input id="nav-register-confirm-password" name="confirmPassword" type="password" autoComplete="new-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                         placeholder="Повтори паролата"
                         className="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] text-[13.5px] text-text placeholder:text-text-muted/40 bg-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" />
                     </div>
