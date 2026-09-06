@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/admin/auth'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { queueEmailAutomationJob } from '@/lib/email-automation/jobs'
 import { hasActivePremium } from '@/lib/subscription-access'
+import { NVO7_EXAM_CYCLE_KEY } from '@/lib/campaigns/nvo7-exam-dates'
 
 export const runtime = 'nodejs'
 
@@ -44,7 +45,7 @@ export async function POST() {
         userId: profile.id,
         templateKey: 'nvo7_urgency_nudge',
         scheduledFor: now,
-        dedupeKey: `nvo7-urgency-campaign-jun2026:${profile.id}`,
+        dedupeKey: `nvo7-urgency-campaign-${NVO7_EXAM_CYCLE_KEY}:${profile.id}`,
         payload: { source: 'bulk-campaign', class_snapshot: '7' },
       })
       queued++

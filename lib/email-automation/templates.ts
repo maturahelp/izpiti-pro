@@ -1,5 +1,6 @@
 import type { PlanKey } from '@/lib/billing/plans'
 import type { EmailAutomationTemplateKey } from '@/lib/email-automation/jobs'
+import { NVO7_BEL_EXAM_DATE_LABEL, NVO7_MAT_EXAM_DATE_LABEL } from '@/lib/campaigns/nvo7-exam-dates'
 
 type EmailTemplateRenderContext = {
   templateKey: EmailAutomationTemplateKey
@@ -202,7 +203,7 @@ export function renderEmailAutomationTemplate(
       const content = renderLayout({
         eyebrow: 'НВО — 7. клас',
         title: 'НВО е след дни. Ето 15% отстъпка за теб.',
-        intro: `${recipientGreeting}, регистрира се в MaturaHelp, но все още нямаш активен план. НВО по БЕЛ е на 17 юни, по математика — на 19 юни. Имаш още няколко дни — и специален код само за теб.`,
+        intro: `${recipientGreeting}, регистрира се в MaturaHelp, но все още нямаш активен план. НВО по БЕЛ е на ${NVO7_BEL_EXAM_DATE_LABEL}, по математика — на ${NVO7_MAT_EXAM_DATE_LABEL}. Имаш още няколко дни — и специален код само за теб.`,
         bullets: [
           'Резюмета и анализи на всички произведения за НВО.',
           'Видео уроци по всички теми.',
