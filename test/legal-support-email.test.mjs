@@ -14,7 +14,6 @@ const filesToCheck = [
   'lib/legal-consent.ts',
   'app/(student)/dashboard/help/page.tsx',
   'app/(student)/dashboard/subscription/page.tsx',
-  'app/(admin)/admin/settings/page.tsx',
   'landing-source.html',
 ]
 

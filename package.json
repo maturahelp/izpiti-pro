@@ -9,6 +9,7 @@
     "lint": "npm run lint:feature",
     "lint:feature": "eslint \"app/(student)/dashboard/literature-exercise/[workId]/page.tsx\" \"app/(student)/dashboard/materials/page.tsx\" \"app/(student)/dashboard/materials/nvo4-topic/[id]/page.tsx\" \"data/dziLiteratureExercises.ts\" \"data/literatureExerciseResolver.ts\" \"scripts/dzi-literature-exercise-blueprints.ts\" \"scripts/validate-dzi-literature-exercises.ts\" \"eslint.config.mjs\"",
     "lint:all": "eslint .",
+    "test": "tsx --test test/*.test.mjs lib/*.test.ts",
     "review:english-mock:validate": "tsx scripts/validate-english-mock-parser.ts",
     "review:english-mock:screenshots": "tsx scripts/capture-english-mock-screenshots.ts",
     "review:english-mock": "tsx scripts/run-english-mock-review.ts",
