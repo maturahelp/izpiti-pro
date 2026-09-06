@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export const runtime = 'nodejs'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MISSING_TABLE_ERROR_CODE = 'PGRST205'
 
 function isValidPhone(raw: string): boolean {
   const stripped = raw.replace(/[\s\-()]/g, '')
@@ -31,12 +33,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'INVALID_PHONE' }, { status: 400 })
   }
 
-  // TODO(crm): persist to Supabase `leads` table OR forward to email-marketing
-  // provider (Brevo / Mailchimp / HubSpot) when one is chosen.
-  // Example Supabase call:
-  //   const admin = createAdminClient()
-  //   await admin.from('leads').upsert({ email, phone: phone || null, source }, { onConflict: 'email' })
-  console.log('[lead]', { email, phone: phone || null, source, at: new Date().toISOString() })
+  try {
+    const admin = createAdminClient()
+    const { error } = await admin.from('leads').upsert(
+      { email, phone: phone || null, source, updated_at: new Date().toISOString() },
+      { onConflict: 'email' }
+    )
+
+    if (error) {
+      if (error.code === MISSING_TABLE_ERROR_CODE) {
+        console.warn('[leads] leads table missing in production, continuing without persistence')
+      } else {
+        console.error('[leads] upsert failed', error)
+        // Still return ok — the discount code must not be withheld from the
+        // visitor just because persistence had a hiccup.
+      }
+    }
+  } catch (error) {
+    console.error('[leads] unexpected error', error)
+  }
 
   return NextResponse.json({ ok: true })
 }
