@@ -674,34 +674,22 @@ const BERON_EXAMS: NvoExam[] = beronExamPayload.tests.map(normalizeBeronExam)
 export default function TestPage() {
   const params = useParams()
   const testId = String(params.id)
-  const test = tests.find((t) => t.id === testId) ?? beronTests.find((t) => t.id === testId)
+  // `test` may be null (unknown id or wrong class). All hooks below must still
+  // run unconditionally — the "not found" early return lives AFTER them so
+  // React never sees a different hook count between renders of this instance.
+  const test = tests.find((t) => t.id === testId) ?? beronTests.find((t) => t.id === testId) ?? null
 
-  if (!test) {
-    return (
-      <div className="min-h-screen pb-20 md:pb-0">
-        <TopBar title="Тест" />
-        <div className="p-4 md:p-6 max-w-3xl mx-auto">
-          <div className="card p-6 text-center">
-            <h1 className="text-lg font-semibold text-text mb-2">Този тест не е достъпен</h1>
-            <p className="text-sm text-text-muted mb-4">Избраният тест не е наличен за текущия клас или не съществува.</p>
-            <Link href="/dashboard/tests" className="btn-primary justify-center">
-              Към тестовете
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const datasetId = mapTestId(test.id)
-  const exam = [...OFFICIAL_EXAMS, ...GENERATED_ENGLISH_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
-  const storageKey = `izpiti-pro:test:${test.id}:state:v1`
+  const datasetId = test ? mapTestId(test.id) : null
+  const exam = datasetId
+    ? [...OFFICIAL_EXAMS, ...GENERATED_ENGLISH_EXAMS, ...MOCK_EXAMS, ...BERON_EXAMS].find((e) => e.id === datasetId) ?? null
+    : null
+  const storageKey = `izpiti-pro:test:${testId}:state:v1`
 
   const [answers, setAnswers] = useState<SingleChoiceAnswers>({})
   const [openResponses, setOpenResponses] = useState<OpenResponses>({})
   const [submitted, setSubmitted] = useState(false)
   const [revealAnswers, setRevealAnswers] = useState(false)
-  const [contextCollapsed, setContextCollapsed] = useState(test.subjectName === 'Английски език')
+  const [contextCollapsed, setContextCollapsed] = useState(test?.subjectName === 'Английски език')
   const [contextMediaCollapsed, setContextMediaCollapsed] = useState(false)
   const [showLottieConfetti, setShowLottieConfetti] = useState(false)
   const [isPremiumUser, setIsPremiumUser] = useState(false)
@@ -739,7 +727,7 @@ export default function TestPage() {
 
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || !test) return
     try {
       const raw = window.localStorage.getItem(storageKey)
       if (!raw) {
@@ -767,17 +755,17 @@ export default function TestPage() {
       setSubmitted(false)
       setRevealAnswers(false)
     }
-  }, [storageKey])
+  }, [storageKey, test])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || !test) return
     window.localStorage.setItem(storageKey, JSON.stringify({
       answers,
       openResponses,
       submitted,
       revealAnswers,
     }))
-  }, [answers, openResponses, submitted, revealAnswers, storageKey])
+  }, [answers, openResponses, submitted, revealAnswers, storageKey, test])
 
   const handleSubmit = useCallback(() => {
     setSubmitted(true)
@@ -895,6 +883,23 @@ export default function TestPage() {
       window.localStorage.removeItem(storageKey)
     }
   }, [storageKey])
+
+  if (!test) {
+    return (
+      <div className="min-h-screen pb-20 md:pb-0">
+        <TopBar title="Тест" />
+        <div className="p-4 md:p-6 max-w-3xl mx-auto">
+          <div className="card p-6 text-center">
+            <h1 className="text-lg font-semibold text-text mb-2">Този тест не е достъпен</h1>
+            <p className="text-sm text-text-muted mb-4">Избраният тест не е наличен за текущия клас или не съществува.</p>
+            <Link href="/dashboard/tests" className="btn-primary justify-center">
+              Към тестовете
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (!exam) {
     return (
