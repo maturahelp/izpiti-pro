@@ -25,7 +25,16 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   typedRoutes: false,
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }]
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      // Static media under public/ defaults to `max-age=0, must-revalidate`
+      // on Vercel, so every visit re-validates each image/video. These files
+      // are versioned by name (or `?v=N`) when they change, so cache them hard.
+      {
+        source: '/:all*(mp4|webp|jpg|jpeg|png|svg|gif|ico|woff2)',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ]
   },
   async redirects() {
     return [
