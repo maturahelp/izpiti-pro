@@ -84,6 +84,9 @@ export default async function AdminDashboard() {
     page += 1
   }
 
+  // Server Component: rendered once per request, so a per-request timestamp
+  // is intentional here (the purity rule targets re-rendering client trees).
+  // eslint-disable-next-line react-hooks/purity
   const now = Date.now()
   const day = 24 * 60 * 60 * 1000
 
