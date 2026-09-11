@@ -159,6 +159,23 @@ Merge and conflict resolution rules:
   - For the materials page and tests page: read both sides of a conflict carefully. The side with more features (more buttons, more panels, lazy-load logic) is almost always the correct one to keep. Never use git checkout --ours or --theirs blindly on these files.
   - After any merge or cherry-pick, run the pre-commit feature check above before pushing.
 
+Change Log (mandatory)
+
+CHANGELOG.md is the shared memory of what changed and why. Everyone (Slavi, Danko, Claude Code) adds to it.
+
+  - At the end of every session that changes code, data, or config, add one bullet per meaningful change
+    under a "## YYYY-MM-DD" heading at the top (below "## [Unreleased]"). Create today's heading if missing.
+  - Format: "- type(scope): what — why (author)". Keep the why — it is the part git log does not have.
+  - Docs-only or CHANGELOG-only changes do not need an entry.
+  - A Stop hook (.claude/hooks/changelog-guard.mjs) will ask for this if you forget; do not disable it.
+  - The daily ops report and the Status Dashboard parse this file: keep the "## YYYY-MM-DD" headings and "- " bullets.
+
+Ops and monitoring
+
+  - Public health endpoint: app/api/health/route.ts (GET /api/health). Keep it cheap and secret-free.
+  - Page probe script: scripts/ops/site-check.mjs (node, no deps).
+  - Runbook: docs/ops/monitoring.md (UptimeRobot, daily report, dashboard, Sentry notes).
+
 Git Safety Protocol
 
 These rules protect the repository history. Follow them without exception.
