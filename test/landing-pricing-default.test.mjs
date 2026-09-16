@@ -88,3 +88,15 @@ test('the renewing tiers state their billing cadence', () => {
   assert.match(source, /6 месеца — еднократно плащане/)
   assert.match(source, /Отказваш по всяко време от профила си/)
 })
+
+test('every "Пакети" link points at the purchasable plans, not the subject cards', () => {
+  const links = [...source.matchAll(/<a href="(#[a-z-]+)"[^>]*>Пакети<\/a>/g)].map((m) => m[1])
+  assert.ok(links.length >= 3, `expected header, mobile menu and footer links, got ${links.length}`)
+  for (const href of links) {
+    assert.equal(href, '#pricing')
+  }
+})
+
+test('the pricing section is the anchor target and is reachable', () => {
+  assert.match(source, /<section id="pricing"/)
+})
