@@ -30,10 +30,17 @@ export type BillingPlanConfig = {
   accessEndsAt?: string
   /**
    * Относителен достъп в месеци от момента на плащането. Използва се от
-   * one-time плановете с период (1 / 3 / 6 месеца). Ако е зададено заедно с
-   * `accessEndsAt`, печели по-ранната от двете дати.
+   * one-time плановете с период. Ако е зададено заедно с `accessEndsAt`,
+   * печели по-ранната от двете дати.
    */
   accessMonths?: number
+  /**
+   * Дължина на един платен период за `mode: 'subscription'`, в месеци.
+   * Stripe получава `recurring: { interval: 'month', interval_count: N }`,
+   * т.е. сумата се удържа автоматично на всеки N месеца до отказ.
+   * Незададено при месечните планове означава 1.
+   */
+  billingIntervalMonths?: number
   accessScope?: AccessScope
   // null = неограничено, число = дневен лимит за AI чат.
   aiDailyLimit?: number | null
@@ -91,26 +98,28 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     accessScope: 'english',
   },
 
-  // ── Периодични one-time планове (12. клас ДЗИ) ──────────────────────────
-  // Еднократно плащане за фиксиран брой месеци достъп. Ефективната месечна
-  // цена пада с дължината на плана — виж pricing таблицата в landing-source.html.
+  // ── Тарифни планове (12. клас ДЗИ) ──────────────────────────────────────
+  // „Бърз старт“ и „Сериозна подготовка“ са абонаменти — сумата се удържа
+  // автоматично на всеки 1 / 3 месеца, докато ученикът не откаже. „До
+  // матурата“ остава еднократно плащане за 6 месеца достъп. Ефективната
+  // месечна цена пада с дължината на периода.
   'dzi-start-1m': {
-    name: 'ДЗИ Бърз старт — 1 месец',
+    name: 'ДЗИ Бърз старт — месечен абонамент',
     amount: 2999,
     currency: 'eur',
-    mode: 'payment',
+    mode: 'subscription',
     class: '12',
     examPath: 'ДЗИ',
-    accessMonths: 1,
+    billingIntervalMonths: 1,
   },
   'dzi-serious-3m': {
-    name: 'ДЗИ Сериозна подготовка — 3 месеца',
+    name: 'ДЗИ Сериозна подготовка — абонамент на 3 месеца',
     amount: 7999,
     currency: 'eur',
-    mode: 'payment',
+    mode: 'subscription',
     class: '12',
     examPath: 'ДЗИ',
-    accessMonths: 3,
+    billingIntervalMonths: 3,
   },
   'dzi-matura-6m': {
     name: 'ДЗИ До матурата — 6 месеца',
@@ -122,24 +131,24 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     accessMonths: 6,
   },
 
-  // ── Периодични one-time планове (7. клас НВО) ───────────────────────────
+  // ── Тарифни планове (7. клас НВО) ───────────────────────────────────────
   'nvo-start-1m': {
-    name: 'НВО Бърз старт — 1 месец',
+    name: 'НВО Бърз старт — месечен абонамент',
     amount: 2999,
     currency: 'eur',
-    mode: 'payment',
+    mode: 'subscription',
     class: '7',
     examPath: 'НВО',
-    accessMonths: 1,
+    billingIntervalMonths: 1,
   },
   'nvo-serious-3m': {
-    name: 'НВО Сериозна подготовка — 3 месеца',
+    name: 'НВО Сериозна подготовка — абонамент на 3 месеца',
     amount: 7999,
     currency: 'eur',
-    mode: 'payment',
+    mode: 'subscription',
     class: '7',
     examPath: 'НВО',
-    accessMonths: 3,
+    billingIntervalMonths: 3,
   },
   'nvo-exam-6m': {
     name: 'НВО До изпита — 6 месеца',
@@ -204,6 +213,17 @@ export function getOneTimePlanExpiry(planKey: PlanKey, from: Date = new Date()) 
 
   if (fixed && relative) return fixed < relative ? fixed : relative
   return fixed ?? relative
+}
+
+/**
+ * Дължина на платения период в месеци — интервалът на абонамента или
+ * срокът на достъпа при еднократните планове. Използва се за
+ * „ефективно на месец“ цената, показвана на landing page-а.
+ */
+export function getPlanPeriodMonths(planKey: PlanKey): number {
+  const config = BILLING_PLANS[planKey]
+  if (config.mode === 'subscription') return config.billingIntervalMonths ?? 1
+  return config.accessMonths ?? 1
 }
 
 export function isOneTimePlan(planKey: PlanKey) {

@@ -50,11 +50,11 @@ test('landing page shows and tracks the configured plan prices', () => {
   assert.match(source, /<span class="text-4xl font-extrabold text-accent-navy">9\.99 €<\/span>/)
 
   assert.match(source, /"name": "НВО 4\. клас месечен", "price": "9\.99"/)
-  assert.match(source, /"name": "ДЗИ Бърз старт — 1 месец", "price": "29\.99"/)
-  assert.match(source, /"name": "ДЗИ Сериозна подготовка — 3 месеца", "price": "79\.99"/)
+  assert.match(source, /"name": "ДЗИ Бърз старт — месечен абонамент", "price": "29\.99"/)
+  assert.match(source, /"name": "ДЗИ Сериозна подготовка — абонамент на 3 месеца", "price": "79\.99"/)
   assert.match(source, /"name": "ДЗИ До матурата — 6 месеца", "price": "119\.99"/)
-  assert.match(source, /"name": "НВО Бърз старт — 1 месец", "price": "29\.99"/)
-  assert.match(source, /"name": "НВО Сериозна подготовка — 3 месеца", "price": "79\.99"/)
+  assert.match(source, /"name": "НВО Бърз старт — месечен абонамент", "price": "29\.99"/)
+  assert.match(source, /"name": "НВО Сериозна подготовка — абонамент на 3 месеца", "price": "79\.99"/)
   assert.match(source, /"name": "НВО До изпита — 6 месеца", "price": "119\.99"/)
 
   assert.match(source, /'nvo4-full': 9\.99/)
@@ -75,4 +75,16 @@ test('every pricing checkout button maps to a known plan value', () => {
   for (const key of planKeys) {
     assert.ok(tracked.has(key), `PLAN_VALUES is missing a price for "${key}"`)
   }
+})
+
+test('the dark comparison table is no longer rendered', () => {
+  assert.doesNotMatch(source, /bg-\[#0A0A0B\]/)
+  assert.doesNotMatch(source, /Ефективно на месец/)
+})
+
+test('the renewing tiers state their billing cadence', () => {
+  assert.match(source, /Плащане всеки месец, до отказ/)
+  assert.match(source, /Плащане на всеки 3 месеца, до отказ/)
+  assert.match(source, /6 месеца — еднократно плащане/)
+  assert.match(source, /Отказваш по всяко време от профила си/)
 })

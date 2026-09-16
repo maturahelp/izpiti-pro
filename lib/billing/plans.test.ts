@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { BILLING_PLANS, getOneTimePlanExpiry } from './plans'
+import { BILLING_PLANS, getOneTimePlanExpiry, getPlanPeriodMonths } from './plans'
 
 describe('billing plans', () => {
   it('charges 9.99 EUR for the NVO 4 monthly plan', () => {
@@ -21,29 +21,50 @@ describe('billing plans', () => {
     assert.equal(BILLING_PLANS['nvo-exam-6m'].amount, 11999)
   })
 
-  it('matches the effective monthly prices advertised on the landing page', () => {
-    const effective = (key: 'dzi-start-1m' | 'dzi-serious-3m' | 'dzi-matura-6m') => {
-      const plan = BILLING_PLANS[key]
-      return (plan.amount / 100 / (plan.accessMonths ?? 1)).toFixed(2)
+  it('bills Бърз старт monthly and Сериозна подготовка every 3 months', () => {
+    for (const key of ['dzi-start-1m', 'nvo-start-1m'] as const) {
+      assert.equal(BILLING_PLANS[key].mode, 'subscription')
+      assert.equal(BILLING_PLANS[key].billingIntervalMonths, 1)
     }
+    for (const key of ['dzi-serious-3m', 'nvo-serious-3m'] as const) {
+      assert.equal(BILLING_PLANS[key].mode, 'subscription')
+      assert.equal(BILLING_PLANS[key].billingIntervalMonths, 3)
+    }
+  })
+
+  it('keeps the 6-month tier a one-time payment', () => {
+    for (const key of ['dzi-matura-6m', 'nvo-exam-6m'] as const) {
+      assert.equal(BILLING_PLANS[key].mode, 'payment')
+      assert.equal(BILLING_PLANS[key].accessMonths, 6)
+      assert.equal(BILLING_PLANS[key].billingIntervalMonths, undefined)
+    }
+  })
+
+  it('matches the effective monthly prices advertised on the landing page', () => {
+    const effective = (key: 'dzi-start-1m' | 'dzi-serious-3m' | 'dzi-matura-6m') =>
+      (BILLING_PLANS[key].amount / 100 / getPlanPeriodMonths(key)).toFixed(2)
     assert.equal(effective('dzi-start-1m'), '29.99')
     assert.equal(effective('dzi-serious-3m'), '26.66')
     assert.equal(effective('dzi-matura-6m'), '20.00')
   })
 
-  it('expires month-based one-time plans N months after payment', () => {
+  it('expires the one-time 6-month plan 6 months after payment', () => {
     const from = new Date('2026-01-15T10:00:00.000Z')
-    assert.equal(getOneTimePlanExpiry('dzi-start-1m', from), '2026-02-15T10:00:00.000Z')
-    assert.equal(getOneTimePlanExpiry('dzi-serious-3m', from), '2026-04-15T10:00:00.000Z')
     assert.equal(getOneTimePlanExpiry('dzi-matura-6m', from), '2026-07-15T10:00:00.000Z')
+    assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-07-15T10:00:00.000Z')
   })
 
   it('clamps the expiry day into shorter target months', () => {
-    const from = new Date('2026-01-31T10:00:00.000Z')
-    assert.equal(getOneTimePlanExpiry('nvo-start-1m', from), '2026-02-28T10:00:00.000Z')
+    // 31 Aug + 6 months lands on the last day of February.
+    const from = new Date('2025-08-31T10:00:00.000Z')
+    assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-02-28T10:00:00.000Z')
   })
 
-  it('returns null for plans without a period or an end date', () => {
+  it('leaves expiry to Stripe for subscription plans', () => {
+    // Subscriptions renew until cancelled; the period end comes from the
+    // Stripe subscription, not from a fixed local expiry.
+    assert.equal(getOneTimePlanExpiry('dzi-start-1m'), null)
+    assert.equal(getOneTimePlanExpiry('dzi-serious-3m'), null)
     assert.equal(getOneTimePlanExpiry('dzi-english-sprint'), null)
   })
 })
