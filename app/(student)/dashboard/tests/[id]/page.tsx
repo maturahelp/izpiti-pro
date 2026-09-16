@@ -1480,10 +1480,13 @@ function QuestionCard({
                 | Record<string, 'correct' | 'incorrect' | 'empty'>
                 | undefined
               const labelState = perLabel?.[label]
-              const isCorrect = labelState ? labelState === 'correct' : openEval?.mode === 'correct'
-              const isIncorrect = labelState
-                ? labelState === 'incorrect'
-                : openEval?.mode === 'incorrect'
+              // Colour the field only after the student checks the answers (or reveals the key);
+              // otherwise typing the exact answer would light it up green immediately.
+              const isCorrect =
+                showFeedback && (labelState ? labelState === 'correct' : openEval?.mode === 'correct')
+              const isIncorrect =
+                showFeedback &&
+                (labelState ? labelState === 'incorrect' : openEval?.mode === 'incorrect')
               return (
                 <div key={label} className="grid gap-1.5">
                   <label className="text-xs font-bold text-amber-700">
