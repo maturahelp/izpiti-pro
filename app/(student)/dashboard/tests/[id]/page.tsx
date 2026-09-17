@@ -89,12 +89,15 @@ import { officialEnglishMockExams } from '@/lib/official-english-mock-data'
 import { EnglishDziTestView } from '@/components/dashboard/EnglishDziTestView'
 import { createClient } from '@/lib/supabase/client'
 import { hasActivePremium } from '@/lib/subscription-access'
+import { isFreeOfficialExam } from '@/lib/free-content'
 
 // ---------------------------------------------------------------------------
 // Freemium past-exam gating
 // ---------------------------------------------------------------------------
 // Past DZI/NVO exams are freemium: the first FREE_PAST_EXAM_QUESTIONS questions
 // are visible to free users; the rest is blurred behind a premium upsell.
+// Изключение: един официален изпит на клас влиза изцяло в безплатния план
+// (isFreeOfficialExam) и не се реже на 3 въпроса.
 const FREE_PAST_EXAM_QUESTIONS = 3
 
 function isPastExamId(id: string): boolean {
@@ -785,6 +788,7 @@ export default function TestPage() {
 
     const isLockedNow =
       isPastExamId(testId) &&
+      !isFreeOfficialExam(testId) &&
       premiumStatusChecked &&
       !isPremiumUser &&
       exam.questions.length > FREE_PAST_EXAM_QUESTIONS
@@ -913,7 +917,9 @@ export default function TestPage() {
   const isOfficialEnglish = officialEnglishExam !== null
 
   const shouldEvaluateLock =
-    isPastExamId(testId) && exam.questions.length > FREE_PAST_EXAM_QUESTIONS
+    isPastExamId(testId) &&
+    !isFreeOfficialExam(testId) &&
+    exam.questions.length > FREE_PAST_EXAM_QUESTIONS
   const isPremiumPending = shouldEvaluateLock && !premiumStatusChecked
   const isFreemiumLocked = shouldEvaluateLock && premiumStatusChecked && !isPremiumUser
   const visibleQuestions =

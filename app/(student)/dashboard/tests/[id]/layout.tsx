@@ -5,8 +5,10 @@ import {
   canAccessFullContent,
   hasActivePremium,
 } from '@/lib/subscription-access'
+import { isFreeMockExam } from '@/lib/free-content'
 
-// Past DZI/NVO exams are part of the free plan. Sample/mock tests stay premium.
+// Past DZI/NVO exams are part of the free plan. Sample/mock tests stay premium,
+// except the single free mock exam per grade (see lib/free-content.ts).
 function isPastExamId(id: string) {
   if (id.startsWith('mock_')) return false
   if (id.startsWith('selected_mock_')) return false
@@ -43,7 +45,9 @@ export default async function TestAccessLayout({
     redirect(`/login?redirectTo=/dashboard/tests/${id}`)
   }
 
-  if (isPastExamId(id)) {
+  // Официалните изпити от минали години са freemium, а един примерен изпит
+  // на клас влиза в безплатния план — и двете минават без premium проверка.
+  if (isPastExamId(id) || isFreeMockExam(id)) {
     return <>{children}</>
   }
 

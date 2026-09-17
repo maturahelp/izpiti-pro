@@ -175,7 +175,15 @@ export async function POST(req: NextRequest) {
             currency: config.currency,
             unit_amount: config.amount,
             product_data: { name: config.name },
-            ...(config.mode === 'subscription' ? { recurring: { interval: 'month' } } : {}),
+            ...(config.mode === 'subscription'
+              ? {
+                  recurring: {
+                    interval: 'month' as const,
+                    // 1 = месечно, 3 = на всеки 3 месеца.
+                    interval_count: config.billingIntervalMonths ?? 1,
+                  },
+                }
+              : {}),
           },
           quantity: 1,
         },
