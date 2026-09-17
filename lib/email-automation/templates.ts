@@ -198,7 +198,7 @@ export function renderEmailAutomationTemplate(
     }
 
     case 'nvo7_urgency_nudge': {
-      const nvo7PricingHref = `https://www.maturahelp.com/api/checkout/redirect?plan=nvo-sprint&promoCode=NVO15`
+      const nvo7PricingHref = `https://www.maturahelp.com/api/checkout/redirect?plan=nvo-start-1m&promoCode=NVO15`
       const discountCode = 'NVO15'
       const content = renderLayout({
         eyebrow: 'НВО — 7. клас',

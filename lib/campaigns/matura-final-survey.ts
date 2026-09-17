@@ -4,9 +4,11 @@ export const MATURA_FINAL_DISCOUNT_PERCENT = 50
 export const MATURA_FINAL_EXAM_DATE_ISO = '2026-05-20T08:30:00+03:00'
 export const MATURA_FINAL_EXAM_DATE_LABEL = '20 май 2026'
 export const MATURA_FINAL_DISCOUNT_DEADLINE_LABEL = '19 май 2026, 23:59'
-export const MATURA_FINAL_CHECKOUT_PLAN = 'dzi-full' as const
+// Кампанията е от май 2026 и сочеше към спрения 'dzi-full'. Страницата е
+// още жива, затова checkout-ът води към актуалния месечен ДЗИ план.
+export const MATURA_FINAL_CHECKOUT_PLAN = 'dzi-start-1m' as const
 export const MATURA_FINAL_CHECKOUT_REDIRECT =
-  `/api/checkout/redirect?plan=dzi-full&promoCode=${MATURA_FINAL_DISCOUNT_CODE}`
+  `/api/checkout/redirect?plan=${MATURA_FINAL_CHECKOUT_PLAN}&promoCode=${MATURA_FINAL_DISCOUNT_CODE}`
 
 export const MATURA_FINAL_BLOCKERS = [
   { value: 'price', label: 'Цената ме спира' },
