@@ -140,7 +140,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   // преименувай — съществуващи профили го имат в billing_plan_key.
   'dzi-matura-6m': {
     name: 'ДЗИ До матурата — 8 месеца',
-    amount: 12000,
+    amount: 11999,
     currency: 'eur',
     mode: 'payment',
     class: '12',
@@ -170,7 +170,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   // Ключът е исторически (виж dzi-matura-6m).
   'nvo-exam-6m': {
     name: 'НВО До изпита — 8 месеца',
-    amount: 12000,
+    amount: 11999,
     currency: 'eur',
     mode: 'payment',
     class: '7',

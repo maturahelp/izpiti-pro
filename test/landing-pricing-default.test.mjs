@@ -40,7 +40,7 @@ test('pricing tabs are ordered 12th grade first', () => {
 })
 
 test('landing page shows and tracks the configured plan prices', () => {
-  for (const price of ['29\\.99', '79\\.99', '120']) {
+  for (const price of ['29\\.99', '79\\.99', '119\\.99']) {
     assert.match(
       source,
       new RegExp(`<span class="text-4xl font-extrabold text-accent-navy">${price} €</span>`)
@@ -52,18 +52,18 @@ test('landing page shows and tracks the configured plan prices', () => {
   assert.match(source, /"name": "НВО 4\. клас месечен", "price": "9\.99"/)
   assert.match(source, /"name": "ДЗИ Бърз старт — месечен абонамент", "price": "29\.99"/)
   assert.match(source, /"name": "ДЗИ Сериозна подготовка — абонамент на 3 месеца", "price": "79\.99"/)
-  assert.match(source, /"name": "ДЗИ До матурата — 8 месеца", "price": "120\.00"/)
+  assert.match(source, /"name": "ДЗИ До матурата — 8 месеца", "price": "119\.99"/)
   assert.match(source, /"name": "НВО Бърз старт — месечен абонамент", "price": "29\.99"/)
   assert.match(source, /"name": "НВО Сериозна подготовка — абонамент на 3 месеца", "price": "79\.99"/)
-  assert.match(source, /"name": "НВО До изпита — 8 месеца", "price": "120\.00"/)
+  assert.match(source, /"name": "НВО До изпита — 8 месеца", "price": "119\.99"/)
 
   assert.match(source, /'nvo4-full': 9\.99/)
   assert.match(source, /'dzi-start-1m': 29\.99/)
   assert.match(source, /'dzi-serious-3m': 79\.99/)
-  assert.match(source, /'dzi-matura-6m': 120/)
+  assert.match(source, /'dzi-matura-6m': 119\.99/)
   assert.match(source, /'nvo-start-1m': 29\.99/)
   assert.match(source, /'nvo-serious-3m': 79\.99/)
-  assert.match(source, /'nvo-exam-6m': 120/)
+  assert.match(source, /'nvo-exam-6m': 119\.99/)
 })
 
 test('every pricing checkout button maps to a known plan value', () => {
