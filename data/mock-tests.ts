@@ -24,6 +24,8 @@ const mathPayload = mockMathPracticeData as MockPracticePayload
 export const mockTests: Test[] = [...payload.exams, ...mathPayload.exams].map((exam) => {
   const isNvo = exam.exam_type === 'nvo_bel' || exam.exam_type === 'nvo_math'
   const isMath = exam.exam_type === 'nvo_math' || exam.exam_type === 'dzi_math'
+  // Пълен формат на НВО БЕЛ (25 задачи + преразказ като задача 26) е 150 минути.
+  const hasRetelling = exam.exam_type === 'nvo_bel' && exam.questions.some((question) => question.number === 26)
 
   return {
     id: exam.id,
@@ -35,7 +37,7 @@ export const mockTests: Test[] = [...payload.exams, ...mathPayload.exams].map((e
     examType: isNvo ? 'nvo7' : 'dzi12',
     difficulty: isMath ? (isNvo ? 'среден' : 'труден') : isNvo ? 'среден' : 'труден',
     questionsCount: exam.questions.length,
-    timeMinutes: isMath ? (isNvo ? 60 : 240) : isNvo ? 75 : 240,
+    timeMinutes: isMath ? (isNvo ? 60 : 240) : isNvo ? (hasRetelling ? 150 : 75) : 240,
     isPremium: false,
     completedCount: 0,
     avgScore: 0,
