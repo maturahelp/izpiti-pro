@@ -1377,8 +1377,8 @@
             });
           };
 
-          // Own easing instead of scrollIntoView({ behavior: 'smooth' }) — the native smooth scroll
-          // stalls on this page (the scroll-driven hero handlers keep interrupting it).
+          // Eased scroll with a guaranteed finish: if animation frames don't run (hidden tab,
+          // reduced motion, throttled browser) the page still jumps to the target.
           function animateScrollTo(top) {
             var start = window.scrollY;
             var delta = top - start;
@@ -1387,14 +1387,19 @@
             if (reduceMotion || typeof window.requestAnimationFrame !== 'function') { window.scrollTo(0, top); return; }
             var duration = 650;
             var startedAt = null;
+            var done = false;
             function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+            function finish() { if (done) return; done = true; window.scrollTo(0, top); }
             function step(now) {
+              if (done) return;
               if (startedAt === null) startedAt = now;
               var progress = Math.min(1, (now - startedAt) / duration);
+              if (progress >= 1) { finish(); return; }
               window.scrollTo(0, start + delta * ease(progress));
-              if (progress < 1) window.requestAnimationFrame(step);
+              window.requestAnimationFrame(step);
             }
             window.requestAnimationFrame(step);
+            window.setTimeout(finish, duration + 150);
           }
 
           window.goToPricing = function (tab) {
