@@ -25,7 +25,14 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   typedRoutes: false,
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }]
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      {
+        // Versioned media (rename the file when it changes) — safe to cache for a year.
+        source: '/video/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ]
   },
   async redirects() {
     return [

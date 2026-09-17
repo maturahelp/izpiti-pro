@@ -674,9 +674,27 @@
             class="w-72 h-72 md:w-80 md:h-80 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-6">
           </div>
           <div class="relative z-10 w-full max-w-2xl">
-            <video src="/landing-video.mp4" controls playsinline preload="metadata"
-              class="w-full rounded-2xl shadow-lg bg-black"></video>
-            <p class="mt-3 text-xs text-gray-400 text-center leading-relaxed">Видеото показва материалите за 7. клас. За 4. и 12. клас структурата е същата и съдържа тестове, материали и проследяване на напредъка.</p>
+            <video id="how-it-works-video" controls playsinline preload="none" poster="/video/how-it-works-poster-v1.webp"
+              width="1280" height="720" aria-label="Как работи MaturaHelp"
+              class="w-full aspect-video rounded-2xl shadow-lg bg-[#e6f0fb]">
+              <source src="/video/how-it-works-v1.webm" type="video/webm">
+              <source src="/video/how-it-works-v1.mp4" type="video/mp4">
+            </video>
+            <script>
+              (function () {
+                var v = document.getElementById('how-it-works-video');
+                if (!v) return;
+                var c = navigator.connection || {};
+                if (c.saveData || /(^|-)2g$/.test(c.effectiveType || '')) return;
+                var warm = function () { v.preload = 'auto'; v.load(); };
+                if (!('IntersectionObserver' in window)) { warm(); return; }
+                var io = new IntersectionObserver(function (entries) {
+                  if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); warm(); }
+                }, { rootMargin: '900px 0px' });
+                io.observe(v);
+              })();
+            </script>
+            <p class="mt-3 text-xs text-gray-400 text-center leading-relaxed">Видеото показва реална задача от НВО 2025, каталога с изпити, таблото с напредъка и AI помощника. За 4., 7. и 12. клас структурата е същата.</p>
           </div>
         </div>
       </div>
