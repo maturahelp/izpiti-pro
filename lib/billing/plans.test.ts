@@ -21,10 +21,10 @@ describe('billing plans', () => {
   it('charges the tiered one-time prices for the DZI and NVO plans', () => {
     assert.equal(BILLING_PLANS['dzi-start-1m'].amount, 2999)
     assert.equal(BILLING_PLANS['dzi-serious-3m'].amount, 7999)
-    assert.equal(BILLING_PLANS['dzi-matura-6m'].amount, 12000)
+    assert.equal(BILLING_PLANS['dzi-matura-6m'].amount, 11999)
     assert.equal(BILLING_PLANS['nvo-start-1m'].amount, 2999)
     assert.equal(BILLING_PLANS['nvo-serious-3m'].amount, 7999)
-    assert.equal(BILLING_PLANS['nvo-exam-6m'].amount, 12000)
+    assert.equal(BILLING_PLANS['nvo-exam-6m'].amount, 11999)
   })
 
   it('bills Бърз старт monthly and Сериозна подготовка every 3 months', () => {
