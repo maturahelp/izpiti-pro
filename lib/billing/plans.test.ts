@@ -21,10 +21,10 @@ describe('billing plans', () => {
   it('charges the tiered one-time prices for the DZI and NVO plans', () => {
     assert.equal(BILLING_PLANS['dzi-start-1m'].amount, 2999)
     assert.equal(BILLING_PLANS['dzi-serious-3m'].amount, 7999)
-    assert.equal(BILLING_PLANS['dzi-matura-6m'].amount, 11999)
+    assert.equal(BILLING_PLANS['dzi-matura-6m'].amount, 12000)
     assert.equal(BILLING_PLANS['nvo-start-1m'].amount, 2999)
     assert.equal(BILLING_PLANS['nvo-serious-3m'].amount, 7999)
-    assert.equal(BILLING_PLANS['nvo-exam-6m'].amount, 11999)
+    assert.equal(BILLING_PLANS['nvo-exam-6m'].amount, 12000)
   })
 
   it('bills Бърз старт monthly and Сериозна подготовка every 3 months', () => {
@@ -38,10 +38,10 @@ describe('billing plans', () => {
     }
   })
 
-  it('keeps the 6-month tier a one-time payment', () => {
+  it('keeps the 8-month tier a one-time payment', () => {
     for (const key of ['dzi-matura-6m', 'nvo-exam-6m'] as const) {
       assert.equal(BILLING_PLANS[key].mode, 'payment')
-      assert.equal(BILLING_PLANS[key].accessMonths, 6)
+      assert.equal(BILLING_PLANS[key].accessMonths, 8)
       assert.equal(BILLING_PLANS[key].billingIntervalMonths, undefined)
     }
   })
@@ -51,19 +51,19 @@ describe('billing plans', () => {
       (BILLING_PLANS[key].amount / 100 / getPlanPeriodMonths(key)).toFixed(2)
     assert.equal(effective('dzi-start-1m'), '29.99')
     assert.equal(effective('dzi-serious-3m'), '26.66')
-    assert.equal(effective('dzi-matura-6m'), '20.00')
+    assert.equal(effective('dzi-matura-6m'), '15.00')
   })
 
-  it('expires the one-time 6-month plan 6 months after payment', () => {
+  it('expires the one-time 8-month plan 8 months after payment', () => {
     const from = new Date('2026-01-15T10:00:00.000Z')
-    assert.equal(getOneTimePlanExpiry('dzi-matura-6m', from), '2026-07-15T10:00:00.000Z')
-    assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-07-15T10:00:00.000Z')
+    assert.equal(getOneTimePlanExpiry('dzi-matura-6m', from), '2026-09-15T10:00:00.000Z')
+    assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-09-15T10:00:00.000Z')
   })
 
   it('clamps the expiry day into shorter target months', () => {
-    // 31 Aug + 6 months lands on the last day of February.
+    // 31 Aug + 8 months lands on the last day of April.
     const from = new Date('2025-08-31T10:00:00.000Z')
-    assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-02-28T10:00:00.000Z')
+    assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-04-30T10:00:00.000Z')
   })
 
   it('retires the legacy plans so they cannot be bought again', () => {

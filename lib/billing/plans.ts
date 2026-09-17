@@ -116,7 +116,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
   // ── Тарифни планове (12. клас ДЗИ) ──────────────────────────────────────
   // „Бърз старт“ и „Сериозна подготовка“ са абонаменти — сумата се удържа
   // автоматично на всеки 1 / 3 месеца, докато ученикът не откаже. „До
-  // матурата“ остава еднократно плащане за 6 месеца достъп. Ефективната
+  // матурата“ остава еднократно плащане за 8 месеца достъп. Ефективната
   // месечна цена пада с дължината на периода.
   'dzi-start-1m': {
     name: 'ДЗИ Бърз старт — месечен абонамент',
@@ -136,14 +136,16 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     examPath: 'ДЗИ',
     billingIntervalMonths: 3,
   },
+  // Ключът е исторически (планът стартира като 6-месечен); не го
+  // преименувай — съществуващи профили го имат в billing_plan_key.
   'dzi-matura-6m': {
-    name: 'ДЗИ До матурата — 6 месеца',
-    amount: 11999,
+    name: 'ДЗИ До матурата — 8 месеца',
+    amount: 12000,
     currency: 'eur',
     mode: 'payment',
     class: '12',
     examPath: 'ДЗИ',
-    accessMonths: 6,
+    accessMonths: 8,
   },
 
   // ── Тарифни планове (7. клас НВО) ───────────────────────────────────────
@@ -165,14 +167,15 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     examPath: 'НВО',
     billingIntervalMonths: 3,
   },
+  // Ключът е исторически (виж dzi-matura-6m).
   'nvo-exam-6m': {
-    name: 'НВО До изпита — 6 месеца',
-    amount: 11999,
+    name: 'НВО До изпита — 8 месеца',
+    amount: 12000,
     currency: 'eur',
     mode: 'payment',
     class: '7',
     examPath: 'НВО',
-    accessMonths: 6,
+    accessMonths: 8,
   },
 }
 
