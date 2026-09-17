@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 
 function FloatingPath({ d, delay = 0, duration = 20, strokeWidth = 1 }: {
@@ -8,6 +9,10 @@ function FloatingPath({ d, delay = 0, duration = 20, strokeWidth = 1 }: {
   duration?: number
   strokeWidth?: number
 }) {
+  // Picked once per mount — calling Math.random() during render would give a
+  // different value on every re-render and is flagged by react-hooks/purity.
+  const [repeatDelay] = useState(() => Math.random() * 5 + 2)
+
   return (
     <motion.path
       d={d}
@@ -22,7 +27,7 @@ function FloatingPath({ d, delay = 0, duration = 20, strokeWidth = 1 }: {
         delay,
         ease: 'easeInOut',
         repeat: Infinity,
-        repeatDelay: Math.random() * 5 + 2,
+        repeatDelay,
       }}
     />
   )
