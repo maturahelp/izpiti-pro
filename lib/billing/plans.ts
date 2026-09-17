@@ -44,6 +44,12 @@ export type BillingPlanConfig = {
   accessScope?: AccessScope
   // null = неограничено, число = дневен лимит за AI чат.
   aiDailyLimit?: number | null
+  /**
+   * Планът вече не се продава. Ключът остава в конфига, защото съществуващи
+   * абонати го имат в `billing_plan_key` и webhook-ът, страницата за абонамент
+   * и access логиката го четат. Нови checkout сесии за него се отказват.
+   */
+  retired?: boolean
 }
 
 export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
@@ -55,6 +61,10 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     class: '4',
     examPath: 'НВО',
   },
+
+  // ── Спрени планове ──────────────────────────────────────────────────────
+  // Заменени от тарифните планове по-долу (септември 2026). Остават само
+  // заради съществуващи абонати; `retired: true` блокира нови покупки.
   'nvo-full': {
     name: 'НВО до края на изпитите',
     amount: 1999,
@@ -62,6 +72,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     mode: 'payment',
     class: '7',
     examPath: 'НВО',
+    retired: true,
   },
   'nvo-sprint': {
     name: 'Лятна подготовка НВО',
@@ -71,6 +82,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     class: '7',
     examPath: 'НВО',
     aiDailyLimit: 10,
+    retired: true,
   },
   'dzi-full': {
     name: 'ДЗИ — месечен достъп',
@@ -79,6 +91,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     mode: 'subscription',
     class: '12',
     examPath: 'ДЗИ',
+    retired: true,
   },
   'dzi-sprint': {
     name: 'Лятна подготовка ДЗИ',
@@ -87,6 +100,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     mode: 'subscription',
     class: '12',
     examPath: 'ДЗИ',
+    retired: true,
   },
   'dzi-english-sprint': {
     name: 'Интензивен английски',
@@ -96,6 +110,7 @@ export const BILLING_PLANS: Record<PlanKey, BillingPlanConfig> = {
     class: '12',
     examPath: 'ДЗИ',
     accessScope: 'english',
+    retired: true,
   },
 
   // ── Тарифни планове (12. клас ДЗИ) ──────────────────────────────────────
@@ -179,6 +194,15 @@ export function getPlanAiDailyLimit(planKey: PlanKey | null | undefined): number
 
 export function isPlanKey(value: string): value is PlanKey {
   return value in BILLING_PLANS
+}
+
+/**
+ * Валиден ключ на план, който все още може да се купи. Спрените планове
+ * (`retired: true`) минават `isPlanKey`, но не и тази проверка — checkout
+ * route-овете трябва да използват нея.
+ */
+export function isPurchasablePlanKey(value: string): value is PlanKey {
+  return isPlanKey(value) && BILLING_PLANS[value].retired !== true
 }
 
 /**

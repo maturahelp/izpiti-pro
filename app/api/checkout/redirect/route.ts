@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { BILLING_PLANS, isPlanKey } from '@/lib/billing/plans'
+import { BILLING_PLANS, isPurchasablePlanKey } from '@/lib/billing/plans'
 import {
   PROMO_CODE_UNAVAILABLE_ERROR,
   resolveCheckoutDiscounts,
@@ -27,7 +27,9 @@ export async function GET(req: NextRequest) {
   const plan = req.nextUrl.searchParams.get('plan') ?? ''
   const promoCode = req.nextUrl.searchParams.get('promoCode')
 
-  if (!isPlanKey(plan)) {
+  // Непознат или спрян план (стар линк от имейл/кампания) → към актуалните
+  // планове, без да се създава Stripe сесия.
+  if (!isPurchasablePlanKey(plan)) {
     return NextResponse.redirect(new URL('/#pricing', BASE_URL))
   }
 
@@ -83,10 +85,9 @@ export async function GET(req: NextRequest) {
   const metadata = { planKey: plan, userId: user.id, userEmail: user.email }
 
   try {
-    // dzi-sprint и dzi-english-sprint са already-discounted и не приемат промо кодове.
-    // nvo-sprint може да получава промо кодове (напр. NVO15 имейл кампания).
-    const allowPromoCodes =
-      plan !== 'dzi-sprint' && plan !== 'dzi-english-sprint'
+    // Всички продавани планове приемат промо кодове; спрените already-discounted
+    // планове са отхвърлени по-горе.
+    const allowPromoCodes = true
     const discounts = allowPromoCodes
       ? await resolveCheckoutDiscounts(stripe, promoCode)
       : undefined
@@ -104,7 +105,15 @@ export async function GET(req: NextRequest) {
             currency: config.currency,
             unit_amount: config.amount,
             product_data: { name: config.name },
-            ...(config.mode === 'subscription' ? { recurring: { interval: 'month' } } : {}),
+            ...(config.mode === 'subscription'
+              ? {
+                  recurring: {
+                    interval: 'month' as const,
+                    // 1 = месечно, 3 = на всеки 3 месеца.
+                    interval_count: config.billingIntervalMonths ?? 1,
+                  },
+                }
+              : {}),
           },
           quantity: 1,
         },

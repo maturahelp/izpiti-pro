@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { BILLING_PLANS, getOneTimePlanExpiry, getPlanPeriodMonths } from './plans'
+import {
+  BILLING_PLANS,
+  getOneTimePlanExpiry,
+  getPlanPeriodMonths,
+  isPlanKey,
+  isPurchasablePlanKey,
+} from './plans'
 
 describe('billing plans', () => {
   it('charges 9.99 EUR for the NVO 4 monthly plan', () => {
@@ -58,6 +64,40 @@ describe('billing plans', () => {
     // 31 Aug + 6 months lands on the last day of February.
     const from = new Date('2025-08-31T10:00:00.000Z')
     assert.equal(getOneTimePlanExpiry('nvo-exam-6m', from), '2026-02-28T10:00:00.000Z')
+  })
+
+  it('retires the legacy plans so they cannot be bought again', () => {
+    const legacy = ['nvo-full', 'nvo-sprint', 'dzi-full', 'dzi-sprint', 'dzi-english-sprint']
+    for (const key of legacy) {
+      // Остават валидни ключове (съществуващи абонати ги имат в профила си)…
+      assert.equal(isPlanKey(key), true, key)
+      // …но не могат да се купят наново.
+      assert.equal(isPurchasablePlanKey(key), false, key)
+    }
+  })
+
+  it('keeps the current plans purchasable', () => {
+    const current = [
+      'nvo4-full',
+      'nvo-start-1m',
+      'nvo-serious-3m',
+      'nvo-exam-6m',
+      'dzi-start-1m',
+      'dzi-serious-3m',
+      'dzi-matura-6m',
+    ]
+    for (const key of current) {
+      assert.equal(isPurchasablePlanKey(key), true, key)
+    }
+    assert.equal(isPurchasablePlanKey('not-a-plan'), false)
+  })
+
+  it('points the live campaign links at purchasable plans', async () => {
+    const { MATURA_FINAL_CHECKOUT_PLAN, MATURA_FINAL_CHECKOUT_REDIRECT } = await import(
+      '../campaigns/matura-final-survey'
+    )
+    assert.equal(isPurchasablePlanKey(MATURA_FINAL_CHECKOUT_PLAN), true)
+    assert.match(MATURA_FINAL_CHECKOUT_REDIRECT, /plan=dzi-start-1m&/)
   })
 
   it('leaves expiry to Stripe for subscription plans', () => {

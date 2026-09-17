@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { BILLING_PLANS, isPlanKey } from '@/lib/billing/plans'
+import { BILLING_PLANS, isPlanKey, isPurchasablePlanKey } from '@/lib/billing/plans'
 import {
   PROMO_CODE_UNAVAILABLE_ERROR,
   resolveCheckoutDiscounts,
@@ -85,6 +85,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unknown plan' }, { status: 400 })
   }
 
+  // Спрените планове остават в конфига заради съществуващи абонати, но
+  // нови покупки по тях (напр. през стар линк) не се допускат.
+  if (!isPurchasablePlanKey(payload.plan)) {
+    return NextResponse.json(
+      {
+        error: 'PLAN_RETIRED',
+        message: 'Този план вече не се предлага. Виж актуалните планове на сайта.',
+      },
+      { status: 410 }
+    )
+  }
+
   const plan = payload.plan
   const config = BILLING_PLANS[plan]
 
@@ -154,10 +166,9 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // dzi-sprint и dzi-english-sprint са already-discounted и не приемат промо кодове.
-    // nvo-sprint може да получава промо кодове (напр. NVO15 имейл кампания).
-    const allowPromoCodes =
-      plan !== 'dzi-sprint' && plan !== 'dzi-english-sprint'
+    // Всички продавани планове приемат промо кодове (напр. NVO15 / SPECIAL50
+    // имейл кампании). Спрените already-discounted планове не стигат дотук.
+    const allowPromoCodes = true
     const discounts = allowPromoCodes
       ? await resolveCheckoutDiscounts(stripe, payload.promoCode)
       : undefined
