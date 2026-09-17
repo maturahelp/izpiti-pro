@@ -175,6 +175,7 @@ interface MockPracticeExam {
     correct_option?: string
     answer_guide?: string | Record<string, string>
     question_image?: string
+    task_condition?: string
     points?: number
     section?: string
     source_tags?: {
@@ -550,6 +551,7 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
         source_tags: question.source_tags,
         formatting_flags: question.formatting_flags,
         question_image: question.question_image,
+        task_condition: question.task_condition,
         points: question.points,
       }
     }),
@@ -1325,7 +1327,12 @@ function QuestionCard({
     <div className={cn('card p-5 border-2', cardBorder)}>
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
-        <span className="font-mono text-xs font-bold text-primary-dark">Въпрос {question.number}</span>
+        <span className="font-mono text-xs font-bold text-primary-dark">
+          Въпрос {question.number}
+          {typeof question.points === 'number' && question.points > 0 && (
+            <span className="ml-2 font-sans font-semibold text-text-muted">{question.points} т.</span>
+          )}
+        </span>
         <span className={cn(
           'text-xs font-bold px-2 py-1 rounded-full',
           question.type === 'open_response'
@@ -1344,7 +1351,7 @@ function QuestionCard({
 
       {/* Question text */}
       {question.task_condition && (
-        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-relaxed text-amber-800">
+        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-relaxed text-amber-800 whitespace-pre-line">
           {normalizeMathText(question.task_condition)}
         </div>
       )}
