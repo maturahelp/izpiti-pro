@@ -261,60 +261,44 @@
       transform-origin: center;
     }
 
-    /* ===== Hero visual – mobile-first responsive sizing ===== */
+    /* ===== Hero visual – one fixed composition, scaled as a whole =====
+       Everything (circle, girl, 3D orbs) is sized in `em` of .hero-stage, so the
+       layout is identical on every screen – only --hero-u changes.
+       1em = 1/10 of the circle diameter (50px on desktop = 500px circle). */
+    .hero-stage {
+      --hero-pb: 40px; /* matches the section's pb-10 / md:pb-16 */
+      font-size: min(34px, calc((100vw - 40px) / 12.6));
+      width: 10em;
+      height: 10em;
+      transform: translateY(1.2em);
+      /* cut the circle at the same height as on desktop */
+      margin-bottom: calc(-1.04em - var(--hero-pb));
+    }
     .hero-circle {
-      width: 260px;
-      height: 260px;
-      transform: translateY(32px);
-      margin-bottom: -60px;
+      width: 100%;
+      height: 100%;
+      isolation: isolate; /* keep the girl layered above the orbs */
     }
     .hero-graduate {
-      height: 720px;
-      bottom: -268px;
-      left: 50%;
-      transform: translateX(-50%) scale(1.3);
-      transform-origin: center center;
+      top: -1.645em;
+      left: -4.12em;
+      width: 16.8em;
+      height: 9.45em;
+      max-width: none;
     }
-    .hero-orb { width: 82px; height: 82px; }
-    .hero-orb-chart { bottom: 48px; left: -22px; }
-    .hero-orb-cap   { top: -18px; left: 22px; }
-    .hero-orb-play  { top: 44px; right: -18px; }
-
-    @media (min-width: 480px) {
-      .hero-circle {
-        width: 320px;
-        height: 320px;
-        margin-bottom: -70px;
-      }
-      .hero-graduate {
-        height: 900px;
-        bottom: -330px;
-        transform: translateX(-50%) scale(1.35);
-      }
-      .hero-orb { width: 100px; height: 100px; }
-      .hero-orb-chart { bottom: 60px; left: -34px; }
-      .hero-orb-cap   { top: -22px; left: 28px; }
-      .hero-orb-play  { top: 50px; right: -24px; }
-    }
+    .hero-orb { width: 3em; height: 3em; }
+    .hero-orb-cap { width: 2.8em; height: 2.8em; }
+    .hero-orb-chart { bottom: 2.2em; left: -1.6em; }
+    .hero-orb-cap   { top: -0.64em; left: 0.6em; }
+    .hero-orb-play  { top: 1.4em; right: -1em; }
 
     @media (min-width: 768px) {
-      .hero-circle {
-        width: 500px;
-        height: 500px;
-        transform: translateY(60px);
-        margin-bottom: -116px;
+      /* sit on the section's bottom edge even when the text column is taller */
+      .hero-visual { align-self: end; }
+      .hero-stage {
+        --hero-pb: 64px;
+        font-size: min(50px, calc((100vw - 96px) / 24));
       }
-      .hero-graduate {
-        height: 1300px;
-        bottom: -480px;
-        left: 44%;
-        transform: translateX(-50%) scale(1.4);
-      }
-      .hero-orb { width: 150px; height: 150px; }
-      .hero-orb-cap { width: 140px; height: 140px; }
-      .hero-orb-chart { bottom: 110px; left: -80px; }
-      .hero-orb-cap   { top: -32px; left: 30px; }
-      .hero-orb-play  { top: 70px; right: -50px; }
     }
 
     /* Decorative soft-blobs – hide on small screens to avoid overflow / visual noise */
@@ -540,7 +524,8 @@
             </a>
           </div>
         </div>
-        <div class="relative flex justify-center mt-4 md:mt-0">
+        <div class="relative flex justify-center mt-4 md:mt-0 hero-visual">
+          <div class="hero-stage relative">
           <!-- Girl image -->
           <img src="/brand/hero-graduate.webp" alt="Завършваща ученичка с шапка и диплома — MaturaHelp платформа за НВО и ДЗИ" class="hero-graduate absolute object-contain z-10 pointer-events-none" width="1920" height="1080" fetchpriority="high" decoding="async" loading="eager">
           <div class="hero-circle relative">
@@ -563,21 +548,7 @@
               <canvas id="playCanvas3d" class="w-full h-full"
                 style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));"></canvas>
             </div>
-
-            <div
-              class="hero-stat-card absolute bottom-4 left-2 sm:-left-4 md:-left-8 bg-white rounded-2xl card-shadow-lg py-2 pl-2 pr-3 sm:p-3 sm:pr-5 flex items-center gap-2 sm:gap-3 z-20">
-              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div>
-                <p class="text-xs font-bold text-accent-navy">20K+</p>
-                <p class="text-[10px] text-gray-400">Ученици на платформата</p>
-              </div>
-            </div>
+          </div>
           </div>
 
         </div>
