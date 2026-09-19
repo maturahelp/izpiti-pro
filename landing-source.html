@@ -742,6 +742,7 @@
     <style>
       .plan-panel { animation: planFade 0.28s ease both; }
       @keyframes planFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+      .count-up { font-variant-numeric: tabular-nums; }
       @media (min-width: 640px) {
         .plan-stat + .plan-stat { border-left: 1px solid #E2E8F0; }
       }
@@ -784,11 +785,11 @@
         <!-- Summary strip -->
         <div class="bg-white rounded-2xl card-shadow border border-gray-200 px-4 sm:px-6 py-4 sm:py-5 mb-5 md:mb-6">
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-y-4">
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-xs text-gray-600 mt-1.5">примерни ДЗИ по БЕЛ</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">17</p><p class="text-xs text-gray-600 mt-1.5">официални матури по БЕЛ</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">35</p><p class="text-xs text-gray-600 mt-1.5">ДЗИ по английски</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">27</p><p class="text-xs text-gray-600 mt-1.5">видео урока и резюмета</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">46</p><p class="text-xs text-gray-600 mt-1.5">правила по български език</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="10" data-suffix="+">10+</p><p class="text-xs text-gray-600 mt-1.5">примерни ДЗИ по БЕЛ</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="17" data-suffix="+">17+</p><p class="text-xs text-gray-600 mt-1.5">официални матури по БЕЛ</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="35" data-suffix="">35</p><p class="text-xs text-gray-600 mt-1.5">ДЗИ по английски</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="27" data-suffix="">27</p><p class="text-xs text-gray-600 mt-1.5">видео урока и резюмета</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="46" data-suffix="">46</p><p class="text-xs text-gray-600 mt-1.5">правила по български език</p></div>
             <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-xs text-gray-600 mt-1.5">помощник без лимит</p></div>
           </div>
         </div>
@@ -936,11 +937,11 @@
         <!-- Summary strip -->
         <div class="bg-white rounded-2xl card-shadow border border-gray-200 px-4 sm:px-6 py-4 sm:py-5 mb-5 md:mb-6">
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-y-4">
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-xs text-gray-600 mt-1.5">примерни НВО по БЕЛ</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-xs text-gray-600 mt-1.5">примерни НВО по математика</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">16</p><p class="text-xs text-gray-600 mt-1.5">официални НВО 2018–2025</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">22</p><p class="text-xs text-gray-600 mt-1.5">видео урока и резюмета</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">540</p><p class="text-xs text-gray-600 mt-1.5">задачи по математика</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="10" data-suffix="+">10+</p><p class="text-xs text-gray-600 mt-1.5">примерни НВО по БЕЛ</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="10" data-suffix="+">10+</p><p class="text-xs text-gray-600 mt-1.5">примерни НВО по математика</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="16" data-suffix="">16</p><p class="text-xs text-gray-600 mt-1.5">официални НВО 2018–2025</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="20" data-suffix="+">20+</p><p class="text-xs text-gray-600 mt-1.5">видео урока и резюмета</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="500" data-suffix="+">500+</p><p class="text-xs text-gray-600 mt-1.5">задачи по математика</p></div>
             <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-xs text-gray-600 mt-1.5">помощник без лимит</p></div>
           </div>
         </div>
@@ -1102,10 +1103,10 @@
         <!-- Summary strip -->
         <div class="bg-white rounded-2xl card-shadow border border-gray-200 px-4 sm:px-6 py-4 sm:py-5 mb-5 md:mb-6">
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-y-4">
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">36</p><p class="text-xs text-gray-600 mt-1.5">официални НВО теста</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">20</p><p class="text-xs text-gray-600 mt-1.5">примерни теста по формата</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">59</p><p class="text-xs text-gray-600 mt-1.5">учебни урока</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">295</p><p class="text-xs text-gray-600 mt-1.5">задачи и примери</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="36" data-suffix="">36</p><p class="text-xs text-gray-600 mt-1.5">официални НВО теста</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="20" data-suffix="">20</p><p class="text-xs text-gray-600 mt-1.5">примерни теста по формата</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="59" data-suffix="">59</p><p class="text-xs text-gray-600 mt-1.5">учебни урока</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="count-up text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none" data-count="295" data-suffix="">295</p><p class="text-xs text-gray-600 mt-1.5">задачи и примери</p></div>
             <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-xs text-gray-600 mt-1.5">помощник за въпроси</p></div>
           </div>
         </div>
@@ -1297,6 +1298,43 @@
           } else {
             init();
           }
+        })();
+      </script>
+      <script>
+        // Count the plan summary numbers up from 0 the first time each one scrolls into view
+        // (panels of inactive plan tabs are display:none, so they animate when the tab opens).
+        (function () {
+          var els = document.querySelectorAll('.count-up[data-count]');
+          if (!els.length) return;
+          function setValue(el, v) { el.textContent = v + (el.getAttribute('data-suffix') || ''); }
+          function finish(el) { setValue(el, el.getAttribute('data-count')); }
+          var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduceMotion || !('IntersectionObserver' in window) || !window.requestAnimationFrame) return;
+          function run(el) {
+            var target = parseInt(el.getAttribute('data-count'), 10);
+            var duration = 1400;
+            var startTime = null;
+            var done = false;
+            setValue(el, 0);
+            function tick(now) {
+              if (done) return;
+              if (startTime === null) startTime = now;
+              var t = Math.min((now - startTime) / duration, 1);
+              setValue(el, Math.round(target * (1 - Math.pow(1 - t, 3))));
+              if (t < 1) requestAnimationFrame(tick); else { done = true; finish(el); }
+            }
+            requestAnimationFrame(tick);
+            // Frames don't run in background tabs; make sure the real number always ends up shown.
+            setTimeout(function () { done = true; finish(el); }, duration + 400);
+          }
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              io.unobserve(entry.target);
+              run(entry.target);
+            });
+          }, { threshold: 0.6 });
+          els.forEach(function (el) { io.observe(el); });
         })();
       </script>
     </div>
