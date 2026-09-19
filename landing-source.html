@@ -740,244 +740,187 @@
     <span id="plans" class="block relative -top-20"></span>
     <div class="absolute top-0 right-0 w-[420px] h-[420px] soft-blob rounded-full translate-x-1/3 -translate-y-1/4 bg-gradient-to-br from-blue-50 to-indigo-100 opacity-70"></div>
     <style>
-      .plan-scroller { scrollbar-width: none; -ms-overflow-style: none; }
-      .plan-scroller::-webkit-scrollbar { display: none; }
-      .plan-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-      .plan-card:hover { transform: translateY(-3px); box-shadow: 0 12px 34px rgba(27, 40, 69, 0.10); }
       .plan-panel { animation: planFade 0.28s ease both; }
       @keyframes planFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
       @media (min-width: 640px) {
-        .plan-stat + .plan-stat { border-left: 1px solid #E5E7EB; }
+        .plan-stat + .plan-stat { border-left: 1px solid #E2E8F0; }
       }
+      .plan-item summary { list-style: none; }
+      .plan-item summary::-webkit-details-marker { display: none; }
+      .plan-item summary::marker { content: ''; }
+      .plan-item { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+      .plan-item:hover { border-color: #C5DDF1; }
+      .plan-item[open] { border-color: #9AC2E8; box-shadow: 0 12px 34px rgba(27, 40, 69, 0.10); }
+      .plan-item[open] .plan-teaser { display: none; }
+      .plan-chevron { transition: transform 0.25s ease, background-color 0.2s ease; }
+      .plan-item[open] .plan-chevron { transform: rotate(180deg); background: #E0EDF8; border-color: #C5DDF1; }
+      .plan-item-body { animation: planFade 0.25s ease both; }
     </style>
-    <div class="max-w-7xl mx-auto px-5 sm:px-6 relative">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 relative">
 
       <!-- Heading -->
       <div class="text-center mb-8 md:mb-10">
-        <span class="inline-flex items-center gap-2 bg-white card-shadow rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-primary-600 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary-400"></span>Какво получаваш
+        <span class="inline-flex items-center gap-2 bg-white card-shadow border border-gray-200 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-primary-600 mb-4">
+Какво получаваш
         </span>
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-accent-navy mb-3 md:mb-4 leading-tight">Избери своя план</h2>
-        <p class="text-gray-500 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed">Виж всичко, което отключваш, преди да платиш. Всеки план включва пълното съдържание за твоя клас — разликата между пакетите е само в периода на достъп.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed">Виж всичко, което отключваш, преди да платиш. Всеки план включва пълното съдържание за твоя клас — разликата между пакетите е само в периода на достъп. Отвори всяка функция, за да видиш как работи.</p>
       </div>
 
       <!-- Plan selector -->
-      <div class="flex justify-center mb-8 md:mb-10">
-        <div class="bg-white card-shadow rounded-full p-1 inline-flex flex-wrap justify-center gap-1" role="tablist" aria-label="Избор на клас и изпит">
+      <div class="flex justify-center mb-6 md:mb-8">
+        <div class="bg-white card-shadow border border-gray-200 rounded-full p-1 inline-flex flex-wrap justify-center gap-1" role="tablist" aria-label="Избор на клас и изпит">
           <button id="plan-tab-nvo4" type="button" onclick="switchPlanTab('nvo4')" role="tab" aria-selected="false" aria-controls="plan-nvo4"
-            class="px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-gray-500 hover:text-primary-600">4. клас · НВО</button>
+            class="px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-gray-600 hover:text-primary-600">4. клас · НВО</button>
           <button id="plan-tab-nvo7" type="button" onclick="switchPlanTab('nvo7')" role="tab" aria-selected="false" aria-controls="plan-nvo7"
-            class="px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-gray-500 hover:text-primary-600">7. клас · НВО</button>
+            class="px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-gray-600 hover:text-primary-600">7. клас · НВО</button>
           <button id="plan-tab-dzi" type="button" onclick="switchPlanTab('dzi')" role="tab" aria-selected="true" aria-controls="plan-dzi"
             class="px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold transition-all gradient-btn text-white">12. клас · ДЗИ</button>
         </div>
       </div>
 
-      <!-- ============ 12. клас ДЗИ ============ -->
       <div id="plan-dzi" class="plan-panel" role="tabpanel" aria-labelledby="plan-tab-dzi">
 
         <!-- Summary strip -->
-        <div class="bg-white rounded-2xl card-shadow border border-gray-100 px-4 sm:px-6 py-4 sm:py-5 mb-6 md:mb-8">
+        <div class="bg-white rounded-2xl card-shadow border border-gray-200 px-4 sm:px-6 py-4 sm:py-5 mb-5 md:mb-6">
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-y-4">
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">примерни ДЗИ по БЕЛ</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">17</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">официални матури по БЕЛ</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">35</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">ДЗИ по английски</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">27</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">видео урока и резюмета</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">46</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">правила по български език</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">помощник без лимит</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-xs text-gray-600 mt-1.5">примерни ДЗИ по БЕЛ</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">17</p><p class="text-xs text-gray-600 mt-1.5">официални матури по БЕЛ</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">35</p><p class="text-xs text-gray-600 mt-1.5">ДЗИ по английски</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">27</p><p class="text-xs text-gray-600 mt-1.5">видео урока и резюмета</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">46</p><p class="text-xs text-gray-600 mt-1.5">правила по български език</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-xs text-gray-600 mt-1.5">помощник без лимит</p></div>
           </div>
         </div>
 
-        <p class="sm:hidden text-[11px] text-gray-400 text-right mb-2 pr-1">Плъзни, за да видиш всички →</p>
-
-        <!-- Benefit cards -->
-        <div class="plan-scroller flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-5 px-5 sm:mx-0 sm:px-0 pb-2 sm:pb-0">
-
-          <!-- Video lessons (wide) -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto sm:col-span-2 bg-white rounded-2xl card-shadow border border-gray-100 overflow-hidden flex flex-col md:flex-row">
-            <div class="md:w-1/2 bg-black relative">
-              <video class="w-full h-full aspect-video object-cover" controls preload="none" playsinline
-                poster="/JPEG/%D0%98%D0%B7%D0%B1%D0%BE%D1%80%D1%8A%D1%82%20%D0%B8%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B2%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5%D1%82%D0%BE/%D0%9F%D0%BE%D1%82%D0%BE%D0%BC%D0%BA%D0%B0.jpg"
-                title="Видео урок: Потомка — Елисавета Багряна">
-                <source src="/literature-videos/potomka.mp4" type="video/mp4">
-              </video>
-              <span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-accent-navy text-[10px] font-bold px-2.5 py-1 rounded-full pointer-events-none">Откъс от урок</span>
-            </div>
-            <div class="p-5 sm:p-6 flex flex-col md:w-1/2">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-accent-navy leading-snug">Видео урок за всяка творба</h3>
-              </div>
-              <p class="text-sm text-gray-500 leading-relaxed mb-4">27 творби от конспекта за ДЗИ — всяка с видео урок, който ти показва най-важното: контекст, герои, теми и послания, обяснени ясно и подредено.</p>
-              <div class="mt-auto flex items-center gap-2 text-xs text-gray-500">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
-                <span>Откъсът е от „Потомка“ на Елисавета Багряна — безплатен урок в платформата</span>
-              </div>
-            </div>
+        <!-- Benefits (expandable) -->
+        <div class="space-y-3 sm:space-y-3.5">
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200" open>
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Видео урок за всяка творба</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">27 творби от конспекта, всяка с видео урок</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="grid md:grid-cols-2 gap-5 md:gap-8 items-start"><div class="rounded-xl overflow-hidden bg-black relative"><video class="plan-excerpt w-full aspect-video object-cover" controls preload="none" playsinline poster="/JPEG/%D0%98%D0%B7%D0%B1%D0%BE%D1%80%D1%8A%D1%82%20%D0%B8%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B2%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5%D1%82%D0%BE/%D0%9F%D0%BE%D1%82%D0%BE%D0%BC%D0%BA%D0%B0.jpg" title="Видео урок: Потомка — Елисавета Багряна" data-start="310" data-end="330"><source src="/literature-videos/potomka.mp4#t=310,330" type="video/mp4"></video><span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-accent-navy text-[10px] font-bold px-2.5 py-1 rounded-full pointer-events-none">Откъс от урок · 5:10–5:30</span></div><div class="space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">27 творби от конспекта за ДЗИ — всяка с видео урок, който ти показва най-важното: контекст, герои, теми и послания, обяснени ясно и подредено.</p><div class="flex items-center gap-2 text-sm text-gray-600"><span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>Откъсът е от „Потомка“ на Елисавета Багряна — безплатен урок в платформата</span></div></div></div></div>
           </div>
-
-          <!-- Sample DZI -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">10 примерни ДЗИ по БЕЛ</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Матури в реалния изпитен формат — със същите видове задачи, същата структура и ключ за отговори, за да тренираш като на истинския изпит.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">Примерен ДЗИ #1</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">#2</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">#3</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">…</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">#10</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Съчинение за ДЗИ — план, писане и оценяване</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Планове, насоки и оценка на твоите текстове по критериите на МОН</span>
+            </span>
+            <span class="flex-shrink-0 inline-flex items-center gap-1 bg-primary-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-white/90"></span>Ново</span>
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Структурирани планове и практически насоки за интерпретативно съчинение и есе — от разчитането на заглавието през тезата и аргументацията до финалната редакция. Написаните от теб текстове получават оценка по критериите на МОН и конкретни препоръки за подобрение.</p><ul class="space-y-2"><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Интерпретативно съчинение върху една и няколко творби</li><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Есе по житейски проблем</li><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Критериите за оценяване на ДЗИ, обяснени по групи</li></ul></div><div class="md:w-[46%] flex-shrink-0"><div class="bg-[#F3F7FD] rounded-xl p-4 sm:p-5 border border-primary-100"><p class="text-[11px] font-bold uppercase tracking-wider text-primary-600 mb-3">Как работи</p><ol class="space-y-3"><li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span><div><p class="text-sm font-bold text-accent-navy leading-snug">План и насоки за писане</p><p class="text-xs text-gray-600 leading-snug mt-0.5">Готова структура и съвети за всяка част от съчинението — увод, теза, аргументи, заключение.</p></div></li><li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span><div><p class="text-sm font-bold text-accent-navy leading-snug">Оценяване по критериите на МОН</p><p class="text-xs text-gray-600 leading-snug mt-0.5">Изпращаш написания текст и получаваш оценка по същите критерии, по които се проверява на матурата.</p></div></li><li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span><div><p class="text-sm font-bold text-accent-navy leading-snug">Редактиране и обратна връзка</p><p class="text-xs text-gray-600 leading-snug mt-0.5">Конкретни препоръки какво да поправиш — съдържание, аргументация, език и правопис.</p></div></li></ol></div></div></div></div>
           </div>
-
-          <!-- Official past DZI -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">17 официални матури от минали години</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Всички ДЗИ по БЕЛ от 2016 до 2025 г. — майски и августовски сесии — с официалните ключове и критерии на МОН.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2016</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2017</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2018</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">…</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2024</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2025</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">10 примерни ДЗИ по БЕЛ</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Матури в реалния изпитен формат с ключ за отговори</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Матури в реалния изпитен формат — със същите видове задачи, същата структура и ключ за отговори, за да тренираш като на истинския изпит.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">Примерен ДЗИ #1</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">#2</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">#3</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">…</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">#10</span></div></div></div></div>
           </div>
-
-          <!-- Essay (new) -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto sm:col-span-2 bg-white rounded-2xl card-shadow border-2 border-primary-200 p-5 sm:p-6 flex flex-col md:flex-row gap-5 md:gap-6">
-            <div class="flex-1 flex flex-col">
-              <div class="flex items-start gap-3 mb-3">
-                <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-accent-navy leading-snug pt-2">Съчинение за ДЗИ — план, писане и оценяване</h3>
-                <span class="ml-auto flex-shrink-0 inline-flex items-center gap-1 bg-primary-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mt-2"><span class="w-1.5 h-1.5 rounded-full bg-white/90"></span>Ново</span>
-              </div>
-              <p class="text-sm text-gray-500 leading-relaxed mb-4">Структурирани планове и практически насоки за интерпретативно съчинение и есе — от разчитането на заглавието през тезата и аргументацията до финалната редакция. Написаните от теб текстове получават оценка по критериите на МОН и конкретни препоръки за подобрение.</p>
-              <ul class="mt-auto space-y-1.5">
-                <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Интерпретативно съчинение върху една и няколко творби</li>
-                <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Есе по житейски проблем</li>
-                <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Критериите за оценяване на ДЗИ, обяснени по групи</li>
-              </ul>
-            </div>
-            <div class="md:w-[46%] flex-shrink-0 bg-[#F8FAFF] rounded-xl p-4 sm:p-5 border border-gray-100">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-primary-600 mb-3">Как работи</p>
-              <ol class="space-y-3">
-                <li class="flex gap-3">
-                  <span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
-                  <div>
-                    <p class="text-xs font-bold text-accent-navy leading-snug">План и насоки за писане</p>
-                    <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Готова структура и съвети за всяка част от съчинението — увод, теза, аргументи, заключение.</p>
-                  </div>
-                </li>
-                <li class="flex gap-3">
-                  <span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
-                  <div>
-                    <p class="text-xs font-bold text-accent-navy leading-snug">Оценяване по критериите на МОН</p>
-                    <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Изпращаш написания текст и получаваш оценка по същите критерии, по които се проверява на матурата.</p>
-                  </div>
-                </li>
-                <li class="flex gap-3">
-                  <span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
-                  <div>
-                    <p class="text-xs font-bold text-accent-navy leading-snug">Редактиране и обратна връзка</p>
-                    <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Конкретни препоръки какво да поправиш — съдържание, аргументация, език и правопис.</p>
-                  </div>
-                </li>
-              </ol>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">17 официални матури от минали години</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Всички ДЗИ по БЕЛ от 2016 до 2025 г. с официалните ключове</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Всички ДЗИ по БЕЛ от 2016 до 2025 г. — майски и августовски сесии — с официалните ключове и критерии на МОН.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2016</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2017</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2018</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">…</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2024</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2025</span></div></div></div></div>
           </div>
-
-          <!-- Summaries -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Резюмета и анализи на 27-те творби</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Подробен анализ за всяка творба — творческа история, заглавие, сюжет и композиция, теми, конфликти и послания — плюс пълния текст на произведението.</p>
-            <div class="mt-auto space-y-1.5">
-              <div class="flex items-center gap-2"><span class="text-[10px] font-bold text-sky-700 uppercase tracking-wide w-24 flex-shrink-0">Заглавие</span><span class="h-1.5 rounded-full bg-sky-100 flex-1"></span></div>
-              <div class="flex items-center gap-2"><span class="text-[10px] font-bold text-sky-700 uppercase tracking-wide w-24 flex-shrink-0">Композиция</span><span class="h-1.5 rounded-full bg-sky-100 w-3/4"></span></div>
-              <div class="flex items-center gap-2"><span class="text-[10px] font-bold text-sky-700 uppercase tracking-wide w-24 flex-shrink-0">Послания</span><span class="h-1.5 rounded-full bg-sky-100 w-1/2"></span></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7z"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Резюмета и анализи на 27-те творби</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Творческа история, композиция, теми и послания за всяка творба</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Подробен анализ за всяка творба — творческа история, заглавие, сюжет и композиция, теми, конфликти и послания — плюс пълния текст на произведението.</p></div><div class="md:w-72 flex-shrink-0"><div class="space-y-2 max-w-sm"><div class="flex items-center gap-2"><span class="text-[11px] font-bold text-sky-700 uppercase tracking-wide w-28 flex-shrink-0">Заглавие</span><span class="h-2 rounded-full bg-sky-100 flex-1"></span></div><div class="flex items-center gap-2"><span class="text-[11px] font-bold text-sky-700 uppercase tracking-wide w-28 flex-shrink-0">Композиция</span><span class="h-2 rounded-full bg-sky-100 w-3/4"></span></div><div class="flex items-center gap-2"><span class="text-[11px] font-bold text-sky-700 uppercase tracking-wide w-28 flex-shrink-0">Послания</span><span class="h-2 rounded-full bg-sky-100 w-1/2"></span></div></div></div></div></div>
           </div>
-
-          <!-- BEL rules -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-16M12 20l4-16M2 9h20M1 15h20"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Български език: теория + упражнение за всяко правило</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">46 правила в 6 раздела. Всяко правило идва с кратка теория, пример, най-честата грешка и упражнение, което проверява дали си го разбрал.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Правописна норма</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Пунктуационна</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Лексикална</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Граматична</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-16M12 20l4-16M2 9h20M1 15h20"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Български език: теория + упражнение за всяко правило</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">46 правила в 6 раздела, всяко с теория, пример и упражнение</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">46 правила в 6 раздела. Всяко правило идва с кратка теория, пример, най-честата грешка и упражнение, което проверява дали си го разбрал.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Правописна норма</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Пунктуационна</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Лексикална</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Граматична</span></div></div></div></div>
           </div>
-
-          <!-- AI -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">AI помощник без лимит</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Питаш по всяко време — обяснява правила, анализира творби, проверява тезата и аргументите ти за съчинението и разделя трудното на малки стъпки.</p>
-            <div class="mt-auto space-y-1.5 max-w-md">
-              <div class="flex justify-end"><span class="bg-primary-500 text-white text-[11px] px-3 py-1.5 rounded-2xl rounded-br-sm max-w-[85%]">Обясни ми какво е теза в съчинение</span></div>
-              <div class="flex"><span class="bg-gray-100 text-gray-700 text-[11px] px-3 py-1.5 rounded-2xl rounded-bl-sm max-w-[85%]">Тезата е основната ти идея в едно изречение. Пример: …</span></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">ДЗИ по английски език</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">35 изпита, 45 текста за четене и 50 задачи за писане</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">35 изпита по английски — официалните ДЗИ от 2008 до 2025 г. плюс примерни варианти — заедно с 45 текста за четене с разбиране и 50 задачи за писане по формата на изпита.</p></div><div class="md:w-72 flex-shrink-0"><div class="grid grid-cols-3 gap-2 text-center"><div class="bg-indigo-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-indigo-700">35</p><p class="text-[11px] text-gray-600">изпита</p></div><div class="bg-indigo-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-indigo-700">45</p><p class="text-[11px] text-gray-600">reading</p></div><div class="bg-indigo-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-indigo-700">50</p><p class="text-[11px] text-gray-600">writing</p></div></div></div></div></div>
           </div>
-
-          <!-- English -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto lg:col-span-2 bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">ДЗИ по английски език</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">35 изпита по английски — официалните ДЗИ от 2008 до 2025 г. плюс примерни варианти — заедно с 45 текста за четене с разбиране и 50 задачи за писане по формата на изпита.</p>
-            <div class="mt-auto grid grid-cols-3 gap-2 text-center">
-              <div class="bg-indigo-50 rounded-xl py-2"><p class="text-sm font-extrabold text-indigo-700">35</p><p class="text-[10px] text-gray-500">изпита</p></div>
-              <div class="bg-indigo-50 rounded-xl py-2"><p class="text-sm font-extrabold text-indigo-700">45</p><p class="text-[10px] text-gray-500">reading</p></div>
-              <div class="bg-indigo-50 rounded-xl py-2"><p class="text-sm font-extrabold text-indigo-700">50</p><p class="text-[10px] text-gray-500">writing</p></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">AI помощник без лимит</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Обяснява, анализира и проверява тезата и аргументите ти</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Питаш по всяко време — обяснява правила, анализира творби, проверява тезата и аргументите ти за съчинението и разделя трудното на малки стъпки.</p></div><div class="md:w-80 flex-shrink-0"><div class="space-y-2 max-w-md"><div class="flex justify-end"><span class="bg-primary-500 text-white text-xs px-3.5 py-2 rounded-2xl rounded-br-sm max-w-[85%]">Обясни ми какво е теза в съчинение</span></div><div class="flex"><span class="bg-gray-100 text-gray-800 text-xs px-3.5 py-2 rounded-2xl rounded-bl-sm max-w-[85%]">Тезата е основната ти идея в едно изречение. Пример: …</span></div></div></div></div></div>
           </div>
-
-          <!-- Progress -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Напредък и грешки</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Виждаш какво си минал по теми, къде грешиш най-често и какво остава до матурата. Грешките ти се събират на едно място, за да ги затвориш.</p>
-            <div class="mt-auto space-y-2">
-              <div><div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>Литература</span><span>82%</span></div><div class="h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[82%]"></div></div></div>
-              <div><div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>Български език</span><span>64%</span></div><div class="h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[64%]"></div></div></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Напредък и грешки</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Какво си минал, къде грешиш и какво остава до матурата</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Виждаш какво си минал по теми, къде грешиш най-често и какво остава до матурата. Грешките ти се събират на едно място, за да ги затвориш.</p></div><div class="md:w-72 flex-shrink-0"><div class="space-y-2.5 max-w-sm"><div><div class="flex justify-between text-xs text-gray-600 mb-1"><span>Литература</span><span>82%</span></div><div class="h-2 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[82%]"></div></div></div><div><div class="flex justify-between text-xs text-gray-600 mb-1"><span>Български език</span><span>64%</span></div><div class="h-2 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[64%]"></div></div></div></div></div></div></div>
           </div>
+        </details>
         </div>
 
         <!-- CTA -->
@@ -985,353 +928,282 @@
           <button type="button" onclick="goToPricing('dzi')" class="w-full sm:w-auto gradient-btn text-white font-semibold px-8 py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Виж цените за ДЗИ</button>
           <a href="/register" class="w-full sm:w-auto text-center font-semibold px-8 py-3 rounded-full text-sm bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-600 hover:text-white transition-all">Започни безплатно</a>
         </div>
-        <p class="text-center text-xs text-gray-400 mt-3">Безплатният план не изисква карта · Абонаментите се отказват по всяко време</p>
+        <p class="text-center text-xs text-gray-500 mt-3">Безплатният план не изисква карта · Абонаментите се отказват по всяко време</p>
       </div>
 
-      <!-- ============ 7. клас НВО ============ -->
       <div id="plan-nvo7" class="plan-panel hidden" role="tabpanel" aria-labelledby="plan-tab-nvo7">
 
-        <div class="bg-white rounded-2xl card-shadow border border-gray-100 px-4 sm:px-6 py-4 sm:py-5 mb-6 md:mb-8">
+        <!-- Summary strip -->
+        <div class="bg-white rounded-2xl card-shadow border border-gray-200 px-4 sm:px-6 py-4 sm:py-5 mb-5 md:mb-6">
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-y-4">
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">примерни НВО по БЕЛ</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">примерни НВО по математика</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">16</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">официални НВО 2018–2025</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">22</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">видео урока и резюмета</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">540</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">задачи по математика</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">помощник без лимит</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-xs text-gray-600 mt-1.5">примерни НВО по БЕЛ</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">10</p><p class="text-xs text-gray-600 mt-1.5">примерни НВО по математика</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">16</p><p class="text-xs text-gray-600 mt-1.5">официални НВО 2018–2025</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">22</p><p class="text-xs text-gray-600 mt-1.5">видео урока и резюмета</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">540</p><p class="text-xs text-gray-600 mt-1.5">задачи по математика</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-xs text-gray-600 mt-1.5">помощник без лимит</p></div>
           </div>
         </div>
 
-        <p class="sm:hidden text-[11px] text-gray-400 text-right mb-2 pr-1">Плъзни, за да видиш всички →</p>
-
-        <div class="plan-scroller flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-5 px-5 sm:mx-0 sm:px-0 pb-2 sm:pb-0">
-
-          <!-- Video lessons (wide) -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto sm:col-span-2 bg-white rounded-2xl card-shadow border border-gray-100 overflow-hidden flex flex-col md:flex-row">
-            <div class="md:w-1/2 bg-black relative">
-              <video class="w-full h-full aspect-video object-cover" controls preload="none" playsinline
-                poster="/nvo-literature/hudozhnik.jpg" title="Видео урок: Художник — Веселин Ханчев">
-                <source src="/nvo-videos/hudozhnik.mp4" type="video/mp4">
-              </video>
-              <span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-accent-navy text-[10px] font-bold px-2.5 py-1 rounded-full pointer-events-none">Откъс от урок</span>
-            </div>
-            <div class="p-5 sm:p-6 flex flex-col md:w-1/2">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-accent-navy leading-snug">Видео урок за всяка от 22-те творби</h3>
-              </div>
-              <p class="text-sm text-gray-500 leading-relaxed mb-4">Всички творби от програмата за НВО — от „Хубава си, моя горо“ до „Художник“ — обяснени с видео, което показва най-важното за героите, темите и посланията.</p>
-              <div class="mt-auto flex items-center gap-2 text-xs text-gray-500">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
-                <span>Откъсът е от „Художник“ на Веселин Ханчев — безплатен урок в платформата</span>
-              </div>
-            </div>
+        <!-- Benefits (expandable) -->
+        <div class="space-y-3 sm:space-y-3.5">
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200" open>
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Видео урок за всяка от 22-те творби</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Всички творби от програмата за НВО, обяснени с видео</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="grid md:grid-cols-2 gap-5 md:gap-8 items-start"><div class="rounded-xl overflow-hidden bg-black relative"><video class="plan-excerpt w-full aspect-video object-cover" controls preload="none" playsinline poster="/nvo-literature/hudozhnik.jpg" title="Видео урок: Художник — Веселин Ханчев" data-start="167" data-end="202"><source src="/nvo-videos/hudozhnik.mp4#t=167,202" type="video/mp4"></video><span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-accent-navy text-[10px] font-bold px-2.5 py-1 rounded-full pointer-events-none">Откъс от урок · 2:47–3:22</span></div><div class="space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Всички творби от програмата за НВО — от „Хубава си, моя горо“ до „Художник“ — обяснени с видео, което показва най-важното за героите, темите и посланията.</p><div class="flex items-center gap-2 text-sm text-gray-600"><span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>Откъсът е от „Художник“ на Веселин Ханчев — безплатен урок в платформата</span></div></div></div></div>
           </div>
-
-          <!-- Sample NVO BEL -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">10 примерни НВО по БЕЛ</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Изпити в реалния формат на НВО — тест, текст за четене с разбиране и задачи със свободен отговор — с ключ и обяснения към всеки въпрос.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">Примерно НВО #1</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">#2</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">#3</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">…</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">#10</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2z"/><path d="M8 8h6M8 12h6M8 16h4"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Преразказ за НВО — план, писане и оценяване</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Насоки за преразказ с дидактическа задача и оценка на твоите текстове</span>
+            </span>
+            <span class="flex-shrink-0 inline-flex items-center gap-1 bg-primary-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-white/90"></span>Ново</span>
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Насоки стъпка по стъпка за преразказ с дидактическа задача — как да подредиш епизодите, да преразкажеш от името на герой или неутрално и да спазиш глаголното време и изискванията на задачата. Написаните от теб преразкази получават оценка по критериите за НВО и препоръки за редакция.</p><ul class="space-y-2"><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Подробен и сбит преразказ</li><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Преразказ от името на герой и с дидактическа задача</li><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Критериите за оценяване на НВО, обяснени ясно</li></ul></div><div class="md:w-[46%] flex-shrink-0"><div class="bg-[#F3F7FD] rounded-xl p-4 sm:p-5 border border-primary-100"><p class="text-[11px] font-bold uppercase tracking-wider text-primary-600 mb-3">Как работи</p><ol class="space-y-3"><li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span><div><p class="text-sm font-bold text-accent-navy leading-snug">План и насоки за писане</p><p class="text-xs text-gray-600 leading-snug mt-0.5">Как се изгражда планът на текста и как се изпълнява дидактическата задача без пропуски.</p></div></li><li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span><div><p class="text-sm font-bold text-accent-navy leading-snug">Оценяване по критериите за НВО</p><p class="text-xs text-gray-600 leading-snug mt-0.5">Изпращаш преразказа си и получаваш оценка по същите критерии, по които се проверява на изпита.</p></div></li><li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span><div><p class="text-sm font-bold text-accent-navy leading-snug">Редактиране и обратна връзка</p><p class="text-xs text-gray-600 leading-snug mt-0.5">Конкретни препоръки за съдържанието, структурата, езика и правописа.</p></div></li></ol></div></div></div></div>
           </div>
-
-          <!-- Sample NVO Math -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">10 примерни НВО по математика</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Задачи по модела на НВО с пълни решения стъпка по стъпка — виждаш не само верния отговор, а и как се стига до него.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-orange-700 bg-orange-50 px-2.5 py-1 rounded-full">Тест с избор</span>
-              <span class="text-[11px] font-semibold text-orange-700 bg-orange-50 px-2.5 py-1 rounded-full">Кратък отговор</span>
-              <span class="text-[11px] font-semibold text-orange-700 bg-orange-50 px-2.5 py-1 rounded-full">Пълно решение</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">10 примерни НВО по БЕЛ</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Изпити в реалния формат на НВО с ключ и обяснения</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Изпити в реалния формат на НВО — тест, текст за четене с разбиране и задачи със свободен отговор — с ключ и обяснения към всеки въпрос.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">Примерно НВО #1</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">#2</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">#3</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">…</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">#10</span></div></div></div></div>
           </div>
-
-          <!-- Official past NVO -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">16 официални НВО от минали години</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">БЕЛ и математика от 2018 до 2025 г. — точно както са били на изпита, с официалните ключове на МОН.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2018</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2019</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">…</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2024</span>
-              <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">2025</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">10 примерни НВО по математика</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Задачи по модела на НВО с решения стъпка по стъпка</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Задачи по модела на НВО с пълни решения стъпка по стъпка — виждаш не само верния отговор, а и как се стига до него.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-orange-700 bg-orange-50 px-3 py-1.5 rounded-full">Тест с избор</span><span class="text-xs font-semibold text-orange-700 bg-orange-50 px-3 py-1.5 rounded-full">Кратък отговор</span><span class="text-xs font-semibold text-orange-700 bg-orange-50 px-3 py-1.5 rounded-full">Пълно решение</span></div></div></div></div>
           </div>
-
-          <!-- BEL topics -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-16M12 20l4-16M2 9h20M1 15h20"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Български език: теория + упражнение за всяка тема</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">13-те учебни теми за НВО с ясна теория и 130 упражнения — по 10 задачи към всяка тема, за да затвърдиш правилото веднага.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Звукови промени</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Причастия</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Глаголни времена</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Части на изречението</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">16 официални НВО от минали години</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">БЕЛ и математика от 2018 до 2025 г. с официалните ключове</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">БЕЛ и математика от 2018 до 2025 г. — точно както са били на изпита, с официалните ключове на МОН.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2018</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2019</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">…</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2024</span><span class="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1.5 rounded-full">2025</span></div></div></div></div>
           </div>
-
-          <!-- Retelling (new) -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto sm:col-span-2 bg-white rounded-2xl card-shadow border-2 border-primary-200 p-5 sm:p-6 flex flex-col md:flex-row gap-5 md:gap-6">
-            <div class="flex-1 flex flex-col">
-              <div class="flex items-start gap-3 mb-3">
-                <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2z"/><path d="M8 8h6M8 12h6M8 16h4"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-accent-navy leading-snug pt-2">Преразказ за НВО — план, писане и оценяване</h3>
-                <span class="ml-auto flex-shrink-0 inline-flex items-center gap-1 bg-primary-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mt-2"><span class="w-1.5 h-1.5 rounded-full bg-white/90"></span>Ново</span>
-              </div>
-              <p class="text-sm text-gray-500 leading-relaxed mb-4">Насоки стъпка по стъпка за преразказ с дидактическа задача — как да подредиш епизодите, да преразкажеш от името на герой или неутрално и да спазиш глаголното време и изискванията на задачата. Написаните от теб преразкази получават оценка по критериите за НВО и препоръки за редакция.</p>
-              <ul class="mt-auto space-y-1.5">
-                <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Подробен и сбит преразказ</li>
-                <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Преразказ от името на герой и с дидактическа задача</li>
-                <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Критериите за оценяване на НВО, обяснени ясно</li>
-              </ul>
-            </div>
-            <div class="md:w-[46%] flex-shrink-0 bg-[#F8FAFF] rounded-xl p-4 sm:p-5 border border-gray-100">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-primary-600 mb-3">Как работи</p>
-              <ol class="space-y-3">
-                <li class="flex gap-3">
-                  <span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
-                  <div>
-                    <p class="text-xs font-bold text-accent-navy leading-snug">План и насоки за писане</p>
-                    <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Как се изгражда планът на текста и как се изпълнява дидактическата задача без пропуски.</p>
-                  </div>
-                </li>
-                <li class="flex gap-3">
-                  <span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
-                  <div>
-                    <p class="text-xs font-bold text-accent-navy leading-snug">Оценяване по критериите за НВО</p>
-                    <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Изпращаш преразказа си и получаваш оценка по същите критерии, по които се проверява на изпита.</p>
-                  </div>
-                </li>
-                <li class="flex gap-3">
-                  <span class="w-6 h-6 rounded-full bg-primary-500 text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
-                  <div>
-                    <p class="text-xs font-bold text-accent-navy leading-snug">Редактиране и обратна връзка</p>
-                    <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Конкретни препоръки за съдържанието, структурата, езика и правописа.</p>
-                  </div>
-                </li>
-              </ol>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-16M12 20l4-16M2 9h20M1 15h20"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Български език: теория + упражнение за всяка тема</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">13 учебни теми и 130 упражнения</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">13-те учебни теми за НВО с ясна теория и 130 упражнения — по 10 задачи към всяка тема, за да затвърдиш правилото веднага.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Звукови промени</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Причастия</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Глаголни времена</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Части на изречението</span></div></div></div></div>
           </div>
-
-          <!-- Math -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l7-7M14 4l6 6-9 9H5v-6z"/><path d="M12 6l6 6"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Математика: 540 задачи с решения</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">4 теми · 27 подтеми · по 20 задачи във всяка подтема — от числа и алгебра до фигури, тела и вероятности. Всяка задача с решение.</p>
-            <div class="mt-auto grid grid-cols-3 gap-2 text-center">
-              <div class="bg-indigo-50 rounded-xl py-2"><p class="text-sm font-extrabold text-indigo-700">4</p><p class="text-[10px] text-gray-500">теми</p></div>
-              <div class="bg-indigo-50 rounded-xl py-2"><p class="text-sm font-extrabold text-indigo-700">27</p><p class="text-[10px] text-gray-500">подтеми</p></div>
-              <div class="bg-indigo-50 rounded-xl py-2"><p class="text-sm font-extrabold text-indigo-700">540</p><p class="text-[10px] text-gray-500">задачи</p></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l7-7M14 4l6 6-9 9H5v-6z"/><path d="M12 6l6 6"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Математика: 540 задачи с решения</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">4 теми · 27 подтеми · по 20 задачи във всяка</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">4 теми · 27 подтеми · по 20 задачи във всяка подтема — от числа и алгебра до фигури, тела и вероятности. Всяка задача с решение.</p></div><div class="md:w-72 flex-shrink-0"><div class="grid grid-cols-3 gap-2 text-center"><div class="bg-indigo-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-indigo-700">4</p><p class="text-[11px] text-gray-600">теми</p></div><div class="bg-indigo-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-indigo-700">27</p><p class="text-[11px] text-gray-600">подтеми</p></div><div class="bg-indigo-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-indigo-700">540</p><p class="text-[11px] text-gray-600">задачи</p></div></div></div></div></div>
           </div>
-
-          <!-- Summaries + exercises -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Резюме и упражнение за всяка творба</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">22 резюмета с най-важното за творбата, пълният текст на произведението и тест след всеки урок — проверяваш веднага какво си запомнил.</p>
-            <ul class="mt-auto space-y-1.5">
-              <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Текст на произведението</li>
-              <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Резюме с ключовите моменти</li>
-              <li class="flex items-center gap-2 text-xs text-gray-600"><span class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Упражнение след урока</li>
-            </ul>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7z"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Резюме и упражнение за всяка творба</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">22 резюмета, пълният текст и тест след всеки урок</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">22 резюмета с най-важното за творбата, пълният текст на произведението и тест след всеки урок — проверяваш веднага какво си запомнил.</p></div><div class="md:w-72 flex-shrink-0"><ul class="space-y-2"><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Текст на произведението</li><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Резюме с ключовите моменти</li><li class="flex items-center gap-2 text-sm text-gray-700"><span class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Упражнение след урока</li></ul></div></div></div>
           </div>
-
-          <!-- AI -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">AI помощник без лимит</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Питаш по всяко време — обяснява правила, анализира творби, проверява разсъжденията ти и разделя трудното на малки стъпки.</p>
-            <div class="mt-auto space-y-1.5 max-w-md">
-              <div class="flex justify-end"><span class="bg-primary-500 text-white text-[11px] px-3 py-1.5 rounded-2xl rounded-br-sm max-w-[85%]">Кога се пише „ъ“ в „сънувам“?</span></div>
-              <div class="flex"><span class="bg-gray-100 text-gray-700 text-[11px] px-3 py-1.5 rounded-2xl rounded-bl-sm max-w-[85%]">Това е подвижно Ъ — проверяваш с думата „сън“. Пример: …</span></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">AI помощник без лимит</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Обяснява правила, анализира творби, проверява разсъжденията ти</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Питаш по всяко време — обяснява правила, анализира творби, проверява разсъжденията ти и разделя трудното на малки стъпки.</p></div><div class="md:w-80 flex-shrink-0"><div class="space-y-2 max-w-md"><div class="flex justify-end"><span class="bg-primary-500 text-white text-xs px-3.5 py-2 rounded-2xl rounded-br-sm max-w-[85%]">Кога се пише „ъ“ в „сънувам“?</span></div><div class="flex"><span class="bg-gray-100 text-gray-800 text-xs px-3.5 py-2 rounded-2xl rounded-bl-sm max-w-[85%]">Това е подвижно Ъ — проверяваш с думата „сън“. Пример: …</span></div></div></div></div></div>
           </div>
-
-          <!-- Progress -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Напредък и грешки</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Виждаш какво си минал по теми, къде грешиш най-често и какво остава до изпита. Грешките ти се събират на едно място, за да ги затвориш.</p>
-            <div class="mt-auto space-y-2">
-              <div><div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>Литература</span><span>78%</span></div><div class="h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[78%]"></div></div></div>
-              <div><div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>Математика</span><span>55%</span></div><div class="h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[55%]"></div></div></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Напредък и грешки</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Какво си минал, къде грешиш и какво остава до изпита</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Виждаш какво си минал по теми, къде грешиш най-често и какво остава до изпита. Грешките ти се събират на едно място, за да ги затвориш.</p></div><div class="md:w-72 flex-shrink-0"><div class="space-y-2.5 max-w-sm"><div><div class="flex justify-between text-xs text-gray-600 mb-1"><span>Литература</span><span>78%</span></div><div class="h-2 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[78%]"></div></div></div><div><div class="flex justify-between text-xs text-gray-600 mb-1"><span>Математика</span><span>55%</span></div><div class="h-2 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[55%]"></div></div></div></div></div></div></div>
           </div>
+        </details>
         </div>
 
+        <!-- CTA -->
         <div class="mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button type="button" onclick="goToPricing('nvo7')" class="w-full sm:w-auto gradient-btn text-white font-semibold px-8 py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Виж цените за НВО</button>
           <a href="/register" class="w-full sm:w-auto text-center font-semibold px-8 py-3 rounded-full text-sm bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-600 hover:text-white transition-all">Започни безплатно</a>
         </div>
-        <p class="text-center text-xs text-gray-400 mt-3">Безплатният план не изисква карта · Абонаментите се отказват по всяко време</p>
+        <p class="text-center text-xs text-gray-500 mt-3">Безплатният план не изисква карта · Абонаментите се отказват по всяко време</p>
       </div>
 
-      <!-- ============ 4. клас НВО ============ -->
       <div id="plan-nvo4" class="plan-panel hidden" role="tabpanel" aria-labelledby="plan-tab-nvo4">
 
-        <div class="bg-white rounded-2xl card-shadow border border-gray-100 px-4 sm:px-6 py-4 sm:py-5 mb-6 md:mb-8">
+        <!-- Summary strip -->
+        <div class="bg-white rounded-2xl card-shadow border border-gray-200 px-4 sm:px-6 py-4 sm:py-5 mb-5 md:mb-6">
           <div class="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-y-4">
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">36</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">официални НВО теста</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">20</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">примерни теста по формата</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">59</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">учебни урока</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">295</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">задачи и примери</p></div>
-            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-[11px] sm:text-xs text-gray-500 mt-1.5">помощник за въпроси</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">36</p><p class="text-xs text-gray-600 mt-1.5">официални НВО теста</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">20</p><p class="text-xs text-gray-600 mt-1.5">примерни теста по формата</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">59</p><p class="text-xs text-gray-600 mt-1.5">учебни урока</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-accent-navy leading-none">295</p><p class="text-xs text-gray-600 mt-1.5">задачи и примери</p></div>
+            <div class="plan-stat sm:flex-1 sm:px-4 text-center"><p class="text-2xl sm:text-3xl font-extrabold text-primary-500 leading-none">AI</p><p class="text-xs text-gray-600 mt-1.5">помощник за въпроси</p></div>
           </div>
         </div>
 
-        <p class="sm:hidden text-[11px] text-gray-400 text-right mb-2 pr-1">Плъзни, за да видиш всички →</p>
-
-        <div class="plan-scroller flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-5 px-5 sm:mx-0 sm:px-0 pb-2 sm:pb-0">
-
-          <!-- Official tests (wide) -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto sm:col-span-2 lg:col-span-3 bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col md:flex-row md:items-center gap-5">
-            <div class="flex-1">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-accent-navy leading-snug">36 официални НВО теста от минали години</h3>
-              </div>
-              <p class="text-sm text-gray-500 leading-relaxed">18 по БЕЛ и 18 по математика — в оригиналния формат, с изображенията от официалните материали на МОН и ключове за отговорите. Четене с разбиране, езикови задачи, задачи с изображения и свободен отговор.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-3 md:w-56 flex-shrink-0">
-              <div class="bg-amber-50 rounded-xl p-3 text-center"><p class="text-xl font-extrabold text-amber-700">18</p><p class="text-[10px] text-gray-500">БЕЛ</p></div>
-              <div class="bg-amber-50 rounded-xl p-3 text-center"><p class="text-xl font-extrabold text-amber-700">18</p><p class="text-[10px] text-gray-500">Математика</p></div>
-            </div>
+        <!-- Benefits (expandable) -->
+        <div class="space-y-3 sm:space-y-3.5">
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200" open>
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">36 официални НВО теста от минали години</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">18 по БЕЛ и 18 по математика в оригиналния формат</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">18 по БЕЛ и 18 по математика — в оригиналния формат, с изображенията от официалните материали на МОН и ключове за отговорите. Четене с разбиране, езикови задачи, задачи с изображения и свободен отговор.</p></div><div class="md:w-64 flex-shrink-0"><div class="grid grid-cols-2 gap-2 text-center"><div class="bg-amber-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-amber-700">18</p><p class="text-[11px] text-gray-600">БЕЛ</p></div><div class="bg-amber-50 rounded-xl py-2.5 px-2"><p class="text-base font-extrabold text-amber-700">18</p><p class="text-[11px] text-gray-600">Математика</p></div></div></div></div></div>
           </div>
-
-          <!-- Sample tests -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">20 примерни теста по формата на НВО</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">10 по БЕЛ и 10 по математика, съставени по официалния модел за 4. клас — за тренировка, когато официалните вече са минати.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">10 × БЕЛ</span>
-              <span class="text-[11px] font-semibold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full">10 × Математика</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">20 примерни теста по формата на НВО</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">10 по БЕЛ и 10 по математика по официалния модел</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">10 по БЕЛ и 10 по математика, съставени по официалния модел за 4. клас — за тренировка, когато официалните вече са минати.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">10 × БЕЛ</span><span class="text-xs font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">10 × Математика</span></div></div></div></div>
           </div>
-
-          <!-- Math lessons -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Математика: 7 раздела, 36 урока</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Теория, решен пример, практика и бърза проверка във всеки урок — 180 задачи от естествени числа и мерни единици до фигури и таблици.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full">Числа</span>
-              <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full">Мерни единици</span>
-              <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full">Геометрични фигури</span>
-              <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full">Данни и таблици</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Математика: 7 раздела, 36 урока</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Теория, решен пример, практика и бърза проверка — 180 задачи</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Теория, решен пример, практика и бърза проверка във всеки урок — 180 задачи от естествени числа и мерни единици до фигури и таблици.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-full">Числа</span><span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-full">Мерни единици</span><span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-full">Геометрични фигури</span><span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-full">Данни и таблици</span></div></div></div></div>
           </div>
-
-          <!-- BEL lessons -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-16M12 20l4-16M2 9h20M1 15h20"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">БЕЛ: 7 раздела, 23 урока</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">115 задачи и примери — четене с разбиране, части на речта, строеж на думата, правопис и редактиране, кратък писмен текст.</p>
-            <div class="mt-auto flex flex-wrap gap-1.5">
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Четене с разбиране</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Правопис</span>
-              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Писмен текст</span>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-16M12 20l4-16M2 9h20M1 15h20"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">БЕЛ: 7 раздела, 23 урока</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">115 задачи — четене с разбиране, правопис, писмен текст</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">115 задачи и примери — четене с разбиране, части на речта, строеж на думата, правопис и редактиране, кратък писмен текст.</p></div><div class="md:w-72 flex-shrink-0"><div class="flex flex-wrap gap-2"><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Четене с разбиране</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Правопис</span><span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full">Писмен текст</span></div></div></div></div>
           </div>
-
-          <!-- AI -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto lg:col-span-2 bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">AI помощник за въпроси</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Обяснява на езика на детето — стъпка по стъпка, с пример и с най-честата грешка, която да избягва.</p>
-            <div class="mt-auto space-y-1.5 max-w-md">
-              <div class="flex justify-end"><span class="bg-primary-500 text-white text-[11px] px-3 py-1.5 rounded-2xl rounded-br-sm max-w-[85%]">Как се намира обиколка на правоъгълник?</span></div>
-              <div class="flex"><span class="bg-gray-100 text-gray-700 text-[11px] px-3 py-1.5 rounded-2xl rounded-bl-sm max-w-[85%]">Събираш всички страни: 2 × (дължина + ширина). Пример: …</span></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">AI помощник за въпроси</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Обяснява на езика на детето — стъпка по стъпка</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Обяснява на езика на детето — стъпка по стъпка, с пример и с най-честата грешка, която да избягва.</p></div><div class="md:w-80 flex-shrink-0"><div class="space-y-2 max-w-md"><div class="flex justify-end"><span class="bg-primary-500 text-white text-xs px-3.5 py-2 rounded-2xl rounded-br-sm max-w-[85%]">Как се намира обиколка на правоъгълник?</span></div><div class="flex"><span class="bg-gray-100 text-gray-800 text-xs px-3.5 py-2 rounded-2xl rounded-bl-sm max-w-[85%]">Събираш всички страни: 2 × (дължина + ширина). Пример: …</span></div></div></div></div></div>
           </div>
-
-          <!-- Progress -->
-          <div class="plan-card snap-start shrink-0 w-[84%] sm:w-auto bg-white rounded-2xl card-shadow border border-gray-100 p-5 sm:p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-accent-navy leading-snug">Напредък и грешки</h3>
-            </div>
-            <p class="text-sm text-gray-500 leading-relaxed mb-4">Родителят и детето виждат кои тестове са минати, къде се греши най-често и какво остава до изпита.</p>
-            <div class="mt-auto space-y-2">
-              <div><div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>Български език</span><span>70%</span></div><div class="h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[70%]"></div></div></div>
-              <div><div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>Математика</span><span>45%</span></div><div class="h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[45%]"></div></div></div>
-            </div>
+        </details>
+        <details class="plan-item bg-white rounded-2xl card-shadow border border-gray-200">
+          <summary class="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-[18px] cursor-pointer select-none">
+            <span class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+            <span class="flex-1 min-w-0">
+              <span class="block text-[15px] sm:text-base font-bold text-accent-navy leading-snug">Напредък и грешки</span>
+              <span class="plan-teaser block text-[13px] text-gray-600 mt-0.5 truncate">Кои тестове са минати и къде се греши най-често</span>
+            </span>
+            
+            <span class="plan-chevron w-8 h-8 rounded-full bg-gray-50 border border-gray-200 text-accent-navy flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="plan-item-body px-4 sm:px-6 pb-5 sm:pb-6">
+            <div class="border-t border-gray-100 pt-4 sm:pt-5"><div class="flex flex-col md:flex-row md:items-start gap-5 md:gap-8"><div class="flex-1 space-y-4"><p class="text-[15px] text-gray-700 leading-relaxed">Родителят и детето виждат кои тестове са минати, къде се греши най-често и какво остава до изпита.</p></div><div class="md:w-72 flex-shrink-0"><div class="space-y-2.5 max-w-sm"><div><div class="flex justify-between text-xs text-gray-600 mb-1"><span>Български език</span><span>70%</span></div><div class="h-2 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[70%]"></div></div></div><div><div class="flex justify-between text-xs text-gray-600 mb-1"><span>Математика</span><span>45%</span></div><div class="h-2 rounded-full bg-gray-100"><div class="h-full rounded-full bg-teal-500 w-[45%]"></div></div></div></div></div></div></div>
           </div>
+        </details>
         </div>
 
+        <!-- CTA -->
         <div class="mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button type="button" onclick="goToPricing('nvo4')" class="w-full sm:w-auto gradient-btn text-white font-semibold px-8 py-3 rounded-full text-sm hover:shadow-lg hover:shadow-blue-200 transition-all">Виж цените за 4. клас</button>
           <a href="/register" class="w-full sm:w-auto text-center font-semibold px-8 py-3 rounded-full text-sm bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-600 hover:text-white transition-all">Започни безплатно</a>
         </div>
-        <p class="text-center text-xs text-gray-400 mt-3">Безплатният план не изисква карта · Абонаментите се отказват по всяко време</p>
+        <p class="text-center text-xs text-gray-500 mt-3">Безплатният план не изисква карта · Абонаментите се отказват по всяко време</p>
       </div>
 
       <script>
@@ -1360,6 +1232,10 @@
             return 'dzi';
           }
 
+          function pauseVideos(root) {
+            root.querySelectorAll('video').forEach(function (video) { if (!video.paused) video.pause(); });
+          }
+
           window.switchPlanTab = function (tab) {
             PLAN_TABS.forEach(function (key) {
               var panel = document.getElementById('plan-' + key);
@@ -1369,11 +1245,9 @@
               panel.classList.toggle('hidden', !active);
               button.classList.toggle('gradient-btn', active);
               button.classList.toggle('text-white', active);
-              button.classList.toggle('text-gray-500', !active);
+              button.classList.toggle('text-gray-600', !active);
               button.setAttribute('aria-selected', active ? 'true' : 'false');
-              if (!active) {
-                panel.querySelectorAll('video').forEach(function (video) { if (!video.paused) video.pause(); });
-              }
+              if (!active) pauseVideos(panel);
             });
           };
 
@@ -1412,6 +1286,22 @@
             var tab = initialPlanTab();
             window.switchPlanTab(tab);
             if (tab !== 'dzi' && typeof window.switchPricingTab === 'function') window.switchPricingTab(tab);
+            // Stop a playing video when its bubble is collapsed.
+            document.querySelectorAll('details.plan-item').forEach(function (item) {
+              item.addEventListener('toggle', function () { if (!item.open) pauseVideos(item); });
+            });
+            // Keep excerpt videos inside their [data-start, data-end] window: the media fragment
+            // only sets the first start, so re-seek on play and stop at the end.
+            document.querySelectorAll('video.plan-excerpt').forEach(function (video) {
+              var start = parseFloat(video.getAttribute('data-start')) || 0;
+              var end = parseFloat(video.getAttribute('data-end')) || Infinity;
+              video.addEventListener('play', function () {
+                if (video.currentTime < start || video.currentTime >= end - 0.25) video.currentTime = start;
+              });
+              video.addEventListener('timeupdate', function () {
+                if (video.currentTime >= end) { video.pause(); video.currentTime = start; }
+              });
+            });
           }
 
           if (document.readyState === 'loading') {
