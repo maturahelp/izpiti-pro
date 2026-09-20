@@ -25,7 +25,7 @@ export function CTASection() {
             Подготви се уверено за НВО и ДЗИ
           </h2>
           <p className="text-[16px] text-white/60 mb-10 max-w-xl mx-auto leading-[1.7]">
-            Над 4 800 ученика вече ползват MaturaHelp. Стартирай безплатно — без кредитна карта.
+            Над 500 ученици вече ползват MaturaHelp. Стартирай безплатно — без кредитна карта.
             7 дни пробен период за Премиум план.
           </p>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -46,7 +46,7 @@ export function CTASection() {
 
           <div className="flex flex-wrap justify-center gap-6 text-[12.5px] text-white/35">
             {[
-              '4 800+ ученика',
+              '500+ ученици',
               '500+ теста',
               '200+ аудио урока',
               'Работи на телефон',

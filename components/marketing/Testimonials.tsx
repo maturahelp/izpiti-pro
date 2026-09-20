@@ -49,7 +49,7 @@ export function Testimonials() {
             Какво казват учениците и родителите
           </h2>
           <p className="text-[16px] text-text-muted max-w-xl mx-auto leading-[1.7]">
-            Над 4 800 ученика и родители вече ползват MaturaHelp за подготовка.
+            Над 500 ученици и родители вече ползват MaturaHelp за подготовка.
           </p>
         </FadeIn>
 

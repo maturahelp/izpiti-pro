@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 }
 
 const stats = [
-  { value: '4 800+', label: 'активни ученици' },
+  { value: '500+', label: 'регистрирани ученици' },
   { value: '500+', label: 'теста и упражнения' },
   { value: '7–12', label: 'клас покритие' },
   { value: '2', label: 'изпита: НВО и ДЗИ' },

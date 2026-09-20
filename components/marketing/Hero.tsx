@@ -77,7 +77,7 @@ export function Hero() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-bold leading-none" style={{ color: '#1B2845' }}>4 800+</p>
+                  <p className="text-lg font-bold leading-none" style={{ color: '#1B2845' }}>500+</p>
                   <p className="text-xs text-gray-400 mt-0.5">Активни ученици</p>
                 </div>
               </div>
