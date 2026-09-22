@@ -444,21 +444,22 @@
         </span>
       </div>
       <!-- Nav Links -->
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="hidden lg:flex items-center gap-7 whitespace-nowrap">
         <a href="#" class="text-sm font-medium text-accent-navy hover:text-primary-600 transition">Начало</a>
+        <a href="#courses" class="text-sm font-medium text-gray-500 hover:text-primary-600 transition">Какво получаваш</a>
         <a href="#pricing" class="text-sm font-medium text-gray-500 hover:text-primary-600 transition">Пакети</a>
         <a href="#how-it-works" class="text-sm font-medium text-gray-500 hover:text-primary-600 transition">Как работи</a>
         <a href="#parents" class="text-sm font-medium text-gray-500 hover:text-primary-600 transition">За родители</a>
         <a href="#faq" class="text-sm font-medium text-gray-500 hover:text-primary-600 transition">ЧЗВ</a>
       </nav>
       <!-- CTA -->
-      <div class="hidden md:flex items-center gap-5">
+      <div class="hidden lg:flex items-center gap-5 whitespace-nowrap">
         <a href="/login" class="text-sm font-medium text-accent-navy hover:text-primary-600 transition">Вход</a>
         <a href="/register" class="gradient-btn text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:shadow-lg transition">Регистрация</a>
       </div>
       <!-- Mobile menu button -->
       <button id="mobileMenuBtn" aria-label="Отвори меню" aria-expanded="false"
-        class="md:hidden w-11 h-11 -mr-2 flex items-center justify-center text-accent-navy rounded-lg"
+        class="lg:hidden w-11 h-11 -mr-2 flex items-center justify-center text-accent-navy rounded-lg"
         onclick="toggleMobileMenu()">
         <svg id="mobileMenuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -469,9 +470,10 @@
       </button>
     </div>
     <div id="mobileMenu"
-      class="hidden md:hidden mx-4 rounded-2xl bg-white/95 backdrop-blur-md p-5 card-shadow-lg border border-gray-100">
+      class="hidden lg:hidden mx-4 rounded-2xl bg-white/95 backdrop-blur-md p-5 card-shadow-lg border border-gray-100">
       <div class="flex flex-col gap-1 mb-4">
         <a href="#" class="block px-3 py-3 rounded-lg text-sm font-semibold text-accent-navy hover:bg-gray-50 transition">Начало</a>
+        <a href="#courses" class="block px-3 py-3 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">Какво получаваш</a>
         <a href="#pricing" class="block px-3 py-3 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">Пакети</a>
         <a href="#how-it-works" class="block px-3 py-3 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">Как работи</a>
         <a href="#parents" class="block px-3 py-3 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">За родители</a>
@@ -514,7 +516,7 @@
         <div class="md:max-w-xl md:ml-auto md:pr-4 lg:pr-8 text-center md:text-left">
           <!-- Сезонен/спешен маркер: текстът се изчислява от EXAM_TARGET_ISO в скрипта под hero-то -->
           <p id="heroUrgency" class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-white rounded-full px-4 py-1.5 mb-4 md:mb-5 text-xs font-semibold text-accent-navy">
-            <span id="heroUrgencyText" class="sm:hidden">ДЗИ по БЕЛ е на 19 май 2027</span><span id="heroUrgencyTextFull" class="hidden sm:inline">ДЗИ по БЕЛ е на 19 май 2027</span>
+            <span id="heroUrgencyText">8 месеца до ДЗИ по БЕЛ 2027</span>
           </p>
           <h1 class="text-[2rem] leading-[1.15] sm:text-4xl md:text-[2.7rem] lg:text-[2.95rem] md:leading-tight font-extrabold text-accent-navy mb-4 md:mb-5">
             Подготовка за <span class="logo-help">НВО</span> и <span class="logo-help">ДЗИ</span>, с която влизаш в изпита спокоен
@@ -550,8 +552,6 @@
             </a>
             <span class="hidden sm:inline-block w-px h-4 bg-gray-300/70"></span>
             <span class="text-xs font-semibold text-accent-navy">Над 500 потребители</span>
-            <span class="hidden sm:inline-block w-px h-4 bg-gray-300/70"></span>
-            <span class="text-xs font-semibold text-accent-navy">Всички матури 2016–2025 с ключове</span>
           </div>
         </div>
         <div class="relative flex justify-center mt-4 md:mt-0 hero-visual">
@@ -589,30 +589,23 @@
   </section>
 
   <script>
-    /* Спешност в hero-то: брояч до ДЗИ по БЕЛ.
-       Дата: 19 май 2027 (ДЗИ по БЕЛ). При смяна на датата пипай само двете константи. */
+    /* Спешност в hero-то: „N месеца до ДЗИ по БЕЛ 2027“.
+       ДЗИ по БЕЛ е на 19 май 2027. Месеците се преизчисляват сами всеки ден. */
     (function () {
       var EXAM_TARGET_ISO = '2027-05-19';
-      var EXAM_LABEL = '19 май 2027';
-      var elShort = document.getElementById('heroUrgencyText');
-      var elFull = document.getElementById('heroUrgencyTextFull');
-      if (!elShort || !elFull) return;
+      var el = document.getElementById('heroUrgencyText');
+      if (!el) return;
       var today = new Date();
       today.setHours(0, 0, 0, 0);
-      var target = new Date(EXAM_TARGET_ISO + 'T00:00:00');
-      var days = Math.round((target - today) / 86400000);
-      if (days > 1) {
-        elShort.textContent = 'До ДЗИ по БЕЛ остават ' + days + ' дни';
-        elFull.textContent = 'ДЗИ по БЕЛ е на ' + EXAM_LABEL + ' · остават ' + days + ' дни';
-      } else if (days === 1) {
-        elShort.textContent = 'ДЗИ по БЕЛ е утре';
-        elFull.textContent = 'ДЗИ по БЕЛ е утре, ' + EXAM_LABEL;
-      } else if (days === 0) {
-        elShort.textContent = 'ДЗИ по БЕЛ е днес — успех!';
-        elFull.textContent = 'ДЗИ по БЕЛ е днес — успех!';
+      var days = Math.round((new Date(EXAM_TARGET_ISO + 'T00:00:00') - today) / 86400000);
+      if (days < 0) { el.textContent = 'Подготовка за НВО и ДЗИ'; return; }
+      var months = Math.round(days / 30.44);
+      if (months >= 2) {
+        el.textContent = months + ' месеца до ДЗИ по БЕЛ 2027';
+      } else if (months === 1) {
+        el.textContent = '1 месец до ДЗИ по БЕЛ 2027';
       } else {
-        elShort.textContent = 'Подготовка за НВО и ДЗИ';
-        elFull.textContent = 'Подготовка за НВО и ДЗИ — започни днес';
+        el.textContent = days + (days === 1 ? ' ден' : ' дни') + ' до ДЗИ по БЕЛ 2027';
       }
     })();
   </script>
@@ -820,9 +813,7 @@
 
       <!-- Heading -->
       <div class="text-center mb-8 md:mb-10">
-        <span class="inline-flex items-center gap-2 bg-white card-shadow border border-gray-200 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-primary-600 mb-4">
-Какво получаваш
-        </span>
+        <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-3">Какво получаваш</p>
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-accent-navy mb-3 md:mb-4 leading-tight">Избери своя план</h2>
         <p class="text-gray-600 max-w-2xl mx-auto text-[15px] sm:text-base leading-relaxed">Виж всичко, което отключваш, преди да платиш. Всеки план включва пълното съдържание за твоя клас — разликата между пакетите е само в периода на достъп. Отвори всяка функция, за да видиш как работи.</p>
       </div>
@@ -1962,7 +1953,7 @@
     <div class="max-w-5xl mx-auto px-5 sm:px-6">
       <div class="text-center mb-8 md:mb-12">
         <p class="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-3">За родители</p>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-accent-navy mb-3 md:mb-4 leading-tight">Плащате вие. Ето какво получавате.</h2>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-accent-navy mb-3 md:mb-4 leading-tight">Ето какво получавате</h2>
         <p class="text-gray-500 max-w-2xl mx-auto text-[15px] sm:text-base">Най-честият въпрос на родителите не е колко струва, а дали детето наистина ще го използва. Затова всичко тук може да се провери, преди да въведете карта.</p>
       </div>
       <div class="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-9 md:mb-10">
@@ -1971,7 +1962,7 @@
           <p class="text-sm text-gray-500 leading-relaxed">В профила на ученика, раздел „Напредък“, се вижда какво е минато, кои теми куцат и какво остава до изпита. Разделът „Грешки“ събира сгрешените задачи, за да се преговорят.</p>
         </div>
         <div class="bg-white rounded-2xl card-shadow p-5 sm:p-6 border border-gray-100">
-          <h3 class="text-sm font-bold text-accent-navy mb-2 leading-snug">Официално съдържание, не преразкази</h3>
+          <h3 class="text-sm font-bold text-accent-navy mb-2 leading-snug">Официално съдържание</h3>
           <p class="text-sm text-gray-500 leading-relaxed">Всички матури от минали години са с оригиналните текстове и официалните ключове на МОН. Видео уроците следват конспекта, по който детето ще бъде изпитвано.</p>
         </div>
         <div class="bg-white rounded-2xl card-shadow p-5 sm:p-6 border border-gray-100">
