@@ -4,7 +4,6 @@ import path from 'node:path'
 import test from 'node:test'
 
 const repoRoot = path.resolve(import.meta.dirname, '..')
-const landingHtml = fs.readFileSync(path.join(repoRoot, 'landing-source.html'), 'utf8')
 const publicRoot = path.join(repoRoot, 'public')
 
 const iconSrcs = [
@@ -49,9 +48,10 @@ function resolvePublicAsset(src) {
   return path.join(publicRoot, src.replace(/^\/+/, ''))
 }
 
-test('landing page 3 icons use optimized webp assets', () => {
+// Секцията „Видео уроци, които ти показват най-важното“, която ползваше тези иконки,
+// е махната от landing-source.html, затова вече не проверяваме, че са в HTML-а.
+test('landing page 3 icons exist as optimized webp assets', () => {
   for (const src of iconSrcs) {
-    assert.match(landingHtml, new RegExp(src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))
     assert.ok(fs.existsSync(resolvePublicAsset(src)), `${src} should exist in public assets`)
   }
 })
