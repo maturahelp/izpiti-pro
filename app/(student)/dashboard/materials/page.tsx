@@ -5,10 +5,8 @@ import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { materials, materialTypeLabels, type MaterialType } from '@/data/materials'
 import { literatureThemeOrder, literatureWorks } from '@/data/literatureWorks'
-import { literatureSummaries } from '@/data/literatureSummaries'
 import { literatureVideoPaths } from '@/data/literatureVideoPaths'
 import { literatureWorkTextPaths } from '@/data/literatureWorkTexts'
-import { nvoLiteratureSummaries } from '@/data/nvoLiteratureSummaries'
 import { NVO_LITERATURE_RICH_SUMMARY_IDS } from '@/data/nvoLiteratureRichSummaryIds'
 import { nvoLiteratureThemeOrder, nvoLiteratureWorks } from '@/data/nvoLiteratureWorks'
 import { nvoLiteratureVideoPaths } from '@/data/nvoLiteratureVideoPaths'
@@ -499,6 +497,11 @@ export default function MaterialsPage() {
   const [nvoReadingProgressByWork, setNvoReadingProgressByWork] = useState<Record<string, number>>({})
   const [activeWorkPanel, setActiveWorkPanel] = useState<WorkPanel>('cover')
   const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('cover')
+  // Fallback (non-rich) summaries are lazy-loaded on the first "Резюме" click,
+  // after the premium gate in the panel handlers, so the full text datasets
+  // never ship in the initial materials bundle. null = not loaded yet.
+  const [dziSummaries, setDziSummaries] = useState<Record<string, string[]> | null>(null)
+  const [nvoSummaries, setNvoSummaries] = useState<Record<string, string[]> | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
   const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
@@ -568,12 +571,12 @@ export default function MaterialsPage() {
   const bulgarianRulesCount = bulgarianRuleGroups.reduce((acc, section) => acc + section.items.length, 0)
 
   const activeWork = literatureWorks.find((work) => work.id === activeWorkId)
-  const activeWorkSummary = activeWork ? literatureSummaries[activeWork.id] ?? [] : []
+  const activeWorkSummary = activeWork && dziSummaries ? dziSummaries[activeWork.id] ?? [] : []
   const activeWorkVideoPath = activeWorkId ? literatureVideoPaths[activeWorkId] : undefined
   const activeWorkMarkedWordIndex = activeWorkId ? workReadingProgressByWork[activeWorkId] : undefined
   const activeWorkTextTokens = useMemo(() => activeWorkText.split(/(\s+)/), [activeWorkText])
   const activeNvoWork = nvoLiteratureWorks.find((w) => w.id === activeNvoWorkId)
-  const activeNvoWorkSummary = activeNvoWork ? nvoLiteratureSummaries[activeNvoWork.id] ?? [] : []
+  const activeNvoWorkSummary = activeNvoWork && nvoSummaries ? nvoSummaries[activeNvoWork.id] ?? [] : []
   const activeNvoVideoPath = activeNvoWorkId ? nvoLiteratureVideoPaths[activeNvoWorkId] : undefined
   const activeNvoMarkedWordIndex = activeNvoWorkId ? nvoReadingProgressByWork[activeNvoWorkId] : undefined
   const activeNvoTextTokens = useMemo(() => activeNvoWorkText.split(/(\s+)/), [activeNvoWorkText])
@@ -659,6 +662,12 @@ export default function MaterialsPage() {
       return
     }
 
+    if (panel === 'summary' && !dziSummaries) {
+      void import('@/data/literatureSummaries')
+        .then((mod) => setDziSummaries(mod.literatureSummaries))
+        .catch(() => setDziSummaries({}))
+    }
+
     setActiveWorkPanel(panel)
     setIsActiveWorkVideoPlaying(false)
   }
@@ -672,6 +681,12 @@ export default function MaterialsPage() {
     if (panel === 'video' && !canPlayVideos && !isActiveNvoWorkFree) {
       redirectToSubscription()
       return
+    }
+
+    if (panel === 'summary' && !nvoSummaries) {
+      void import('@/data/nvoLiteratureSummaries')
+        .then((mod) => setNvoSummaries(mod.nvoLiteratureSummaries))
+        .catch(() => setNvoSummaries({}))
     }
 
     setActiveNvoWorkPanel(panel)
@@ -1535,7 +1550,9 @@ export default function MaterialsPage() {
                     ) : activeNvoWorkPanel === 'summary' ? (
                       <div className="w-full max-h-[60vh] lg:max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
                         <h4 className="mb-3 text-sm font-semibold text-[#1E4D7B]">„{activeNvoWork.title}“</h4>
-                        {activeNvoWorkSummary.length > 0 ? (
+                        {!nvoSummaries ? (
+                          <p className="text-sm text-text-muted">Зареждане на резюмето…</p>
+                        ) : activeNvoWorkSummary.length > 0 ? (
                           <div className="space-y-2 text-sm leading-7 text-text">
                             {activeNvoWorkSummary.map((sentence, index) => (
                               <p key={`${activeNvoWork.id}-summary-${index}`}>{sentence}</p>
@@ -2318,7 +2335,9 @@ export default function MaterialsPage() {
                   ) : activeWorkPanel === 'summary' ? (
                     <div className="w-full max-h-[60vh] lg:max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
                       <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
-                      {activeWorkSummary.length > 0 ? (
+                      {!dziSummaries ? (
+                        <p className="text-sm text-text-muted">Зареждане на резюмето…</p>
+                      ) : activeWorkSummary.length > 0 ? (
                         <div className="space-y-2 text-sm leading-7 text-text">
                           {activeWorkSummary.map((sentence, index) => (
                             <p key={`${activeWork.id}-summary-${index}`}>{sentence}</p>
