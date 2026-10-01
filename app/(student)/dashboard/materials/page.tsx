@@ -2422,10 +2422,10 @@ export default function MaterialsPage() {
             onClick={() => setTheoryIndex(null)}
           >
             <div
-              className="w-full max-w-lg rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+              className="w-full max-w-2xl max-h-[90vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border flex-shrink-0">
                 <div>
                   <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Теория</p>
                   <h3 className="text-base font-bold text-text leading-snug">{t.title}</h3>
@@ -2442,21 +2442,45 @@ export default function MaterialsPage() {
                 </button>
               </div>
 
-              <div className="p-5 space-y-4">
+              <div className="p-5 space-y-4 overflow-y-auto">
                 <div className="rounded-xl bg-[#F2F8FF] border border-[#D7E7F7] p-4">
                   <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Правило</p>
-                  <p className="text-sm text-text leading-relaxed">{t.rule}</p>
+                  <p className="text-sm text-text leading-relaxed font-medium">{t.rule}</p>
+                  {t.points.length > 0 && (
+                    <ul className="mt-3 space-y-2 list-disc pl-5 text-sm text-text leading-relaxed">
+                      {t.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
                 <div className="rounded-xl bg-success/5 border border-success/20 p-4">
-                  <p className="text-xs font-semibold text-success uppercase tracking-wide mb-1">Пример</p>
-                  <p className="text-sm text-text font-medium">{t.example}</p>
+                  <p className="text-xs font-semibold text-success uppercase tracking-wide mb-2">Примери</p>
+                  <ul className="flex flex-wrap gap-2">
+                    {t.examples.map((example) => (
+                      <li key={example} className="rounded-lg bg-white border border-success/20 px-2.5 py-1 text-sm text-text font-medium">
+                        {example}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
                 <div className="rounded-xl bg-danger/5 border border-danger/20 p-4">
-                  <p className="text-xs font-semibold text-danger uppercase tracking-wide mb-1">Типична грешка</p>
-                  <p className="text-sm text-text leading-relaxed">{t.commonMistake}</p>
+                  <p className="text-xs font-semibold text-danger uppercase tracking-wide mb-2">Типични грешки</p>
+                  <ul className="space-y-1.5 text-sm text-text leading-relaxed">
+                    {t.mistakes.map((mistake) => (
+                      <li key={mistake}>{mistake}</li>
+                    ))}
+                  </ul>
                 </div>
+
+                {t.tip && (
+                  <div className="rounded-xl bg-amber-50 border border-amber-200 p-4">
+                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">Как да проверя</p>
+                    <p className="text-sm text-text leading-relaxed">{t.tip}</p>
+                  </div>
+                )}
 
                 <button
                   type="button"

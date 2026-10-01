@@ -140,7 +140,7 @@ function buildBelTheoryChunks(): ChunkRow[] {
     exam_type: null,
     title: rule.title,
     content: truncate(
-      `${rule.title}\n\nПравило: ${rule.rule}\n\nПример: ${rule.example}\n\nЧеста грешка: ${rule.commonMistake}`
+      `${rule.title}\n\nПравило: ${rule.rule}\n${rule.points.map((point) => `- ${point}`).join('\n')}\n\nПримери: ${rule.examples.join('; ')}\n\nЧести грешки:\n${rule.mistakes.join('\n')}${rule.tip ? `\n\nПроверка: ${rule.tip}` : ''}`
     ),
   }))
 }
