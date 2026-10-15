@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, createContext, useContext } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { signIn, signUp, signOut, getUser } from '@/lib/auth'
+import { signIn, signUp, signOut, getUser, EXISTING_ACCOUNT_MESSAGE } from '@/lib/auth'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
 import { RegistrationConsentFields, type RegistrationConsentValues } from '@/components/shared/LegalConsentFields'
 import { BrandLogo } from '@/components/shared/BrandLogo'
@@ -231,16 +231,26 @@ export function LoginGateModal() {
       ...consents,
       userAgent: getBrowserUserAgent(),
     })
-    const { session, error } = await signUp(email, password, name, consentMetadata)
+    const { session, existingAccount, error } = await signUp(email, password, name, consentMetadata)
     setLoading(false)
     if (error) { setError(error.message); return }
+    if (existingAccount) {
+      setTab('login')
+      setPassword('')
+      setConfirmPassword('')
+      setInfo(EXISTING_ACCOUNT_MESSAGE)
+      return
+    }
     if (session) {
       trackLead()
       closeLoginGate()
       router.push(activeHref || '/dashboard/materials')
       router.refresh()
     } else {
-      setInfo('Акаунтът е създаден! Провери имейла си и кликни линка за потвърждение, за да влезеш.')
+      // Confirmation required — continue on the page where the 6-digit code is entered
+      try { window.localStorage.setItem('pendingVerifyEmail', email) } catch {}
+      closeLoginGate()
+      router.push(`/verify-email?redirectTo=${encodeURIComponent(activeHref || '/dashboard/materials')}`)
     }
   }
 

@@ -38,11 +38,16 @@ export async function signUp(
         },
       },
     })
-    return { user: data?.user ?? null, session: data?.session ?? null, error }
+    // For an email that already has a confirmed account Supabase answers with a
+    // placeholder user without identities and sends no email at all.
+    const existingAccount = !error && !!data?.user && data.user.identities?.length === 0
+    return { user: data?.user ?? null, session: data?.session ?? null, existingAccount, error }
   } catch {
-    return { user: null, session: null, error: previewAuthUnavailableError() }
+    return { user: null, session: null, existingAccount: false, error: previewAuthUnavailableError() }
   }
 }
+
+export const EXISTING_ACCOUNT_MESSAGE = 'Този имейл вече има акаунт. Влез с паролата си или я възстанови.'
 
 export async function verifySignupOtp(email: string, token: string) {
   try {

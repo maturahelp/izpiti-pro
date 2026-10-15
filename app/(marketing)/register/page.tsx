@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { signUp, signIn, verifySignupOtp, resendSignupOtp, type SignUpClass } from '@/lib/auth'
+import { signUp, signIn, verifySignupOtp, resendSignupOtp, EXISTING_ACCOUNT_MESSAGE, type SignUpClass } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/client'
 import { BrandLogo } from '@/components/shared/BrandLogo'
 import { buildRegistrationConsentMetadata, getBrowserUserAgent } from '@/lib/legal-consent'
@@ -60,6 +60,7 @@ function RegisterForm() {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [existingAccount, setExistingAccount] = useState(false)
   const [confirmation, setConfirmation] = useState(false)
   const [otp, setOtp] = useState('')
   const [verifying, setVerifying] = useState(false)
@@ -89,6 +90,7 @@ function RegisterForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
+    setExistingAccount(false)
     if (!selectedClass) { setError('Избери за какъв изпит се подготвяш.'); return }
     if (!email || !password) { setError('Попълни всички полета.'); return }
     if (password.length < 8) { setError('Паролата трябва да е поне 8 знака.'); return }
@@ -100,8 +102,9 @@ function RegisterForm() {
       ...consents,
       userAgent: getBrowserUserAgent(),
     })
-    const { session, error } = await signUp(email, password, name, consentMetadata, selectedClass)
+    const { session, existingAccount, error } = await signUp(email, password, name, consentMetadata, selectedClass)
     if (error) { setLoading(false); setError(error.message); return }
+    if (existingAccount) { setLoading(false); setExistingAccount(true); setError(EXISTING_ACCOUNT_MESSAGE); return }
     if (session) {
       trackLead()
       await persistSelectedClass(selectedClass)
@@ -274,6 +277,16 @@ function RegisterForm() {
               {error && (
                 <div className="mb-4 px-4 py-2.5 rounded-xl bg-red-50 border border-red-200 text-[13px] text-red-600">
                   {error}
+                  {existingAccount && (
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5">
+                      <Link href={loginHref} className="font-semibold text-primary hover:underline">
+                        Влез
+                      </Link>
+                      <Link href="/forgot-password" className="font-semibold text-primary hover:underline">
+                        Забравена парола
+                      </Link>
+                    </div>
+                  )}
                 </div>
               )}
 
