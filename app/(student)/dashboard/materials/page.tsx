@@ -26,6 +26,11 @@ import {
   type DziEssayMaterial,
   type DziEssaySection,
 } from '@/data/dziEssayMaterials'
+import {
+  buildEnglishWritingSearchText,
+  englishWritingMaterialGroups,
+  type EnglishWritingMaterial,
+} from '@/data/englishWritingMaterials'
 import math7ProblemBank from '@/data/nvo_7_math_generated_problem_bank.json'
 import topicsData from '@/data/bel_curriculum_topics_content.json'
 import { useGrade } from '@/lib/grade-context'
@@ -46,6 +51,7 @@ import {
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/shared/Badge'
+import { EnglishWritingMaterialView } from '@/components/dashboard/EnglishWritingMaterialView'
 import { logActivity } from '@/lib/activity-log'
 
 type Math7Topic = {
@@ -112,58 +118,7 @@ interface CurriculumTopic {
   exercises: unknown[]
 }
 
-interface EnglishMaterial {
-  title: string
-  description: string
-  textHref?: string
-  imageSrcs?: string[]
-}
-
-interface EnglishMaterialGroup {
-  title: string
-  description: string
-  items: EnglishMaterial[]
-}
-
 const belCurriculumTopics = topicsData.topics as CurriculumTopic[]
-
-const englishMaterialGroups: EnglishMaterialGroup[] = [
-  {
-    title: 'Essay',
-    description: 'Структура, аргументиране и полезни фрази за писане на есе.',
-    items: [
-      {
-        title: 'Essay Structure Format',
-        description: 'Кратко ръководство за подредба на теза, аргументи, примери и заключение.',
-        imageSrcs: [
-          '/english-materials/essay-structure-guide-1.png',
-          '/english-materials/essay-structure-guide-2.png',
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Formal letter',
-    description: 'Готови изрази, примерни писма и формати за официална кореспонденция.',
-    items: [
-      {
-        title: 'Formal Letter Writing / Email / Useful phrases',
-        description: 'Полезни фрази за начало, развитие и финал на formal letter или email.',
-        textHref: '/english-materials/formal-letter-email-useful-phrases.txt',
-      },
-      {
-        title: 'Letter Writing Useful Words and Expressions',
-        description: 'Лексика и изрази за по-точно и естествено оформяне на писмен отговор.',
-        textHref: '/english-materials/letter-writing-useful-words-and-expressions.txt',
-      },
-      {
-        title: 'Sample Letters - Block Format',
-        description: 'Примерни писма в block format за бърза ориентация преди писане.',
-        imageSrcs: ['/english-materials/sample-letters-block-format.png'],
-      },
-    ],
-  },
-]
 
 function formatMathTitleText(text: string) {
   return text
@@ -528,11 +483,8 @@ export default function MaterialsPage() {
   const [activeNvoWorkPanel, setActiveNvoWorkPanel] = useState<WorkPanel>('cover')
   const [searchQuery, setSearchQuery] = useState('')
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
-  const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishMaterial | null>(null)
+  const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishWritingMaterial | null>(null)
   const [activeDziEssayMaterial, setActiveDziEssayMaterial] = useState<DziEssayMaterial | null>(null)
-  const [englishMaterialText, setEnglishMaterialText] = useState('')
-  const [englishMaterialLoading, setEnglishMaterialLoading] = useState(false)
-  const [englishMaterialError, setEnglishMaterialError] = useState<string | null>(null)
   const [fullscreenImageSrc, setFullscreenImageSrc] = useState<string | null>(null)
   const [fullscreenImageZoom, setFullscreenImageZoom] = useState(1)
   const [fullscreenImageGallery, setFullscreenImageGallery] = useState<string[] | null>(null)
@@ -631,13 +583,13 @@ export default function MaterialsPage() {
       return searchableText.includes(normalizedQuery)
     })
 
-  const filteredEnglishMaterialGroups = englishMaterialGroups
+  const filteredEnglishMaterialGroups = englishWritingMaterialGroups
     .map((group) => {
       const groupMatches = `${group.title} ${group.description}`.toLowerCase().includes(normalizedQuery)
       const items = group.items.filter((item) => {
         if (!normalizedQuery) return true
         if (groupMatches) return true
-        return `${item.title} ${item.description}`.toLowerCase().includes(normalizedQuery)
+        return buildEnglishWritingSearchText(item).includes(normalizedQuery)
       })
       return { ...group, items }
     })
@@ -756,33 +708,13 @@ export default function MaterialsPage() {
     setFullscreenImageZoom(1)
   }
 
-  const openEnglishMaterial = async (material: EnglishMaterial) => {
+  const openEnglishMaterial = (material: EnglishWritingMaterial) => {
     if (!hasEnglishAccess && !isFreeEnglishDziMaterial(material.title)) {
       redirectToSubscription()
       return
     }
 
     setActiveEnglishMaterial(material)
-    setEnglishMaterialText('')
-    setEnglishMaterialError(null)
-
-    if (!material.textHref) {
-      setEnglishMaterialLoading(false)
-      return
-    }
-
-    setEnglishMaterialLoading(true)
-
-    try {
-      const response = await fetch(material.textHref)
-      if (!response.ok) throw new Error('Неуспешно зареждане')
-      const text = await response.text()
-      setEnglishMaterialText(text.trim())
-    } catch {
-      setEnglishMaterialError('Материалът не може да бъде зареден в момента.')
-    } finally {
-      setEnglishMaterialLoading(false)
-    }
   }
 
   const openDziEssayMaterial = (material: DziEssayMaterial) => {
@@ -842,6 +774,7 @@ export default function MaterialsPage() {
 
   useEffect(() => {
     if (!activeWorkId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronous reset when the opened work changes
       setActiveWorkText('')
       setActiveWorkTextError(null)
       setActiveWorkTextLoading(false)
@@ -890,6 +823,7 @@ export default function MaterialsPage() {
 
   useEffect(() => {
     if (!activeNvoWorkId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronous reset when the opened work changes
       setActiveNvoWorkText('')
       setActiveNvoWorkTextError(null)
       setActiveNvoWorkTextLoading(false)
@@ -943,6 +877,7 @@ export default function MaterialsPage() {
       if (!raw) return
       const parsed = JSON.parse(raw) as Record<string, number>
       if (parsed && typeof parsed === 'object') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from localStorage after mount to keep SSR output stable
         setWorkReadingProgressByWork(parsed)
       }
     } catch {
@@ -962,6 +897,7 @@ export default function MaterialsPage() {
       if (!raw) return
       const parsed = JSON.parse(raw) as Record<string, number>
       if (parsed && typeof parsed === 'object') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from localStorage after mount to keep SSR output stable
         setNvoReadingProgressByWork(parsed)
       }
     } catch {
@@ -996,25 +932,24 @@ export default function MaterialsPage() {
     })
   }, [activeNvoWorkPanel, activeNvoMarkedWordIndex, activeNvoWorkText])
 
-  useEffect(() => {
-    if (activeWorkId) {
-      setActiveWorkPanel('cover')
-      setIsActiveWorkVideoPlaying(false)
-      setIsWorkReadingMarkerEnabled(false)
-    }
-  }, [activeWorkId])
+  const openWork = (workId: string) => {
+    setActiveWorkId(workId)
+    setActiveWorkPanel('cover')
+    setIsActiveWorkVideoPlaying(false)
+    setIsWorkReadingMarkerEnabled(false)
+  }
 
-  useEffect(() => {
-    if (activeNvoWorkId) {
-      setActiveNvoWorkPanel('cover')
-      setIsActiveNvoVideoPlaying(false)
-      setIsNvoReadingMarkerEnabled(false)
-    }
-  }, [activeNvoWorkId])
+  const openNvoWork = (workId: string) => {
+    setActiveNvoWorkId(workId)
+    setActiveNvoWorkPanel('cover')
+    setIsActiveNvoVideoPlaying(false)
+    setIsNvoReadingMarkerEnabled(false)
+  }
 
   useEffect(() => {
     if (hasPremiumAccess || isActiveWorkFree) return
     if (activeWorkPanel === 'text' || activeWorkPanel === 'cover') return
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- premium gating: fall back to the free panel
     setActiveWorkPanel('text')
     setIsActiveWorkVideoPlaying(false)
   }, [activeWorkPanel, hasPremiumAccess, isActiveWorkFree])
@@ -1022,6 +957,7 @@ export default function MaterialsPage() {
   useEffect(() => {
     if (hasPremiumAccess || isActiveNvoWorkFree) return
     if (activeNvoWorkPanel === 'text' || activeNvoWorkPanel === 'cover') return
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- premium gating: fall back to the free panel
     setActiveNvoWorkPanel('text')
     setIsActiveNvoVideoPlaying(false)
   }, [activeNvoWorkPanel, hasPremiumAccess, isActiveNvoWorkFree])
@@ -1034,6 +970,7 @@ export default function MaterialsPage() {
       : grade12Sections
 
     if (!allowedSections.includes(selectedSection)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- the grade changed and the current section is not available for it
       setSelectedSection('bulgarian')
     }
   }, [effectiveGrade, selectedSection])
@@ -1362,7 +1299,7 @@ export default function MaterialsPage() {
                         <button
                           key={work.id}
                           type="button"
-                          onClick={() => setActiveNvoWorkId(work.id)}
+                          onClick={() => openNvoWork(work.id)}
                           className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && !isFreeItem && 'opacity-60')}
                         >
                           {!hasPremiumAccess && !isFreeItem && (
@@ -1760,7 +1697,7 @@ export default function MaterialsPage() {
                       <button
                         key={work.id}
                         type="button"
-                        onClick={() => setActiveWorkId(work.id)}
+                        onClick={() => openWork(work.id)}
                         className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && !isFreeItem && 'opacity-60')}
                       >
                         {!hasPremiumAccess && !isFreeItem && (
@@ -2050,37 +1987,18 @@ export default function MaterialsPage() {
                             </div>
                             <p className="text-xs text-text-muted leading-relaxed">{item.description}</p>
                             <div className="mt-auto space-y-2">
-                              {item.textHref && (
-                                <button
-                                  type="button"
-                                  onClick={() => openEnglishMaterial(item)}
-                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border transition-colors px-3"
-                                  style={{
-                                    borderColor: grade12SectionTheme.english.outlineBorder,
-                                    color: grade12SectionTheme.english.outlineText,
-                                  }}
-                                >
-                                  Отвори
-                                </button>
-                              )}
-                              {item.imageSrcs && item.imageSrcs.length > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    handlePremiumAction(
-                                      () => openImageGallery(item.imageSrcs!, item.title),
-                                      isFreeEnglishDziMaterial(item.title) || hasEnglishAccess
-                                    )
-                                  }
-                                  className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border transition-colors px-3"
-                                  style={{
-                                    borderColor: grade12SectionTheme.english.outlineBorder,
-                                    color: grade12SectionTheme.english.outlineText,
-                                  }}
-                                >
-                                  Отвори пример
-                                </button>
-                              )}
+                              <p className="text-[11px] text-text-muted">≈ {item.estimatedMinutes} мин четене</p>
+                              <button
+                                type="button"
+                                onClick={() => openEnglishMaterial(item)}
+                                className="w-full text-left text-xs font-semibold py-2 rounded-lg bg-white border transition-colors px-3"
+                                style={{
+                                  borderColor: grade12SectionTheme.english.outlineBorder,
+                                  color: grade12SectionTheme.english.outlineText,
+                                }}
+                              >
+                                Отвори
+                              </button>
                             </div>
                           </div>
                           )
@@ -2177,10 +2095,13 @@ export default function MaterialsPage() {
           <div
             className="w-full max-w-6xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={`english-material-title-${activeEnglishMaterial.id}`}
           >
             <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-text">{activeEnglishMaterial.title}</h3>
+                <h3 id={`english-material-title-${activeEnglishMaterial.id}`} className="text-lg md:text-xl font-bold text-text">{activeEnglishMaterial.title}</h3>
                 <p className="text-sm text-text-muted mt-1">{activeEnglishMaterial.description}</p>
               </div>
               <button
@@ -2196,46 +2117,7 @@ export default function MaterialsPage() {
             </div>
 
             <div className="h-[calc(86vh-100px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
-              {englishMaterialLoading && (
-                <p className="text-sm text-text-muted">Зареждане на материала...</p>
-              )}
-              {!englishMaterialLoading && englishMaterialError && (
-                <p className="text-sm text-danger">{englishMaterialError}</p>
-              )}
-              {!englishMaterialLoading && !englishMaterialError && englishMaterialText && (
-                <pre className="whitespace-pre-wrap break-words text-[15px] leading-7 text-text font-sans">
-                  {englishMaterialText}
-                </pre>
-              )}
-              {!englishMaterialLoading && !englishMaterialError && !englishMaterialText && activeEnglishMaterial.imageSrcs && (
-                <div className="space-y-4">
-                  {activeEnglishMaterial.imageSrcs.map((src, index) => (
-                    <button
-                      key={`${activeEnglishMaterial.title}-${index}`}
-                      type="button"
-                      onClick={() => {
-                        setFullscreenImageSrc(src)
-                        setFullscreenImageZoom(1)
-                      }}
-                      className="block w-full rounded-xl border border-border bg-white overflow-hidden group relative"
-                      aria-label="Отвори на цял екран"
-                    >
-                      <img
-                        src={src}
-                        alt={`${activeEnglishMaterial.title} - ${index + 1}`}
-                        className="w-full h-auto"
-                      />
-                      <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-lg bg-black/60 text-white text-xs font-semibold px-2 py-1 opacity-80 group-hover:opacity-100 transition-opacity">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <circle cx="11" cy="11" r="7" />
-                          <path d="M21 21l-4.3-4.3M8 11h6M11 8v6" />
-                        </svg>
-                        Цял екран
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
+              <EnglishWritingMaterialView material={activeEnglishMaterial} />
             </div>
           </div>
         </div>
