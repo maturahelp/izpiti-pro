@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { dziEssayMaterials, type DziEssayQuizQuestion } from '@/data/dziEssayMaterials'
@@ -63,6 +63,11 @@ function fireConfetti() {
 }
 
 const OPTION_LABELS = ['А', 'Б', 'В', 'Г']
+const EMPTY_QUIZ: DziEssayQuizQuestion[] = []
+
+function subscribeNoop() {
+  return () => {}
+}
 
 function shuffleQuestion(question: DziEssayQuizQuestion): DziEssayQuizQuestion {
   const indices = Array.from({ length: question.options.length }, (_, index) => index)
@@ -86,9 +91,17 @@ export default function DziEssayQuizPage() {
   const needsPremiumCheck = Boolean(material && !isFreeDziEssayMaterial(material.id))
 
   const [hasVerifiedPremiumAccess, setHasVerifiedPremiumAccess] = useState(false)
-  const [questions, setQuestions] = useState<DziEssayQuizQuestion[]>(() =>
-    material ? material.quiz.map(shuffleQuestion) : []
+  // Разбъркването ползва Math.random, затова не може да стане при SSR: сървърът и
+  // клиентът биха рендерирали различен ред и React хвърля hydration mismatch.
+  // При хидратация isClient е false (неразбъркан ред), после React пререндерира
+  // с разбъркания ред само на клиента.
+  const isClient = useSyncExternalStore(subscribeNoop, () => true, () => false)
+  const materialQuiz = material?.quiz ?? EMPTY_QUIZ
+  const initialQuestions = useMemo(
+    () => (isClient ? materialQuiz.map(shuffleQuestion) : materialQuiz),
+    [isClient, materialQuiz]
   )
+  const [questions, setQuestions] = useState<DziEssayQuizQuestion[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null)
   const [checked, setChecked] = useState(false)
@@ -154,8 +167,7 @@ export default function DziEssayQuizPage() {
     )
   }
 
-  const materialQuiz = material.quiz
-  const activeQuestions = questions.length ? questions : materialQuiz
+  const activeQuestions = questions.length ? questions : initialQuestions
   const currentQuestion = activeQuestions[currentIndex]
   const score = activeQuestions.filter((question, index) => answers[index] === question.correctOptionIndex).length
 
