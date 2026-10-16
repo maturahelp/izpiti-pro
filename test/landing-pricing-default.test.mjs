@@ -10,14 +10,15 @@ function classListFor(id) {
   return match[1].split(/\s+/).filter(Boolean)
 }
 
-test('landing page defaults the course tabs to NVO7', () => {
-  assert.ok(classListFor('tab-nvo7').includes('gradient-btn'))
-  assert.ok(classListFor('tab-nvo7').includes('text-white'))
-  assert.ok(classListFor('cards-nvo7').includes('grid'))
-  assert.ok(!classListFor('cards-nvo7').includes('hidden'))
+test('landing page defaults the "Избери своя план" tabs to 12th grade (DZI)', () => {
+  assert.ok(classListFor('plan-tab-dzi').includes('gradient-btn'))
+  assert.ok(classListFor('plan-tab-dzi').includes('text-white'))
+  assert.ok(!classListFor('plan-dzi').includes('hidden'))
 
-  assert.ok(!classListFor('tab-nvo4').includes('gradient-btn'))
-  assert.ok(classListFor('cards-nvo4').includes('hidden'))
+  for (const key of ['nvo7', 'nvo4']) {
+    assert.ok(!classListFor(`plan-tab-${key}`).includes('gradient-btn'))
+    assert.ok(classListFor(`plan-${key}`).includes('hidden'))
+  }
 })
 
 test('landing page defaults the pricing tabs to 12th grade (DZI)', () => {
