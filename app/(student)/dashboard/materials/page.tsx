@@ -747,6 +747,7 @@ export default function MaterialsPage() {
 
   useEffect(() => {
     if (!activeWorkId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronous reset when the opened work changes
       setActiveWorkText('')
       setActiveWorkTextError(null)
       setActiveWorkTextLoading(false)
@@ -795,6 +796,7 @@ export default function MaterialsPage() {
 
   useEffect(() => {
     if (!activeNvoWorkId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronous reset when the opened work changes
       setActiveNvoWorkText('')
       setActiveNvoWorkTextError(null)
       setActiveNvoWorkTextLoading(false)
@@ -848,6 +850,7 @@ export default function MaterialsPage() {
       if (!raw) return
       const parsed = JSON.parse(raw) as Record<string, number>
       if (parsed && typeof parsed === 'object') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from localStorage after mount to keep SSR output stable
         setWorkReadingProgressByWork(parsed)
       }
     } catch {
@@ -867,6 +870,7 @@ export default function MaterialsPage() {
       if (!raw) return
       const parsed = JSON.parse(raw) as Record<string, number>
       if (parsed && typeof parsed === 'object') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from localStorage after mount to keep SSR output stable
         setNvoReadingProgressByWork(parsed)
       }
     } catch {
@@ -901,25 +905,24 @@ export default function MaterialsPage() {
     })
   }, [activeNvoWorkPanel, activeNvoMarkedWordIndex, activeNvoWorkText])
 
-  useEffect(() => {
-    if (activeWorkId) {
-      setActiveWorkPanel('cover')
-      setIsActiveWorkVideoPlaying(false)
-      setIsWorkReadingMarkerEnabled(false)
-    }
-  }, [activeWorkId])
+  const openWork = (workId: string) => {
+    setActiveWorkId(workId)
+    setActiveWorkPanel('cover')
+    setIsActiveWorkVideoPlaying(false)
+    setIsWorkReadingMarkerEnabled(false)
+  }
 
-  useEffect(() => {
-    if (activeNvoWorkId) {
-      setActiveNvoWorkPanel('cover')
-      setIsActiveNvoVideoPlaying(false)
-      setIsNvoReadingMarkerEnabled(false)
-    }
-  }, [activeNvoWorkId])
+  const openNvoWork = (workId: string) => {
+    setActiveNvoWorkId(workId)
+    setActiveNvoWorkPanel('cover')
+    setIsActiveNvoVideoPlaying(false)
+    setIsNvoReadingMarkerEnabled(false)
+  }
 
   useEffect(() => {
     if (hasPremiumAccess || isActiveWorkFree) return
     if (activeWorkPanel === 'text' || activeWorkPanel === 'cover') return
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- premium gating: fall back to the free panel
     setActiveWorkPanel('text')
     setIsActiveWorkVideoPlaying(false)
   }, [activeWorkPanel, hasPremiumAccess, isActiveWorkFree])
@@ -927,6 +930,7 @@ export default function MaterialsPage() {
   useEffect(() => {
     if (hasPremiumAccess || isActiveNvoWorkFree) return
     if (activeNvoWorkPanel === 'text' || activeNvoWorkPanel === 'cover') return
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- premium gating: fall back to the free panel
     setActiveNvoWorkPanel('text')
     setIsActiveNvoVideoPlaying(false)
   }, [activeNvoWorkPanel, hasPremiumAccess, isActiveNvoWorkFree])
@@ -939,6 +943,7 @@ export default function MaterialsPage() {
       : grade12Sections
 
     if (!allowedSections.includes(selectedSection)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- the grade changed and the current section is not available for it
       setSelectedSection('bulgarian')
     }
   }, [effectiveGrade, selectedSection])
@@ -1267,7 +1272,7 @@ export default function MaterialsPage() {
                         <button
                           key={work.id}
                           type="button"
-                          onClick={() => setActiveNvoWorkId(work.id)}
+                          onClick={() => openNvoWork(work.id)}
                           className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && !isFreeItem && 'opacity-60')}
                         >
                           {!hasPremiumAccess && !isFreeItem && (
@@ -1665,7 +1670,7 @@ export default function MaterialsPage() {
                       <button
                         key={work.id}
                         type="button"
-                        onClick={() => setActiveWorkId(work.id)}
+                        onClick={() => openWork(work.id)}
                         className={cn('relative rounded-xl border border-border bg-white p-4 text-left transition-transform duration-200 hover:-translate-y-0.5', !hasPremiumAccess && !isFreeItem && 'opacity-60')}
                       >
                         {!hasPremiumAccess && !isFreeItem && (
