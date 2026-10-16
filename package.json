@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3335",
-    "build": "tailwindcss -c tailwind.config.ts -i landing-input.css -o public/landing.css --minify && next build",
+    "dev": "npm run build:landing && next dev -p 3335",
+    "build": "npm run build:landing && next build",
     "start": "next start",
     "lint": "npm run lint:feature",
     "lint:feature": "eslint \"app/(student)/dashboard/literature-exercise/[workId]/page.tsx\" \"app/(student)/dashboard/materials/page.tsx\" \"app/(student)/dashboard/materials/nvo4-topic/[id]/page.tsx\" \"data/dziLiteratureExercises.ts\" \"data/literatureExerciseResolver.ts\" \"scripts/dzi-literature-exercise-blueprints.ts\" \"scripts/validate-dzi-literature-exercises.ts\" \"eslint.config.mjs\"",
@@ -16,7 +16,9 @@
     "build:nvo4": "python3 scripts/build-nvo4-dataset.py && npm run generate:nvo4-mocks",
     "generate:nvo4-mocks": "tsx scripts/generate-nvo4-mocks.ts",
     "validate:nvo4": "tsx scripts/validate-nvo4-content.ts",
-    "index:rag": "tsx scripts/build-rag-index.ts"
+    "index:rag": "tsx scripts/build-rag-index.ts",
+    "build:landing": "tailwindcss -c tailwind.landing.config.ts -i landing-input.css -o public/landing.css --minify",
+    "dev:landing": "tailwindcss -c tailwind.landing.config.ts -i landing-input.css -o public/landing.css --watch"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.0",

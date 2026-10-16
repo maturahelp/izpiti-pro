@@ -5,61 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MaturaHelp — НВО 7 клас и ДЗИ 12 клас | Тестове и Видео Уроци</title>
-  <link rel="icon" href="/brand/logo14.png" type="image/png">
-  <link rel="shortcut icon" href="/brand/logo14.png" type="image/png">
-  <link rel="apple-touch-icon" href="/brand/logo14.png">
-  <link rel="preload" as="image" href="/brand/hero-graduate.webp" fetchpriority="high">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="/brand/logo14-64.png" type="image/png" sizes="64x64">
+  <link rel="shortcut icon" href="/brand/logo14-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="/brand/logo14-180.png" sizes="180x180">
+  <!-- Compiled Tailwind + self-hosted fonts (see landing-input.css / tailwind.landing.config.ts, built by `npm run build:landing`). -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-cyrillic.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
+  <link rel="preload" as="image" href="/brand/hero-graduate.webp" imagesrcset="/brand/hero-graduate-960.webp 960w, /brand/hero-graduate.webp 1920w" imagesizes="(min-width: 768px) 840px, 450px" fetchpriority="high">
+  <link rel="stylesheet" href="/landing.css">
   <link rel="dns-prefetch" href="https://widget.trustpilot.com">
-  <!-- TrustBox script -->
-  <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
-  <!-- End TrustBox script -->
+  <!-- The Trustpilot TrustBox bootstrap is loaded lazily next to the widget (reviews section). -->
   <script defer src="/cookie-consent.js"></script>
   <script defer src="/discount-popup.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap"
-    rel="stylesheet">
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-      }
-    }
-  </script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            primary: {
-              50: '#F0F6FC',
-              100: '#E0EDF8',
-              200: '#C5DDF1',
-              300: '#9AC2E8',
-              400: '#5899E2',
-              500: '#5899E2',
-              600: '#335C81',
-              700: '#274060',
-              800: '#1B2845',
-              900: '#12192E',
-            },
-            accent: {
-              blue: '#5899E2',
-              lightblue: '#E0EDF8',
-              purple: '#335C81',
-              navy: '#1B2845',
-            }
-          }
-        }
-      }
-    }
-  </script>
   <style>
     :root {
       --figure-blue: #5899E2;
@@ -438,7 +395,7 @@
     <div class="max-w-7xl mx-auto px-5 sm:px-6 py-4 flex items-center justify-between">
       <!-- Logo -->
       <div class="flex items-center gap-2">
-        <img src="/brand/logo14.png" alt="MaturaHelp logo" class="w-8 h-8 object-contain" width="1254" height="1254" loading="eager" decoding="async">
+        <img src="/brand/logo14-64.webp" srcset="/brand/logo14-64.webp 1x, /brand/logo14-128.webp 2x" alt="MaturaHelp logo" class="w-8 h-8 object-contain" width="64" height="64" loading="eager" decoding="async">
         <span class="logo-wordmark text-xl">
           <span class="logo-matura">Matura</span><span class="logo-help">Help</span>
         </span>
@@ -557,26 +514,25 @@
         <div class="relative flex justify-center mt-4 md:mt-0 hero-visual">
           <div class="hero-stage relative">
           <!-- Girl image -->
-          <img src="/brand/hero-graduate.webp" alt="Завършваща ученичка с шапка и диплома — MaturaHelp платформа за НВО и ДЗИ" class="hero-graduate absolute object-contain z-10 pointer-events-none" width="1920" height="1080" fetchpriority="high" decoding="async" loading="eager">
+          <img src="/brand/hero-graduate.webp" srcset="/brand/hero-graduate-960.webp 960w, /brand/hero-graduate.webp 1920w" sizes="(min-width: 768px) 840px, 450px" alt="Завършваща ученичка с шапка и диплома — MaturaHelp платформа за НВО и ДЗИ" class="hero-graduate absolute object-contain z-10 pointer-events-none" width="1920" height="1080" fetchpriority="high" decoding="async" loading="eager">
           <div class="hero-circle relative">
             <div class="w-full h-full rounded-full bg-white shadow-2xl relative" style="z-index: 5;"></div>
 
-            <!-- Real 3D chart (three.js, glass material, bottom-left) -->
+            <!-- Glass 3D figures: pre-rendered WebP (formerly live three.js scenes; the renders
+                 live in public/brand/hero-orb-*.webp, 4x the on-screen size). -->
             <div class="hero-orb hero-orb-chart absolute pointer-events-none z-20 float-book">
-              <canvas id="chartCanvas3d" class="w-full h-full"
-                style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));"></canvas>
+              <img src="/brand/hero-orb-chart.webp" alt="" width="600" height="600" class="w-full h-full" decoding="async"
+                style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));">
             </div>
 
-            <!-- Real 3D graduation cap (three.js, glass material) -->
             <div class="hero-orb hero-orb-cap absolute pointer-events-none z-20 float-book">
-              <canvas id="capCanvas3d" class="w-full h-full"
-                style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));"></canvas>
+              <img src="/brand/hero-orb-cap.webp" alt="" width="560" height="560" class="w-full h-full" decoding="async"
+                style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));">
             </div>
 
-            <!-- Real 3D play icon (three.js, glass material) -->
             <div class="hero-orb hero-orb-play absolute pointer-events-none z-20 float-book">
-              <canvas id="playCanvas3d" class="w-full h-full"
-                style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));"></canvas>
+              <img src="/brand/hero-orb-play.webp" alt="" width="600" height="600" class="w-full h-full" decoding="async"
+                style="filter: drop-shadow(0 14px 22px rgba(var(--figure-blue-rgb), 0.38));">
             </div>
           </div>
           </div>
@@ -709,11 +665,15 @@
                 if (!v) return;
                 var c = navigator.connection || {};
                 if (c.saveData || /(^|-)2g$/.test(c.effectiveType || '')) return;
-                var warm = function () { v.preload = 'auto'; v.load(); };
-                if (!('IntersectionObserver' in window)) { warm(); return; }
+                // Desktop: warm the whole file shortly before the player scrolls into view.
+                // Mobile: only the metadata when the player is about to be visible — the full
+                // 1.2 MB is fetched when the user taps play, not on every visit.
+                if (!('IntersectionObserver' in window)) return;
+                var desktop = window.matchMedia && window.matchMedia('(min-width: 768px)').matches;
+                var warm = function () { v.preload = desktop ? 'auto' : 'metadata'; v.load(); };
                 var io = new IntersectionObserver(function (entries) {
                   if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); warm(); }
-                }, { rootMargin: '900px 0px' });
+                }, { rootMargin: desktop ? '300px 0px' : '0px' });
                 io.observe(v);
               })();
             </script>
@@ -1278,16 +1238,16 @@
             система.</p>
           <div class="space-y-3 sm:space-y-4 mb-7 md:mb-8">
             <div class="flex items-start sm:items-center gap-3">
-              <img src="/nvo_pdfs/LANDING PAGE/4th page l page images/Gemini_Generated_Image_f3p7pbf3p7pbf3p7.png?v=2"
-                alt="" class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 object-contain" loading="lazy" decoding="async" width="2816" height="1536">
+              <img src="/nvo_pdfs/LANDING PAGE/4th page l page images/all-in-one-place-320.webp"
+                alt="Икона: теория, видео и тестове, събрани на едно място" class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 object-contain" loading="lazy" decoding="async" width="320" height="175">
               <div>
                 <h4 class="text-sm font-bold text-accent-navy">Всичко на едно място</h4>
                 <p class="text-xs text-gray-500 leading-relaxed">Без лутане между сайтове, файлове и клипове</p>
               </div>
             </div>
             <div class="flex items-start sm:items-center gap-3">
-              <img src="/nvo_pdfs/LANDING PAGE/4th page l page images/Gemini_Generated_Image_go9fm2go9fm2go9f.png?v=2"
-                alt="" class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 object-contain" loading="lazy" decoding="async" width="2816" height="1536">
+              <img src="/nvo_pdfs/LANDING PAGE/4th page l page images/real-progress-320.webp"
+                alt="Икона: отметка за проследен напредък" class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 object-contain" loading="lazy" decoding="async" width="320" height="175">
               <div>
                 <h4 class="text-sm font-bold text-accent-navy">Реален напредък</h4>
                 <p class="text-xs text-gray-500 leading-relaxed">Виждаш какво си минал и какво ти остава</p>
@@ -1549,6 +1509,33 @@
           <a href="https://www.trustpilot.com/review/maturahelp.com" target="_blank" rel="noopener">Trustpilot</a>
         </div>
         <!-- End TrustBox widget -->
+        <script>
+          /* TrustBox bootstrap (~1.7 s main-thread on mobile) is fetched only when the widget
+             is about 400px from the viewport. The static link above is the no-JS fallback. */
+          (function () {
+            var box = document.querySelector('.trustpilot-widget');
+            if (!box) return;
+            var loaded = false;
+            function load() {
+              if (loaded) return;
+              loaded = true;
+              var s = document.createElement('script');
+              s.src = 'https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
+              s.async = true;
+              s.onload = function () {
+                if (window.Trustpilot && typeof window.Trustpilot.loadFromElement === 'function') {
+                  window.Trustpilot.loadFromElement(box, true);
+                }
+              };
+              document.head.appendChild(s);
+            }
+            if (!('IntersectionObserver' in window)) { load(); return; }
+            var io = new IntersectionObserver(function (entries) {
+              if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); load(); }
+            }, { rootMargin: '400px 0px' });
+            io.observe(box);
+          })();
+        </script>
       </div>
     </div>
   </section>
@@ -1961,7 +1948,7 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-7 sm:gap-8 mb-10 md:mb-12">
         <div class="col-span-2 md:col-span-1">
           <div class="flex items-center gap-2 mb-5">
-            <img src="/brand/logo14.png" alt="MaturaHelp logo" class="w-8 h-8 object-contain" width="1254" height="1254" loading="lazy" decoding="async">
+            <img src="/brand/logo14-64.webp" srcset="/brand/logo14-64.webp 1x, /brand/logo14-128.webp 2x" alt="MaturaHelp logo" class="w-8 h-8 object-contain" width="64" height="64" loading="lazy" decoding="async">
             <span class="logo-wordmark text-lg">
               <span class="logo-matura">Matura</span><span class="logo-help">Help</span>
             </span>
@@ -2035,333 +2022,6 @@
     </div>
   </footer>
 
-  <script type="module">
-    import * as THREE from 'three';
-    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-    import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
-
-    const FIGURE_BLUE = 0x79a8f6;
-    const FIGURE_BLUE_DARK = 0x5a87d8;
-    const FIGURE_BLUE_LIGHT = 0xe1ecff;
-
-    const canvas = document.getElementById('capCanvas3d');
-    if (canvas) {
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-
-      const scene = new THREE.Scene();
-
-      const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-      camera.position.set(-3.8, 2.6, 5.5);
-      camera.lookAt(0, 0, 0);
-
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setSize(width, height, false);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.0;
-
-      const pmrem = new THREE.PMREMGenerator(renderer);
-      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-
-      const ambient = new THREE.AmbientLight(0xffffff, 0.4);
-      scene.add(ambient);
-      const dir = new THREE.DirectionalLight(0xffffff, 1.3);
-      dir.position.set(5, 10, 7);
-      scene.add(dir);
-      const rim = new THREE.DirectionalLight(0xbfdbfe, 0.7);
-      rim.position.set(-6, 3, -4);
-      scene.add(rim);
-
-      const glassMat = new THREE.MeshPhysicalMaterial({
-        color: FIGURE_BLUE,
-        roughness: 0.12,
-        metalness: 0,
-        transmission: 0.6,
-        thickness: 1.4,
-        ior: 1.45,
-        transparent: true,
-        opacity: 0.92,
-        clearcoat: 1,
-        clearcoatRoughness: 0.05,
-        attenuationColor: FIGURE_BLUE_DARK,
-        attenuationDistance: 1.2
-      });
-      const topPlateMat = new THREE.MeshPhysicalMaterial({
-        color: FIGURE_BLUE,
-        roughness: 0.18,
-        metalness: 0,
-        transmission: 0,
-        transparent: false,
-        opacity: 1,
-        clearcoat: 1,
-        clearcoatRoughness: 0.08
-      });
-      const blackMat = glassMat;
-      const goldMat = glassMat;
-
-      const cap = new THREE.Group();
-
-      const base = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 1.2, 32), blackMat);
-      cap.add(base);
-
-      const topPlate = new THREE.Mesh(new RoundedBoxGeometry(3.1, 0.2, 3.1, 4, 0.045), topPlateMat);
-      topPlate.position.y = 0.65;
-      cap.add(topPlate);
-
-      const button = new THREE.Mesh(new THREE.SphereGeometry(0.15, 32, 32), blackMat);
-      button.position.y = 0.75;
-      cap.add(button);
-
-      const tassel = new THREE.Group();
-      const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.5, 8), goldMat);
-      cord.rotation.z = Math.PI / 2.5;
-      cord.position.set(0.7, 0.75, 0);
-      tassel.add(cord);
-
-      const drop = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1, 8), goldMat);
-      drop.position.set(1.4, 0.3, 0);
-      tassel.add(drop);
-
-      const ball = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), goldMat);
-      ball.position.set(1.4, -0.2, 0);
-      tassel.add(ball);
-
-      const fringe = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.4, 16), goldMat);
-      fringe.position.set(1.4, -0.5, 0);
-      tassel.add(fringe);
-
-      cap.add(tassel);
-      cap.rotation.y = 0.9;
-      cap.rotation.x = 0.22;
-      cap.rotation.z = -0.08;
-      scene.add(cap);
-
-      renderer.render(scene, camera);
-
-      window.addEventListener('resize', () => {
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h, false);
-        renderer.render(scene, camera);
-      });
-    }
-
-    // ===== 3D Chart =====
-    const chartCanvas = document.getElementById('chartCanvas3d');
-    if (chartCanvas) {
-      const w = chartCanvas.clientWidth;
-      const h = chartCanvas.clientHeight;
-
-      const scene = new THREE.Scene();
-
-      const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
-      camera.position.set(5, 3.5, 7);
-      camera.lookAt(0, 0.2, 0);
-
-      const renderer = new THREE.WebGLRenderer({ canvas: chartCanvas, antialias: true, alpha: true });
-      renderer.setSize(w, h, false);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.0;
-
-      const pmrem = new THREE.PMREMGenerator(renderer);
-      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-      const dir = new THREE.DirectionalLight(0xffffff, 1.3);
-      dir.position.set(5, 10, 7);
-      scene.add(dir);
-      const rim = new THREE.DirectionalLight(0xbfdbfe, 0.7);
-      rim.position.set(-6, 3, -4);
-      scene.add(rim);
-
-      const glassMat = new THREE.MeshPhysicalMaterial({
-        color: FIGURE_BLUE,
-        roughness: 0.12,
-        metalness: 0,
-        transmission: 0.6,
-        thickness: 1.4,
-        ior: 1.45,
-        transparent: true,
-        opacity: 0.92,
-        clearcoat: 1,
-        clearcoatRoughness: 0.05,
-        attenuationColor: FIGURE_BLUE_DARK,
-        attenuationDistance: 1.2
-      });
-
-      const chart = new THREE.Group();
-
-      // Bars
-      const heights = [1.0, 1.8, 2.6, 3.4];
-      const xs = [-2.4, -0.8, 0.8, 2.4];
-      const baseY = -2;
-      for (let i = 0; i < 4; i++) {
-        const bar = new THREE.Mesh(
-          new RoundedBoxGeometry(1, heights[i], 1, 5, 0.16),
-          glassMat
-        );
-        bar.position.set(xs[i], baseY + heights[i] / 2, 0);
-        chart.add(bar);
-      }
-
-      // Arrow: curved tube rising over bars
-      const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-2.8, -0.9, 0.55),
-        new THREE.Vector3(-1.2, 0.5, 0.55),
-        new THREE.Vector3(0.4, -0.3, 0.55),
-        new THREE.Vector3(2.2, 1.8, 0.55)
-      ]);
-      const tube = new THREE.Mesh(
-        new THREE.TubeGeometry(curve, 60, 0.16, 16, false),
-        glassMat
-      );
-      chart.add(tube);
-
-      // Arrowhead cone at curve end, oriented along tangent
-      const endPoint = curve.getPoint(1);
-      const tangent = curve.getTangent(1).normalize();
-      const cone = new THREE.Mesh(
-        new THREE.ConeGeometry(0.38, 0.9, 20),
-        glassMat
-      );
-      cone.position.copy(endPoint).add(tangent.clone().multiplyScalar(0.4));
-      const up = new THREE.Vector3(0, 1, 0);
-      const quat = new THREE.Quaternion().setFromUnitVectors(up, tangent);
-      cone.quaternion.copy(quat);
-      chart.add(cone);
-
-      chart.rotation.y = -0.25;
-      chart.rotation.x = 0.05;
-      scene.add(chart);
-
-      renderer.render(scene, camera);
-
-      window.addEventListener('resize', () => {
-        const cw = chartCanvas.clientWidth;
-        const ch = chartCanvas.clientHeight;
-        camera.aspect = cw / ch;
-        camera.updateProjectionMatrix();
-        renderer.setSize(cw, ch, false);
-        renderer.render(scene, camera);
-      });
-    }
-
-    // ===== 3D Play Icon =====
-    const playCanvas = document.getElementById('playCanvas3d');
-    if (playCanvas) {
-      const w = playCanvas.clientWidth;
-      const h = playCanvas.clientHeight;
-
-      const scene = new THREE.Scene();
-
-      const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
-      camera.position.set(-0.3, 0.1, 5.2);
-      camera.lookAt(0, 0, 0);
-
-      const renderer = new THREE.WebGLRenderer({ canvas: playCanvas, antialias: true, alpha: true });
-      renderer.setSize(w, h, false);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.0;
-
-      const pmrem = new THREE.PMREMGenerator(renderer);
-      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-      const dir = new THREE.DirectionalLight(0xffffff, 1.3);
-      dir.position.set(5, 10, 7);
-      scene.add(dir);
-      const rim = new THREE.DirectionalLight(0xbfdbfe, 0.7);
-      rim.position.set(-6, 3, -4);
-      scene.add(rim);
-
-      const glassMat = new THREE.MeshPhysicalMaterial({
-        color: FIGURE_BLUE,
-        roughness: 0.12,
-        metalness: 0,
-        transmission: 0.6,
-        thickness: 1.4,
-        ior: 1.45,
-        transparent: true,
-        opacity: 0.92,
-        clearcoat: 1,
-        clearcoatRoughness: 0.05,
-        attenuationColor: FIGURE_BLUE_DARK,
-        attenuationDistance: 1.2
-      });
-
-      const highlightMat = new THREE.MeshPhysicalMaterial({
-        color: FIGURE_BLUE_LIGHT,
-        roughness: 0.08,
-        metalness: 0,
-        transmission: 0.4,
-        thickness: 0.6,
-        ior: 1.2,
-        transparent: true,
-        opacity: 0.3,
-        clearcoat: 1,
-        clearcoatRoughness: 0.03
-      });
-
-      const playShape = new THREE.Shape();
-      playShape.moveTo(-1.03, -0.96);
-      playShape.quadraticCurveTo(-1.18, -1.09, -1.18, -0.8);
-      playShape.lineTo(-1.18, 0.8);
-      playShape.quadraticCurveTo(-1.18, 1.09, -0.92, 0.95);
-      playShape.lineTo(0.68, 0.11);
-      playShape.quadraticCurveTo(0.9, 0, 0.68, -0.13);
-      playShape.lineTo(-0.92, -0.95);
-      playShape.quadraticCurveTo(-1.15, -1.06, -1.03, -0.96);
-      playShape.closePath();
-
-      const playGeometry = new THREE.ExtrudeGeometry(playShape, {
-        depth: 0.46,
-        bevelEnabled: true,
-        bevelSegments: 8,
-        steps: 1,
-        bevelSize: 0.08,
-        bevelThickness: 0.09,
-        curveSegments: 24
-      });
-      playGeometry.center();
-
-      const playIcon = new THREE.Group();
-
-      const playMesh = new THREE.Mesh(playGeometry, glassMat);
-      playMesh.rotation.y = -0.45;
-      playMesh.rotation.x = 0.12;
-      playMesh.rotation.z = -0.08;
-      playIcon.add(playMesh);
-
-      const shine = new THREE.Mesh(
-        new RoundedBoxGeometry(0.94, 0.2, 0.12, 5, 0.08),
-        highlightMat
-      );
-      shine.position.set(-0.24, 0.24, 0.28);
-      shine.rotation.z = -0.55;
-      shine.rotation.x = 0.12;
-      playIcon.add(shine);
-
-      scene.add(playIcon);
-      renderer.render(scene, camera);
-
-      window.addEventListener('resize', () => {
-        const cw = playCanvas.clientWidth;
-        const ch = playCanvas.clientHeight;
-        camera.aspect = cw / ch;
-        camera.updateProjectionMatrix();
-        renderer.setSize(cw, ch, false);
-        renderer.render(scene, camera);
-      });
-    }
-  </script>
 
   <!-- Auth state: swap login/register CTAs only if user has a real Supabase session. -->
   <!-- Note: this is a UX convenience — route protection lives in middleware / server components. -->

@@ -6,11 +6,11 @@ import test from 'node:test'
 const repoRoot = path.resolve(import.meta.dirname, '..')
 const landingHtml = fs.readFileSync(path.join(repoRoot, 'landing-source.html'), 'utf8')
 
-test('landing page loads the Trustpilot TrustBox bootstrap script in the head', () => {
-  assert.match(
-    landingHtml,
-    /<script type="text\/javascript" src="\/\/widget\.trustpilot\.com\/bootstrap\/v5\/tp\.widget\.bootstrap\.min\.js" async><\/script>/,
-  )
+test('landing page loads the Trustpilot TrustBox bootstrap lazily, not as a blocking head script', () => {
+  // The bootstrap is injected by an IntersectionObserver next to the widget (see the reviews section).
+  assert.match(landingHtml, /s\.src = 'https:\/\/widget\.trustpilot\.com\/bootstrap\/v5\/tp\.widget\.bootstrap\.min\.js'/)
+  assert.match(landingHtml, /new IntersectionObserver\([\s\S]{0,400}io\.observe\(box\)/)
+  assert.doesNotMatch(landingHtml, /<script[^>]*src="(https:)?\/\/widget\.trustpilot\.com\/bootstrap/)
 })
 
 test('landing page renders the Trustpilot Review Collector widget in the reviews section', () => {
