@@ -138,8 +138,14 @@ function normalizeExam(exam: RawEnglishExam, seenIds: Map<string, number>): Offi
   }
 }
 
+// Показваме само изпитите в днешния формат (B2, от 2022 г. нататък). Старият формат
+// 2007–2021 остава в датасета, но не се предлага на учениците: задачите му с текст с
+// празнини нямат текст, няколко изпита са без ключ и форматът вече не се дава.
+const FIRST_CURRENT_FORMAT_YEAR = 2022
+
 export const officialEnglishMockExams: OfficialEnglishExam[] = (
   rawEnglishDataset as { exams: RawEnglishExam[] }
 ).exams
+  .filter((exam) => exam.year >= FIRST_CURRENT_FORMAT_YEAR)
   .map((exam) => normalizeExam(exam, normalizeExamSeenIds))
   .filter((exam) => exam.questions.length > 0)

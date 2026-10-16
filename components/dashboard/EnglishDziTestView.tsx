@@ -31,6 +31,10 @@ export function EnglishDziTestView({
 
   return (
     <div className="space-y-10">
+      <p className="rounded-lg border border-border bg-gray-50 px-3 py-2 text-xs leading-relaxed text-text-muted">
+        Тренажорът включва частите Reading Comprehension и Writing от официалния изпит. Listening
+        Comprehension (задачи 1–20) не е включена, защото няма аудио.
+      </p>
       {groups.map((group) => (
         <EnglishGroup
           key={group.key}

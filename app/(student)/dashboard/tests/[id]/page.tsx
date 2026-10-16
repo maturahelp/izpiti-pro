@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { Fragment, useState, useEffect, useCallback, type ReactNode } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { TopBar } from '@/components/dashboard/TopBar'
@@ -296,10 +296,30 @@ function stripExamBoilerplate(text: string): string {
     .replace(/МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО И НАУКАТА\s*/g, '')
     .replace(/ДЪРЖАВЕН ЗРЕЛОСТЕН ИЗПИТ ПО БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА\s*/g, '')
     .replace(/\b\d{1,2}\s+[а-яА-Я]+\s+\d{4}\s+година\s*/g, '')
-    .replace(/ЧАСТ\s*[12]\s*\(Време за работа:\s*\d+\s*минути\)\s*/g, '')
+    .replace(/ЧАСТ\s*[123]\s*\(Време за работа:\s*\d+\s*минути\)\s*/g, '')
+    .replace(/Аргументативния текст напишете в листа за отговори на предвиденото място\.\s*/g, '')
     .replace(/Отговорите на задачите от \d+\. до \d+\. включително отбелязвайте в листа за отговори\.\s*/g, '')
-    .replace(/\s{2,}/g, ' ')
+    // Пазим новите редове: стиховете и абзаците в ДЗИ БЕЛ са записани с \n / \n\n.
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/[ \t]*\n[ \t]*/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
     .trim()
+}
+
+// Контекстните текстове на ДЗИ БЕЛ маркират подчертаните места с __...__
+// (задачите питат за „подчертания абзац/израз/изречение“).
+function renderUnderlineMarkup(text: string): ReactNode {
+  const parts = text.split(/(__[\s\S]+?__)/)
+  if (parts.length === 1) return text
+  return parts.map((part, index) =>
+    part.startsWith('__') && part.endsWith('__') ? (
+      <u key={index} className="decoration-primary/60 underline-offset-4">
+        {part.slice(2, -2)}
+      </u>
+    ) : (
+      <Fragment key={index}>{part}</Fragment>
+    )
+  )
 }
 
 function cleanMathChoiceText(text: string): string {
@@ -470,6 +490,7 @@ function splitContextText(exam: NvoExam): { intro: string; body: string } {
     /^Прочетете текста, запознайте се със съдържанието на таблицата и изпълнете от 1\. до 16\. задача включително\.\s*/i,
     /^Запознайте се с текста и диаграмата и изпълнете задачите към тях \(от 14\. до 21\.\s*включително\)\.\s*/i,
     /^Запознайте се с текста и таблицата и изпълнете задачите към тях \(от 14\. до 21\.\s*включително\)\.\s*/i,
+    /^Прочетете двата текста и изпълнете задачите към тях \(от 14\. до 21\.\s*включително\)\.\s*/i,
   ]
 
   let matched = true
@@ -1069,7 +1090,9 @@ export default function TestPage() {
                   </div>
                 )}
                 {contextParts.body && (
-                  <p className="text-sm text-text leading-relaxed whitespace-pre-wrap">{contextParts.body}</p>
+                  <p className="text-sm text-text leading-relaxed whitespace-pre-wrap">
+                    {renderUnderlineMarkup(contextParts.body)}
+                  </p>
                 )}
                 {hasChart && <ChartCard chart={exam.chart!} />}
               </div>
@@ -1266,7 +1289,11 @@ function QuestionCard({
     const parts = stripExamBoilerplate(normalizeMathText(question.question || '')).split('\n\n').filter(Boolean)
     questionContent = (
       <>
-        {parts.map((part, i) => <p key={i} className={i > 0 ? 'mt-2' : ''}>{part}</p>)}
+        {parts.map((part, i) => (
+          <p key={i} className={cn('whitespace-pre-line', i > 0 && 'mt-2')}>
+            {part}
+          </p>
+        ))}
       </>
     )
   }
