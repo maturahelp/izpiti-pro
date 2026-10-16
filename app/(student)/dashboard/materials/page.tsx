@@ -382,38 +382,65 @@ function DziEssayMaterialModal({
   material: DziEssayMaterial
   onClose: () => void
 }) {
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+      className={cn(
+        'fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center',
+        isFullscreen ? 'p-0' : 'p-4 md:p-8'
+      )}
       onClick={onClose}
     >
       <div
-        className="w-full max-w-5xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+        className={cn(
+          'w-full bg-white border border-border shadow-2xl overflow-hidden flex flex-col',
+          isFullscreen ? 'max-w-none h-full rounded-none border-0' : 'max-w-5xl h-[86vh] rounded-2xl'
+        )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby={`dzi-essay-title-${material.id}`}
         aria-describedby={`dzi-essay-description-${material.id}`}
       >
-        <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+        <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border flex-shrink-0">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[#115E59]">{material.group}</p>
             <h3 id={`dzi-essay-title-${material.id}`} className="text-lg md:text-xl font-bold text-text">{material.title}</h3>
             <p id={`dzi-essay-description-${material.id}`} className="mt-1 text-sm text-text-muted">{material.description}</p>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
-            aria-label="Затвори"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsFullscreen((value) => !value)}
+              className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center"
+              aria-label={isFullscreen ? 'Изход от цял екран' : 'Цял екран'}
+              title={isFullscreen ? 'Изход от цял екран' : 'Цял екран'}
+            >
+              {isFullscreen ? (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" />
+                </svg>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center"
+              aria-label="Затвори"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <div className="h-[calc(86vh-112px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
+        <div className="flex-1 min-h-0 overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
           <div className="space-y-6 rounded-xl border border-border bg-white p-5 md:p-6">
             {material.sections.map((section) => (
               <DziEssaySectionView key={`${material.id}-${section.title}`} section={section} />
