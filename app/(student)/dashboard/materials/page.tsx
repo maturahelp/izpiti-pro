@@ -330,6 +330,40 @@ function DziEssaySectionView({ section }: { section: DziEssaySection }) {
   )
 }
 
+function FullscreenToggleButton({
+  isFullscreen,
+  onToggle,
+  className,
+}: {
+  isFullscreen: boolean
+  onToggle: () => void
+  className?: string
+}) {
+  const label = isFullscreen ? 'Изход от цял екран' : 'Цял екран'
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className={cn(
+        'rounded-full border border-border bg-white text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0',
+        className ?? 'w-8 h-8'
+      )}
+      aria-label={label}
+      title={label}
+    >
+      {isFullscreen ? (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" />
+        </svg>
+      ) : (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" />
+        </svg>
+      )}
+    </button>
+  )
+}
+
 function DziEssayMaterialModal({
   material,
   onClose,
@@ -484,6 +518,9 @@ export default function MaterialsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [theoryIndex, setTheoryIndex] = useState<number | null>(null)
   const [activeEnglishMaterial, setActiveEnglishMaterial] = useState<EnglishWritingMaterial | null>(null)
+  const [isEnglishMaterialFullscreen, setIsEnglishMaterialFullscreen] = useState(false)
+  const [isWorkFullscreen, setIsWorkFullscreen] = useState(false)
+  const [isNvoWorkFullscreen, setIsNvoWorkFullscreen] = useState(false)
   const [activeDziEssayMaterial, setActiveDziEssayMaterial] = useState<DziEssayMaterial | null>(null)
   const [fullscreenImageSrc, setFullscreenImageSrc] = useState<string | null>(null)
   const [fullscreenImageZoom, setFullscreenImageZoom] = useState(1)
@@ -640,6 +677,7 @@ export default function MaterialsPage() {
 
     setActiveWorkPanel(panel)
     setIsActiveWorkVideoPlaying(false)
+    setIsWorkFullscreen(false)
   }
 
   const handleNvoWorkPanelChange = (panel: WorkPanel) => {
@@ -655,6 +693,7 @@ export default function MaterialsPage() {
 
     setActiveNvoWorkPanel(panel)
     setIsActiveNvoVideoPlaying(false)
+    setIsNvoWorkFullscreen(false)
   }
 
   const handleWorkWordMark = (wordIndex: number) => {
@@ -715,6 +754,7 @@ export default function MaterialsPage() {
     }
 
     setActiveEnglishMaterial(material)
+    setIsEnglishMaterialFullscreen(false)
   }
 
   const openDziEssayMaterial = (material: DziEssayMaterial) => {
@@ -937,6 +977,7 @@ export default function MaterialsPage() {
     setActiveWorkPanel('cover')
     setIsActiveWorkVideoPlaying(false)
     setIsWorkReadingMarkerEnabled(false)
+    setIsWorkFullscreen(false)
   }
 
   const openNvoWork = (workId: string) => {
@@ -944,6 +985,7 @@ export default function MaterialsPage() {
     setActiveNvoWorkPanel('cover')
     setIsActiveNvoVideoPlaying(false)
     setIsNvoReadingMarkerEnabled(false)
+    setIsNvoWorkFullscreen(false)
   }
 
   useEffect(() => {
@@ -1405,14 +1447,20 @@ export default function MaterialsPage() {
 
         {activeNvoWork && (
           <div
-            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-start lg:items-center justify-center overflow-y-auto"
+            className={cn(
+              'fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex justify-center',
+              isNvoWorkFullscreen ? 'p-0 items-stretch overflow-hidden' : 'p-4 md:p-8 items-start lg:items-center overflow-y-auto'
+            )}
             onClick={() => setActiveNvoWorkId(null)}
           >
             <div
-              className="w-full max-w-5xl rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+              className={cn(
+                'w-full bg-white border border-border shadow-2xl overflow-hidden',
+                isNvoWorkFullscreen ? 'max-w-none h-full rounded-none border-0 flex flex-col' : 'max-w-5xl rounded-2xl'
+              )}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border flex-shrink-0">
                 <div>
                   <p className="text-xs font-semibold text-primary uppercase tracking-wide">Литература — 7. клас</p>
                   <h3 className="text-lg md:text-xl font-bold text-text">{activeNvoWork.title}</h3>
@@ -1430,11 +1478,23 @@ export default function MaterialsPage() {
                   </svg>
                 </button>
               </div>
-              <div className="p-4 md:p-6">
-                <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                  <div className="p-4 md:p-6 bg-[#F8FBFF] border-t lg:border-t-0 lg:border-r border-border">
+              <div className={cn(isNvoWorkFullscreen ? 'flex-1 min-h-0 flex flex-col' : 'p-4 md:p-6')}>
+                <div
+                  className={cn(
+                    'overflow-hidden',
+                    isNvoWorkFullscreen
+                      ? 'flex flex-1 min-h-0 flex-col'
+                      : 'flex flex-col-reverse lg:grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'bg-[#F8FBFF]',
+                      isNvoWorkFullscreen ? 'flex flex-1 min-h-0 flex-col p-3 md:p-5' : 'p-4 md:p-6 border-t lg:border-t-0 lg:border-r border-border'
+                    )}
+                  >
                     {activeNvoWorkPanel === 'text' ? (
-                      <div className="flex h-[60vh] max-h-[60vh] lg:h-[70vh] lg:max-h-[70vh] flex-col gap-3">
+                      <div className={cn('flex flex-col gap-3', isNvoWorkFullscreen ? 'flex-1 min-h-0' : 'h-[60vh] max-h-[60vh] lg:h-[70vh] lg:max-h-[70vh]')}>
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
@@ -1454,6 +1514,11 @@ export default function MaterialsPage() {
                             </svg>
                           </button>
                           <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
+                          <FullscreenToggleButton
+                            className="ml-auto w-7 h-7"
+                            isFullscreen={isNvoWorkFullscreen}
+                            onToggle={() => setIsNvoWorkFullscreen((value) => !value)}
+                          />
                         </div>
 
                         <div className="min-h-0 flex-1 overflow-y-auto rounded-xl border border-border bg-white p-4">
@@ -1497,8 +1562,16 @@ export default function MaterialsPage() {
                         </div>
                       </div>
                     ) : activeNvoWorkPanel === 'summary' ? (
-                      <div className="w-full max-h-[60vh] lg:max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                        <h4 className="mb-3 text-sm font-semibold text-[#1E4D7B]">„{activeNvoWork.title}“</h4>
+                      <div className={cn('flex flex-col gap-3', isNvoWorkFullscreen && 'flex-1 min-h-0')}>
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-[#1E4D7B]">„{activeNvoWork.title}“</h4>
+                          <FullscreenToggleButton
+                            className="ml-auto w-7 h-7"
+                            isFullscreen={isNvoWorkFullscreen}
+                            onToggle={() => setIsNvoWorkFullscreen((value) => !value)}
+                          />
+                        </div>
+                        <div className={cn('w-full overflow-y-auto rounded-xl border border-border bg-white p-4', isNvoWorkFullscreen ? 'flex-1 min-h-0' : 'max-h-[60vh] lg:max-h-[70vh]')}>
                         {activeNvoWorkSummary.length > 0 ? (
                           <div className="space-y-2 text-sm leading-7 text-text">
                             {activeNvoWorkSummary.map((sentence, index) => (
@@ -1508,6 +1581,7 @@ export default function MaterialsPage() {
                         ) : (
                           <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
                         )}
+                        </div>
                       </div>
                     ) : activeNvoWorkPanel === 'video' && activeNvoVideoPath && isActiveNvoVideoPlaying ? (
                       <video
@@ -1563,7 +1637,7 @@ export default function MaterialsPage() {
                       />
                     )}
                   </div>
-                  <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                  <div className={cn('p-4 md:p-6 bg-white flex flex-col justify-center gap-3', isNvoWorkFullscreen && 'hidden')}>
                     <button type="button" onClick={() => handleNvoWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
                     <button
                       type="button"
@@ -2089,34 +2163,46 @@ export default function MaterialsPage() {
 
       {activeEnglishMaterial && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
+          className={cn(
+            'fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center',
+            isEnglishMaterialFullscreen ? 'p-0' : 'p-4 md:p-8'
+          )}
           onClick={() => setActiveEnglishMaterial(null)}
         >
           <div
-            className="w-full max-w-6xl h-[86vh] rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+            className={cn(
+              'w-full bg-white border border-border shadow-2xl overflow-hidden flex flex-col',
+              isEnglishMaterialFullscreen ? 'max-w-none h-full rounded-none border-0' : 'max-w-6xl h-[86vh] rounded-2xl'
+            )}
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby={`english-material-title-${activeEnglishMaterial.id}`}
           >
-            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
+            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border flex-shrink-0">
               <div>
                 <h3 id={`english-material-title-${activeEnglishMaterial.id}`} className="text-lg md:text-xl font-bold text-text">{activeEnglishMaterial.title}</h3>
                 <p className="text-sm text-text-muted mt-1">{activeEnglishMaterial.description}</p>
               </div>
-              <button
-                type="button"
-                onClick={() => setActiveEnglishMaterial(null)}
-                className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
-                aria-label="Затвори"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <FullscreenToggleButton
+                  isFullscreen={isEnglishMaterialFullscreen}
+                  onToggle={() => setIsEnglishMaterialFullscreen((value) => !value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setActiveEnglishMaterial(null)}
+                  className="w-8 h-8 rounded-full border border-border text-text-muted hover:text-text hover:bg-gray-50 transition-colors flex items-center justify-center flex-shrink-0"
+                  aria-label="Затвори"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
-            <div className="h-[calc(86vh-100px)] overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
+            <div className="flex-1 min-h-0 overflow-y-auto bg-[#F8FBFF] p-5 md:p-6">
               <EnglishWritingMaterialView material={activeEnglishMaterial} />
             </div>
           </div>
@@ -2132,14 +2218,20 @@ export default function MaterialsPage() {
 
       {activeWork && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm p-4 md:p-8 flex items-start lg:items-center justify-center overflow-y-auto"
+          className={cn(
+            'fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex justify-center',
+            isWorkFullscreen ? 'p-0 items-stretch overflow-hidden' : 'p-4 md:p-8 items-start lg:items-center overflow-y-auto'
+          )}
           onClick={() => setActiveWorkId(null)}
         >
           <div
-            className="w-full max-w-5xl rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
+            className={cn(
+              'w-full bg-white border border-border shadow-2xl overflow-hidden',
+              isWorkFullscreen ? 'max-w-none h-full rounded-none border-0 flex flex-col' : 'max-w-5xl rounded-2xl'
+            )}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+            <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border flex-shrink-0">
               <div>
                 <p className="text-xs font-semibold text-primary uppercase tracking-wide">Литература</p>
                 <h3 className="text-lg md:text-xl font-bold text-text">{activeWork.title}</h3>
@@ -2158,11 +2250,23 @@ export default function MaterialsPage() {
               </button>
             </div>
 
-            <div className="p-4 md:p-6">
-              <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border overflow-hidden">
-                <div className="p-4 md:p-6 bg-[#F8FBFF] border-t lg:border-t-0 lg:border-r border-border">
+            <div className={cn(isWorkFullscreen ? 'flex-1 min-h-0 flex flex-col' : 'p-4 md:p-6')}>
+              <div
+                className={cn(
+                  'overflow-hidden',
+                  isWorkFullscreen
+                    ? 'flex flex-1 min-h-0 flex-col'
+                    : 'flex flex-col-reverse lg:grid lg:grid-cols-[1.2fr_0.8fr] rounded-xl border border-border'
+                )}
+              >
+                <div
+                  className={cn(
+                    'bg-[#F8FBFF]',
+                    isWorkFullscreen ? 'flex flex-1 min-h-0 flex-col p-3 md:p-5' : 'p-4 md:p-6 border-t lg:border-t-0 lg:border-r border-border'
+                  )}
+                >
                   {activeWorkPanel === 'text' ? (
-                    <div className="flex h-[60vh] max-h-[60vh] lg:h-[70vh] lg:max-h-[70vh] flex-col gap-3">
+                    <div className={cn('flex flex-col gap-3', isWorkFullscreen ? 'flex-1 min-h-0' : 'h-[60vh] max-h-[60vh] lg:h-[70vh] lg:max-h-[70vh]')}>
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
@@ -2182,6 +2286,11 @@ export default function MaterialsPage() {
                           </svg>
                         </button>
                         <p className="text-xs font-medium text-text-muted">Маркирай до къде си стигнал</p>
+                        <FullscreenToggleButton
+                          className="ml-auto w-7 h-7"
+                          isFullscreen={isWorkFullscreen}
+                          onToggle={() => setIsWorkFullscreen((value) => !value)}
+                        />
                       </div>
 
                       <div className="min-h-0 flex-1 overflow-y-auto rounded-xl border border-border bg-white p-4">
@@ -2225,8 +2334,16 @@ export default function MaterialsPage() {
                       </div>
                     </div>
                   ) : activeWorkPanel === 'summary' ? (
-                    <div className="w-full max-h-[60vh] lg:max-h-[70vh] overflow-y-auto rounded-xl border border-border bg-white p-4">
-                      <h4 className="text-sm font-semibold text-[#1E4D7B] mb-3">„{activeWork.title}“</h4>
+                    <div className={cn('flex flex-col gap-3', isWorkFullscreen && 'flex-1 min-h-0')}>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-sm font-semibold text-[#1E4D7B]">„{activeWork.title}“</h4>
+                        <FullscreenToggleButton
+                          className="ml-auto w-7 h-7"
+                          isFullscreen={isWorkFullscreen}
+                          onToggle={() => setIsWorkFullscreen((value) => !value)}
+                        />
+                      </div>
+                      <div className={cn('w-full overflow-y-auto rounded-xl border border-border bg-white p-4', isWorkFullscreen ? 'flex-1 min-h-0' : 'max-h-[60vh] lg:max-h-[70vh]')}>
                       {activeWorkSummary.length > 0 ? (
                         <div className="space-y-2 text-sm leading-7 text-text">
                           {activeWorkSummary.map((sentence, index) => (
@@ -2236,6 +2353,7 @@ export default function MaterialsPage() {
                       ) : (
                         <p className="text-sm text-text-muted">Резюмето за това произведение все още не е добавено.</p>
                       )}
+                      </div>
                     </div>
                   ) : activeWorkPanel === 'video' && activeWorkVideoPath && isActiveWorkVideoPlaying ? (
                     <video
@@ -2291,7 +2409,7 @@ export default function MaterialsPage() {
                     />
                   )}
                 </div>
-                <div className="p-4 md:p-6 bg-white flex flex-col justify-center gap-3">
+                <div className={cn('p-4 md:p-6 bg-white flex flex-col justify-center gap-3', isWorkFullscreen && 'hidden')}>
                   <button type="button" onClick={() => handleWorkPanelChange('text')} className="w-full rounded-xl bg-primary text-white text-sm font-semibold py-3 px-4">Текст</button>
                   <button type="button" onClick={() => handleWorkPanelChange('summary')} className="w-full rounded-xl bg-[#74A5D4] text-white text-sm font-semibold py-3 px-4">{hasPremiumAccess || isActiveWorkFree ? 'Резюме' : 'Резюме • Премиум'}</button>
                   <button type="button" onClick={() => handleWorkPanelChange('video')} className="w-full rounded-xl bg-[#1E4D7B] text-white text-sm font-semibold py-3 px-4">{canPlayVideos || isActiveWorkFree ? 'Видео урок' : 'Видео урок • Премиум'}</button>
