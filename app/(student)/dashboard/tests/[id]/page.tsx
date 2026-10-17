@@ -70,6 +70,13 @@ function fireBurstConfetti() {
 }
 import { buildUnderlinedWordQuestion } from '@/lib/underlined-word-question'
 import {
+  cleanOfficialAnswerText,
+  extractAnswerAlternatives,
+  isManualCheckAnswer,
+  matchesSubAnswer,
+  normalizeOpenAnswerText,
+} from '@/lib/official-answer'
+import {
   buildDziMatchingAnswerGuide,
   buildDziMatchingQuestionModel,
   evaluateDziMatchingQuestion,
@@ -121,6 +128,9 @@ interface NvoQuestion {
   official_answer?: string
   answer_guide?: string
   sub_answers?: Record<string, string>
+  // Официалният ключ не може да се провери с точно съвпадение (редактиращата
+  // задача, многочастни отговори) — показваме го за самопроверка.
+  manual_check?: boolean
   question_image?: string
   task_condition?: string
   points?: number
@@ -338,74 +348,24 @@ function cleanMathChoiceText(text: string): string {
     .trim()
 }
 
+// Почистването на официалните ключове (колоната „точки“ от PDF) живее в
+// lib/official-answer.ts, за да е покрито с тестове; тук само нормализираме
+// PDF глифовете преди това.
 function cleanOfficialAnswer(text: string | undefined, questionType: string): string {
   if (!text) return ''
-  let cleaned = normalizeMathText(text)
-    .replace(/^(Примерни отговори:)\s*\d+\s*/i, '$1 ')
-    .replace(/^(Възможни отговори:)\s*\d+\s*/i, '$1 ')
-    .replace(/\uf0b7/g, '•')
-    .replace(/_/g, ' ')
-    .replace(/([А-Я]\)\s*\d+)\s+\d+\s+(?=[А-Я]\))/g, '$1 ')
-    .replace(/([^\d])\s+\d+\s+(?=[А-Я]\))/g, '$1 ')
-    .replace(/([А-Яа-яA-Za-z„""«»])\s+\d+\s+(?=[А-Яа-яA-Za-z„""«»])/g, '$1 ')
-    .replace(/\b(?:Общо|Всичко):?\s*\d+(?:,\d+)?\s*т\.?.*$/gi, '')
-    .replace(/\b(?:по\s+\d+(?:,\d+)?\s*т\.?.*)$/gi, '')
-    .replace(/\b(\d+(?:,\d+)?)\s*точки?\b.*$/gi, '')
-    .replace(/\b(\d+(?:,\d+)?)\s*т\.?\b.*$/gi, '')
-    .replace(/^(Например:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
-    .replace(/^(Примерни (?:насоки|посоки)(?: за размисъл)?:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
-    .replace(/^(Възможни? отговори?:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
-    .replace(/^(Възможен отговор:)\s*\d+(?:,\d+)?\s*/i, '$1 ')
-    .replace(/\s+\d+(?:,\d+)?\s*$/g, '')
-    .replace(/\s{2,}/g, ' ')
-    .trim()
-
-  if (questionType !== 'single_choice') {
-    cleaned = cleaned
-      .replace(/(?<=[А-Яа-яA-Za-z"»""\)])\s+\d+(?:,\d+)?\s+(?=[а-яa-z])/g, ' ')
-      .replace(/\s{2,}/g, ' ')
-      .trim()
-  }
-  return cleaned
+  return cleanOfficialAnswerText(normalizeMathText(text), questionType)
 }
 
 function normalizeOpenAnswer(text: string): string {
-  return normalizeMathText(text || '')
-    .toLowerCase()
-    .replace(/["„""«»]/g, '')
-    .replace(/[.,!?;:()[\]{}]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
+  return normalizeOpenAnswerText(normalizeMathText(text || ''))
 }
 
 function extractAlternatives(cleaned: string): string[] {
-  if (!cleaned) return []
-  return cleaned
-    .replace(/^Например:\s*/i, '')
-    .replace(/^Възможни? отговори?:\s*/i, '')
-    .replace(/^Възможен отговор:\s*/i, '')
-    .split(/\s*\/\s*|\s*;\s*|\s+или\s+/i)
-    .map((p) => normalizeOpenAnswer(p))
-    .filter(Boolean)
-}
-
-// За multi-part Q25 (математика 4. клас 2021–2025): извлича всички числа
-// (разделени по ";" в expected) и проверява, че всяко се появява в user
-// input. Толерира интервали и разделители в "10 000" / "17 875".
-function matchesSubAnswer(user: string, expected: string): boolean {
-  const digitsFrom = (s: string) => (s.match(/\d+/g) || []).join(',')
-  const userDigits = digitsFrom(user)
-  if (!userDigits) return false
-  return expected.split(';').every((part) => {
-    const expDigits = digitsFrom(part)
-    if (!expDigits) return true
-    return userDigits.includes(expDigits)
-  })
+  return extractAnswerAlternatives(cleaned)
 }
 
 function isManualCheck(cleaned: string): boolean {
-  if (!cleaned) return true
-  return /примерни|насоки|посоки|размисъл|докажете|редактирана|грешка|текстът|изречение|съчувствие|ролята на|например:/i.test(cleaned)
+  return isManualCheckAnswer(cleaned)
 }
 
 function getOpenResponseLabels(question: NvoQuestion): string[] {
@@ -901,7 +861,7 @@ export default function TestPage() {
           questionNumber: q.number,
           questionText: underlinedWordDisplay
             ? `${underlinedWordDisplay.prompt} ${underlinedWordDisplay.sentenceText}`
-            : q.question,
+            : q.question.replace(/__/g, ''),
           options: underlinedWordDisplay?.choices ?? q.options ?? {},
           correctOption: q.correct_option ?? '',
           questionImage: null, userAnswer,
@@ -1306,7 +1266,7 @@ function QuestionCard({
       <>
         {parts.map((part, i) => (
           <p key={i} className={cn('whitespace-pre-line', i > 0 && 'mt-2')}>
-            {part}
+            {renderUnderlineMarkup(part)}
           </p>
         ))}
       </>
@@ -1333,7 +1293,10 @@ function QuestionCard({
     }
     const filledEntries = effectiveLabels.filter((l) => (openState[l] || '').trim())
     if (!filledEntries.length) return { mode: 'empty' as const, cleaned }
-    // Multi-part с структуриран ключ от МОН (Q25 в математика 4. клас 2021–2025).
+    // Редактиращата задача и многочастните отговори на НВО БЕЛ: самопроверка по ключа.
+    if (question.manual_check) return { mode: 'manual' as const, cleaned }
+    // Multi-part с структуриран ключ от МОН (Q25 в математика 4. клас 2021–2025,
+    // задача 24 на НВО БЕЛ — таблица за съответствие).
     if (question.sub_answers && Object.keys(question.sub_answers).length > 0) {
       const subs = question.sub_answers
       const perLabel: Record<string, 'correct' | 'incorrect' | 'empty'> = {}
@@ -1394,7 +1357,7 @@ function QuestionCard({
       {/* Question text */}
       {question.task_condition && (
         <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-relaxed text-amber-800 whitespace-pre-line">
-          {normalizeMathText(question.task_condition)}
+          {renderUnderlineMarkup(normalizeMathText(question.task_condition))}
         </div>
       )}
       <div className="text-sm font-medium text-text leading-relaxed mb-4">
