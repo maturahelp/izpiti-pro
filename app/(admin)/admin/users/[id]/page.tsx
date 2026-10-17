@@ -131,9 +131,13 @@ export default async function AdminUserDetailPage({
     }
   }
 
+  // Server Component: rendered once per request, so a per-request timestamp
+  // is intentional here (the purity rule targets re-rendering client trees).
+  // eslint-disable-next-line react-hooks/purity
+  const nowMs = Date.now()
   const banned = Boolean(
     authUser && (authUser as { banned_until?: string | null }).banned_until
-      && new Date((authUser as { banned_until?: string | null }).banned_until!).getTime() > Date.now()
+      && new Date((authUser as { banned_until?: string | null }).banned_until!).getTime() > nowMs
   )
 
   const billingPlanLabel = isPlanKey(profile.billing_plan_key ?? '')
