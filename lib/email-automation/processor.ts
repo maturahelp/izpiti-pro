@@ -1,5 +1,6 @@
 import type { User } from '@supabase/supabase-js'
 import { isPlanKey } from '@/lib/billing/plans'
+import { NVO7_BEL_EXAM_DATE_ISO, NVO7_MAT_EXAM_DATE_ISO } from '@/lib/campaigns/nvo7-exam-dates'
 import { hasActivePremium } from '@/lib/subscription-access'
 import {
   EMAIL_AUTOMATION_TEMPLATES,
@@ -297,6 +298,14 @@ export async function processEmailAutomationJobs(
       }
 
       if (job.template_key === 'nvo7_urgency_nudge') {
+        // The template interpolates the exam dates; never send it while they
+        // are still the "дата предстои да бъде обявена" placeholders.
+        if (!NVO7_BEL_EXAM_DATE_ISO || !NVO7_MAT_EXAM_DATE_ISO) {
+          await markJobSkipped(job.id, 'exam_dates_not_set')
+          skipped += 1
+          continue
+        }
+
         if (!authUser?.email_confirmed_at) {
           await markJobSkipped(job.id, 'email_not_confirmed')
           skipped += 1
