@@ -599,12 +599,35 @@ export default function MaterialsPage() {
   const hasPremiumAccess = hasFullAccessState
   const hasEnglishAccess = isPremiumUser
 
+  // Полето „Търси“ филтрира и трите списъка за 7. клас: учебни теми,
+  // литературни творби и подтеми по математика.
   const nvoLiteratureGroups = nvoLiteratureThemeOrder
     .map((theme) => ({
       theme,
-      works: nvoLiteratureWorks.filter((w) => w.theme === theme),
+      works: nvoLiteratureWorks.filter((w) => {
+        if (w.theme !== theme) return false
+        if (!normalizedQuery) return true
+        return `${w.title} ${w.author} ${w.theme}`.toLowerCase().includes(normalizedQuery)
+      }),
     }))
     .filter((group) => group.works.length > 0)
+
+  const filteredNvoLiteratureCount = nvoLiteratureGroups.reduce((acc, group) => acc + group.works.length, 0)
+
+  const filteredMath7Topics = math7Topics
+    .map((topic) => {
+      if (!normalizedQuery) return topic
+      const topicMatches = formatMathTitleText(topic.title).toLowerCase().includes(normalizedQuery)
+      return {
+        ...topic,
+        subtopics: topic.subtopics.filter((subtopic) =>
+          topicMatches || formatMathTitleText(subtopic.title).toLowerCase().includes(normalizedQuery)
+        ),
+      }
+    })
+    .filter((topic) => topic.subtopics.length > 0)
+
+  const filteredMath7SubtopicCount = filteredMath7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)
 
   const filteredBelCurriculumTopics = belCurriculumTopics
     .map((topic, topicIndex) => ({ topic, topicIndex }))
@@ -1323,7 +1346,7 @@ export default function MaterialsPage() {
               }}
             >
               <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{nvoLiteratureWorks.length}</strong> творби
+                Намерени: <strong className="text-text">{filteredNvoLiteratureCount}</strong> творби
               </p>
               <div className="space-y-6">
                 {nvoLiteratureGroups.map(({ theme, works }, themeIndex) => (
@@ -1377,10 +1400,10 @@ export default function MaterialsPage() {
               }}
             >
               <p className="text-sm text-text-muted mb-4">
-                Намерени: <strong className="text-text">{math7Topics.reduce((sum, topic) => sum + topic.subtopics.length, 0)}</strong> подтеми
+                Намерени: <strong className="text-text">{filteredMath7SubtopicCount}</strong> подтеми
               </p>
               <div className="space-y-6">
-                {math7Topics.map((topic, topicIndex) => (
+                {filteredMath7Topics.map((topic, topicIndex) => (
                   <section key={topic.id}>
                     <h3
                       className="text-sm md:text-base font-semibold text-center mb-3"

@@ -43,7 +43,6 @@ import { literatureSummaries } from '../data/literatureSummaries'
 import { nvoLiteratureSummaries } from '../data/nvoLiteratureSummaries'
 import { literatureWorks } from '../data/literatureWorks'
 import { belTheory } from '../data/bel-theory'
-import { lessons } from '../data/lessons'
 
 const EMBEDDING_MODEL = 'gemini-embedding-001'
 const EMBEDDING_DIMS = 768
@@ -145,23 +144,8 @@ function buildBelTheoryChunks(): ChunkRow[] {
   }))
 }
 
-function buildLessonChunks(): ChunkRow[] {
-  return lessons.map((lesson) => {
-    const grade = lesson.examType === 'nvo7' ? 7 : 12
-    return {
-      source: 'lesson',
-      source_id: lesson.id,
-      section: '',
-      grade,
-      exam_type: lesson.examType,
-      title: lesson.title,
-      content: truncate(
-        `${lesson.title}\n\nКратко: ${lesson.summary}\n\nОбяснение: ${lesson.transcript}`
-      ),
-    }
-  })
-}
-
+// data/lessons.ts са демо уроци с невярна граматика (одит НВО 7, §4.5) и
+// умишлено НЕ се индексират.
 type CurriculumTopic = {
   number: number
   title: string
@@ -401,7 +385,6 @@ async function main() {
   const all: ChunkRow[] = [
     ...buildLiteratureSummaryChunks(),
     ...buildBelTheoryChunks(),
-    ...buildLessonChunks(),
     ...(await buildCurriculumChunks()),
     ...(await buildLitQbankChunks('data/dziLiteratureQuestionBank.json', 'dzi-qbank', 12)),
     ...(await buildLitQbankChunks('data/nvoLiteratureQuestionBank.json', 'nvo-qbank', 7)),

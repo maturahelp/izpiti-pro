@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/client'
-import { studentLessons, studentTests } from '@/data/student-content'
 import { allTests } from '@/data/tests'
 import { fetchPointProgress, type EnergyEventRecord } from '@/lib/mastery'
 
@@ -135,8 +134,6 @@ export interface ProgressData {
   avgScore: number
   lessonsCompleted: number
   streakDays: number
-  totalTests: number
-  totalLessons: number
   weeklyActivity: number[]
   scoreHistory: { date: string; testName: string; score: number }[]
   recentActivity: { type: 'test' | 'lesson' | 'material'; title: string; date: string; score?: number }[]
@@ -277,8 +274,6 @@ export async function fetchProgressData(): Promise<ProgressData> {
     avgScore,
     lessonsCompleted: lessonCompletions.length,
     streakDays,
-    totalTests: studentTests.length,
-    totalLessons: studentLessons.length,
     weeklyActivity,
     scoreHistory,
     recentActivity,
@@ -308,7 +303,6 @@ function emptyProgress(pointProgress?: Awaited<ReturnType<typeof fetchPointProgr
 
   return {
     testsCompleted: 0, avgScore: 0, lessonsCompleted: 0, streakDays: 0,
-    totalTests: studentTests.length, totalLessons: studentLessons.length,
     weeklyActivity: [0, 0, 0, 0, 0, 0, 0],
     scoreHistory: [], recentActivity: [], weakTopics: [], strongTopics: [],
     masteryPoints: points.masteryPoints,

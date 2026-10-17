@@ -16,9 +16,8 @@ export interface Test {
   difficulty: Difficulty
   questionsCount: number
   timeMinutes: number
-  isPremium: boolean
-  completedCount: number
-  avgScore: number
+  /** Реален брой решавания; показва се само когато има такъв. */
+  completedCount?: number
   status?: TestStatus
   lastScore?: number
   completedAt?: string
@@ -48,10 +47,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'труден',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 3241,
-    avgScore: 69,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2024',
@@ -63,10 +59,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'труден',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 4887,
-    avgScore: 71,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2023',
@@ -78,10 +71,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'среден',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 5613,
-    avgScore: 72,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2022',
@@ -93,10 +83,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'среден',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 6102,
-    avgScore: 74,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2021',
@@ -108,10 +95,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'среден',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 5978,
-    avgScore: 73,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2020',
@@ -123,10 +107,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'лесен',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 5441,
-    avgScore: 76,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2019',
@@ -138,10 +119,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'лесен',
     questionsCount: 19,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 4829,
-    avgScore: 75,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-bel-2018',
@@ -153,10 +131,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'лесен',
     questionsCount: 18,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 4217,
-    avgScore: 77,
+    timeMinutes: 150,
   },
   // Mathematics (НВО 7. клас)
   {
@@ -169,10 +144,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'труден',
     questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: true,
-    completedCount: 2987,
-    avgScore: 61,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2024',
@@ -184,10 +156,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'труден',
     questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: true,
-    completedCount: 4312,
-    avgScore: 63,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2023',
@@ -198,11 +167,8 @@ export const allTests: Test[] = [
     topicName: 'НВО — Пълен изпит',
     examType: 'nvo7',
     difficulty: 'среден',
-    questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: true,
-    completedCount: 5091,
-    avgScore: 65,
+    questionsCount: 18,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2022',
@@ -213,11 +179,8 @@ export const allTests: Test[] = [
     topicName: 'НВО — Пълен изпит',
     examType: 'nvo7',
     difficulty: 'среден',
-    questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 5734,
-    avgScore: 67,
+    questionsCount: 18,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2021',
@@ -228,11 +191,8 @@ export const allTests: Test[] = [
     topicName: 'НВО — Пълен изпит',
     examType: 'nvo7',
     difficulty: 'среден',
-    questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 5498,
-    avgScore: 66,
+    questionsCount: 18,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2020',
@@ -243,11 +203,8 @@ export const allTests: Test[] = [
     topicName: 'НВО — Пълен изпит',
     examType: 'nvo7',
     difficulty: 'лесен',
-    questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 5112,
-    avgScore: 69,
+    questionsCount: 18,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2019',
@@ -258,11 +215,8 @@ export const allTests: Test[] = [
     topicName: 'НВО — Пълен изпит',
     examType: 'nvo7',
     difficulty: 'лесен',
-    questionsCount: 20,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 4644,
-    avgScore: 70,
+    questionsCount: 17,
+    timeMinutes: 150,
   },
   {
     id: 'nvo-math-2018',
@@ -274,10 +228,7 @@ export const allTests: Test[] = [
     examType: 'nvo7',
     difficulty: 'лесен',
     questionsCount: 16,
-    timeMinutes: 60,
-    isPremium: false,
-    completedCount: 3987,
-    avgScore: 71,
+    timeMinutes: 150,
   },
   // ДЗИ Български език и литература (12. клас)
   {
@@ -291,9 +242,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 41,
     timeMinutes: 240,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   },
   {
@@ -307,9 +255,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 41,
     timeMinutes: 240,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   },
   {
@@ -323,9 +268,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 41,
     timeMinutes: 240,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   },
   {
@@ -339,9 +281,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 41,
     timeMinutes: 240,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   },
   {
@@ -355,9 +294,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 41,
     timeMinutes: 240,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   },
   {
@@ -371,9 +307,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 41,
     timeMinutes: 240,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   },
   // ── End real NVO exams ───────────────────────────────────────────────────────
@@ -388,9 +321,6 @@ export const allTests: Test[] = [
     difficulty: 'среден',
     questionsCount: 30,
     timeMinutes: 45,
-    isPremium: false,
-    completedCount: 1567,
-    avgScore: 66,
     status: 'not_started',
   },
   {
@@ -404,9 +334,6 @@ export const allTests: Test[] = [
     difficulty: 'труден',
     questionsCount: 35,
     timeMinutes: 60,
-    isPremium: true,
-    completedCount: 934,
-    avgScore: 62,
     status: 'not_started',
   },
   ...nvo4Tests,
