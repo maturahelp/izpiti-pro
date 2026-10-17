@@ -11,7 +11,7 @@ import { createClient as createSupabaseServerClient } from '@/lib/supabase/serve
 
 export const runtime = 'nodejs'
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://izpiti.pro'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.maturahelp.com'
 
 type ProfileBillingSnapshot = {
   stripe_customer_id: string | null
