@@ -1,0 +1,164 @@
+{
+  "generatedFrom": "data/nvo_7_math_generated_problem_bank.json",
+  "topics": [
+    {
+      "id": "chisla-algebra",
+      "title": "Числа. Алгебра",
+      "subtopics": [
+        {
+          "id": "alg-natural",
+          "title": "Естествени числа. Кратни и делители. Прости и съставни числа. Признаци за делимост.",
+          "problemCount": 20
+        },
+        {
+          "id": "alg-rational",
+          "title": "Рационални числа. Действия с рационални числа. Свойства на числови равенства и неравенства. Процент - основни задачи.",
+          "problemCount": 20
+        },
+        {
+          "id": "alg-expressions",
+          "title": "Цели изрази. Тъждествени изрази. Формули за съкратено умножение.",
+          "problemCount": 20
+        },
+        {
+          "id": "alg-factor",
+          "title": "Разлагане на многочлени на множители.",
+          "problemCount": 20
+        },
+        {
+          "id": "alg-linear-eq",
+          "title": "Линейни уравнения с едно неизвестно $ax+b=0$ и уравнения, свеждащи се до линейни.",
+          "problemCount": 20
+        },
+        {
+          "id": "alg-abs-eq",
+          "title": "Модулно линейно уравнение от вида $|ax+b|=c$.",
+          "problemCount": 20
+        },
+        {
+          "id": "alg-ineq",
+          "title": "Линейни неравенства с едно неизвестно и неравенства, свеждащи се към тях.",
+          "problemCount": 20
+        }
+      ]
+    },
+    {
+      "id": "figuri-tela-izmervane",
+      "title": "Фигури и тела. Измерване",
+      "subtopics": [
+        {
+          "id": "geom-area",
+          "title": "Лице и периметър на равнинни фигури.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-polygon",
+          "title": "Многоъгълник. Правилен многоъгълник.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-coord",
+          "title": "Правоъгълна координатна система. Разстояние от точка до права.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-prisms",
+          "title": "Елементи и свойства на ръбести тела: куб, правоъгълен паралелепипед, права призма, правилна пирамида.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-round",
+          "title": "Елементи и свойства на валчести тела: прав кръгов цилиндър, прав кръгов конус, сфера и кълбо.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-angles",
+          "title": "Съседни и противоположни ъгли. Перпендикулярни прави.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-parallel",
+          "title": "Успоредни прави - признаци и свойства.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-triangle-angles",
+          "title": "Триъгълник. Сбор от ъглите. Външен ъгъл.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-congruent",
+          "title": "Еднакви триъгълници. Питагорови тройки числа.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-bisectors",
+          "title": "Симетрала на отсечка и ъглополовяща на ъгъл.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-isosceles",
+          "title": "Равнобедрен триъгълник. Равностранен триъгълник.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-right-triangle",
+          "title": "Правоъгълен триъгълник. Медиана към хипотенуза. Правоъгълен триъгълник с ъгъл $30^\\circ$.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-triangle-ineq",
+          "title": "Неравенства между страни и ъгли в триъгълника. Неравенство на триъгълника.",
+          "problemCount": 20
+        },
+        {
+          "id": "geom-parallelogram",
+          "title": "Успоредник. Видове успоредници - правоъгълник, ромб, квадрат.",
+          "problemCount": 20
+        }
+      ]
+    },
+    {
+      "id": "veroyatnosti-statistika",
+      "title": "Елементи от вероятности и статистика",
+      "subtopics": [
+        {
+          "id": "stats-charts",
+          "title": "Представяне, разчитане и интерпретиране на данни чрез диаграми и графики.",
+          "problemCount": 20
+        },
+        {
+          "id": "stats-sets",
+          "title": "Множества и операции с тях.",
+          "problemCount": 20
+        },
+        {
+          "id": "stats-probability",
+          "title": "Случайно събитие. Вероятност на случайно събитие.",
+          "problemCount": 20
+        }
+      ]
+    },
+    {
+      "id": "logicheski-znania-modelirane",
+      "title": "Логически знания. Моделиране",
+      "subtopics": [
+        {
+          "id": "model-proportions",
+          "title": "Отношения и пропорции. Права и обратна пропорционалност.",
+          "problemCount": 20
+        },
+        {
+          "id": "model-average",
+          "title": "Средноаритметично на две и повече числа.",
+          "problemCount": 20
+        },
+        {
+          "id": "model-equations",
+          "title": "Моделиране с изрази, линейни уравнения и неравенства.",
+          "problemCount": 20
+        }
+      ]
+    }
+  ]
+}

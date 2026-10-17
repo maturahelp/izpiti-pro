@@ -7,7 +7,7 @@
     "build": "npm run build:landing && next build",
     "start": "next start",
     "lint": "npm run lint:feature",
-    "lint:feature": "eslint \"app/(student)/dashboard/literature-exercise/[workId]/page.tsx\" \"app/(student)/dashboard/materials/page.tsx\" \"app/(student)/dashboard/materials/nvo4-topic/[id]/page.tsx\" \"data/dziLiteratureExercises.ts\" \"data/literatureExerciseResolver.ts\" \"scripts/dzi-literature-exercise-blueprints.ts\" \"scripts/validate-dzi-literature-exercises.ts\" \"eslint.config.mjs\"",
+    "lint:feature": "eslint \"app/(student)/dashboard/literature-exercise/[workId]/page.tsx\" \"app/(student)/dashboard/literature-exercise/[workId]/LiteratureExerciseClient.tsx\" \"app/(student)/dashboard/materials/math-7-topics/page.tsx\" \"app/(student)/dashboard/materials/math-7-topics/Math7TopicsClient.tsx\" \"app/(student)/dashboard/materials/curriculum-topic/[id]/page.tsx\" \"app/(student)/dashboard/materials/curriculum-topic/[id]/CurriculumTopicClient.tsx\" \"app/(student)/dashboard/materials/page.tsx\" \"app/(student)/dashboard/materials/nvo4-topic/[id]/page.tsx\" \"data/dziLiteratureExercises.ts\" \"data/literatureExerciseResolver.ts\" \"scripts/dzi-literature-exercise-blueprints.ts\" \"scripts/validate-dzi-literature-exercises.ts\" \"eslint.config.mjs\"",
     "lint:all": "eslint .",
     "test": "tsx --test test/*.test.mjs lib/*.test.ts lib/billing/*.test.ts",
     "review:english-mock:validate": "tsx scripts/validate-english-mock-parser.ts",

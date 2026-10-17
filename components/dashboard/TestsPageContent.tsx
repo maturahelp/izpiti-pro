@@ -11,6 +11,7 @@ import {
 } from '@/lib/english-generated-materials'
 import { useGrade } from '@/lib/grade-context'
 import { hasActivePremium } from '@/lib/subscription-access'
+import { isFreeMockExam } from '@/lib/free-content'
 import { cn } from '@/lib/utils'
 
 export type TestSection4 = 'bel' | 'math'
@@ -169,7 +170,10 @@ export function TestsPageContent({
   // Past DZI/NVO tests are partially free: the test detail page shows the first
   // 3 questions and blurs the rest behind a premium upsell. The list card itself
   // stays openable, so we only fully lock cards for sample/premium content.
-  const isLocked = !isPremiumUser && selectedMode !== 'past'
+  // The free plan additionally unlocks one whole mock exam per grade
+  // (FREE_MOCK_EXAM_IDS) — those cards must never show a lock.
+  const isSampleLocked = !isPremiumUser && selectedMode !== 'past'
+  const isTestLocked = (testId: string) => isSampleLocked && !isFreeMockExam(testId)
 
   const filtered = tests.filter((test) => {
     if (effectiveGrade === '7') {
@@ -344,7 +348,7 @@ export function TestsPageContent({
                   >
                     Writing
                   </span>
-                  {isLocked ? (
+                  {isSampleLocked ? (
                     <Link
                       href="/dashboard/subscription"
                       className="text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors bg-gray-100 text-text-muted hover:bg-gray-200"
@@ -377,6 +381,7 @@ export function TestsPageContent({
                 test.id.startsWith('english-generated-')
               const isBeron = test.id.startsWith('beron_')
 
+              const isLocked = isTestLocked(test.id)
               return (
               <div key={test.id} className={cn('card-hover p-5 flex flex-col gap-4 relative', isLocked && 'opacity-60')}>
                 {isLocked ? (

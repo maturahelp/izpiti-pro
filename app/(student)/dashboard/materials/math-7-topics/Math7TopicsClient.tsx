@@ -1,0 +1,627 @@
+'use client'
+
+import { useEffect, useMemo, useRef, useState } from 'react'
+import Script from 'next/script'
+import { useRouter } from 'next/navigation'
+import { TopBar } from '@/components/dashboard/TopBar'
+import { cn } from '@/lib/utils'
+import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
+
+function fireConfetti() {
+  if (typeof window === 'undefined') return
+  const COLORS = ['#1E4D7B', '#4CAF50', '#FFC107', '#FF5722', '#9C27B0', '#03A9F4', '#E91E63']
+  const container = document.createElement('div')
+  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;'
+  document.body.appendChild(container)
+  const cx = window.innerWidth / 2
+  const cy = window.innerHeight * 0.55
+  type P = { el: HTMLDivElement; x: number; y: number; vx: number; vy: number; rot: number; vr: number; life: number }
+  const particles: P[] = Array.from({ length: 70 }, () => {
+    const el = document.createElement('div')
+    const color = COLORS[Math.floor(Math.random() * COLORS.length)]
+    const size = 5 + Math.random() * 4
+    el.style.cssText = `position:absolute;left:${cx}px;top:${cy}px;width:${size}px;height:${size * 0.5}px;background:${color};border-radius:2px;will-change:transform,opacity;`
+    container.appendChild(el)
+    const angle = Math.random() * Math.PI * 2
+    const speed = 5 + Math.random() * 9
+    return {
+      el, x: 0, y: 0,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 4,
+      rot: Math.random() * 360,
+      vr: (Math.random() - 0.5) * 18,
+      life: 1,
+    }
+  })
+  const start = performance.now()
+  function tick(now: number) {
+    const elapsed = (now - start) / 1000
+    let alive = 0
+    for (const p of particles) {
+      if (p.life <= 0) continue
+      alive++
+      p.x += p.vx
+      p.y += p.vy
+      p.vy += 0.35
+      p.vx *= 0.99
+      p.rot += p.vr
+      p.life -= 0.016
+      p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${p.rot}deg)`
+      p.el.style.opacity = String(Math.max(0, p.life))
+    }
+    if (alive > 0 && elapsed < 4) {
+      requestAnimationFrame(tick)
+    } else {
+      container.remove()
+    }
+  }
+  requestAnimationFrame(tick)
+}
+
+type Difficulty = 'easy' | 'medium' | 'exam_ready'
+type ProblemType = 'multiple_choice' | 'short_answer'
+
+export interface MathProblem {
+  id: string
+  topicId: string
+  subtopicId: string
+  difficulty: Difficulty
+  type: ProblemType
+  question: string
+  options: Record<string, string> | null
+  correctAnswer: string
+  explanation: string
+  skills: string[]
+}
+
+export interface MathSubtopic {
+  id: string
+  title: string
+  sourceInspiredBy: { name: string; url: string }[]
+  /** Total number of problems in the bank (shown on the card even when locked). */
+  problemCount: number
+  /** True when the visitor has no plan and this is not the free subtopic. */
+  locked: boolean
+  /** Empty for locked subtopics — the server never sends their problems. */
+  problems: MathProblem[]
+}
+
+export interface MathTopic {
+  id: string
+  title: string
+  subtopics: MathSubtopic[]
+}
+
+declare global {
+  interface Window {
+    MathJax?: {
+      typesetPromise?: (elements?: HTMLElement[]) => Promise<void>
+      typesetClear?: (elements?: HTMLElement[]) => void
+    }
+  }
+}
+
+/**
+ * Presentational math practice UI. Receives the (already entitlement-filtered)
+ * topic tree from the Server Component page; it never imports the problem
+ * bank itself, so non-entitled visitors only get titles and counts.
+ */
+export function Math7TopicsClient({
+  topics: mathTopics,
+  initialSubtopicId,
+}: {
+  topics: MathTopic[]
+  initialSubtopicId: string | null
+}) {
+  const router = useRouter()
+  const initialTopicId = useMemo(() => {
+    if (!initialSubtopicId) return ''
+    const parent = mathTopics.find((topic) =>
+      topic.subtopics.some((subtopic) => subtopic.id === initialSubtopicId)
+    )
+    return parent?.id ?? ''
+  }, [mathTopics, initialSubtopicId])
+  const [topicId, setTopicId] = useState(initialTopicId)
+  const [subtopicId, setSubtopicId] = useState(initialTopicId ? initialSubtopicId ?? '' : '')
+
+  const allProblems = useMemo(() => (
+    mathTopics.flatMap((topic) =>
+      topic.subtopics.flatMap((subtopic) =>
+        subtopic.problems.map((problem) => ({
+          ...problem,
+          topicTitle: topic.title,
+          subtopicTitle: subtopic.title,
+          sourceInspiredBy: subtopic.sourceInspiredBy,
+        }))
+      )
+    )
+  ), [mathTopics])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [selectedOpt, setSelectedOpt] = useState<string | null>(null)
+  const [checked, setChecked] = useState(false)
+  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [finished, setFinished] = useState(false)
+  const [mathJaxReady, setMathJaxReady] = useState(false)
+
+  const filteredProblems = useMemo(() => {
+    return allProblems.filter((problem) => {
+      if (topicId && problem.topicId !== topicId) return false
+      if (subtopicId && problem.subtopicId !== subtopicId) return false
+      return true
+    })
+  }, [allProblems, subtopicId, topicId])
+
+  const allSubtopicCounts = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const topic of mathTopics) {
+      for (const subtopic of topic.subtopics) {
+        counts.set(subtopic.id, subtopic.problemCount)
+      }
+    }
+    return counts
+  }, [mathTopics])
+
+  // Cheap lookup over 27 subtopics — no memo needed (and the React Compiler
+  // cannot preserve a useMemo with an early-returning loop).
+  const selectedSubtopic = subtopicId
+    ? mathTopics
+        .flatMap((topic) =>
+          topic.subtopics.map((subtopic) => ({
+            ...subtopic,
+            topicId: topic.id,
+            topicTitle: topic.title,
+          }))
+        )
+        .find((subtopic) => subtopic.id === subtopicId) ?? null
+    : null
+
+  function resetWorkspace() {
+    setCurrentIndex(0)
+    setSelectedOpt(null)
+    setChecked(false)
+    setAnswers({})
+    setFinished(false)
+  }
+
+  function chooseSubtopic(nextTopicId: string, nextSubtopicId: string, locked: boolean) {
+    if (locked) {
+      router.push('/dashboard/subscription')
+      return
+    }
+    setTopicId(nextTopicId)
+    setSubtopicId(nextSubtopicId)
+    resetWorkspace()
+    window.history.replaceState(null, '', `/dashboard/materials/math-7-topics?subtopic=${nextSubtopicId}`)
+    requestAnimationFrame(() => {
+      document.getElementById('math-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  function returnToSubtopics() {
+    setTopicId('')
+    setSubtopicId('')
+    resetWorkspace()
+    window.history.replaceState(null, '', '/dashboard/materials/math-7-topics')
+    requestAnimationFrame(() => {
+      document.getElementById('math-subtopic-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  useEffect(() => {
+    if (!window.MathJax?.typesetPromise) return
+    const root = document.getElementById('math-workspace')
+    if (!root) return
+    window.MathJax.typesetClear?.([root])
+    window.MathJax.typesetPromise([root]).catch(() => {})
+  }, [currentIndex, checked, mathJaxReady])
+
+  function handleSelect(optValue: string) {
+    if (checked) return
+    setSelectedOpt(optValue)
+  }
+
+  function handleCheck() {
+    if (selectedOpt === null) return
+    const problem = filteredProblems[currentIndex]
+    setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
+    setChecked(true)
+    if (selectedOpt === problem.correctAnswer) {
+      fireConfetti()
+    }
+  }
+
+  function handleRevealShortAnswer() {
+    const problem = filteredProblems[currentIndex]
+    setAnswers((prev) => ({ ...prev, [problem.id]: problem.correctAnswer }))
+    setChecked(true)
+  }
+
+  function handleRetryQuestion() {
+    const problem = filteredProblems[currentIndex]
+    setAnswers((prev) => {
+      const next = { ...prev }
+      delete next[problem.id]
+      return next
+    })
+    setSelectedOpt(null)
+    setChecked(false)
+  }
+
+  function handleNext() {
+    if (currentIndex + 1 >= filteredProblems.length) {
+      setFinished(true)
+    } else {
+      setCurrentIndex((i) => i + 1)
+      setSelectedOpt(null)
+      setChecked(false)
+    }
+  }
+
+  function handleRestart() {
+    setCurrentIndex(0)
+    setSelectedOpt(null)
+    setChecked(false)
+    setAnswers({})
+    setFinished(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const correctCount = filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length
+
+  return (
+    <div className="min-h-screen pb-20 md:pb-0">
+      <Script
+        id="mathjax-config"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+                displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+                processEscapes: true
+              },
+              startup: { typeset: false },
+              options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+            };
+          `,
+        }}
+      />
+      <Script
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          setMathJaxReady(true)
+          const root = document.getElementById('math-workspace')
+          if (root) window.MathJax?.typesetPromise?.([root])
+        }}
+      />
+
+      <TopBar title="Математика по теми" />
+
+      <div className="p-4 md:p-6 max-w-6xl mx-auto">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted mb-4">
+          <button
+            type="button"
+            onClick={() => router.push('/dashboard/materials')}
+            className="hover:text-primary transition-colors"
+          >
+            Материали
+          </button>
+          <span>/</span>
+          <span className="text-text font-medium">Математика — 7. клас</span>
+        </div>
+
+        {!selectedSubtopic && (
+        <section id="math-subtopic-grid" className="rounded-2xl border border-border bg-white p-4 md:p-5 mb-5">
+          <div className="mb-5">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
+              Теми и подтеми
+            </p>
+            <h2 className="text-lg font-bold text-text">
+              Избери подтема от квадратчетата
+            </h2>
+          </div>
+
+          <div className="space-y-7">
+            {mathTopics.map((topic, topicIndex) => (
+              <section key={topic.id}>
+                <h3 className="text-sm md:text-base font-bold text-[#1E4D7B] mb-3">
+                  {formatTitleText(`${topicIndex + 1}. ${topic.title}`)}
+                </h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {topic.subtopics.map((subtopic, subtopicIndex) => {
+                    const active = subtopic.id === subtopicId
+                    return (
+                      <button
+                        key={subtopic.id}
+                        type="button"
+                        onClick={() => chooseSubtopic(topic.id, subtopic.id, subtopic.locked)}
+                        className={cn(
+                          'relative min-h-[132px] rounded-lg border p-4 text-left transition-colors',
+                          active
+                            ? 'border-primary bg-primary-light shadow-sm'
+                            : 'border-[#D7E7F7] bg-[#F8FBFF] hover:border-primary/50 hover:bg-primary/5',
+                          subtopic.locked && 'opacity-60'
+                        )}
+                      >
+                        {subtopic.locked && (
+                          <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                            Премиум
+                          </span>
+                        )}
+                        <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">
+                          Подтема #{subtopicIndex + 1}
+                        </p>
+                        <h4 className="text-sm font-bold text-text leading-snug">
+                          {formatTitleText(subtopic.title)}
+                        </h4>
+                        <p className="mt-4 text-xs font-semibold text-primary">
+                          {allSubtopicCounts.get(subtopic.id) ?? 0} задачи
+                        </p>
+                      </button>
+                    )
+                  })}
+                </div>
+              </section>
+            ))}
+          </div>
+        </section>
+        )}
+
+        {selectedSubtopic && (
+        <section id="math-workspace" className="rounded-2xl border border-border bg-white p-4 md:p-5">
+          <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <button
+                type="button"
+                onClick={returnToSubtopics}
+                className="mb-3 rounded-lg border border-border bg-white px-3 py-2 text-xs font-semibold text-text-muted hover:border-primary/50 hover:text-primary transition-colors"
+              >
+                Назад към подтемите
+              </button>
+              <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
+                {selectedSubtopic.topicTitle}
+              </p>
+              <h2 className="text-lg md:text-xl font-bold text-text leading-snug">
+                {formatTitleText(selectedSubtopic.title)}
+              </h2>
+            </div>
+          </div>
+
+          {!finished && filteredProblems.length > 0 && (
+            <>
+              {/* Progress bar */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wide">
+                    Въпрос {currentIndex + 1} от {filteredProblems.length}
+                  </h2>
+                  <span className="text-xs text-text-muted font-semibold">
+                    {currentIndex + 1}/{filteredProblems.length}
+                  </span>
+                </div>
+                <div className="w-full bg-border rounded-full h-1.5">
+                  <div
+                    className="bg-primary h-1.5 rounded-full transition-all duration-300"
+                    style={{ width: `${((currentIndex + 1) / filteredProblems.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Question card */}
+              {(() => {
+                const problem = filteredProblems[currentIndex]
+                const isCorrect = checked && selectedOpt === problem.correctAnswer
+                const isWrong = checked && selectedOpt !== null && selectedOpt !== problem.correctAnswer
+
+                return (
+                  <div
+                    className={cn(
+                      'rounded-2xl border p-4 md:p-5 mb-4',
+                      checked
+                        ? isCorrect
+                          ? 'border-success/40 bg-success/5'
+                          : 'border-danger/40 bg-danger/5'
+                        : 'border-border bg-white'
+                    )}
+                  >
+                    <div className="flex gap-3 mb-4">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
+                        {currentIndex + 1}
+                      </span>
+                      <p className="text-sm md:text-base font-semibold text-text leading-relaxed">
+                        <MathText text={problem.question} mathJaxReady={mathJaxReady} />
+                      </p>
+                    </div>
+
+                    {problem.type === 'multiple_choice' && problem.options && (
+                      <div className="space-y-2 pl-9">
+                        {Object.entries(problem.options).map(([label, value]) => {
+                          const isSelected = selectedOpt === value
+                          const isCorrectOpt = value === problem.correctAnswer
+
+                          let optStyle = 'border-border bg-gray-50 text-text hover:border-primary/40 hover:bg-primary/5'
+                          if (checked) {
+                            if (isCorrectOpt) {
+                              optStyle = 'border-success bg-success/10 text-success font-semibold'
+                            } else if (isSelected && !isCorrectOpt) {
+                              optStyle = 'border-danger bg-danger/10 text-danger'
+                            } else {
+                              optStyle = 'border-border bg-gray-50 text-text-muted'
+                            }
+                          } else if (isSelected) {
+                            optStyle = 'border-primary bg-primary/10 text-primary font-semibold'
+                          }
+
+                          return (
+                            <button
+                              key={label}
+                              type="button"
+                              onClick={() => handleSelect(value)}
+                              disabled={checked}
+                              className={cn(
+                                'w-full text-left rounded-xl border px-3 py-2.5 text-sm transition-colors flex items-start gap-2.5',
+                                optStyle,
+                                checked && 'cursor-default'
+                              )}
+                            >
+                              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-[10px] font-bold flex items-center justify-center mt-0.5">
+                                {label}
+                              </span>
+                              <span className="leading-relaxed">
+                                <MathText text={value} mathJaxReady={mathJaxReady} />
+                              </span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+
+                    {problem.type === 'short_answer' && checked && (
+                      <div className="mt-4 rounded-xl border border-[#D7E7F7] bg-[#F8FBFF] p-4 text-sm text-text">
+                        <p><strong>Отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
+                      </div>
+                    )}
+
+                    {checked && isWrong && (
+                      <p className="mt-3 pl-9 text-xs text-text-muted italic leading-relaxed">
+                        <MathText text={problem.explanation} mathJaxReady={mathJaxReady} />
+                      </p>
+                    )}
+                  </div>
+                )
+              })()}
+
+              {/* Action buttons */}
+              <div className="flex flex-col gap-2">
+                {!checked ? (
+                  filteredProblems[currentIndex].type === 'short_answer' ? (
+                    <button
+                      type="button"
+                      onClick={handleRevealShortAnswer}
+                      className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+                    >
+                      Виж отговора
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={selectedOpt === null}
+                      onClick={handleCheck}
+                      className={cn(
+                        'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+                        selectedOpt !== null
+                          ? 'bg-primary text-white hover:bg-primary-dark'
+                          : 'bg-border text-text-muted cursor-not-allowed'
+                      )}
+                    >
+                      Провери отговора
+                    </button>
+                  )
+                ) : filteredProblems[currentIndex].type === 'short_answer' ? (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+                  >
+                    {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
+                  </button>
+                ) : selectedOpt === filteredProblems[currentIndex].correctAnswer ? (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="w-full rounded-xl py-3 text-sm font-semibold bg-success text-white hover:bg-success/90 transition-colors"
+                  >
+                    {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleRetryQuestion}
+                      className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+                    >
+                      Опитай пак
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNext}
+                      className="w-full rounded-xl py-3 text-sm font-semibold bg-white border border-border text-text-muted hover:border-primary/40 transition-colors"
+                    >
+                      {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
+
+          {filteredProblems.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-border bg-white p-8 text-center text-text-muted">
+              Няма задачи за избраните филтри.
+            </div>
+          )}
+
+          {finished && (
+            <div className="flex flex-col items-center justify-center min-h-[40vh] text-center py-8">
+              <div
+                className={cn(
+                  'w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold mb-6 border-4',
+                  correctCount >= filteredProblems.length * 0.8
+                    ? 'bg-success/10 text-success border-success'
+                    : correctCount >= filteredProblems.length * 0.5
+                      ? 'bg-amber-100 text-amber-600 border-amber-400'
+                      : 'bg-danger/10 text-danger border-danger'
+                )}
+              >
+                {correctCount}/{filteredProblems.length}
+              </div>
+              <h2 className="text-2xl font-bold text-text mb-2">
+                {correctCount >= filteredProblems.length * 0.8
+                  ? 'Отлично!'
+                  : correctCount >= filteredProblems.length * 0.5
+                    ? 'Добре!'
+                    : 'Опитай пак!'}
+              </h2>
+              <p className="text-text-muted mb-8">
+                Верни отговори:{' '}
+                <strong className="text-text">
+                  {correctCount}
+                </strong>{' '}
+                от <strong className="text-text">{filteredProblems.length}</strong>
+              </p>
+              <button
+                type="button"
+                onClick={handleRestart}
+                className="w-full max-w-xs rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+              >
+                Опитай отново
+              </button>
+            </div>
+          )}
+        </section>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function MathText({ text, mathJaxReady }: { text: string; mathJaxReady: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const fallbackText = useMemo(() => formatMathFallbackText(text), [text])
+  const mathText = useMemo(() => normalizeInlineMathDelimiters(text), [text])
+
+  useEffect(() => {
+    if (!mathJaxReady || !window.MathJax?.typesetPromise || !ref.current) return
+    window.MathJax.typesetClear?.([ref.current])
+    window.MathJax.typesetPromise([ref.current]).catch(() => {})
+  }, [mathText, mathJaxReady])
+
+  return <span ref={ref}>{mathJaxReady ? mathText : fallbackText}</span>
+}
+
+function formatTitleText(text: string) {
+  return formatMathFallbackText(text)
+}
