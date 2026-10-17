@@ -130,7 +130,7 @@
   {
     "title": "Хубава си, моя горо",
     "author": "Любен Каравелов",
-    "genre": "стихотворение",
+    "genre": "елегия",
     "source_file": "notebooklm_video_prompts_bg/02_Хубава_си_моя_горо.docx",
     "questions": [
       {
@@ -258,7 +258,7 @@
   {
     "title": "Отечество любезно, как хубаво си ти",
     "author": "Иван Вазов",
-    "genre": "стихотворение",
+    "genre": "ода",
     "source_file": "notebooklm_video_prompts_bg/03_Отечество_любезно_как_хубаво_си_ти.docx",
     "questions": [
       {
@@ -898,7 +898,7 @@
   {
     "title": "Братчетата на Гаврош",
     "author": "Христо Смирненски",
-    "genre": "разказ",
+    "genre": "стихотворение",
     "source_file": "notebooklm_video_prompts_bg/08_Братчетата_на_Гаврош.docx",
     "questions": [
       {
@@ -908,10 +908,10 @@
           "A": "приказка",
           "B": "легенда",
           "C": "комедия",
-          "D": "разказ"
+          "D": "стихотворение"
         },
         "correct_answer": "D",
-        "explanation": "Материалът определя „Братчетата на Гаврош“ като разказ, затова жанровият отговор е този."
+        "explanation": "„Братчетата на Гаврош“ е стихотворение – лирическа творба в стихове, затова жанровият отговор е този."
       },
       {
         "focus": "тема",
@@ -1922,7 +1922,7 @@
   {
     "title": "Българският език",
     "author": "Иван Вазов",
-    "genre": "стихотворение",
+    "genre": "ода",
     "source_file": "notebooklm_video_prompts_bg/16_Българският_език.docx",
     "questions": [
       {
@@ -2050,7 +2050,7 @@
   {
     "title": "До Чикаго и назад",
     "author": "Алеко Константинов",
-    "genre": "пътеписен откъс",
+    "genre": "откъс от пътепис",
     "source_file": "notebooklm_video_prompts_bg/17_До_Чикаго_и_назад.docx",
     "questions": [
       {
@@ -2178,7 +2178,7 @@
   {
     "title": "Бай Ганьо пътува",
     "author": "Алеко Константинов",
-    "genre": "фейлетонов откъс",
+    "genre": "откъс от книгата „Бай Ганьо“",
     "source_file": "notebooklm_video_prompts_bg/18_Бай_Ганьо_пътува.docx",
     "questions": [
       {
@@ -2305,8 +2305,8 @@
   },
   {
     "title": "Неразделни",
-    "author": "Петко Р. Славейков",
-    "genre": "поема",
+    "author": "Пенчо Славейков",
+    "genre": "балада",
     "source_file": "notebooklm_video_prompts_bg/19_Неразделни.docx",
     "questions": [
       {
@@ -2434,7 +2434,7 @@
   {
     "title": "Заточеници",
     "author": "Пейо Яворов",
-    "genre": "стихотворение",
+    "genre": "елегия",
     "source_file": "notebooklm_video_prompts_bg/20_Заточеници.docx",
     "questions": [
       {
