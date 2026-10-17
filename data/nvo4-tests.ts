@@ -40,7 +40,7 @@ function testIdForExam(exam: Nvo4Exam) {
   return `nvo4-${subjectSlug}-${exam.year}`
 }
 
-const officialNvo4Tests: Test[] = (officialNvo4Dataset as Nvo4Exam[]).map((exam, index) => {
+const officialNvo4Tests: Test[] = (officialNvo4Dataset as Nvo4Exam[]).map((exam) => {
   const meta = subjectMeta[exam.exam_type]
   return {
     id: testIdForExam(exam),
@@ -53,9 +53,6 @@ const officialNvo4Tests: Test[] = (officialNvo4Dataset as Nvo4Exam[]).map((exam,
     difficulty: exam.year >= 2024 ? 'среден' : 'лесен',
     questionsCount: exam.questions.length,
     timeMinutes: 60,
-    isPremium: false,
-    completedCount: Math.max(0, 2400 - index * 37),
-    avgScore: exam.exam_type === 'nvo4_math' ? 68 : 74,
   }
 })
 
@@ -74,9 +71,6 @@ const mockNvo4Tests: Test[] = ((mockNvo4PracticeDataset as { exams: Nvo4Exam[] }
     difficulty: 'среден',
     questionsCount: exam.questions.length,
     timeMinutes: 60,
-    isPremium: false,
-    completedCount: 0,
-    avgScore: 0,
     status: 'not_started',
   }
   })

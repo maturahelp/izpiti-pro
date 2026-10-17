@@ -21,7 +21,7 @@ function estimateEnglishTimeMinutes(questionCount: number): number {
   return 60
 }
 
-const officialEnglishTests: Test[] = officialEnglishMockExams.map((exam, index) => {
+const officialEnglishTests: Test[] = officialEnglishMockExams.map((exam) => {
   const sessionLabel = sessionLabelMap[exam.session || ''] || exam.session || 'Сесия'
   const levelLabel = exam.level ? ` ${exam.level}` : ''
 
@@ -36,16 +36,13 @@ const officialEnglishTests: Test[] = officialEnglishMockExams.map((exam, index) 
     difficulty: exam.level === 'B2' ? 'труден' : 'среден',
     questionsCount: exam.questions.length,
     timeMinutes: estimateEnglishTimeMinutes(exam.questions.length),
-    isPremium: false,
-    completedCount: Math.max(0, 1640 - index * 37),
-    avgScore: Math.max(58, 78 - (index % 8)),
     status: 'not_started',
   }
 })
 
 const generatedReadingTests: Test[] = generatedEnglishMaterialSections
   .filter((section) => section.mode === 'reading')
-  .map((section, index) => ({
+  .map((section) => ({
     id: `english-generated-${section.id}`,
     title: section.title.replace(/^Reading Passage/, 'Примерен reading тест'),
     subjectId: 'eng-12',
@@ -56,9 +53,6 @@ const generatedReadingTests: Test[] = generatedEnglishMaterialSections
     difficulty: 'среден',
     questionsCount: section.questions.length,
     timeMinutes: 20,
-    isPremium: false,
-    completedCount: Math.max(0, 520 - index * 4),
-    avgScore: Math.max(60, 76 - (index % 6)),
     status: 'not_started',
   }))
 
@@ -73,9 +67,6 @@ const generatedWritingTest: Test = {
   difficulty: 'труден',
   questionsCount: generatedEnglishWritingQuestionCount,
   timeMinutes: 60,
-  isPremium: false,
-  completedCount: 318,
-  avgScore: 72,
   status: 'not_started',
 }
 

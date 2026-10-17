@@ -423,7 +423,9 @@ export function TestsPageContent({
                     {test.timeMinutes} мин.
                   </span>
                   <span>{getQuestionCountLabel(test)}</span>
-                  <span>{test.completedCount.toLocaleString()} реш.</span>
+                  {typeof test.completedCount === 'number' && test.completedCount > 0 && (
+                    <span>{test.completedCount.toLocaleString()} реш.</span>
+                  )}
                   {test.status === 'completed' && test.lastScore && (
                     <span className={`ml-auto font-bold text-sm font-serif ${
                       test.lastScore >= 80 ? 'text-success' :
