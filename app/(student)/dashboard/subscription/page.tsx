@@ -10,6 +10,7 @@ import {
   type SubscriptionAccessProfile,
 } from '@/lib/subscription-access'
 import { createClient } from '@/lib/supabase/client'
+import { BILLING_PLANS, isPlanKey } from '@/lib/billing/plans'
 
 type PlanState =
   | { status: 'loading' }
@@ -19,13 +20,16 @@ type PlanState =
 const PROFILE_SELECT =
   'plan, is_active, plan_expires_at, billing_status, billing_plan_key, cancel_at_period_end, cancel_at, current_period_end, stripe_customer_id, stripe_subscription_id, last_payment_status'
 
-const PLAN_LABELS: Record<string, string> = {
-  'nvo4-full': 'НВО 4. клас — месечен достъп',
-  'nvo-full': 'НВО — до края на изпитите',
-  'nvo-sprint': 'Лятна подготовка НВО',
-  'dzi-full': 'ДЗИ — месечен достъп',
-  'dzi-sprint': 'Лятна подготовка ДЗИ',
-  'dzi-english-sprint': 'Интензивен английски',
+/** Human-readable plan name from the single source of truth in lib/billing/plans.ts. */
+function planLabelFor(planKey: string | null | undefined): string | null {
+  if (!planKey || !isPlanKey(planKey)) return null
+  return BILLING_PLANS[planKey].name
+}
+
+/** Plan price in EUR (Stripe amount is in cents) for the Meta Pixel Purchase event. */
+function planValueFor(planKey: string | null | undefined): number {
+  if (!planKey || !isPlanKey(planKey)) return 0
+  return BILLING_PLANS[planKey].amount / 100
 }
 
 function formatBgDate(iso: string | null | undefined): string | null {
@@ -102,14 +106,6 @@ export default function SubscriptionPage() {
   useEffect(() => {
     if (!hasRecentCheckout) return
     if (typeof window === 'undefined') return
-    const PLAN_VALUES: Record<string, number> = {
-      'nvo4-full': 9.99,
-      'nvo-full': 19.99,
-      'nvo-sprint': 9.99,
-      'dzi-full': 19.99,
-      'dzi-sprint': 9.99,
-      'dzi-english-sprint': 4.99,
-    }
     const STORAGE_KEY = 'mh_purchase_pixel_fired'
     let sessionId: string | null = null
     try {
@@ -122,7 +118,7 @@ export default function SubscriptionPage() {
 
     const planKey = state.status === 'ready' ? state.profile?.billing_plan_key ?? null : null
     if (!planKey && state.status === 'loading') return // wait for profile
-    const value = (planKey && PLAN_VALUES[planKey]) || 0
+    const value = planValueFor(planKey)
     const fbq = (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq
     if (typeof fbq === 'function') {
       try {
@@ -247,7 +243,7 @@ export default function SubscriptionPage() {
   }[subscriptionStatus]
 
   const planLabel =
-    (readyProfile?.billing_plan_key && PLAN_LABELS[readyProfile.billing_plan_key]) ??
+    planLabelFor(readyProfile?.billing_plan_key) ??
     (readyProfile?.plan === 'premium' ? 'Премиум' : 'Безплатен')
 
   async function handleCancel() {
