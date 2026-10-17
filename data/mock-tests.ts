@@ -37,7 +37,8 @@ export const mockTests: Test[] = [...payload.exams, ...mathPayload.exams].map((e
     examType: isNvo ? 'nvo7' : 'dzi12',
     difficulty: isMath ? (isNvo ? 'среден' : 'труден') : isNvo ? 'среден' : 'труден',
     questionsCount: exam.questions.length,
-    timeMinutes: isMath ? (isNvo ? 60 : 240) : isNvo ? (hasRetelling ? 150 : 75) : 240,
+    // НВО по математика: 60 мин. за задачи 1–20 + 90 мин. за задачи 21–23 (втора част).
+    timeMinutes: isMath ? (isNvo ? 150 : 240) : isNvo ? (hasRetelling ? 150 : 75) : 240,
     isPremium: false,
     completedCount: 0,
     avgScore: 0,

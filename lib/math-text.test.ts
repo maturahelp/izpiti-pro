@@ -35,15 +35,12 @@ describe('generated math problem bank fallback text', () => {
       formatMathFallbackText(firstProblem.question),
       'Пресметнете стойността на израза 4 − 3 · 2.',
     )
+    // The options are shuffled deterministically per task, so only the set of values is stable.
     assert.deepEqual(
-      Object.fromEntries(
-        Object.entries(firstProblem.options).map(([label, value]) => [
-          label,
-          formatMathFallbackText(String(value)),
-        ]),
-      ),
-      { А: '−2', Б: '10', В: '1', Г: '−4' },
+      Object.values(firstProblem.options).map((value) => formatMathFallbackText(String(value))).sort(),
+      ['−2', '10', '1', '−4'].sort(),
     )
+    assert.deepEqual(Object.keys(firstProblem.options), ['А', 'Б', 'В', 'Г'])
   })
 })
 

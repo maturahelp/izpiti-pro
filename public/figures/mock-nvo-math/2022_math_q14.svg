@@ -10,10 +10,12 @@
   </defs>
 
   <text class="caption" x="54" y="54">Триъгълник ABC и външен ъгъл при B</text>
-  <path class="line" d="M150 400 L710 360 L600 95 Z"/><path class="thin" d="M710 360 H820 M600 95 L640 30"/>
-  <path class="orange" d="M200 397 Q225 360 268 354"/><path class="blue" d="M620 130 Q575 142 565 188"/>
-  <path class="green" d="M730 356 Q732 318 702 292"/><path class="green" d="M748 354 Q750 310 716 278"/>
-  <circle class="point" cx="150" cy="400" r="8"/><circle class="point" cx="710" cy="360" r="8"/><circle class="point" cx="600" cy="95" r="8"/>
-  <text class="label" x="116" y="440">A</text><text class="label" x="724" y="395">B</text><text class="label" x="615" y="94">C</text>
-  <text class="small" x="246" y="382">30°</text><text class="small" x="645" y="138">110°</text><text class="small" x="758" y="318">x</text>
+  <polygon class="line" points="150,400 710,360 637,71"/>
+  <path class="thin" d="M710 360 L820 352 M637 71 L695 32"/>
+  <path class="orange" d="M200 396 A50 50 0 0 0 191 372"/>
+  <path class="blue" d="M667 51 A36 36 0 0 1 646 106"/>
+  <path class="green" d="M750 357 A40 40 0 0 0 700 321"/><path class="green" d="M762 356 A52 52 0 0 0 697 310"/>
+  <circle class="point" cx="150" cy="400" r="7"/><circle class="point" cx="710" cy="360" r="7"/><circle class="point" cx="637" cy="71" r="7"/>
+  <text class="label" x="116" y="438">A</text><text class="label" x="708" y="402">B</text><text class="label" x="597" y="69">C</text>
+  <text class="small" x="208" y="388">30°</text><text class="small" x="684" y="62">110°</text><text class="small" x="754" y="332">x</text>
 </svg>

@@ -10,7 +10,7 @@ import { MATH_TEXT_OVERRIDES } from '@/data/nvo-math-overrides'
 import { getMockNvoMathFigure } from '@/data/nvo-math-figure-assets'
 import { QUESTION_IMAGES } from '@/data/nvo-question-images'
 import { cn } from '@/lib/utils'
-import { renderMathInHtml } from '@/lib/render-math'
+import { hasTexDelimiters, renderMathInHtml, renderMathTextToHtml } from '@/lib/render-math'
 import 'katex/dist/katex.min.css'
 import { saveDziAttempt } from '@/lib/progress'
 import { logActivity } from '@/lib/activity-log'
@@ -174,6 +174,8 @@ interface MockPracticeExam {
     table_rows?: Record<string, string>
     correct_option?: string
     answer_guide?: string | Record<string, string>
+    // Структуриран ключ по подточки за автоматична проверка (примерни НВО по математика, задачи 21–23).
+    sub_answers?: Record<string, string>
     question_image?: string
     task_condition?: string
     points?: number
@@ -568,6 +570,7 @@ function normalizeMockExam(exam: MockPracticeExam): NvoExam {
         correct_option: question.correct_option,
         official_answer: guideStr,
         answer_guide: guideStr,
+        sub_answers: question.sub_answers,
         section: question.section,
         source_tags: question.source_tags,
         formatting_flags: question.formatting_flags,
@@ -1278,13 +1281,25 @@ function QuestionCard({
       .replace(/([.!?:;])\s*([АБВГД])\)/g, '$1\n\n$2)')
       .replace(/^([АБВГД])\)/gm, '$1)')
     const parts = formatted.split('\n\n').filter(Boolean)
+    // Примерните изпити по математика носят LaTeX (\(…\)) в текста — KaTeX, не суров низ.
     questionContent = (
       <>
-        {parts.map((part, i) => <p key={i} className={i > 0 ? 'mt-2' : ''}>{part}</p>)}
+        {parts.map((part, i) =>
+          hasTexDelimiters(part) ? (
+            <p key={i} className={i > 0 ? 'mt-2' : ''} dangerouslySetInnerHTML={{ __html: renderMathTextToHtml(part) }} />
+          ) : (
+            <p key={i} className={i > 0 ? 'mt-2' : ''}>{part}</p>
+          ),
+        )}
       </>
     )
   } else if (isMath) {
-    questionContent = <span>{stripExamBoilerplate(collapseQuestionText(normalizeMathText(question.question || '')))}</span>
+    const text = stripExamBoilerplate(collapseQuestionText(normalizeMathText(question.question || '')))
+    questionContent = hasTexDelimiters(text) ? (
+      <span dangerouslySetInnerHTML={{ __html: renderMathTextToHtml(text) }} />
+    ) : (
+      <span>{text}</span>
+    )
   } else {
     const parts = stripExamBoilerplate(normalizeMathText(question.question || '')).split('\n\n').filter(Boolean)
     questionContent = (
@@ -1423,9 +1438,12 @@ function QuestionCard({
             const showCorrect = showFeedback && isCorrect
             const showWrong = showFeedback && isSelected && !isCorrect
 
-            let optText: React.ReactNode = cleanMathChoiceText(text || 'Избор по изображение')
+            const cleanedOption = cleanMathChoiceText(text || 'Избор по изображение')
+            let optText: React.ReactNode = cleanedOption
             if (override?.optionsHtml?.[label]) {
               optText = <span dangerouslySetInnerHTML={{ __html: renderMathInHtml(override.optionsHtml[label]) }} />
+            } else if (hasTexDelimiters(cleanedOption)) {
+              optText = <span dangerouslySetInnerHTML={{ __html: renderMathTextToHtml(cleanedOption) }} />
             }
 
             return (
