@@ -3,26 +3,24 @@
 import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { tests } from '@/data/tests'
-import { lessons } from '@/data/lessons'
 import { StatCard } from '@/components/shared/StatCard'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { fetchProgressData, type ProgressData } from '@/lib/progress'
 import { getScoreColor } from '@/lib/utils'
 import { getUser } from '@/lib/auth'
 import { getUserFirstName } from '@/lib/user-display'
+import { useGrade } from '@/lib/grade-context'
 
-const completedTests = tests.filter((t) => t.status === 'completed')
-const completedLessons = lessons.filter((l) => l.status === 'completed')
-
-const averageScore = completedTests.length
-  ? Math.round(
-      completedTests.reduce((sum, test) => sum + (test.lastScore ?? test.avgScore), 0) / completedTests.length
-    )
-  : 0
+const examTypeByGrade = { '4': 'nvo4', '7': 'nvo7', '12': 'dzi12' } as const
 
 export default function DashboardPage() {
   const [data, setData] = useState<ProgressData | null>(null)
   const [firstName, setFirstName] = useState('Ученик')
+  const { grade, lockedGrade } = useGrade()
+  const effectiveGrade = lockedGrade ?? grade
+  // Броят „налични“ тестове идва от реалния каталог за класа на ученика,
+  // а не от фиксирано число.
+  const availableTests = tests.filter((t) => t.examType === examTypeByGrade[effectiveGrade]).length
 
   useEffect(() => {
     fetchProgressData().then(setData).catch(() => setData(null))
@@ -54,9 +52,11 @@ export default function DashboardPage() {
                 Избери една задача за следващите 20 минути и я довърши.
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-                <span className="badge bg-success-light text-success">Завършени тестове: {completedTests.length}</span>
-                <span className="badge bg-primary-light text-primary">Завършени уроци: {completedLessons.length}</span>
-                <span className="badge bg-amber-light text-amber">Среден резултат: {averageScore}%</span>
+                <span className="badge bg-success-light text-success">Завършени тестове: {data?.testsCompleted ?? 0}</span>
+                <span className="badge bg-primary-light text-primary">Завършени уроци: {data?.lessonsCompleted ?? 0}</span>
+                <span className="badge bg-amber-light text-amber">
+                  Среден резултат: {data && data.avgScore > 0 ? `${data.avgScore}%` : '—'}
+                </span>
               </div>
             </div>
           </div>
@@ -65,9 +65,9 @@ export default function DashboardPage() {
         {data ? (
           <>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <StatCard label="Завършени тестове" value={data.testsCompleted} subtext="от 48 налични" />
+              <StatCard label="Завършени тестове" value={data.testsCompleted} subtext={`от ${availableTests} налични`} />
               <StatCard label="Средна оценка" value={data.avgScore > 0 ? `${data.avgScore}%` : '—'} accent />
-              <StatCard label="Завършени уроци" value={data.lessonsCompleted} subtext="от 32 налични" />
+              <StatCard label="Завършени уроци" value={data.lessonsCompleted} />
               <StatCard label="Поредни дни" value={data.streakDays} subtext="дни активност" />
             </div>
 
@@ -155,8 +155,7 @@ export default function DashboardPage() {
                 <div className="card p-5">
                   <h2 className="font-semibold text-text mb-4 text-sm">Общ напредък</h2>
                   <div className="space-y-3">
-                    <ProgressBar value={data.testsCompleted} max={data.totalTests} label="Тестове" showLabel />
-                    <ProgressBar value={data.lessonsCompleted} max={data.totalLessons} label="Уроци" showLabel />
+                    <ProgressBar value={data.testsCompleted} max={Math.max(availableTests, 1)} label="Тестове" showLabel />
                   </div>
                 </div>
 
