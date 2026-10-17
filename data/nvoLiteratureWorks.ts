@@ -13,7 +13,7 @@ export const nvoLiteratureThemeOrder = [
 ] as const
 
 export const nvoLiteratureWorks: NvoLiteratureWork[] = [
-  // І. БЪЛГАРИЯ В ЪЗРОЖДЕНСКИ СВЯТ
+  // І. БЪЛГАРИНЪТ ВЪВ ВЪЗРОЖДЕНСКИЯ СВЯТ
   {
     id: 'nvo-lit-01',
     author: 'Д. Чинтулов',
@@ -81,7 +81,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
   {
     id: 'nvo-lit-09',
     author: 'Иван Вазов',
-    title: 'Из „Немили-недраги"',
+    title: 'Из „Немили-недраги“',
     image: '/nvo-literature/nemili-nedragi.jpg',
     theme: 'І. Българинът във възрожденския свят',
     videoUrl: '/nvo-videos/nemili-nedragi.mp4',
@@ -97,7 +97,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
   {
     id: 'nvo-lit-11',
     author: 'Иван Вазов',
-    title: 'Из „Под игото" — Представлението',
+    title: 'Из „Под игото“ — Представлението',
     image: '/nvo-literature/pod-igoto-predstavlenieto.jpg',
     theme: 'І. Българинът във възрожденския свят',
     videoUrl: '/nvo-videos/pod-igoto-predstavlenieto.mp4',
@@ -130,7 +130,7 @@ export const nvoLiteratureWorks: NvoLiteratureWork[] = [
   {
     id: 'nvo-lit-15',
     author: 'Алеко Константинов',
-    title: 'Из „До Чикаго и назад"',
+    title: 'Из „До Чикаго и назад“',
     image: '/nvo-literature/do-chikago-i-nazad.jpg',
     theme: 'ІІ. Човекът в обществото',
     videoUrl: '/nvo-videos/do-chikago-i-nazad.mp4',

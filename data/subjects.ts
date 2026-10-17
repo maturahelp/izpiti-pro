@@ -141,9 +141,8 @@ export const topics: Topic[] = [
   { id: 'bg7-1', subjectId: 'bg-lang-7', name: 'Правопис и пунктуация', order: 1, lessonsCount: 4, testsCount: 7 },
   { id: 'bg7-2', subjectId: 'bg-lang-7', name: 'Части на речта', order: 2, lessonsCount: 3, testsCount: 2 },
   { id: 'bg7-3', subjectId: 'bg-lang-7', name: 'Анализ на текст', order: 3, lessonsCount: 5, testsCount: 4 },
-  { id: 'bg7-4', subjectId: 'bg-lang-7', name: 'Съчинение-разсъждение', order: 4, lessonsCount: 4, testsCount: 3 },
-  { id: 'bg7-5', subjectId: 'bg-lang-7', name: 'Изразни средства', order: 5, lessonsCount: 3, testsCount: 2 },
-  { id: 'bg7-nvo', subjectId: 'bg-lang-7', name: 'НВО — Пълен изпит', order: 6, lessonsCount: 0, testsCount: 8 },
+  { id: 'bg7-5', subjectId: 'bg-lang-7', name: 'Изразни средства', order: 4, lessonsCount: 3, testsCount: 2 },
+  { id: 'bg7-nvo', subjectId: 'bg-lang-7', name: 'НВО — Пълен изпит', order: 5, lessonsCount: 0, testsCount: 8 },
   { id: 'math7-1', subjectId: 'math-7', name: 'Числа и изрази', order: 1, lessonsCount: 4, testsCount: 3 },
   { id: 'math7-2', subjectId: 'math-7', name: 'Уравнения и неравенства', order: 2, lessonsCount: 5, testsCount: 4 },
   { id: 'math7-3', subjectId: 'math-7', name: 'Функции и графики', order: 3, lessonsCount: 4, testsCount: 3 },
@@ -160,6 +159,6 @@ export const topics: Topic[] = [
 
 export const examTypes = {
   nvo4: { label: '4. клас НВО', description: 'Национално външно оценяване' },
-  nvo7: { label: '7. клас НВО', description: 'Национално вътрешно оценяване' },
+  nvo7: { label: '7. клас НВО', description: 'Национално външно оценяване' },
   dzi12: { label: '12. клас ДЗИ', description: 'Държавен зрелостен изпит' },
 }
