@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { cn } from '@/lib/utils'
 import { formatMathFallbackText, normalizeInlineMathDelimiters } from '@/lib/math-text'
+import { checkShortAnswer } from '@/lib/math7-short-answer'
 
 function fireConfetti() {
   if (typeof window === 'undefined') return
@@ -70,6 +71,8 @@ export interface MathProblem {
   question: string
   options: Record<string, string> | null
   correctAnswer: string
+  /** Допълнителни приети форми на краткия отговор (виж lib/math7-short-answer.ts). */
+  acceptedAnswers?: string[]
   explanation: string
   skills: string[]
 }
@@ -139,7 +142,8 @@ export function Math7TopicsClient({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedOpt, setSelectedOpt] = useState<string | null>(null)
   const [checked, setChecked] = useState(false)
-  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [shortAnswer, setShortAnswer] = useState('')
+  const [answers, setAnswers] = useState<Record<string, { value: string; correct: boolean }>>({})
   const [finished, setFinished] = useState(false)
   const [mathJaxReady, setMathJaxReady] = useState(false)
 
@@ -178,6 +182,7 @@ export function Math7TopicsClient({
   function resetWorkspace() {
     setCurrentIndex(0)
     setSelectedOpt(null)
+    setShortAnswer('')
     setChecked(false)
     setAnswers({})
     setFinished(false)
@@ -223,17 +228,24 @@ export function Math7TopicsClient({
   function handleCheck() {
     if (selectedOpt === null) return
     const problem = filteredProblems[currentIndex]
-    setAnswers((prev) => ({ ...prev, [problem.id]: selectedOpt! }))
+    const correct = selectedOpt === problem.correctAnswer
+    setAnswers((prev) => ({ ...prev, [problem.id]: { value: selectedOpt!, correct } }))
     setChecked(true)
-    if (selectedOpt === problem.correctAnswer) {
+    if (correct) {
       fireConfetti()
     }
   }
 
-  function handleRevealShortAnswer() {
+  function handleCheckShortAnswer() {
+    const value = shortAnswer.trim()
+    if (!value || checked) return
     const problem = filteredProblems[currentIndex]
-    setAnswers((prev) => ({ ...prev, [problem.id]: problem.correctAnswer }))
+    const correct = checkShortAnswer(value, problem.correctAnswer, problem.acceptedAnswers)
+    setAnswers((prev) => ({ ...prev, [problem.id]: { value, correct } }))
     setChecked(true)
+    if (correct) {
+      fireConfetti()
+    }
   }
 
   function handleRetryQuestion() {
@@ -244,6 +256,7 @@ export function Math7TopicsClient({
       return next
     })
     setSelectedOpt(null)
+    setShortAnswer('')
     setChecked(false)
   }
 
@@ -253,6 +266,7 @@ export function Math7TopicsClient({
     } else {
       setCurrentIndex((i) => i + 1)
       setSelectedOpt(null)
+      setShortAnswer('')
       setChecked(false)
     }
   }
@@ -260,13 +274,16 @@ export function Math7TopicsClient({
   function handleRestart() {
     setCurrentIndex(0)
     setSelectedOpt(null)
+    setShortAnswer('')
     setChecked(false)
     setAnswers({})
     setFinished(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const correctCount = filteredProblems.filter((p) => answers[p.id] === p.correctAnswer).length
+  const correctCount = filteredProblems.filter((p) => answers[p.id]?.correct).length
+  const currentResult = filteredProblems[currentIndex] ? answers[filteredProblems[currentIndex].id] : undefined
+  const currentIsCorrect = checked && Boolean(currentResult?.correct)
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
@@ -413,8 +430,9 @@ export function Math7TopicsClient({
               {/* Question card */}
               {(() => {
                 const problem = filteredProblems[currentIndex]
-                const isCorrect = checked && selectedOpt === problem.correctAnswer
-                const isWrong = checked && selectedOpt !== null && selectedOpt !== problem.correctAnswer
+                const result = answers[problem.id]
+                const isCorrect = checked && Boolean(result?.correct)
+                const isWrong = checked && !result?.correct
 
                 return (
                   <div
@@ -479,13 +497,47 @@ export function Math7TopicsClient({
                       </div>
                     )}
 
-                    {problem.type === 'short_answer' && checked && (
-                      <div className="mt-4 rounded-xl border border-[#D7E7F7] bg-[#F8FBFF] p-4 text-sm text-text">
-                        <p><strong>Отговор:</strong> <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} /></p>
+                    {problem.type === 'short_answer' && (
+                      <div className="pl-9">
+                        <label htmlFor="math-short-answer" className="mb-1.5 block text-xs font-semibold text-text-muted">
+                          Твоят отговор
+                        </label>
+                        <input
+                          id="math-short-answer"
+                          type="text"
+                          value={shortAnswer}
+                          disabled={checked}
+                          autoComplete="off"
+                          inputMode="text"
+                          placeholder="Запиши отговора, напр. 42, 5/3, x=5 или x=-9"
+                          onChange={(event) => setShortAnswer(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                              event.preventDefault()
+                              handleCheckShortAnswer()
+                            }
+                          }}
+                          className={cn(
+                            'w-full rounded-xl border px-3 py-2.5 text-sm font-medium text-text bg-white focus:outline-none focus:ring-2',
+                            checked
+                              ? isCorrect
+                                ? 'border-success bg-success/10 text-success'
+                                : 'border-danger bg-danger/10 text-danger'
+                              : 'border-border focus:border-primary/60 focus:ring-primary/20'
+                          )}
+                        />
+                        {checked && (
+                          <div className="mt-3 rounded-xl border border-[#D7E7F7] bg-[#F8FBFF] p-4 text-sm text-text">
+                            <p>
+                              <strong>{isCorrect ? 'Вярно!' : 'Верен отговор:'}</strong>{' '}
+                              {isCorrect ? null : <MathText text={problem.correctAnswer} mathJaxReady={mathJaxReady} />}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     )}
 
-                    {checked && isWrong && (
+                    {checked && (isWrong || problem.type === 'short_answer') && (
                       <p className="mt-3 pl-9 text-xs text-text-muted italic leading-relaxed">
                         <MathText text={problem.explanation} mathJaxReady={mathJaxReady} />
                       </p>
@@ -500,10 +552,16 @@ export function Math7TopicsClient({
                   filteredProblems[currentIndex].type === 'short_answer' ? (
                     <button
                       type="button"
-                      onClick={handleRevealShortAnswer}
-                      className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+                      disabled={!shortAnswer.trim()}
+                      onClick={handleCheckShortAnswer}
+                      className={cn(
+                        'w-full rounded-xl py-3 text-sm font-semibold transition-colors',
+                        shortAnswer.trim()
+                          ? 'bg-primary text-white hover:bg-primary-dark'
+                          : 'bg-border text-text-muted cursor-not-allowed'
+                      )}
                     >
-                      Виж отговора
+                      Провери отговора
                     </button>
                   ) : (
                     <button
@@ -520,15 +578,7 @@ export function Math7TopicsClient({
                       Провери отговора
                     </button>
                   )
-                ) : filteredProblems[currentIndex].type === 'short_answer' ? (
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="w-full rounded-xl py-3 text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
-                  >
-                    {currentIndex + 1 >= filteredProblems.length ? 'Виж резултата' : 'Следващ въпрос →'}
-                  </button>
-                ) : selectedOpt === filteredProblems[currentIndex].correctAnswer ? (
+                ) : currentIsCorrect ? (
                   <button
                     type="button"
                     onClick={handleNext}
