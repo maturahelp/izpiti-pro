@@ -16,6 +16,7 @@ export const MOCK_NVO_MATH_FIGURES = {
   '2023_math_q12': '/figures/mock-nvo-math/2023_math_q12.svg',
   '2023_math_q13': '/figures/mock-nvo-math/2023_math_q13.svg',
   '2023_math_q16': '/figures/mock-nvo-math/2023_math_q16.svg',
+  '2024_math_q08': '/figures/mock-nvo-math/2024_math_q08.svg',
   '2024_math_q19': '/figures/mock-nvo-math/2024_math_q19.svg',
   '2025_math_q09': '/figures/mock-nvo-math/2025_math_q09.svg',
   '2025_math_q10': '/figures/mock-nvo-math/2025_math_q10.svg',

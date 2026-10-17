@@ -24,9 +24,11 @@ interface OfficialExam {
 
 interface MockQuestion {
   number: number
+  type?: 'single_choice' | 'open_response'
   question: string
   options?: OptionMap
-  answer_guide?: string
+  question_image?: string
+  answer_guide?: string | Record<string, string>
   source_tags?: {
     source_id?: string
   }
@@ -83,6 +85,7 @@ const EXPECTED_FIGURE_SOURCE_IDS = [
   '2023_math_q12',
   '2023_math_q13',
   '2023_math_q16',
+  '2024_math_q08',
   '2024_math_q19',
   '2025_math_q09',
   '2025_math_q10',
@@ -234,8 +237,9 @@ function validateMockMathFigures() {
   const missing: string[] = []
   for (const exam of mockExams) {
     for (const question of exam.questions) {
-      if (question.source_tags?.source_id === '2021_math_q17' && /ромб/i.test(question.question)) {
-        fail(`${exam.id} q${question.number} should describe source 2021_math_q17 as a trapezoid, not a rhombus`)
+      // The 2021 PDF (official_assets/math_questions/2021_math/q17.png) draws a rhombus; the mock used to say "трапец".
+      if (question.source_tags?.source_id === '2021_math_q17' && !/ромб/i.test(question.question)) {
+        fail(`${exam.id} q${question.number} should describe source 2021_math_q17 as a rhombus, like the official paper`)
       }
       if (question.source_tags?.source_id === '2024_math_q19' && question.options) {
         for (const [label, text] of Object.entries(question.options)) {
@@ -243,12 +247,14 @@ function validateMockMathFigures() {
             fail(`${exam.id} q${question.number} option ${label} still contains chart label boilerplate`)
           }
         }
-        if (/Видове изпълнения/i.test(question.answer_guide || '')) {
+        if (/Видове изпълнения/i.test(typeof question.answer_guide === 'string' ? question.answer_guide : '')) {
           fail(`${exam.id} q${question.number} answer guide still contains chart label boilerplate`)
         }
       }
       if (!VISUAL_PROMPT_RE.test(question.question || '')) continue
       const sourceId = question.source_tags?.source_id
+      // Tasks pulled from the official papers may reuse the extracted PDF figure instead of an SVG.
+      if (question.question_image) continue
       if (!sourceId || !MOCK_NVO_MATH_FIGURES[sourceId]) {
         missing.push(`${exam.id} q${question.number} (${sourceId || 'no source_id'})`)
       }
